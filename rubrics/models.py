@@ -33,9 +33,6 @@ class Competency(models.Model):
         return self.name
 
 
-
-
-
 # One-to-many with their parent LO
 class Criterion(models.Model):
     name = models.CharField(max_length=250)

@@ -1,15 +1,15 @@
-
+{% extends 'base.html' %}
 
 {% block title %}
 Create and account
 {% endblock %}
 
 {% block content %}
-<h1>Create and account</h1>
-    <p>Please, sign up using the following form:</p>
-    <form action="." method="post">
-    {{ user_form.as_p }}
+<h1>Create a Challenge</h1>
+    <p>Create a Challenge:</p>
+    <form action=""  method="post">
+    {{ form.as_p }}
     {% csrf_token %}
-    <p><input type="submit" value="Create my account"></p>
+    <p><input type="submit" value="Create Challenge"></p>
     </form>
 {% endblock %}
