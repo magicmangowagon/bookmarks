@@ -1,6 +1,8 @@
 from django import forms
-from .models import LearningObjective
+from .models import LearningObjective, Challenge
 
 
-class RubricForm(forms.Form):
-    learningObj = forms.ModelChoiceField(queryset=LearningObjective.objects.all().order_by('name'))
+class ChallengeForm(forms.ModelForm):
+    class Meta:
+        model = Challenge
+        fields = ('name', 'description', 'learningObjs')
