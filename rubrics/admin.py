@@ -33,7 +33,7 @@ class CompetencyAdmin(admin.ModelAdmin):
 
 @admin.register(Challenge)
 class ChallengeAdmin(admin.ModelAdmin):
-    list_display = ['name', 'description']
+    list_display = ['name']
 
 
 @admin.register(Rubric)

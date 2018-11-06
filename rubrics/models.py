@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from tinymce.models import HTMLField
+from djrichtextfield.models import RichTextField
 
 
 # Many-to-many with, connected to competencies and challenges
@@ -52,7 +52,7 @@ class LearningObjective(models.Model):
 class Challenge(models.Model):
     name = models.CharField(max_length=250)
     # competencies = models.ForeignKey(Competency, on_delete=models.CASCADE)
-    description = HTMLField()
+    description = RichTextField()
     learningObjs = models.ManyToManyField(LearningObjective, blank=True)
 
     def __str__(self):
