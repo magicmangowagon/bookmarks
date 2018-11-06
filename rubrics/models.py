@@ -5,12 +5,48 @@ from tinymce.models import HTMLField
 
 # Many-to-many with, connected to competencies and challenges
 class LearningObjective(models.Model):
+    A = 'A'
+    B = 'B'
+    C = 'C'
+    D = 'D'
+    E = 'E'
+    F = 'F'
+
+    compGroupChoices = (
+        ('A', "A"),
+        ('B', "B"),
+        ('C', "C"),
+        ('D', "D"),
+        ("E", "E"),
+        ('F', "F")
+    )
+    compGroup = models.CharField(max_length=1, choices=compGroupChoices, default=A)
+    compNumber = models.IntegerField(choices=(
+        (1, "1"),
+        (2, "2"),
+        (3, "3"),
+        (4, "4"),
+        (5, "5"),
+        (6, "6"),
+        (7, "7")
+    ))
+    loNumber = models.IntegerField(choices=(
+        (1, "1"),
+        (2, "2"),
+        (3, "3"),
+        (4, "4"),
+        (5, "5"),
+        (6, "6"),
+        (7, "7"),
+        (8, "8")
+    ))
     name = models.CharField(max_length=250)
-    description = models.TextField()
+    # description = models.TextField()
     # challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        fullname = str(self.compGroup) + "-" + str(self.compNumber) + "." + str(self.loNumber) + " " + str(self.name)
+        return fullname
 
 
 class Challenge(models.Model):

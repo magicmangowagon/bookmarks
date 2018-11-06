@@ -20,7 +20,7 @@ class CompetencyInline(admin.TabularInline):
 
 @admin.register(LearningObjective)
 class LearningObjectiveAdmin(admin.ModelAdmin):
-    list_display = ['name', 'description']
+    # list_display = ['fullname', 'compNumber', 'loNumber', 'name']
     inlines = [
         CriteriaInline,
     ]
