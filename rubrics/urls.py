@@ -1,9 +1,10 @@
 from django.urls import path
 from . import views
+from .views import challenge_detail, ChallengeListView
 
 urlpatterns = [
     path('rubrics', views.update_challenge, name='challenge-form'),
     path('', views.ChallengeListView.as_view(), name='challenges'),
-    path('rubrics/challenge/<int:pk>', views.challenge_detail, name='challenge-detail'),
+    path('challenge/<int:pk>', challenge_detail.as_view(), name='challenge-detail'),
     # path('edit/', views.edit, name='edit'),
 ]
