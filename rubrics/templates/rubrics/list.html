@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+
+{% block title %}Woodrow Wilson Academy{% endblock %}
+
+{% block content %}
+<h1>Challenges</h1>
+
+
+{% for challenge in challenges %}
+<h2>
+    <a href="{{ challenge }}">
+        {{ challenge.name }}
+    </a>
+</h2>
+
+
+
+
+
+
+{% endfor posts %}
+
+{% endblock content %}
