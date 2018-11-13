@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect
 from .models import Challenge
-from .forms import ChallengeForm
+from .forms import ChallengeForm, UserFileForm
 from django.views.generic import ListView, DetailView
 
 
@@ -32,3 +33,23 @@ class ChallengeListView(ListView):
     context_object_name = 'challenges'
     # paginate_by = 3
     template_name = 'rubrics/list.html'
+
+
+def solution_submission(request):
+    submitted = False
+    if request.method == "POST":
+        form = UserFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            usersolution = form.save(commit=False)
+            try:
+                usersolution.userOwner = request.user
+            except Exception:
+                pass
+            form.save()
+            return HttpResponseRedirect('rubrics/challenge/?submitted=True')
+    else:
+        form = UserFileForm()
+        if 'submitted' in request.GET:
+            submitted = True
+
+    return render(request, 'rubrics/challenge_detail.html', {'form': form, 'submitted': submitted})

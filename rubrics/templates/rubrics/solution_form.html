@@ -1,0 +1,16 @@
+
+
+{% block content %}
+<h2>Solution Upload</h2>
+
+    {% if submitted %}
+    <p>Solution successfully submitted</p>
+
+    {% else %}
+        <form action=""  enctype="multipart/form-data" method="post">
+        {{ form.as_p }}
+        <p><input type="submit" value="Upload Solution"></p>
+    {% csrf_token %}
+    </form>
+    {% endif %}
+{% endblock %}

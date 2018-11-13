@@ -89,5 +89,7 @@ class Rubric(models.Model):
     completionLevel = models.IntegerField()
 
 
-
+class UserSolution(models.Model):
+    file = models.FileField()
+    userOwner = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
 
