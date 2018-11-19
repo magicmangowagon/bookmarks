@@ -24,9 +24,6 @@ class challenge_detail(DetailView):
         context['rubric_list'] = Challenge.objects.all()
         return context
 
-    # challenge = get_object_or_404(Challenge)
-    # return render(request, 'rubrics/challenge_detail.html', {'challenge': challenge, 'int': int})
-
 
 class ChallengeListView(ListView):
     queryset = Challenge.objects.all()
@@ -46,10 +43,10 @@ def solution_submission(request):
             except Exception:
                 pass
             form.save()
-            return HttpResponseRedirect('rubrics/challenge/?submitted=True')
+            return HttpResponseRedirect('?submitted=True')
     else:
         form = UserFileForm()
         if 'submitted' in request.GET:
             submitted = True
 
-    return render(request, 'rubrics/challenge_detail.html', {'form': form, 'submitted': submitted})
+    return render(request, 'rubrics/solution_form.html', {'form': form, 'submitted': submitted})

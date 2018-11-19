@@ -1,6 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ "Solution Upload" }}
+{% endblock %}
 
 
 {% block content %}
+
 <h2>Solution Upload</h2>
 
     {% if submitted %}
@@ -8,9 +14,15 @@
 
     {% else %}
         <form action=""  enctype="multipart/form-data" method="post">
-        {{ form.as_p }}
-        <p><input type="submit" value="Upload Solution"></p>
-    {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Upload Solution"></td>
+            </tr>
+        </table>
+
+        {% csrf_token %}
     </form>
     {% endif %}
 {% endblock %}

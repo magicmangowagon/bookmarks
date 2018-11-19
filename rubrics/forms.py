@@ -11,4 +11,4 @@ class ChallengeForm(forms.ModelForm):
 class UserFileForm(forms.ModelForm):
     class Meta:
         model = UserSolution
-        fields = ('file', 'userOwner')
+        fields = ('file', )

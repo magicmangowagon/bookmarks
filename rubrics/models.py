@@ -90,6 +90,6 @@ class Rubric(models.Model):
 
 
 class UserSolution(models.Model):
-    file = models.FileField()
+    file = models.FileField(upload_to='uploads/', blank=True)
     userOwner = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
 
