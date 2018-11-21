@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from .models import Challenge
 from .forms import ChallengeForm, UserFileForm
 from django.views.generic import ListView, DetailView
+from django import forms
 
 
 def update_challenge(request):
@@ -22,7 +23,12 @@ class challenge_detail(DetailView):
     def get_context_data(self, **kwargs):
         context = super(challenge_detail, self).get_context_data(**kwargs)
         context['rubric_list'] = Challenge.objects.all()
+        context['form'] = SolutionForm()
         return context
+
+
+class SolutionForm(forms.Form):
+    file = forms.FileField()
 
 
 class ChallengeListView(ListView):
