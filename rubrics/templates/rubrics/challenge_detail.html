@@ -9,23 +9,6 @@
     <h1>{{ challenge.name }}</h1>
 <p>{{ challenge.description|safe }}  </p>
 
-    <h2><a href="upload">Solution Upload</a></h2>
-
-     {% if submitted %}
-    <p>Solution successfully submitted</p>
-
-    {% else %}
-        <form action=""  enctype="multipart/form-data" method="post">
-        <table>
-            {{ form.as_table }}
-            <tr>
-                <td></td>
-                <td><input type="submit" value="Upload Solution"></td>
-            </tr>
-        </table>
-
-        {% csrf_token %}
-    </form>
-    {% endif %}
+    {% include 'rubrics/solution_form.html' %}
 
 {% endblock %}
