@@ -7,21 +7,7 @@ from django import forms
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
 from django.views import View
-
-
-class UserFileForm(forms.ModelForm):
-    class Meta:
-        model = UserSolution
-        fields = ('file', )
-
-
-class ChallengeDisplay(DetailView, FormMixin):
-    model = Challenge
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form'] = UserFileForm()
-        return context
+from .forms import UserFileForm
 
 
 class challenge_detail(DetailView, FormMixin):
@@ -42,11 +28,13 @@ class challenge_detail(DetailView, FormMixin):
         self.object = self.get_object()
         form = self.get_form()
         if form.is_valid():
+            UserSolution.userOwner = request.user
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
 
     def form_valid(self, form):
+
         form.save()
         return super(challenge_detail, self).form_valid(form)
 
