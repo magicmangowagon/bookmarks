@@ -21,4 +21,4 @@ class ChallengeDisplay(DetailView):
 class UserFileForm(forms.ModelForm):
     class Meta:
         model = UserSolution
-        fields = ('file', )
+        fields = ('file', 'challengeName')

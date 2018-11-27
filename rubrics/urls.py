@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import challenge_detail, ChallengeListView, ChallengeDetail
+from .views import challenge_detail, ChallengeListView
 
 urlpatterns = [
     # path('rubrics', views.update_challenge, name='challenge-form'),
