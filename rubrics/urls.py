@@ -7,5 +7,6 @@ urlpatterns = [
     path('', views.ChallengeListView.as_view(), name='challenges'),
     path('challenge/<int:pk>', challenge_detail.as_view(), name='challenge-detail'),
     path('challenge/<int:pk>/upload', views.solution_submission, name='solution'),
+    path('challenge/<int:pk>/success', views.success, name='success'),
     # path('edit/', views.edit, name='edit'),
 ]

@@ -1,13 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from .models import Challenge, UserSolution
-from .forms import ChallengeForm
+from .forms import ChallengeForm, UserFileForm
 from django.views.generic import ListView, DetailView, FormView
 from django import forms
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
 from django.views import View
-from .forms import UserFileForm
 
 
 class challenge_detail(DetailView, FormMixin):
@@ -16,7 +15,7 @@ class challenge_detail(DetailView, FormMixin):
     form_class = UserFileForm
 
     def get_success_url(self):
-        return reverse('challenge-detail', kwargs={'pk': self.object.id})
+        return reverse('success', kwargs={'pk': self.object.id})
 
     def get_context_data(self, **kwargs):
         context = super(challenge_detail, self).get_context_data(**kwargs)
@@ -65,3 +64,7 @@ def solution_submission(request, pk):
             submitted = True
 
     return render(request, 'rubrics/solution_form.html', {'form': form, 'submitted': submitted})
+
+
+def success(request, pk):
+    return render(request, 'rubrics/success.html', )
