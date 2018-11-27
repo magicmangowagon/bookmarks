@@ -9,7 +9,7 @@ from django.urls import reverse
 from django.views import View
 
 
-# class based challenge view with functioning form.
+# Class based challenge view with functioning form.
 # Currently using this
 class challenge_detail(DetailView, FormMixin):
     template_name = 'rubrics/challenge_detail.html'
