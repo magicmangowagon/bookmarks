@@ -9,6 +9,8 @@ from django.urls import reverse
 from django.views import View
 
 
+# class based challenge view with functioning form.
+# Currently using this
 class challenge_detail(DetailView, FormMixin):
     template_name = 'rubrics/challenge_detail.html'
     model = Challenge
@@ -33,7 +35,6 @@ class challenge_detail(DetailView, FormMixin):
             return self.form_invalid(form)
 
     def form_valid(self, form):
-
         form.save()
         return super(challenge_detail, self).form_valid(form)
 
@@ -45,6 +46,11 @@ class ChallengeListView(ListView):
     template_name = 'rubrics/list.html'
 
 
+def success(request, pk):
+    return render(request, 'rubrics/success.html', )
+
+
+# function based view not being used, supplanted by Class based view above
 def solution_submission(request, pk):
     submitted = False
     if request.method == "POST":
@@ -65,6 +71,3 @@ def solution_submission(request, pk):
 
     return render(request, 'rubrics/solution_form.html', {'form': form, 'submitted': submitted})
 
-
-def success(request, pk):
-    return render(request, 'rubrics/success.html', )
