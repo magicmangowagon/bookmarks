@@ -10,7 +10,7 @@ from django.views import View
 
 
 # Class based challenge view with functioning form.
-# Currently using this
+# Currently using this. Need to revisit, probably not best practice.
 class challenge_detail(DetailView, FormMixin):
     template_name = 'rubrics/challenge_detail.html'
     model = Challenge
@@ -22,8 +22,10 @@ class challenge_detail(DetailView, FormMixin):
     def get_context_data(self, **kwargs):
         context = super(challenge_detail, self).get_context_data(**kwargs)
         context['rubric_list'] = Challenge.objects.all()
-        context['form'] = UserFileForm(initial={'challengeName': self.object, 'userOwner': self.request.user})
+        # I don't love this, need to find out if this is an acceptable way to pass user id and challenge name to
+        # userSolution model. First attempt commented out directly below. Working version just past it.
         # context['userSolution'] = UserSolution(initial={'userOwner': self.request.user})
+        context['form'] = UserFileForm(initial={'challengeName': self.object, 'userOwner': self.request.user})
         return context
 
     def post(self, request, *args, **kwargs):
