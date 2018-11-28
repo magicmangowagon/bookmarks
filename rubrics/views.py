@@ -22,14 +22,14 @@ class challenge_detail(DetailView, FormMixin):
     def get_context_data(self, **kwargs):
         context = super(challenge_detail, self).get_context_data(**kwargs)
         context['rubric_list'] = Challenge.objects.all()
-        context['form'] = UserFileForm(initial={'post': self.object})
+        context['form'] = UserFileForm(initial={'challengeName': self.object, 'userOwner': self.request.user})
+        # context['userSolution'] = UserSolution(initial={'userOwner': self.request.user})
         return context
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         form = self.get_form()
         if form.is_valid():
-            UserSolution.userOwner = request.user
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
