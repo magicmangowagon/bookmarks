@@ -22,3 +22,4 @@ class UserFileForm(forms.ModelForm):
     class Meta:
         model = UserSolution
         fields = ('file', 'challengeName', 'userOwner')
+        widgets = {'challengeName': forms.HiddenInput(), 'userOwner': forms.HiddenInput}
