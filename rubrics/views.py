@@ -41,11 +41,27 @@ class challenge_detail(DetailView, FormMixin):
         return super(challenge_detail, self).form_valid(form)
 
 
+class SolutionDetailView(DetailView):
+    template_name = 'rubrics/solution_detail.html'
+    model = UserSolution
+
+    def get_context_data(self, **kwargs):
+        context = super(SolutionDetailView, self).get_context_data(**kwargs)
+        context['solution_list'] = UserSolution.objects.all()
+        return context
+
+
 class ChallengeListView(ListView):
     queryset = Challenge.objects.all()
     context_object_name = 'challenges'
     # paginate_by = 3
     template_name = 'rubrics/list.html'
+
+
+class SolutionListView(ListView):
+    queryset = UserSolution.objects.all()
+    context_object_name = 'solutions'
+    template_name = 'rubrics/solution_list.html'
 
 
 def success(request, pk):

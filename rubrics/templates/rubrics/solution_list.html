@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+
+{% block title %}Woodrow Wilson Academy: Solutions{% endblock %}
+
+{% block content %}
+<h1>Solutions</h1>
+
+
+{% for usersolution in object_list %}
+<h2>
+    {{ usersolution.userOwner }}
+
+</h2>
+    <h3>{{ usersolution.challengeName }}</h3>
+<a href="solutions/{{ usersolution.id }}">{{ usersolution.file }}</a>
+
+{% endfor %}
+
+{% endblock content %}

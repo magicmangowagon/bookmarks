@@ -87,10 +87,10 @@ class Rubric(models.Model):
     evidencePresent = models.TextField()
     feedback = models.TextField()
     completionLevel = models.IntegerField()
+    challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
 
 
 class UserSolution(models.Model):
     file = models.FileField(upload_to='uploads/', blank=True)
     userOwner = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     challengeName = models.ForeignKey(Challenge, blank=True, null=True, on_delete=models.CASCADE)
-
