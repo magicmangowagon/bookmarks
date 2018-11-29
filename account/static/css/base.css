@@ -82,7 +82,11 @@ ol {
 
 #content {
     padding:30px 100px;
+    width: 75%;
+    margin: auto;
 }
+
+
 
 /* forms */
 form {
@@ -243,6 +247,11 @@ a.like, a.follow { float:right; margin-top:-8px; }
     width:120px;
     height:120px;
     border-radius:50%;
+}
+
+.center-things {
+    margin: auto;
+    width: 65%;
 }
 
 /* users */

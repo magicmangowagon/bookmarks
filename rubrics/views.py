@@ -61,6 +61,7 @@ class ChallengeListView(ListView):
 class SolutionListView(ListView):
     queryset = UserSolution.objects.all()
     context_object_name = 'solutions'
+    paginate_by = 3
     template_name = 'rubrics/solution_list.html'
 
 

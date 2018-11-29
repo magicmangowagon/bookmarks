@@ -2,7 +2,7 @@
 
 
 {% block content %}
-
+<div class="center-things">
 <h2>Solution Upload</h2>
 
     {% if submitted %}
@@ -21,4 +21,5 @@
         {% csrf_token %}
     </form>
     {% endif %}
+</div>
 {% endblock %}
