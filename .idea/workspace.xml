@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f9d2353c-1e9e-47b8-8190-35e7ab7af957" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Procfile" beforeDir="false" afterPath="$PROJECT_DIR$/Procfile" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -42,10 +42,11 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
+          <entry key="Procfile" value="1" />
           <entry key="css" value="1" />
           <entry key="html" value="14" />
           <entry key="procfile" value="1" />
-          <entry key="py" value="27" />
+          <entry key="py" value="28" />
           <entry key="rubrics_usersolution" value="36" />
           <entry key="rubrics_usersolution_challengename" value="2" />
           <entry key="sql" value="2" />
@@ -58,17 +59,17 @@
           <entry key="CSS" value="1" />
           <entry key="Database Element" value="39" />
           <entry key="HTML" value="14" />
-          <entry key="PLAIN_TEXT" value="3" />
-          <entry key="Python" value="27" />
+          <entry key="PLAIN_TEXT" value="4" />
+          <entry key="Python" value="28" />
           <entry key="Scratch" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="Procfile" value="17" />
+          <entry key="Procfile" value="19" />
           <entry key="css" value="80" />
           <entry key="html" value="598" />
-          <entry key="py" value="3303" />
+          <entry key="py" value="3308" />
           <entry key="txt" value="586" />
         </counts>
       </usages-collector>
@@ -76,8 +77,8 @@
         <counts>
           <entry key="CSS" value="80" />
           <entry key="HTML" value="598" />
-          <entry key="PLAIN_TEXT" value="603" />
-          <entry key="Python" value="3303" />
+          <entry key="PLAIN_TEXT" value="605" />
+          <entry key="Python" value="3308" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages">
@@ -101,8 +102,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bookmarks/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="335">
-              <caret line="154" selection-start-line="154" selection-end-line="154" />
+            <state relative-caret-position="128">
+              <caret line="52" column="62" lean-forward="true" selection-start-line="52" selection-start-column="62" selection-end-line="52" selection-end-column="62" />
               <folding>
                 <element signature="e#310#319#0" expanded="true" />
               </folding>
@@ -110,20 +111,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Procfile">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret column="23" selection-start-column="23" selection-end-column="23" />
+              <caret column="33" selection-start-column="33" selection-end-column="33" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/requirements.txt">
+        <entry file="file://$PROJECT_DIR$/bookmarks/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="16" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
+            <state relative-caret-position="240">
+              <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
             </state>
           </provider>
         </entry>
@@ -131,8 +132,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bookmarks/wsgi.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="3" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
+            <state relative-caret-position="90">
+              <caret line="6" column="60" lean-forward="true" selection-start-line="6" selection-start-column="60" selection-end-line="6" selection-end-column="60" />
               <folding>
                 <element signature="e#225#234#0" expanded="true" />
               </folding>
@@ -140,18 +141,13 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/runtime.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state>
               <caret column="12" lean-forward="true" selection-start-column="12" selection-end-column="12" />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/f780ab61-9031-4846-8b1f-ccc173f48064/console.sql">
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -162,24 +158,6 @@
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/solution_detail.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" selection-start-line="5" selection-end-line="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/solution_form.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" column="6" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -207,7 +185,6 @@
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/challenge_detail.html" />
         <option value="$PROJECT_DIR$/rubrics/migrations/0018_auto_20181126_1934.py" />
         <option value="$PROJECT_DIR$/rubrics/migrations/0018_auto_20181126_1941.py" />
-        <option value="$PROJECT_DIR$/bookmarks/urls.py" />
         <option value="$PROJECT_DIR$/rubrics/forms.py" />
         <option value="$PROJECT_DIR$/rubrics/templates/base.html" />
         <option value="$PROJECT_DIR$/rubrics/models.py" />
@@ -221,10 +198,11 @@
         <option value="$PROJECT_DIR$/account/static/css/base.css" />
         <option value="$PROJECT_DIR$/rubrics/admin.py" />
         <option value="$PROJECT_DIR$/.procfile" />
-        <option value="$PROJECT_DIR$/bookmarks/wsgi.py" />
         <option value="$PROJECT_DIR$/runtime.txt" />
-        <option value="$PROJECT_DIR$/Procfile" />
+        <option value="$PROJECT_DIR$/bookmarks/urls.py" />
+        <option value="$PROJECT_DIR$/bookmarks/wsgi.py" />
         <option value="$PROJECT_DIR$/bookmarks/settings.py" />
+        <option value="$PROJECT_DIR$/Procfile" />
       </list>
     </option>
   </component>
@@ -250,6 +228,11 @@
           <expand>
             <path>
               <item name="bookmarks" type="b2602c69:ProjectViewProjectNode" />
+              <item name="bookmarks" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bookmarks" type="b2602c69:ProjectViewProjectNode" />
+              <item name="bookmarks" type="462c0819:PsiDirectoryNode" />
               <item name="bookmarks" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -420,13 +403,35 @@
       <option name="project" value="LOCAL" />
       <updated>1543864459635</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Trying to push to Heroku">
+      <created>1543866120572</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1543866120572</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Trying to push to Heroku">
+      <created>1543866163742</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1543866163742</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Trying to push to Heroku">
+      <created>1543866606716</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1543866606716</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="157" y="23" width="1283" height="796" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1821112" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1821112" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -440,7 +445,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49848944" weight="0.32954547" />
       <window_info anchor="bottom" id="Database Changes" order="9" weight="0.32954547" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5031056" side_tool="true" weight="0.32954547" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.49689442" visible="true" weight="0.32954547" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49689442" visible="true" weight="0.32954547" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.49924472" weight="0.32954547" />
       <window_info anchor="bottom" id="Database Console" order="13" sideWeight="0.49848944" weight="0.32954547" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -506,13 +511,6 @@
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bookmarks/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="22" column="4" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="4" />
         </state>
       </provider>
     </entry>
@@ -637,13 +635,6 @@
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/f780ab61-9031-4846-8b1f-ccc173f48064/console.sql">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Procfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="23" selection-start-column="23" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -654,37 +645,47 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/runtime.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="12" lean-forward="true" selection-start-column="12" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bookmarks/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/bookmarks/wsgi.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="3" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
+        <state relative-caret-position="90">
+          <caret line="6" column="60" lean-forward="true" selection-start-line="6" selection-start-column="60" selection-end-line="6" selection-end-column="60" />
           <folding>
             <element signature="e#225#234#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/bookmarks/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="335">
-          <caret line="154" selection-start-line="154" selection-end-line="154" />
+        <state relative-caret-position="128">
+          <caret line="52" column="62" lean-forward="true" selection-start-line="52" selection-start-column="62" selection-end-line="52" selection-end-column="62" />
           <folding>
             <element signature="e#310#319#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="16" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/runtime.txt">
+    <entry file="file://$PROJECT_DIR$/Procfile">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="12" lean-forward="true" selection-start-column="12" selection-end-column="12" />
+          <caret column="33" selection-start-column="33" selection-end-column="33" />
         </state>
       </provider>
     </entry>
