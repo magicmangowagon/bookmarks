@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponseForbidden
-from .models import Challenge, UserSolution, Rubric, RubricLine
+from .models import Challenge, UserSolution, Rubric, RubricLine, User
 from .forms import ChallengeForm, UserFileForm
-from django.views.generic import ListView, DetailView, FormView
+from django.views.generic import ListView, DetailView, FormView, CreateView
 from django import forms
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
@@ -59,13 +59,21 @@ class ChallengeListView(ListView):
 
 
 class SolutionListView(ListView):
-    queryset = UserSolution.objects.all()
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            queryset = UserSolution.objects.all()
+            return queryset
+        else:
+            queryset = UserSolution.objects.filter(userOwner=self.request.user)
+            return queryset
+
     context_object_name = 'solutions'
     paginate_by = 3
     template_name = 'rubrics/solution_list.html'
 
 
-class RubricForm(FormView):
+class RubricForm(CreateView):
     model = Rubric
 
 
