@@ -83,11 +83,16 @@ class Rubric(models.Model):
     competencies = models.ForeignKey(Competency, on_delete=models.CASCADE)
     name = models.CharField(max_length=250)
     description = models.CharField(max_length=250)
+    completionLevel = models.IntegerField()
+    challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
+
+
+class RubricLine(models.Model):
     evidenceMissing = models.TextField()
     evidencePresent = models.TextField()
     feedback = models.TextField()
-    completionLevel = models.IntegerField()
-    challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
+    suggestions = models.TextField()
+    readiness = models.BooleanField()
 
 
 class UserSolution(models.Model):

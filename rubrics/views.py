@@ -64,6 +64,9 @@ class SolutionListView(ListView):
     paginate_by = 3
     template_name = 'rubrics/solution_list.html'
 
+# class RubricForm(FormView):
+
+
 
 def success(request, pk):
     return render(request, 'rubrics/success.html', )
