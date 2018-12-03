@@ -51,7 +51,6 @@ class LearningObjective(models.Model):
 
 class Challenge(models.Model):
     name = models.CharField(max_length=250)
-    # competencies = models.ForeignKey(Competency, on_delete=models.CASCADE)
     description = RichTextField()
     learningObjs = models.ManyToManyField(LearningObjective, blank=True)
 
@@ -63,7 +62,6 @@ class Challenge(models.Model):
 # controlled by the Challenge model
 class Competency(models.Model):
     name = models.CharField(max_length=250)
-    # challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
     description = models.TextField()
 
     def __str__(self):
@@ -79,12 +77,20 @@ class Criterion(models.Model):
         return self.name
 
 
+class UserSolution(models.Model):
+    file = models.FileField(upload_to='uploads/', blank=True)
+    userOwner = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
+    challengeName = models.ForeignKey(Challenge, blank=True, null=True, on_delete=models.CASCADE)
+
+
 class Rubric(models.Model):
     competencies = models.ForeignKey(Competency, on_delete=models.CASCADE)
     name = models.CharField(max_length=250)
     description = models.CharField(max_length=250)
     completionLevel = models.IntegerField()
     challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
+    student = models.ForeignKey(UserSolution, on_delete=models.CASCADE)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 class RubricLine(models.Model):
@@ -93,9 +99,7 @@ class RubricLine(models.Model):
     feedback = models.TextField()
     suggestions = models.TextField()
     readiness = models.BooleanField()
+    rubricLine = models.ForeignKey(Rubric, on_delete=models.CASCADE)
 
 
-class UserSolution(models.Model):
-    file = models.FileField(upload_to='uploads/', blank=True)
-    userOwner = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
-    challengeName = models.ForeignKey(Challenge, blank=True, null=True, on_delete=models.CASCADE)
+

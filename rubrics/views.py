@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponseForbidden
-from .models import Challenge, UserSolution
+from .models import Challenge, UserSolution, Rubric, RubricLine
 from .forms import ChallengeForm, UserFileForm
 from django.views.generic import ListView, DetailView, FormView
 from django import forms
@@ -64,8 +64,9 @@ class SolutionListView(ListView):
     paginate_by = 3
     template_name = 'rubrics/solution_list.html'
 
-# class RubricForm(FormView):
 
+class RubricForm(FormView):
+    model = Rubric
 
 
 def success(request, pk):

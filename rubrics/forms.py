@@ -1,5 +1,5 @@
 from django import forms
-from .models import LearningObjective, Challenge, UserSolution
+from .models import LearningObjective, Challenge, UserSolution, Rubric, RubricLine
 from django.views.generic import DetailView
 
 
@@ -23,3 +23,9 @@ class UserFileForm(forms.ModelForm):
         model = UserSolution
         fields = ('file', 'challengeName', 'userOwner')
         widgets = {'challengeName': forms.HiddenInput(), 'userOwner': forms.HiddenInput}
+
+
+class RubricLineForm(forms.Form):
+    class Meta:
+        model = RubricLine
+        fields = ('evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'readiness')
