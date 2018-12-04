@@ -1,13 +1,13 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from .models import Challenge, UserSolution, Rubric, RubricLine, User
-from .forms import ChallengeForm, UserFileForm
+from .forms import ChallengeForm, UserFileForm, RubricForm, RubricLineForm, RubricLineFormset
 from django.views.generic import ListView, DetailView, FormView, CreateView
 from django import forms
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
 from django.views import View
-
+from django.forms import formset_factory
 
 # Class based challenge view with functioning form.
 # Currently using this. Need to revisit, probably not best practice.
@@ -73,8 +73,27 @@ class SolutionListView(ListView):
     template_name = 'rubrics/solution_list.html'
 
 
-class RubricForm(CreateView):
+class RubricFormView(CreateView):
+    template_name = 'rubrics/rubric_form.html'
     model = Rubric
+    form_class = RubricForm
+    
+    def get_context_data(self, **kwargs):
+        context = super(RubricFormView, self).get_context_data(**kwargs)
+        context['formset'] = RubricLineFormset
+        return context
+
+    def post(self, request, *args, **kwargs):
+        formset = RubricLineFormset(request.POST)
+        if formset.is_valid():
+            return self.form_valid(formset)
+
+    def form_valid(self, formset):
+        formset.save()
+        return HttpResponseRedirect('/')
+
+    def form_invalid(self, formset):
+        return self.render_to_response(self.get_context_data(formest=formset))
 
 
 def success(request, pk):

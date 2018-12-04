@@ -18,7 +18,6 @@ class CompetencyInline(admin.TabularInline):
     model = Competency
 
 
-
 @admin.register(UserSolution)
 class UserSolution(admin.ModelAdmin):
     list_display = ['userOwner', 'challengeName']

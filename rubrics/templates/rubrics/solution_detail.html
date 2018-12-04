@@ -8,6 +8,7 @@
 
     <h1>{{ usersolution.challengeName }}</h1>
 <p>Submitted by {{ usersolution.userOwner }}</p>
+    {{ usersolution.solution|safe }}
 
 
 {% endblock %}

@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import formset_factory, ModelForm
 from .models import LearningObjective, Challenge, UserSolution, Rubric, RubricLine
 from django.views.generic import DetailView
 
@@ -21,11 +22,21 @@ class ChallengeDisplay(DetailView):
 class UserFileForm(forms.ModelForm):
     class Meta:
         model = UserSolution
-        fields = ('file', 'challengeName', 'userOwner')
+        fields = ('file', 'solution', 'challengeName', 'userOwner')
         widgets = {'challengeName': forms.HiddenInput(), 'userOwner': forms.HiddenInput}
 
 
-class RubricLineForm(forms.Form):
+class RubricLineForm(ModelForm):
     class Meta:
         model = RubricLine
         fields = ('evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'readiness')
+
+
+class RubricForm(ModelForm):
+    class Meta:
+        model = Rubric
+        fields = ('description', 'completionLevel')
+        widgets = {'student': forms.HiddenInput(), 'challenge': forms.HiddenInput}
+
+
+RubricLineFormset = formset_factory(RubricLineForm)

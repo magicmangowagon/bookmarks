@@ -1,15 +1,20 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Create an Challenge
+Evaluate a Challenge
 {% endblock %}
 
 {% block content %}
-<h1>Create a Challenge</h1>
-    <p>Create a Challenge:</p>
+<h1>Evaluate a solution</h1>
+    <p>Rubric</p>
     <form action=""  method="post">
-    {{ form.as_p }}
+    {{ formset.management_form }}
+    {% for form in formset %}
+        {% for field in form %}
+            {{ field.label_tag }} {{ field }}
+        {% endfor %}
+    {% endfor %}
     {% csrf_token %}
-    <p><input type="submit" value="Create Challenge"></p>
+    <p><input type="submit" value="Submit evaluation"></p>
     </form>
 {% endblock %}

@@ -79,6 +79,7 @@ class Criterion(models.Model):
 
 class UserSolution(models.Model):
     file = models.FileField(upload_to='uploads/', blank=True)
+    solution = RichTextField()
     userOwner = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     challengeName = models.ForeignKey(Challenge, blank=True, null=True, on_delete=models.CASCADE)
 
@@ -99,7 +100,8 @@ class RubricLine(models.Model):
     feedback = models.TextField()
     suggestions = models.TextField()
     readiness = models.BooleanField()
-    rubricLine = models.ForeignKey(Rubric, on_delete=models.CASCADE)
+    rubric = models.ForeignKey(Rubric, on_delete=models.CASCADE)
+    learningObjective = models.ForeignKey(LearningObjective, on_delete=models.CASCADE)
 
 
 

@@ -12,12 +12,13 @@
       <auth-required>false</auth-required>
       <introspection-schemas>*:@</introspection-schemas>
     </data-source>
-    <data-source name="postgres@localhost" uuid="f780ab61-9031-4846-8b1f-ccc173f48064">
-      <database-info product="PostgreSQL" version="10.5" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.2" family="POSTGRES" exact-version="10.5">
+    <data-source name="postgres@localhost" uuid="cd8b9ece-a841-453b-a5a7-7ec1a6ec5a87">
+      <database-info product="PostgreSQL" version="11.1" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.2" family="POSTGRES" exact-version="11.1">
         <identifier-quote-string>&quot;</identifier-quote-string>
       </database-info>
       <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
       <secret-storage>master_key</secret-storage>
+      <user-name>postgres</user-name>
       <introspection-schemas>@:@</introspection-schemas>
     </data-source>
   </component>

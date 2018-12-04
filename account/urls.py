@@ -7,7 +7,7 @@ urlpatterns = [
     # # post views
     # path('login/', auth_views.LoginView.as_view(), name='login'),
     # path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-    path('', views.dashboard, name='dashboard'),
+    path('rubrics/solutions', views.dashboard, name='dashboard'),
     #
     # # change password urls
     # path('password_change/', auth_views.PasswordChangeView.as_view(), name='password_change'),

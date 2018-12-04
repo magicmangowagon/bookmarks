@@ -23,7 +23,7 @@
         <property name="enable_load_extension" value="true" />
       </driver-properties>
     </data-source>
-    <data-source source="LOCAL" name="postgres@localhost" uuid="f780ab61-9031-4846-8b1f-ccc173f48064">
+    <data-source source="LOCAL" name="postgres@localhost" uuid="cd8b9ece-a841-453b-a5a7-7ec1a6ec5a87">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
