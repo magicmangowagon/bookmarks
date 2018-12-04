@@ -69,7 +69,7 @@ class SolutionListView(ListView):
             return queryset
 
     context_object_name = 'solutions'
-    paginate_by = 3
+    # paginate_by = 3
     template_name = 'rubrics/solution_list.html'
 
 

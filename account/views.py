@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def dashboard(request):
     return render(request,
-                  'rubrics/solution_list.html',
+                  'account/dashboard.html',
                   {'section': 'dashboard'})
 
 

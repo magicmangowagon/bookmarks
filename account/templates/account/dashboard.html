@@ -5,7 +5,11 @@
 {% block content %}
 
     <h1>Dashboard</h1>
-    <p>Welcome to your dashboard.</p>
+    <p>Welcome to your dashboard. {{ request.user.first_name }}</p>
+    <p>This will be filled with wonder soon.</p>
+    <p>Use the link at the top to view the Challenges.</p>
+    <p><br>
+    View your submitted solutions here: <a href="solutions">User Solutions</a> </p>
 
 
 
