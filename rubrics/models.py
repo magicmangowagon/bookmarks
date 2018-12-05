@@ -48,7 +48,7 @@ class LearningObjective(models.Model):
     feedback = models.TextField(blank=True)
     suggestions = models.TextField(blank=True)
     readiness = models.BooleanField(blank=True)
-    completionLevel = models.IntegerField(blank=True)
+    completionLevel = models.IntegerField(default=0)
 
     def __str__(self):
         fullname = str(self.compGroup) + "-" + str(self.compNumber) + "." + str(self.loNumber) + " " + str(self.name)
