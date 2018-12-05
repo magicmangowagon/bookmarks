@@ -5,9 +5,6 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('rubrics', '0006_usersolution_solution'),
-    ]
 
     operations = [
         migrations.AddField(
