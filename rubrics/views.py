@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponseForbidden
-from .models import Challenge, UserSolution, Rubric, RubricLine, User
+from .models import Challenge, UserSolution, Rubric, RubricLine, User, LearningObjective, Competency
 from .forms import ChallengeForm, UserFileForm, RubricForm, RubricLineForm, RubricLineFormset
 from django.views.generic import ListView, DetailView, FormView, CreateView
 from django import forms
@@ -8,6 +8,7 @@ from django.views.generic.edit import FormMixin
 from django.urls import reverse
 from django.views import View
 from django.forms import formset_factory
+
 
 # Class based challenge view with functioning form.
 # Currently using this. Need to revisit, probably not best practice.
@@ -25,6 +26,8 @@ class challenge_detail(DetailView, FormMixin):
         # I don't love this, need to find out if this is an acceptable way to pass user id and challenge name to
         # userSolution model. First attempt commented out directly below. Working version just past it.
         # context['userSolution'] = UserSolution(initial={'userOwner': self.request.user})
+        context['competency_list'] = Competency.objects.all()
+        context['learningObjectives_list'] = LearningObjective.objects.all()
         context['form'] = UserFileForm(initial={'challengeName': self.object, 'userOwner': self.request.user})
         return context
 

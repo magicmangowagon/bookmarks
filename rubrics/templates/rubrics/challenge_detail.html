@@ -9,6 +9,15 @@
     <h1>{{ challenge.name }}</h1>
 <p>{{ challenge.description|safe }}  </p>
 
+<h2>Learning Objectives</h2>
+    <ul>
+        {% for learningObjective in learningObjectives_list %}
+                <li><strong>{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}
+                    .{{ learningObjective.loNumber }}</strong>
+                {{ learningObjective.name }}</li>
+        {% endfor %}
+    </ul>
+
     {% include 'rubrics/solution_form.html' %}
 
 {% endblock %}

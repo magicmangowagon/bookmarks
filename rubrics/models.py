@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from djrichtextfield.models import RichTextField
+from tinymce import models as tinymce_models
 
 
 # Many-to-many with, connected to competencies and challenges
@@ -69,7 +70,30 @@ class Challenge(models.Model):
 class Competency(models.Model):
     name = models.CharField(max_length=250)
     description = models.TextField()
-
+    A = 'A'
+    B = 'B'
+    C = 'C'
+    D = 'D'
+    E = 'E'
+    F = 'F'
+    groupLetter = (
+        ('A', "A"),
+        ('B', "B"),
+        ('C', "C"),
+        ('D', "D"),
+        ("E", "E"),
+        ('F', "F")
+    )
+    compGroup = models.CharField(max_length=1, choices=groupLetter, default=A)
+    compNumber = models.IntegerField(choices=(
+        (1, "1"),
+        (2, "2"),
+        (3, "3"),
+        (4, "4"),
+        (5, "5"),
+        (6, "6"),
+        (7, "7")
+    ))
     def __str__(self):
         return self.name
 
@@ -85,7 +109,7 @@ class Criterion(models.Model):
 
 class UserSolution(models.Model):
     file = models.FileField(upload_to='uploads/', blank=True)
-    solution = RichTextField()
+    solution = tinymce_models.HTMLField()
     userOwner = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     challengeName = models.ForeignKey(Challenge, blank=True, null=True, on_delete=models.CASCADE)
 
