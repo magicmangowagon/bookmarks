@@ -75,7 +75,7 @@ class SolutionListView(ListView):
 
 class RubricFormView(CreateView):
     template_name = 'rubrics/rubric_form.html'
-    model = Rubric
+    model = RubricLine
     form_class = RubricForm
     
     def get_context_data(self, **kwargs):

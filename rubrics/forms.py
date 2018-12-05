@@ -28,7 +28,7 @@ class UserFileForm(forms.ModelForm):
 
 class RubricLineForm(ModelForm):
     class Meta:
-        model = RubricLine
+        model = LearningObjective
         fields = ('evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'readiness')
 
 

@@ -43,6 +43,12 @@ class LearningObjective(models.Model):
     name = models.CharField(max_length=250)
     # description = models.TextField()
     # challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
+    evidenceMissing = models.TextField()
+    evidencePresent = models.TextField()
+    feedback = models.TextField()
+    suggestions = models.TextField()
+    readiness = models.BooleanField()
+    completionLevel = models.IntegerField()
 
     def __str__(self):
         fullname = str(self.compGroup) + "-" + str(self.compNumber) + "." + str(self.loNumber) + " " + str(self.name)
