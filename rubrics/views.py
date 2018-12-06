@@ -78,11 +78,12 @@ class SolutionListView(ListView):
 
 class RubricFormView(CreateView):
     template_name = 'rubrics/rubric_form.html'
-    model = RubricLine
+    model = Rubric
     form_class = RubricForm
     
     def get_context_data(self, **kwargs):
         context = super(RubricFormView, self).get_context_data(**kwargs)
+        context['lo_list'] = LearningObjective.objects.all()
         context['formset'] = RubricLineFormset
         return context
 
