@@ -83,7 +83,7 @@ class RubricFormView(CreateView):
     
     def get_context_data(self, **kwargs):
         context = super(RubricFormView, self).get_context_data(**kwargs)
-        context['rubric_challenge'] = User
+        context['rubric_challenge'] = Challenge
         context['lo_list'] = LearningObjective.objects.all()
         context['formset'] = RubricLineFormset
         return context
