@@ -94,6 +94,7 @@ class Competency(models.Model):
         (6, "6"),
         (7, "7")
     ))
+
     def __str__(self):
         return self.name
 
