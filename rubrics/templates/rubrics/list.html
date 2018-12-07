@@ -12,7 +12,14 @@
     <a href="challenge/{{ challenge.id }}">
         {{ challenge.name }}
     </a>
-</h2>
+    </h2>
+    <ul class="challengeListObj">
+        {% for learningObjective in challenge.learningObjs.all %}
+            <li class="challengeListObj">{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}.
+                {{ learningObjective.loNumber }}</li>
+        {% endfor %}
+    </ul>
+
 
 
 {% endfor %}

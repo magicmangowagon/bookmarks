@@ -55,10 +55,15 @@ class SolutionDetailView(DetailView):
 
 
 class ChallengeListView(ListView):
+    model = Challenge
     queryset = Challenge.objects.all()
     context_object_name = 'challenges'
-    # paginate_by = 3
     template_name = 'rubrics/list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['lo_list'] = LearningObjective.objects.all()
+        return context
 
 
 class SolutionListView(ListView):
