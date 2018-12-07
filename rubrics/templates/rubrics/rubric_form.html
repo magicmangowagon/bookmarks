@@ -10,7 +10,8 @@ Evaluate a Challenge
     <form action=""  method="post">
         {% for learningObjective in lo_list%}
             <div class="rubricField">
-                <h3>{{ learningObjective.name }}</h3>
+                <h3>{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}
+                    .{{ learningObjective.loNumber }}{{ learningObjective.name }}</h3>
                 <ul>
                     {{ formset.as_ul }}
                 </ul>
