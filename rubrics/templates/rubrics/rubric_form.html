@@ -8,16 +8,14 @@ Evaluate a Challenge
 <h1>Evaluate a solution</h1>
     <p>{{ rubric_challenge.first_name }} - {{ rubric.creator }}</p>
     <form action=""  method="post">
-    {% for learningObjective in lo_list%}
-        <p>{{ learningObjective.name }}</p>
-        {{ formset.management_form }}
-
-    {% for form in formset %}
-        {% for field in form %}
-            {{ field.label_tag }} {{ field }}
+        {% for learningObjective in lo_list%}
+            <div class="rubricField">
+                <h3>{{ learningObjective.name }}</h3>
+                <ul>
+                    {{ formset.as_ul }}
+                </ul>
+            </div>
         {% endfor %}
-    {% endfor %}
-    {% endfor %}
     {% csrf_token %}
     <p><input type="submit" value="Submit evaluation"></p>
     </form>

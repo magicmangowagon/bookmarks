@@ -85,13 +85,13 @@ class RubricFormView(CreateView):
         context = super(RubricFormView, self).get_context_data(**kwargs)
         context['rubric_challenge'] = User
         context['lo_list'] = LearningObjective.objects.all()
-        context['formset'] = RubricLineFormset
+        context['formset'] = RubricLineForm
         return context
 
     def post(self, request, *args, **kwargs):
-        formset = RubricLineFormset(request.POST)
-        if formset.is_valid():
-            return self.form_valid(formset)
+        form = RubricLineForm(request.POST)
+        if form.is_valid():
+            return self.form_valid(form)
 
     def form_valid(self, formset):
         formset.save()

@@ -29,13 +29,13 @@ class UserFileForm(forms.ModelForm):
 class RubricLineForm(ModelForm):
     class Meta:
         model = RubricLine
-        fields = ('evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'readiness')
+        fields = ('evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel')
 
 
 class RubricForm(ModelForm):
     class Meta:
         model = Rubric
-        fields = ('description', 'completionLevel')
+        fields = ('description',)
         widgets = {'student': forms.HiddenInput(), 'challenge': forms.HiddenInput}
 
 

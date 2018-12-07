@@ -1,5 +1,22 @@
 @import url(https://fonts.googleapis.com/css?family=IBM+Plex+Sans+Condensed|IBM+Plex+Sans:100,400,700|PT+Sans);
 
+.rubricField li {
+    display: inline-block;
+}
+
+.rubricField ul {
+    padding-left: 6px;
+    margin-bottom: 44px;
+}
+
+.rubricField h3 {
+    font-size: 18pt;
+    font-weight: 400;
+    color: white;
+    padding-left: 6px;
+    background-color: #00a497;
+}
+
 body {
     margin:0;
     padding:0;
@@ -82,7 +99,7 @@ ol {
 
 #content {
     padding:30px 100px;
-    width: 75%;
+    width: 85%;
     margin: auto;
 }
 
