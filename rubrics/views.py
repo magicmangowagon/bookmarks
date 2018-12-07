@@ -27,7 +27,7 @@ class challenge_detail(DetailView, FormMixin):
         # userSolution model. First attempt commented out directly below. Working version just past it.
         # context['userSolution'] = UserSolution(initial={'userOwner': self.request.user})
         context['competency_list'] = Competency.objects.all()
-        context['learningObjectives_list'] = LearningObjective.objects.all()
+        context['learningObjectives_list'] = LearningObjective.objects.all().filter(challenge=self.kwargs['pk'])
         context['form'] = UserFileForm(initial={'challengeName': self.object, 'userOwner': self.request.user})
         return context
 
@@ -84,7 +84,7 @@ class RubricFormView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(RubricFormView, self).get_context_data(**kwargs)
         context['rubric_challenge'] = Challenge
-        context['lo_list'] = LearningObjective.objects.all()
+        context['lo_list'] = LearningObjective.objects.all().filter(challenge=self.kwargs['pk'])
         context['formset'] = RubricLineForm
         return context
 
