@@ -6,17 +6,21 @@
 
 {% block content %}
 
-    <h1>{{ challenge.name }}</h1>
-<p>{{ challenge.description|safe }}  </p>
+<h1>{{ challenge.name }}</h1>
 
 <h2>Learning Objectives</h2>
-    <ul>
+    <ul class="challengeListObj">
         {% for learningObjective in learningObjectives_list %}
-                <li><strong>{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}
+                <li class="challengeListObj"><strong>{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}
                     .{{ learningObjective.loNumber }}</strong>
                 {{ learningObjective.name }}</li>
         {% endfor %}
     </ul>
+<p>&nbsp;</p>
+<h2>Description</h2>
+<p>{{ challenge.description|safe }}  </p>
+
+
 
     {% include 'rubrics/solution_form.html' %}
 
