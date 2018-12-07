@@ -88,7 +88,10 @@ class RubricFormView(CreateView):
     
     def get_context_data(self, **kwargs):
         context = super(RubricFormView, self).get_context_data(**kwargs)
-        context['rubric_challenge'] = Challenge
+        # this isn't fucking working, how am I associating the user
+        # who owns the file with the rubric or the challenge
+        # my head hurts, I need to stop for now
+        context['rubric_challenge'] = UserSolution.pk
         context['lo_list'] = LearningObjective.objects.all().filter(challenge=self.kwargs['pk'])
         context['formset'] = RubricLineForm
         return context

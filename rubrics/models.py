@@ -42,14 +42,6 @@ class LearningObjective(models.Model):
         (8, "8")
     ))
     name = models.CharField(max_length=250)
-    # description = models.TextField()
-    # challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
-    evidenceMissing = models.TextField(blank=True)
-    evidencePresent = models.TextField(blank=True)
-    feedback = models.TextField(blank=True)
-    suggestions = models.TextField(blank=True)
-    readiness = models.BooleanField(blank=True)
-    completionLevel = models.IntegerField(default=0)
 
     def __str__(self):
         fullname = str(self.compGroup) + "-" + str(self.compNumber) + "." + str(self.loNumber) + " " + str(self.name)
@@ -119,19 +111,17 @@ class Rubric(models.Model):
     competencies = models.ForeignKey(Competency, on_delete=models.CASCADE)
     name = models.CharField(max_length=250)
     description = models.CharField(max_length=250)
-
     challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
     student = models.ForeignKey(UserSolution, on_delete=models.CASCADE)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 class RubricLine(models.Model):
-    evidenceMissing = models.TextField()
-    evidencePresent = models.TextField()
-    feedback = models.TextField()
-    suggestions = models.TextField()
-    # readiness = models.BooleanField()
-    completionLevel = models.IntegerField()
+    evidenceMissing = models.TextField(blank=True)
+    evidencePresent = models.TextField(blank=True)
+    feedback = models.TextField(blank=True)
+    suggestions = models.TextField(blank=True)
+    completionLevel = models.IntegerField(default=0)
     rubric = models.ForeignKey(Rubric, on_delete=models.CASCADE)
     learningObjective = models.ForeignKey(LearningObjective, on_delete=models.CASCADE)
 
