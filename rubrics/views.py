@@ -91,9 +91,10 @@ class RubricFormView(CreateView):
         # this isn't fucking working, how am I associating the user
         # who owns the file with the rubric or the challenge
         # my head hurts, I need to stop for now
-        context['rubric_challenge'] = UserSolution.pk
         context['lo_list'] = LearningObjective.objects.all().filter(challenge=self.kwargs['pk'])
-        context['formset'] = RubricLineForm
+        context['userSolution'] = UserSolution.objects.filter(userOwner=self.kwargs['pk'])
+        context['formset'] = RubricLineForm(initial={'solutionOwner': UserSolution.objects.get(pk=self.kwargs['pk']),
+                                                     'learningObjective': LearningObjective.objects.get(pk=self.kwargs['pk'])})
         return context
 
     def post(self, request, *args, **kwargs):
@@ -106,7 +107,7 @@ class RubricFormView(CreateView):
         return HttpResponseRedirect('/')
 
     def form_invalid(self, formset):
-        return self.render_to_response(self.get_context_data(formest=formset))
+        return self.render_to_response(self.get_context_data(formset=formset))
 
 
 def success(request, pk):

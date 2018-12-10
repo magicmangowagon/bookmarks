@@ -6,7 +6,7 @@ Evaluate a Challenge
 
 {% block content %}
 <h1>Evaluate a solution</h1>
-    <p>{{ rubric_challenge.userOwner.first_name }} - {{ rubric.creator }}</p>
+    <p>{{ userSolution }} - {{ rubric.creator }}</p>
     <form action=""  method="post">
         {% for learningObjective in lo_list%}
             <div class="rubricField">

@@ -30,13 +30,14 @@ class RubricLineForm(ModelForm):
     class Meta:
         model = RubricLine
         fields = ('evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel')
+        widgets = {'solutionOwner': forms.HiddenInput(), 'learningObjective': forms.HiddenInput()}
 
 
 class RubricForm(ModelForm):
     class Meta:
         model = Rubric
         fields = ('description',)
-        widgets = {'student': forms.HiddenInput(), 'challenge': forms.HiddenInput}
+        widgets = {'challenge': forms.HiddenInput, }
 
 
 RubricLineFormset = formset_factory(RubricLineForm)
