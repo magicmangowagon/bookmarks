@@ -29,14 +29,15 @@ class UserFileForm(forms.ModelForm):
 class RubricLineForm(ModelForm):
     class Meta:
         model = RubricLine
-        fields = ('evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel')
+        fields = ('evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student',
+                  'learningObjective')
 
 
 class RubricForm(ModelForm):
     class Meta:
         model = Rubric
         fields = ('description',)
-        widgets = {'student': forms.HiddenInput(), 'challenge': forms.HiddenInput}
+        widgets = {'challenge': forms.HiddenInput}
 
 
 RubricLineFormset = formset_factory(RubricLineForm)

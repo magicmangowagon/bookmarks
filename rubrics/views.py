@@ -23,10 +23,6 @@ class challenge_detail(DetailView, FormMixin):
     def get_context_data(self, **kwargs):
         context = super(challenge_detail, self).get_context_data(**kwargs)
         context['rubric_list'] = Challenge.objects.all()
-        # I don't love this, need to find out if this is an acceptable way to pass user id and challenge name to
-        # userSolution model. First attempt commented out directly below. Working version just past it.
-        # context['userSolution'] = UserSolution(initial={'userOwner': self.request.user})
-        context['competency_list'] = Competency.objects.all()
         context['learningObjectives_list'] = LearningObjective.objects.all().filter(challenge=self.kwargs['pk'])
         context['form'] = UserFileForm(initial={'challengeName': self.object, 'userOwner': self.request.user})
         return context
@@ -83,14 +79,20 @@ class SolutionListView(ListView):
 
 class RubricFormView(CreateView):
     template_name = 'rubrics/rubric_form.html'
-    model = Rubric
-    form_class = RubricForm
+    model = UserSolution
+    form_class = RubricLineForm
     
     def get_context_data(self, **kwargs):
         context = super(RubricFormView, self).get_context_data(**kwargs)
         context['rubric_challenge'] = Challenge
-        context['lo_list'] = LearningObjective.objects.all().filter(challenge=self.kwargs['pk'])
+        # seems like there is more code here than I need
+        # capture current pk, then get the pk associated with it
+        # then pass it to the filter
+        usersolution = self.kwargs['pk']
+        challenge = UserSolution.objects.get(pk=usersolution).challengeName
+        context['lo_list'] = LearningObjective.objects.filter(challenge=challenge)
         context['formset'] = RubricLineForm
+
         return context
 
     def post(self, request, *args, **kwargs):
