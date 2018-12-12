@@ -84,7 +84,6 @@ class RubricFormView(CreateView):
     
     def get_context_data(self, **kwargs):
         context = super(RubricFormView, self).get_context_data(**kwargs)
-        context['rubric_challenge'] = Challenge
         # seems like there is more code here than I need
         # capture current pk, then get the pk associated with it
         # then pass it to the filter
@@ -92,7 +91,9 @@ class RubricFormView(CreateView):
         challenge = UserSolution.objects.get(pk=usersolution).challengeName
         context['lo_list'] = LearningObjective.objects.filter(challenge=challenge)
         student = UserSolution.objects.get(pk=usersolution).userOwner
-        context['formset'] = RubricLineForm(initial={'student': student, 'learningObjective': LearningObjective})
+        context['student'] = student
+        context['challenge'] = challenge
+        context['formset'] = RubricLineForm(initial={'student': student})
 
         return context
 
@@ -103,10 +104,10 @@ class RubricFormView(CreateView):
 
     def form_valid(self, formset):
         formset.save()
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('?submitted=True')
 
     def form_invalid(self, formset):
-        return self.render_to_response(self.get_context_data(formest=formset))
+        return self.render_to_response(self.get_context_data(formset=formset))
 
 
 def success(request, pk):

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import LearningObjective, Rubric, Criterion, Competency, Challenge, UserSolution
+from .models import LearningObjective, Rubric, Criterion, Competency, Challenge, UserSolution, RubricLine
 
 
 class CriteriaInline(admin.TabularInline):
@@ -21,6 +21,11 @@ class CompetencyInline(admin.TabularInline):
 @admin.register(UserSolution)
 class UserSolution(admin.ModelAdmin):
     list_display = ['userOwner', 'challengeName']
+
+
+@admin.register(RubricLine)
+class RubricLine(admin.ModelAdmin):
+    list_display = ['student', 'learningObjective']
 
 
 @admin.register(LearningObjective)

@@ -5,8 +5,8 @@ Evaluate a Challenge
 {% endblock %}
 
 {% block content %}
-<h1>Evaluate a solution</h1>
-    <p>{{ rubric_challenge.name }} - {{ rubric.creator }}</p>
+<h1>{{ challenge }} - {{ student.first_name }} {{ student.last_name }}</h1>
+    <h2>Evaluate {{ student.first_name }}'s solution</h2>
     <form action=""  method="post">
         {% for learningObjective in lo_list%}
             <div class="rubricField">

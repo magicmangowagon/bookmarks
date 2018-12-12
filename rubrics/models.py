@@ -42,14 +42,6 @@ class LearningObjective(models.Model):
         (8, "8")
     ))
     name = models.CharField(max_length=250)
-    # description = models.TextField()
-    # challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
-    evidenceMissing = models.TextField(blank=True)
-    evidencePresent = models.TextField(blank=True)
-    feedback = models.TextField(blank=True)
-    suggestions = models.TextField(blank=True)
-    readiness = models.BooleanField(blank=True)
-    completionLevel = models.IntegerField(default=0)
 
     def __str__(self):
         fullname = str(self.compGroup) + "-" + str(self.compNumber) + "." + str(self.loNumber) + " " + str(self.name)
@@ -124,13 +116,16 @@ class Rubric(models.Model):
 
 
 class RubricLine(models.Model):
-    evidenceMissing = models.TextField()
-    evidencePresent = models.TextField()
-    feedback = models.TextField()
-    suggestions = models.TextField()
-    completionLevel = models.IntegerField()
+    evidenceMissing = models.TextField(blank=True, default='')
+    evidencePresent = models.TextField(blank=True, default='')
+    feedback = models.TextField(blank=True, default='')
+    suggestions = models.TextField(blank=True, default='')
+    completionLevel = models.IntegerField(default=0)
     student = models.ForeignKey(UserSolution, on_delete=models.CASCADE)
     learningObjective = models.ForeignKey(LearningObjective, on_delete=models.CASCADE)
+
+
+
 
 
 
