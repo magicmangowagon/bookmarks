@@ -129,7 +129,6 @@ class RubricLine(models.Model):
     feedback = models.TextField()
     suggestions = models.TextField()
     completionLevel = models.IntegerField()
-    rubric = models.ForeignKey(Rubric, on_delete=models.CASCADE)
     student = models.ForeignKey(UserSolution, on_delete=models.CASCADE)
     learningObjective = models.ForeignKey(LearningObjective, on_delete=models.CASCADE)
 

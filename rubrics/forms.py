@@ -31,6 +31,7 @@ class RubricLineForm(ModelForm):
         model = RubricLine
         fields = ('evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student',
                   'learningObjective')
+        # widgets = {'student': forms.HiddenInput(), 'learningObjective': forms.HiddenInput}
 
 
 class RubricForm(ModelForm):

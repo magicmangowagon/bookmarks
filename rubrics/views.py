@@ -91,7 +91,8 @@ class RubricFormView(CreateView):
         usersolution = self.kwargs['pk']
         challenge = UserSolution.objects.get(pk=usersolution).challengeName
         context['lo_list'] = LearningObjective.objects.filter(challenge=challenge)
-        context['formset'] = RubricLineForm
+        student = UserSolution.objects.get(pk=usersolution).userOwner
+        context['formset'] = RubricLineForm(initial={'student': student, 'learningObjective': LearningObjective})
 
         return context
 
