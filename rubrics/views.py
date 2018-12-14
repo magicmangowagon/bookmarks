@@ -110,6 +110,32 @@ class RubricFormView(CreateView):
         return self.render_to_response(self.get_context_data(formset=formset))
 
 
+class EvalListView(ListView):
+
+    def get_queryset(self, **kwargs):
+        if self.request.user.is_staff:
+            queryset = UserSolution.objects.all()
+            return queryset
+        else:
+            queryset = UserSolution.objects.filter(userOwner=self.request.user)
+            return queryset
+
+    context_object_name = 'evals'
+    template_name = "rubrics/eval_list.html"
+
+
+class EvalDetailView(DetailView):
+    model = UserSolution
+    template_name = "rubrics/evalDetail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(EvalDetailView, self).get_context_data(**kwargs)
+        context['solution_list'] = UserSolution.objects.all()
+        rubric = self.kwargs['pk']
+        context['evaluation'] = RubricLine.objects.all().filter(student=rubric)
+        return context
+
+
 def success(request, pk):
     return render(request, 'rubrics/success.html', )
 
