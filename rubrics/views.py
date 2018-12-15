@@ -93,18 +93,18 @@ class RubricFormView(CreateView):
         student = UserSolution.objects.get(pk=usersolution).userOwner
         context['student'] = student
         context['challenge'] = challenge
-        context['formset'] = RubricLineForm(initial={'student': student})
+        context['formset'] = RubricLineFormset(initial={'student': student})
 
         return context
 
     def post(self, request, *args, **kwargs):
-        form = RubricLineForm(request.POST)
-        if form.is_valid():
-            return self.form_valid(form)
+        formset = RubricLineFormset(request.POST)
+        if formset.is_valid():
+            return self.form_valid(formset)
 
     def form_valid(self, formset):
         formset.save()
-        return HttpResponseRedirect('?submitted=True')
+        return HttpResponseRedirect('/')
 
     def form_invalid(self, formset):
         return self.render_to_response(self.get_context_data(formset=formset))
