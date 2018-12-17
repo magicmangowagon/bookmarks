@@ -93,12 +93,12 @@ class RubricFormView(CreateView):
         student = UserSolution.objects.get(pk=usersolution).userOwner
         context['student'] = student
         context['challenge'] = challenge
-        context['formset'] = RubricLineFormset(initial={'student': student})
+        context['formset'] = RubricLineForm(initial={'student': student})
 
         return context
 
     def post(self, request, *args, **kwargs):
-        formset = RubricLineFormset(request.POST)
+        formset = RubricLineForm(request.POST)
         if formset.is_valid():
             return self.form_valid(formset)
 
@@ -108,6 +108,9 @@ class RubricFormView(CreateView):
 
     def form_invalid(self, formset):
         return self.render_to_response(self.get_context_data(formset=formset))
+
+# retry this rubric form using formview instead of createview.
+# class RubricFormViewAsForm(FormView):
 
 
 class EvalListView(ListView):

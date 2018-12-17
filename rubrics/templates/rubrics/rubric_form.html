@@ -18,9 +18,7 @@ Evaluate a Challenge
                 </ul>
             </div>
         {% endfor %}
-
     {% csrf_token %}
-    {{ formset.management_form }}
     <p><input type="submit" value="Submit evaluation"></p>
     </form>
 {% endblock %}
