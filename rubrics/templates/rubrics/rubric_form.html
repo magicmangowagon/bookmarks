@@ -12,12 +12,12 @@ Evaluate a Challenge
             <div class="rubricField">
                 <h3>{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}.{{ learningObjective.loNumber }} {{ learningObjective.name }}</h3>
                 <ul>
-
-                        {{ formset.as_ul }}
+                        {{ form.as_ul }}
 
                 </ul>
             </div>
         {% endfor %}
+    {{ formset.management_form }}
     {% csrf_token %}
     <p><input type="submit" value="Submit evaluation"></p>
     </form>

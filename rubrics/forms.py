@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import modelformset_factory, ModelForm
+from django.forms import modelformset_factory, ModelForm, BaseModelFormSet
 from .models import LearningObjective, Challenge, UserSolution, Rubric, RubricLine
 from django.views.generic import DetailView
 
@@ -26,11 +26,16 @@ class UserFileForm(forms.ModelForm):
         widgets = {'challengeName': forms.HiddenInput(), 'userOwner': forms.HiddenInput}
 
 
-class RubricLineForm(ModelForm):
-    class Meta:
-        model = RubricLine
-        fields = ('evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student',
-                  'learningObjective',)
+class RubricLineForm(BaseModelFormSet):
+   # class Meta:
+     #   model = RubricLine
+      #  fields = ('evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student',
+          #        'learningObjective',)
+
+    def __init__(self, *args, **kwargs):
+        super(RubricLineForm, self).__init__(*args, **kwargs)
+        self.queryset = RubricLine.objects.none()
+
         # widgets = {'student': forms.HiddenInput(), 'learningObjective': forms.HiddenInput}
 
 
@@ -41,5 +46,5 @@ class RubricForm(ModelForm):
         widgets = {'challenge': forms.HiddenInput}
 
 
-RubricLineFormset = modelformset_factory(RubricLine, form=RubricLineForm, fields=('evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student',
-                  'learningObjective',), extra=0)
+RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=1, fields=('evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student',
+                  'learningObjective',))

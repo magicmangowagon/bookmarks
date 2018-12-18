@@ -1,13 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from .models import Challenge, UserSolution, Rubric, RubricLine, User, LearningObjective, Competency
-from .forms import ChallengeForm, UserFileForm, RubricForm, RubricLineForm, RubricLineFormset
-from django.views.generic import ListView, DetailView, FormView, CreateView
-from django import forms
+from .forms import ChallengeForm, UserFileForm, RubricLineForm, RubricLineFormset
+from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
-from django.views import View
-from django.forms import formset_factory
 
 
 # Class based challenge view with functioning form.
@@ -77,10 +74,10 @@ class SolutionListView(ListView):
     template_name = 'rubrics/solution_list.html'
 
 
-class RubricFormView(CreateView):
+class RubricFormView(FormView):
     template_name = 'rubrics/rubric_form.html'
     model = UserSolution
-    form_class = RubricLineForm
+    form_class = RubricLineFormset
     
     def get_context_data(self, **kwargs):
         context = super(RubricFormView, self).get_context_data(**kwargs)
@@ -93,18 +90,22 @@ class RubricFormView(CreateView):
         student = UserSolution.objects.get(pk=usersolution).userOwner
         context['student'] = student
         context['challenge'] = challenge
-        context['formset'] = RubricLineForm(initial={'student': student})
+        context['formset'] = RubricLineFormset# (initial={'student': student})
 
         return context
 
     def post(self, request, *args, **kwargs):
-        formset = RubricLineForm(request.POST)
+        formset = RubricLineFormset(request.POST, )
         if formset.is_valid():
-            return self.form_valid(formset)
+            for form in formset:
+                # self.prefix = LearningObjective
+                form.save()
+            return HttpResponseRedirect('/')
+        else:
+            return self.render_to_response(self.get_context_data(formset=formset))
 
     def form_valid(self, formset):
         formset.save()
-        return HttpResponseRedirect('/')
 
     def form_invalid(self, formset):
         return self.render_to_response(self.get_context_data(formset=formset))
