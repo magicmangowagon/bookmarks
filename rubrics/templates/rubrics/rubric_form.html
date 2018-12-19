@@ -8,15 +8,13 @@ Evaluate a Challenge
 <h1>{{ challenge }} - {{ student.first_name }} {{ student.last_name }}</h1>
     <h2>Evaluate {{ student.first_name }}'s solution</h2>
     <form action=""  method="post">
-        {% for learningObjective in lo_list %}
             <div class="rubricField">
-                <h3>{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}.{{ learningObjective.loNumber }} {{ learningObjective.name }}</h3>
-                <ul>
-                        {{ form.as_ul }}
+
+                        {{ formset.as_ul }}
 
                 </ul>
             </div>
-        {% endfor %}
+
     {{ formset.management_form }}
     {% csrf_token %}
     <p><input type="submit" value="Submit evaluation"></p>

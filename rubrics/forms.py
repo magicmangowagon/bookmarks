@@ -27,10 +27,9 @@ class UserFileForm(forms.ModelForm):
 
 
 class RubricLineForm(BaseModelFormSet):
-   # class Meta:
-     #   model = RubricLine
-      #  fields = ('evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student',
-          #        'learningObjective',)
+    #class Meta:
+       # model = RubricLine
+       # fields = ('evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student', 'learningObjective',)
 
     def __init__(self, *args, **kwargs):
         super(RubricLineForm, self).__init__(*args, **kwargs)
@@ -46,5 +45,5 @@ class RubricForm(ModelForm):
         widgets = {'challenge': forms.HiddenInput}
 
 
-RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=1, fields=('evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student',
+RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, fields=('evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student',
                   'learningObjective',))

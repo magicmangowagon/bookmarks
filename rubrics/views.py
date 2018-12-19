@@ -5,6 +5,7 @@ from .forms import ChallengeForm, UserFileForm, RubricLineForm, RubricLineFormse
 from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
+from django.forms import modelformset_factory
 
 
 # Class based challenge view with functioning form.
@@ -78,7 +79,7 @@ class RubricFormView(FormView):
     template_name = 'rubrics/rubric_form.html'
     model = UserSolution
     form_class = RubricLineFormset
-    
+
     def get_context_data(self, **kwargs):
         context = super(RubricFormView, self).get_context_data(**kwargs)
         # seems like there is more code here than I need
@@ -90,16 +91,19 @@ class RubricFormView(FormView):
         student = UserSolution.objects.get(pk=usersolution).userOwner
         context['student'] = student
         context['challenge'] = challenge
-        context['formset'] = RubricLineFormset# (initial={'student': student})
+        RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=2, fields=(
+        'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student',
+        'learningObjective',))
+        context['formset'] = RubricLineFormset()
+        #(initial={'student': student})
+        # setting initial above was fucking up formset (key error), need to figure out how to get it working again
 
         return context
 
     def post(self, request, *args, **kwargs):
         formset = RubricLineFormset(request.POST, )
         if formset.is_valid():
-            for form in formset:
-                # self.prefix = LearningObjective
-                form.save()
+            formset.save()
             return HttpResponseRedirect('/')
         else:
             return self.render_to_response(self.get_context_data(formset=formset))
