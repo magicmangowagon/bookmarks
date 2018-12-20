@@ -27,10 +27,6 @@ class UserFileForm(forms.ModelForm):
 
 
 class RubricLineForm(BaseModelFormSet):
-    #class Meta:
-       # model = RubricLine
-       # fields = ('evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student', 'learningObjective',)
-
     def __init__(self, *args, **kwargs):
         super(RubricLineForm, self).__init__(*args, **kwargs)
         self.queryset = RubricLine.objects.none()

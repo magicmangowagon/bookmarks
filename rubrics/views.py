@@ -91,13 +91,10 @@ class RubricFormView(FormView):
         student = UserSolution.objects.get(pk=usersolution).userOwner
         context['student'] = student
         context['challenge'] = challenge
-        RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=2, fields=(
-        'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student',
-        'learningObjective',))
+        number = LearningObjective.objects.filter(challenge=challenge).count()
+        RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=number, fields=(
+            'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student'), )
         context['formset'] = RubricLineFormset()
-        #(initial={'student': student})
-        # setting initial above was fucking up formset (key error), need to figure out how to get it working again
-
         return context
 
     def post(self, request, *args, **kwargs):
