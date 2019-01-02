@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import challenge_detail, ChallengeListView, SolutionDetailView, SolutionListView, RubricFormView, EvalDetailView, EvalListView
+from .views import challenge_detail, ChallengeListView, SolutionDetailView, SolutionListView, RubricFormView, EvalDetailView, EvalListView, LearningObjectiveRubricView
 
 urlpatterns = [
     # path('rubrics', views.update_challenge, name='challenge-form'),
@@ -12,6 +12,7 @@ urlpatterns = [
     path('solutions/<int:pk>', SolutionDetailView.as_view(), name='solution-detail'),
     path('solutionEval/<int:pk>', RubricFormView.as_view(), name='solution-eval'),
     path('evals', EvalListView.as_view(), name='eval-list'),
-    path('evals/<int:pk>', EvalDetailView.as_view(), name='eval-detail')
+    path('evals/<int:pk>', EvalDetailView.as_view(), name='eval-detail'),
+    path('solutionEvalList/<int:pk>', LearningObjectiveRubricView.as_view(), name='rubric-detail')
     # path('edit/', views.edit, name='edit'),
 ]

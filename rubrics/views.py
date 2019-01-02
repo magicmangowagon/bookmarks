@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from .models import Challenge, UserSolution, Rubric, RubricLine, User, LearningObjective, Competency
-from .forms import ChallengeForm, UserFileForm, RubricLineForm, RubricLineFormset
+from .forms import ChallengeForm, UserFileForm, RubricLineForm
 from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
@@ -75,12 +75,26 @@ class SolutionListView(ListView):
     template_name = 'rubrics/solution_list.html'
 
 
+class LearningObjectiveRubricView(ListView):
+
+    model = UserSolution
+    template_name = 'rubrics/learningObj_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(LearningObjectiveRubricView, self).get_context_data(**kwargs)
+        challenge = UserSolution.objects.get(pk=self.kwargs['pk'])
+        context['challenge'] = challenge.challengeName
+        context['learningObjectives'] = LearningObjective.objects.filter(challenge=challenge.challengeName)
+        theseObjs = LearningObjective.objects.filter(challenge=challenge.challengeName)
+        context['answers'] = RubricLine.objects.all()
+        # context['responses'] = RubricLine.objects.filter(lo=learningObj)
+        return context
+
+
 class RubricFormView(FormView):
     template_name = 'rubrics/rubric_form.html'
     model = UserSolution
-    form_class = RubricLineFormset
-
-
+    form_class = RubricLineForm
 
     def get_context_data(self, **kwargs):
         context = super(RubricFormView, self).get_context_data(**kwargs)
@@ -93,16 +107,12 @@ class RubricFormView(FormView):
         student = UserSolution.objects.get(pk=usersolution).userOwner
         context['student'] = student
         context['challenge'] = challenge
-        los = challenge.learningObjs.all()
-        loCount = LearningObjective.objects.filter(challenge=challenge).count()
-        RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=loCount, fields=(
-            'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student'), )
-        context['formset'] = RubricLineFormset()
+        context['formset'] = RubricLineForm(initial={'student': student})
 
         return context
 
     def post(self, request, *args, **kwargs):
-        formset = RubricLineFormset(request.POST, )
+        formset = RubricLineForm(request.POST, )
         if formset.is_valid():
             formset.save()
             return HttpResponseRedirect('/')

@@ -7,6 +7,10 @@ Evaluate a Challenge
 {% block content %}
     <h1>{{ challenge }}</h1>
 {% for learningObejctive in learningObjectives %}
-    <p>{{ learningObejctive.name }}</p>
+    <h2>{{ learningObejctive.name }}</h2>
+        {% for answer in answers %}
+            <p>{{ answer.evidenceMissing}}</p>
+            <p>{{ answer.student.userOwner }}</p>
+        {% endfor %}
     {% endfor %}
 {% endblock %}

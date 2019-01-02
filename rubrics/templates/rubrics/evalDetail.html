@@ -9,7 +9,7 @@
     <h1>{{ usersolution.challengeName }}</h1>
 <p>Submitted by {{ usersolution.userOwner }}</p>
     {% for rubricLine in evaluation %}
-        <p>{{  rubricLine.as_p }} Something Should be here</p>
+        <p>{{  rubricLine }} Something Should be here</p>
     {% endfor %}
 
 <p><a href="/media/{{ usersolution.file }}">{{ usersolution.file }}</a> </p>
