@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Evaluate a Challenge
+{% endblock %}
+
+{% block content %}
+    <h1>{{ challenge }}</h1>
+{% for learningObejctive in learningObjectives %}
+    <p>{{ learningObejctive.name }}</p>
+    {% endfor %}
+{% endblock %}
