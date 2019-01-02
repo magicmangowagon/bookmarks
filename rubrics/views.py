@@ -80,6 +80,8 @@ class RubricFormView(FormView):
     model = UserSolution
     form_class = RubricLineFormset
 
+
+
     def get_context_data(self, **kwargs):
         context = super(RubricFormView, self).get_context_data(**kwargs)
         # seems like there is more code here than I need
@@ -91,10 +93,12 @@ class RubricFormView(FormView):
         student = UserSolution.objects.get(pk=usersolution).userOwner
         context['student'] = student
         context['challenge'] = challenge
-        number = LearningObjective.objects.filter(challenge=challenge).count()
-        RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=number, fields=(
+        los = challenge.learningObjs.all()
+        loCount = LearningObjective.objects.filter(challenge=challenge).count()
+        RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=loCount, fields=(
             'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student'), )
         context['formset'] = RubricLineFormset()
+
         return context
 
     def post(self, request, *args, **kwargs):
@@ -106,13 +110,11 @@ class RubricFormView(FormView):
             return self.render_to_response(self.get_context_data(formset=formset))
 
     def form_valid(self, formset):
+
         formset.save()
 
     def form_invalid(self, formset):
         return self.render_to_response(self.get_context_data(formset=formset))
-
-# retry this rubric form using formview instead of createview.
-# class RubricFormViewAsForm(FormView):
 
 
 class EvalListView(ListView):
