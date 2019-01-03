@@ -89,7 +89,7 @@ class RubricFormView(FormView):
         challenge = UserSolution.objects.get(pk=usersolution).challengeName
         context['lo_list'] = LearningObjective.objects.filter(challenge=challenge)
         lo_list = LearningObjective.objects.filter(challenge=challenge)
-        student = UserSolution.objects.get(pk=usersolution).userOwner
+        student = UserSolution.objects.get(pk=usersolution)
         context['student'] = student
         context['challenge'] = challenge
         los = challenge.learningObjs.all()
@@ -138,6 +138,7 @@ class EvalDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(EvalDetailView, self).get_context_data(**kwargs)
         rubric = self.kwargs['pk']
+        student = UserSolution.objects.get(pk=rubric)
         context['evaluation'] = RubricLine.objects.all().filter(student=rubric)
         return context
 
