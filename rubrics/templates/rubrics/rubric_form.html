@@ -5,26 +5,43 @@ Evaluate a Challenge
 {% endblock %}
 
 {% block content %}
+
 <h1>{{ challenge }} - {{ student.first_name }} {{ student.last_name }}</h1>
+
     <h2>Evaluate {{ student.first_name }}'s solution</h2>
+
     <form action=""  method="post">
-            <div class="rubricField">
-            {% for form in formset %}
-                <h3>{{ form.learningObjective.as_ul }}</h3>
-                <p>{{ form.learningObjective }}</p>
-                <p>{{ form.student }}</p>
-                <li>{{ form.evidencePresent }}</li>
-                <li>{{ form.evidenceMissing }}</li>
-                <li>{{ form.feedback }}</li>
-                <li>{{ form.suggestions }}</li>
-                <p>{{ form.completionLevel }}</p>
-            {% endfor %}
 
-                </ul>
-            </div>
+        <div class="rubricField">
 
-    {{ formset.management_form }}
-    {% csrf_token %}
-    <p><input type="submit" value="Submit evaluation"></p>
+        {% for form in formset %}
+
+            <h3>{{ form.learningObjective }}</h3>
+            <p>{{ form.student }}</p>
+            <ul>
+                <li><label>{{ form.evidenceMissing.label }}</label>
+                    {{ form.evidencePresent }}</li>
+
+                <li><label>{{ form.evidenceMissing.label }}</label>
+                    {{ form.evidenceMissing }}</li>
+
+                <li><label>{{ form.feedback.label }}</label>
+                    {{ form.feedback }}</li>
+
+                <li><label>{{ form.suggestions.label }}</label>
+                    {{ form.suggestions }}</li>
+
+            <p><label>{{ form.completionLevel.label }}</label>
+                {{ form.completionLevel }}</p>
+            </ul>
+        {% endfor %}
+
+        </div>
+
+        {{ formset.management_form }}
+
+        {% csrf_token %}
+
+        <p><input type="submit" value="Submit evaluation"></p>
     </form>
 {% endblock %}

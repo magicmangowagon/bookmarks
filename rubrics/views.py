@@ -80,7 +80,6 @@ class RubricFormView(FormView):
     model = UserSolution
     form_class = RubricLineFormset
 
-
     def get_context_data(self, **kwargs):
         context = super(RubricFormView, self).get_context_data(**kwargs)
         # seems like there is more code here than I need
@@ -138,7 +137,6 @@ class EvalDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(EvalDetailView, self).get_context_data(**kwargs)
-        context['solution_list'] = UserSolution.objects.all()
         rubric = self.kwargs['pk']
         context['evaluation'] = RubricLine.objects.all().filter(student=rubric)
         return context

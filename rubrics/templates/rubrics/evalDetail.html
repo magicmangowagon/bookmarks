@@ -9,7 +9,18 @@
     <h1>{{ usersolution.challengeName }}</h1>
 <p>Submitted by {{ usersolution.userOwner }}</p>
     {% for rubricLine in evaluation %}
-        <p>{{  rubricLine.as_p }} Something Should be here</p>
+        <div class="rubricField">
+        <ul style="width: 100%">
+            <li style="width: 30%"><label>Evidence Present
+            </label>{{  rubricLine.evidencePresent }}</li>
+            <li style="width: 30%"><label>Evidence Missing
+            </label>{{  rubricLine.evidenceMissing }}</li>
+            <li style="width: 20%"><label>Suggestions
+            </label>{{  rubricLine.suggestions }}</li>
+            <li style="width: 19%"><label>Feedback
+            </label>{{  rubricLine.feedback }}</li>
+        </ul>
+        </div>
     {% endfor %}
 
 <p><a href="/media/{{ usersolution.file }}">{{ usersolution.file }}</a> </p>
