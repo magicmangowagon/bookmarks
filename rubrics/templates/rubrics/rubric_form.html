@@ -9,8 +9,16 @@ Evaluate a Challenge
     <h2>Evaluate {{ student.first_name }}'s solution</h2>
     <form action=""  method="post">
             <div class="rubricField">
-
-                        {{ formset.as_ul }}
+            {% for form in formset %}
+                <h3>{{ form.learningObjective.as_ul }}</h3>
+                <p>{{ form.learningObjective }}</p>
+                <p>{{ form.student }}</p>
+                <li>{{ form.evidencePresent }}</li>
+                <li>{{ form.evidenceMissing }}</li>
+                <li>{{ form.feedback }}</li>
+                <li>{{ form.suggestions }}</li>
+                <p>{{ form.completionLevel }}</p>
+            {% endfor %}
 
                 </ul>
             </div>

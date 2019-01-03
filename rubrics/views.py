@@ -81,7 +81,6 @@ class RubricFormView(FormView):
     form_class = RubricLineFormset
 
 
-
     def get_context_data(self, **kwargs):
         context = super(RubricFormView, self).get_context_data(**kwargs)
         # seems like there is more code here than I need
@@ -90,6 +89,7 @@ class RubricFormView(FormView):
         usersolution = self.kwargs['pk']
         challenge = UserSolution.objects.get(pk=usersolution).challengeName
         context['lo_list'] = LearningObjective.objects.filter(challenge=challenge)
+        lo_list = LearningObjective.objects.filter(challenge=challenge)
         student = UserSolution.objects.get(pk=usersolution).userOwner
         context['student'] = student
         context['challenge'] = challenge
@@ -97,7 +97,8 @@ class RubricFormView(FormView):
         loCount = LearningObjective.objects.filter(challenge=challenge).count()
         RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=loCount, fields=(
             'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student'), )
-        context['formset'] = RubricLineFormset()
+        formset = RubricLineFormset(initial=[{'learningObjective': learningObjective.id, 'student': student} for learningObjective in lo_list])
+        context['formset'] = formset
 
         return context
 
