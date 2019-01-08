@@ -32,8 +32,6 @@ class RubricLineForm(BaseModelFormSet):
         self.queryset = RubricLine.objects.none()
 
 
-
-
 class RubricForm(ModelForm):
     class Meta:
         model = Rubric

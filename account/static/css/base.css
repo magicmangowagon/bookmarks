@@ -3,6 +3,12 @@
 ul{
     padding: 0;
 }
+
+.evalField li {
+    display: inline-block;
+    background-color: #efefef;
+}
+
 .rubricField li {
     display: inline-block;
 }

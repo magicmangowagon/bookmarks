@@ -6,10 +6,13 @@ from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
 from django.forms import modelformset_factory
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 
 # Class based challenge view with functioning form.
 # Currently using this. Need to revisit, probably not best practice.
+
 class challenge_detail(DetailView, FormMixin):
     template_name = 'rubrics/challenge_detail.html'
     model = Challenge
@@ -96,7 +99,7 @@ class RubricFormView(FormView):
         loCount = LearningObjective.objects.filter(challenge=challenge).count()
         RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=loCount, fields=(
             'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student'), )
-        formset = RubricLineFormset(initial=[{'learningObjective': learningObjective.id, 'student': student} for learningObjective in lo_list])
+        formset = RubricLineFormset(initial=[{'learningObjective': learningObjective.pk, 'student': student} for learningObjective in lo_list])
         context['formset'] = formset
 
         return context
@@ -110,7 +113,6 @@ class RubricFormView(FormView):
             return self.render_to_response(self.get_context_data(formset=formset))
 
     def form_valid(self, formset):
-
         formset.save()
 
     def form_invalid(self, formset):
