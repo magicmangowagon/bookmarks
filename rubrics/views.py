@@ -65,10 +65,14 @@ class ChallengeListView(ListView):
 class SolutionListView(ListView):
 
     def get_queryset(self):
-        profile = self.request.user.get_profile
+        profile = self.request.user.profile
 
-        if self.request.user.is_staff:
+        if profile.role == 4:
             queryset = UserSolution.objects.all()
+            return queryset
+
+        if profile.role == 2:
+            queryset = UserSolution.objects.filter()
             return queryset
 
         else:
@@ -124,6 +128,7 @@ class RubricFormView(FormView):
 class EvalListView(ListView):
 
     def get_queryset(self, **kwargs):
+        profile = self.request.user.get_profile
         if self.request.user.is_staff:
             queryset = UserSolution.objects.all()
             return queryset

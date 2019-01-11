@@ -6,7 +6,7 @@
 {% block content %}
 <h1>Solutions</h1>
 
-
+<p>{{ user.profile.role }}</p>
 {% for usersolution in object_list %}
 <h2>
     {{ usersolution.userOwner }}
