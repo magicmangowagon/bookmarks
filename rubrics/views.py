@@ -6,8 +6,7 @@ from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
 from django.forms import modelformset_factory
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
+from django.contrib.auth.models import Group
 
 
 # Class based challenge view with functioning form.
@@ -66,9 +65,12 @@ class ChallengeListView(ListView):
 class SolutionListView(ListView):
 
     def get_queryset(self):
+        profile = self.request.user.get_profile
+
         if self.request.user.is_staff:
             queryset = UserSolution.objects.all()
             return queryset
+
         else:
             queryset = UserSolution.objects.filter(userOwner=self.request.user)
             return queryset

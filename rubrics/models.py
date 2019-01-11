@@ -127,29 +127,4 @@ class RubricLine(models.Model):
     learningObjective = models.ForeignKey(LearningObjective, on_delete=models.CASCADE)
 
 
-class UserProfile(models.Model):
-    TC = 1
-    CLINICALSUPER = 2
-    COACH = 3
-    ADMIN = 4
-    ROLE_CHOICES = (
-        (TC, 'Teaching Candidate'),
-        (CLINICALSUPER, 'Clinical Supervisor'),
-        (COACH, 'Challenge Coach'),
-        (ADMIN, 'Admin')
-    )
-
-    user = models.OneToOneField(User, related_name='role', on_delete=models.CASCADE)
-    role = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, null=True, blank=True)
-
-    def __str__(self):
-        return self.user.username
-
-
-@receiver(post_save, sender=User)
-def create_or_update_user_profile(sender, instance, created, **kwargs):
-    if created:
-        UserProfile.objects.create(user=instance)
-    instance.profile.save()
-
 
