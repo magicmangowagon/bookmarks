@@ -112,7 +112,6 @@ class RubricFormView(FormView):
 
         context['evaluation'] = RubricLine.objects.all().filter(student=usersolution)
 
-
         return context
 
     def post(self, request, *args, **kwargs):

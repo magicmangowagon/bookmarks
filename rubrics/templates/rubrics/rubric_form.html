@@ -6,9 +6,9 @@ Evaluate a Challenge
 
 {% block content %}
 
-<h1>{{ challenge }} - {{ student.first_name }} {{ student.last_name }}</h1>
+<h1>{{ challenge }} - {{ student.userOwner.first_name }} {{ student.userOwner.last_name }}</h1>
 
-    <h2>Evaluate {{ student.first_name }}'s solution</h2>
+    <h2>Evaluate {{ student.userOwner.first_name }}'s solution</h2>
 
     <form action=""  method="post">
 
@@ -18,15 +18,15 @@ Evaluate a Challenge
 
             <h3>{{ form.learningObjective }}</h3>
             <p>{{ form.student }}</p>
+
             <ul>
+                {% if userRole == 4 or 2 %}
+                    <li><label>{{ form.evidenceMissing.label }}</label>
+                        {{ form.evidencePresent }}</li>
 
-            {% if userRole == 4 %}
-                <li><label>{{ form.evidenceMissing.label }}</label>
-                    {{ form.evidencePresent }}</li>
-
-                <li><label>{{ form.evidenceMissing.label }}</label>
-                    {{ form.evidenceMissing }}</li>
-            {% endif %}
+                    <li><label>{{ form.evidenceMissing.label }}</label>
+                        {{ form.evidenceMissing }}</li>
+                {% endif %}
 
                 <li><label>{{ form.feedback.label }}</label>
                     {{ form.feedback }}</li>
@@ -37,6 +37,7 @@ Evaluate a Challenge
             <p><label>{{ form.completionLevel.label }}</label>
                 {{ form.completionLevel }}</p>
             </ul>
+
         {% endfor %}
 
         </div>

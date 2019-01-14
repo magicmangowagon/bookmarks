@@ -6,7 +6,7 @@
 {% block content %}
 <h1>Evaluations</h1>
 
-<table cellspacing="1px" border="1px">
+<table cellpadding="10px" border="1px">
 {% for userSolution in object_list %}
     <tr>
         <td>
@@ -15,18 +15,15 @@
         <td>
             {{ userSolution.challengeName }}
         </td>
-            <td>
-                {{ userSolution.userOwner.last_name }}
-            </td>
+        <td>
+            {{ userSolution.userOwner.last_name }}
+        </td>
 
         <td>
-                {{ userSolution.userOwner.first_name }}
-            </td>
-
-
+            {{ userSolution.userOwner.first_name }}
+        </td>
 
     </tr>
-
 
 {% endfor %}
 </table>
