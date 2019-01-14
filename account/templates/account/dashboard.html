@@ -5,12 +5,18 @@
 {% block content %}
 
     <h1>Dashboard</h1>
-    <p>Welcome to your dashboard. {{ request.user.first_name }}</p>
-    <p>This will be filled with wonder soon.</p>
-    <p>Use the link at the top to view the Challenges.</p>
-    <p><br>
-    View your submitted solutions here: <a href="solutions">User Solutions</a> </p>
+    <p>Welcome to your dashboard, {{ request.user.first_name }}</p>
 
+    <p>View your submitted solutions here: <br>
+    <a href="solutions">User Solutions</a></p>
+
+    <p>View your evaluated solutions here: <br>
+    <a href="evals">Evaluated Solutions</a></p>
+
+    {% if request.user.profile.role != 1 %}
+    <p>Teaching Candidates submissions<br>
+    <a href="solutions">Submitted Solutions</a></p>
+    {% endif %}
 
 
 {% endblock %}

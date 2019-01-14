@@ -6,7 +6,7 @@ from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
 from django.forms import modelformset_factory
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import User, Group
 
 
 # Class based challenge view with functioning form.
@@ -66,12 +66,13 @@ class SolutionListView(ListView):
 
     def get_queryset(self):
         profile = self.request.user.profile
-
+        # groupName = self.request.user.groups('name')
         if profile.role == 4:
             queryset = UserSolution.objects.all()
             return queryset
 
         if profile.role == 2:
+
             queryset = UserSolution.objects.filter()
             return queryset
 
@@ -107,6 +108,10 @@ class RubricFormView(FormView):
             'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student'), )
         formset = RubricLineFormset(initial=[{'learningObjective': learningObjective.pk, 'student': student} for learningObjective in lo_list])
         context['formset'] = formset
+        context['userRole'] = self.request.user.profile.role
+
+        context['evaluation'] = RubricLine.objects.all().filter(student=usersolution)
+
 
         return context
 
@@ -128,7 +133,7 @@ class RubricFormView(FormView):
 class EvalListView(ListView):
 
     def get_queryset(self, **kwargs):
-        profile = self.request.user.get_profile
+        # profile = self.request.user.get_profile
         if self.request.user.is_staff:
             queryset = UserSolution.objects.all()
             return queryset

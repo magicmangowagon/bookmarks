@@ -9,6 +9,7 @@
     <h1>{{ usersolution.challengeName }}</h1>
 <p>Submitted by {{ usersolution.userOwner }}</p>
     {% for rubricLine in evaluation %}
+        <h2>{{ rubricLine.learningObjective }}</h2>
         <div class="evalField">
         <ul style="width: 100%">
             <li style="width: 30%"><p>Evidence Present
@@ -20,7 +21,6 @@
             <li style="width: 19%"><p>Feedback
             </p>{{  rubricLine.feedback }}</li>
         </ul>
-        </div>
     {% endfor %}
 
 <p><a href="/media/{{ usersolution.file }}">{{ usersolution.file }}</a> </p>

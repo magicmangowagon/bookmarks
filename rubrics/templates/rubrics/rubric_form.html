@@ -19,11 +19,14 @@ Evaluate a Challenge
             <h3>{{ form.learningObjective }}</h3>
             <p>{{ form.student }}</p>
             <ul>
+
+            {% if userRole == 4 %}
                 <li><label>{{ form.evidenceMissing.label }}</label>
                     {{ form.evidencePresent }}</li>
 
                 <li><label>{{ form.evidenceMissing.label }}</label>
                     {{ form.evidenceMissing }}</li>
+            {% endif %}
 
                 <li><label>{{ form.feedback.label }}</label>
                     {{ form.feedback }}</li>
