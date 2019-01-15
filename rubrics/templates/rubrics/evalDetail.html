@@ -8,6 +8,10 @@
 
     <h1>{{ usersolution.challengeName }}</h1>
 <p>Submitted by {{ usersolution.userOwner }}</p>
+
+    {% if userRole == 4 or 3 %}
+    <a href="/solutionEval/{{ usersolution.id }}">Edit</a>
+    {% endif %}
     {% for rubricLine in evaluation %}
         <h2>{{ rubricLine.learningObjective }}</h2>
         <div class="evalField">

@@ -131,7 +131,7 @@ class RubricFormView(FormView):
         formset = RubricLineFormset(request.POST)
         if formset.is_valid():
             formset.save()
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/evals')
         else:
             messages.error(request, "Error")
             return self.render_to_response(self.get_context_data(formset=formset))
@@ -167,6 +167,7 @@ class EvalDetailView(DetailView):
         rubric = self.kwargs['pk']
         student = UserSolution.objects.get(pk=rubric)
         context['evaluation'] = RubricLine.objects.all().filter(student=rubric)
+        context['userRole'] = self.request.user.profile.role
         return context
 
 
