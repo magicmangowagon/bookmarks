@@ -104,14 +104,28 @@ class RubricFormView(FormView):
         context['challenge'] = challenge
         los = challenge.learningObjs.all()
         loCount = LearningObjective.objects.filter(challenge=challenge).count()
-        RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=loCount, fields=(
-            'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student'), )
-        formset = RubricLineFormset(initial=[{'learningObjective': learningObjective.pk, 'student': student} for learningObjective in lo_list])
-        context['formset'] = formset
+
+
         context['userRole'] = self.request.user.profile.role
 
-        context['evaluation'] = RubricLine.objects.all().filter(student=usersolution)
+        if RubricLine.objects.all().filter(student=usersolution).exists():
+            RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=0, fields=(
+                'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel',
+                'student'), )
 
+            formset = RubricLineFormset(
+                initial=[{'learningObjective': learningObjective.pk, 'student': student} for learningObjective in
+                         lo_list], queryset=RubricLine.objects.all().filter(student=usersolution))
+        else:
+            RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=loCount, fields=(
+                'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel',
+                'student'), )
+
+            formset = RubricLineFormset(
+                initial=[{'learningObjective': learningObjective.pk, 'student': student} for learningObjective in
+                         lo_list], queryset=RubricLine.objects.none())
+
+        context['formset'] = formset
         return context
 
     def post(self, request, *args, **kwargs):

@@ -29,7 +29,7 @@ class UserFileForm(forms.ModelForm):
 class RubricLineForm(BaseModelFormSet):
     def __init__(self, *args, **kwargs):
         super(RubricLineForm, self).__init__(*args, **kwargs)
-        self.queryset = RubricLine.objects.none()
+        # self.queryset = RubricLine.objects.none()
 
 
 class RubricForm(ModelForm):
