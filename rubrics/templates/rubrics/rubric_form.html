@@ -24,7 +24,7 @@ Evaluate a Challenge
                     <li><label>{{ form.evidenceMissing.label }}</label>
                         {{ form.evidencePresent }}</li>
 
-                    <li><label>{{ form.evidenceMissing.label }}</label>
+                    <li><label>{{ form.evidencePresent.label }}</label>
                         {{ form.evidenceMissing }}</li>
                 {% endif %}
 
@@ -46,6 +46,13 @@ Evaluate a Challenge
 
         {% csrf_token %}
 
+
+
+
         <p><input type="submit" value="Submit evaluation"></p>
     </form>
+
+    {% if form.error %}
+This should pop up if there is an error
+{% endif %}
 {% endblock %}

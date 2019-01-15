@@ -2,10 +2,11 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from .models import Challenge, UserSolution, Rubric, RubricLine, User, LearningObjective, Competency
 from .forms import ChallengeForm, UserFileForm, RubricLineForm, RubricLineFormset
-from django.views.generic import ListView, DetailView, FormView
+from django.views.generic import ListView, DetailView, FormView, UpdateView
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
 from django.forms import modelformset_factory
+from django.contrib import messages
 from django.contrib.auth.models import User, Group
 
 
@@ -105,7 +106,6 @@ class RubricFormView(FormView):
         los = challenge.learningObjs.all()
         loCount = LearningObjective.objects.filter(challenge=challenge).count()
 
-
         context['userRole'] = self.request.user.profile.role
 
         if RubricLine.objects.all().filter(student=usersolution).exists():
@@ -113,9 +113,8 @@ class RubricFormView(FormView):
                 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel',
                 'student'), )
 
-            formset = RubricLineFormset(
-                initial=[{'learningObjective': learningObjective.pk, 'student': student} for learningObjective in
-                         lo_list], queryset=RubricLine.objects.all().filter(student=usersolution))
+            formset = RubricLineFormset(queryset=RubricLine.objects.all().filter(student=usersolution))
+
         else:
             RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=loCount, fields=(
                 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel',
@@ -129,11 +128,12 @@ class RubricFormView(FormView):
         return context
 
     def post(self, request, *args, **kwargs):
-        formset = RubricLineFormset(request.POST, )
+        formset = RubricLineFormset(request.POST)
         if formset.is_valid():
             formset.save()
             return HttpResponseRedirect('/')
         else:
+            messages.error(request, "Error")
             return self.render_to_response(self.get_context_data(formset=formset))
 
     def form_valid(self, formset):
