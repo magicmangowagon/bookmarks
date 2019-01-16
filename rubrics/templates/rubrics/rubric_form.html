@@ -37,6 +37,23 @@ Evaluate a Challenge
             <p><label>{{ form.completionLevel.label }}</label>
                 {{ form.completionLevel }}</p>
             </ul>
+
+            <div class="slidecontainer">
+              <input type="range" min="1" max="100" value="0" class="slider" id="slider{{ form.learningObjective.value }}">
+              <p>Value: <span id="value{{ form.learningObjective.value }}"></span></p>
+            </div>
+
+            <script>
+                var slider{{ form.learningObjective.value }} = document.getElementById("slider{{ form.learningObjective.value }}");
+                var output{{ form.learningObjective.value }} = document.getElementById("{{ form.completionLevel.auto_id }}");
+                slider{{ form.learningObjective.value }}.value = output{{ form.learningObjective.value }}.value;
+
+                slider{{ form.learningObjective.value }}.oninput = function()
+                {
+                    output{{ form.learningObjective.value }}.value = this.value;
+                }
+            </script>
+        {{ form.completionLevel.auto_id }}
         {{ form.id }}
         {% endfor %}
 
