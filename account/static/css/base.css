@@ -335,24 +335,25 @@ img.user-detail {
 }
 
 .slidecontainer {
-  width: 100%; /* Width of the outside container */
+  width: 80%; /* Width of the outside container */
+
 }
 
 /* The slider itself */
 .slider {
   -webkit-appearance: none;  /* Override default CSS styles */
   appearance: none;
-  width: 100%; /* Full-width */
-  height: 25px; /* Specified height */
+  width: 96%; /* Full-width */
+  height: 15px; /* Specified height */
   background: #d3d3d3; /* Grey background */
   outline: none; /* Remove outline */
-  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
-  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
-  transition: opacity .2s;
+    opacity: 0.7;
+    border-radius: 3px;
+
 }
 
 /* Mouse-over effects */
-.slider:hover {
+.slider:hover::-webkit-slider-thumb {
   opacity: 1; /* Fully shown on mouse-over */
 }
 
@@ -361,14 +362,28 @@ img.user-detail {
   -webkit-appearance: none; /* Override default look */
   appearance: none;
   width: 25px; /* Set a specific slider handle width */
-  height: 25px; /* Slider handle height */
-  background: #4CAF50; /* Green background */
+  height: 45px; /* Slider handle height */
+  background: #003469;
   cursor: pointer; /* Cursor on hover */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
 }
 
 .slider::-moz-range-thumb {
   width: 25px; /* Set a specific slider handle width */
-  height: 25px; /* Slider handle height */
-  background: #4CAF50; /* Green background */
+  height: 45px; /* Slider handle height */
+  background: #003469;
   cursor: pointer; /* Cursor on hover */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+}
+
+.readyTick {
+    height: 45px;
+    width: 2px;
+    background-color: #003469;
+    margin-left: 48%;
+    margin-top: 22px;
 }
