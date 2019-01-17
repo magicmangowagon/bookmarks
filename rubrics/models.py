@@ -6,7 +6,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
-# Many-to-many with, connected to competencies and challenges
 class LearningObjective(models.Model):
     A = 'A'
     B = 'B'
@@ -59,8 +58,6 @@ class Challenge(models.Model):
         return self.name
 
 
-# Unsure, might be a one-to-many with LO's in it's bucket. Not sure if it needs to be
-# controlled by the Challenge model
 class Competency(models.Model):
     name = models.CharField(max_length=250)
     description = models.TextField()
@@ -109,14 +106,6 @@ class UserSolution(models.Model):
     challengeName = models.ForeignKey(Challenge, blank=True, null=True, on_delete=models.CASCADE)
 
 
-class Rubric(models.Model):
-    competencies = models.ForeignKey(Competency, on_delete=models.CASCADE)
-    name = models.CharField(max_length=250)
-    description = models.CharField(max_length=250)
-    challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
-    creator = models.ForeignKey(User, on_delete=models.CASCADE)
-
-
 class RubricLine(models.Model):
     evidenceMissing = models.TextField(blank=True, default='')
     evidencePresent = models.TextField(blank=True, default='')
@@ -125,6 +114,17 @@ class RubricLine(models.Model):
     completionLevel = models.IntegerField(default=0)
     student = models.ForeignKey(UserSolution, on_delete=models.CASCADE)
     learningObjective = models.ForeignKey(LearningObjective, on_delete=models.CASCADE)
+
+
+class Rubric(models.Model):
+    competencies = models.ForeignKey(Competency, on_delete=models.CASCADE)
+    generalFeedback = models.TextField(blank=True, default='')
+    challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
+    evaluator = models.ForeignKey(User, on_delete=models.CASCADE)
+    userSolution = models.ForeignKey(UserSolution, on_delete=models.CASCADE, default='0')
+    challengeCompletionLevel = models.IntegerField(default=0)
+
+
 
 
 

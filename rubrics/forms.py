@@ -35,8 +35,8 @@ class RubricLineForm(BaseModelFormSet):
 class RubricForm(ModelForm):
     class Meta:
         model = Rubric
-        fields = ('description',)
-        widgets = {'challenge': forms.HiddenInput}
+        fields = ('generalFeedback', 'userSolution', 'challengeCompletionLevel', 'evaluator')
+        # widgets = {'userSolution': forms.HiddenInput(), 'challengeCompletionLevel': forms.HiddenInput()}
 
 
 RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, fields=('evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student',

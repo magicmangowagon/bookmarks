@@ -49,8 +49,8 @@ class ChallengeAdmin(admin.ModelAdmin):
 
 
 @admin.register(Rubric)
-class LearningObjectiveAdmin(admin.ModelAdmin):
-    list_display = ['name', 'description']
+class RubricAdmin(admin.ModelAdmin):
+    list_display = ['evaluator', 'challenge']
 
 
 @admin.register(Criterion)

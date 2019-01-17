@@ -63,12 +63,32 @@ Evaluate a Challenge
         {% csrf_token %}
 
 
-
-
         <p><input type="submit" value="Submit evaluation"></p>
     </form>
 
-    {% if form.error %}
-This should pop up if there is an error
-{% endif %}
+    <div class="vertSliderContainer">
+        <input type="range" min="1" max="sliderMax" value="0" class="vertSlider" id="challengeSlider">
+        <p id="sliderValues">Val</p>
+
+        <p id="sliderTotal"></p>
+    <script>
+        var sliderFields = document.getElementsByClassName("slider");
+        var sliderTotals = 0;
+        var sliderMax = 0;
+
+        for(var i = 0; i < sliderFields.length; i++)
+        {
+            sliderMax += parseInt(sliderFields[i].value);
+        }
+        document.getElementById("sliderTotal").innerHTML = sliderMax;
+
+        sliderFields.oninput = function()
+        {
+            document.getElementById("challengeSlider").value = this.value;
+        }
+    </script>
+
+
+    </div>
+
 {% endblock %}

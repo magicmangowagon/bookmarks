@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ usersolution.userowner }}
+{% endblock %}
+
+{% block content %}
+
+    <h1>{{ usersolution.challengeName }}</h1>
+<p>Submitted by {{ usersolution.userOwner }}</p>
+
+    {% if userRole == 4 or 3 %}
+    <a href="/solutionEval/{{ usersolution.id }}">Edit</a>
+    {% endif %}
+    {% for rubricLine in evaluation %}
+        <h2>{{ rubricLine.learningObjective }}</h2>
+        <div class="evalField">
+        <ul style="width: 100%">
+            <li style="width: 30%"><p>Evidence Present
+            </p>{{  rubricLine.evidencePresent }}</li>
+            <li style="width: 30%"><p>Evidence Missing
+            </p>{{  rubricLine.evidenceMissing }}</li>
+            <li style="width: 20%"><p>Suggestions
+            </p>{{  rubricLine.suggestions }}</li>
+            <li style="width: 19%"><p>Feedback
+            </p>{{  rubricLine.feedback }}</li>
+        </ul>
+        <p>Completion Level - {{ rubricLine.completionLevel }}</p>
+    {% endfor %}
+    <form action=""  method="post">
+    {{ form }}
+    {% csrf_token %}
+        <p><input type="submit" value="Submit evaluation"></p>
+    </form>
+
+{% endblock %}

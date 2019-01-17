@@ -387,3 +387,31 @@ img.user-detail {
     margin-left: 48%;
     margin-top: 22px;
 }
+
+.vertSlider {
+    -webkit-appearance: slider-vertical;
+
+    width: 12px; /* Full-width */
+    height: 25%; /* Specified height */
+    background: #d3d3d3; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7;
+    border-radius: 3px;
+}
+
+.vertSlider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  width: 25px; /* Set a specific slider handle width */
+  height: 45px; /* Slider handle height */
+  background: #003469;
+  cursor: pointer; /* Cursor on hover */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+}
+
+.vertSliderContainer {
+    position: fixed;
+    top: 100px;
+    right: 24px;
+}

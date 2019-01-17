@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from .models import Challenge, UserSolution, Rubric, RubricLine, User, LearningObjective, Competency
-from .forms import ChallengeForm, UserFileForm, RubricLineForm, RubricLineFormset
+from .forms import ChallengeForm, UserFileForm, RubricLineForm, RubricLineFormset, RubricForm
 from django.views.generic import ListView, DetailView, FormView, UpdateView
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
@@ -9,9 +9,6 @@ from django.forms import modelformset_factory
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
 
-
-# Class based challenge view with functioning form.
-# Currently using this. Need to revisit, probably not best practice.
 
 class challenge_detail(DetailView, FormMixin):
     template_name = 'rubrics/challenge_detail.html'
@@ -86,6 +83,35 @@ class SolutionListView(ListView):
     template_name = 'rubrics/solution_list.html'
 
 
+class RubricFinalFormView(FormView):
+    template_name = 'rubrics/rubricFinalForm.html'
+    model = UserSolution
+    form_class = RubricForm
+    success_url = '/evals'
+
+    def get_context_data(self, **kwargs):
+        context = super(RubricFinalFormView, self).get_context_data(**kwargs)
+        rubric = self.kwargs['pk']
+        context['evaluation'] = RubricLine.objects.all().filter(student=rubric)
+        userSolution = UserSolution.objects.get(pk=rubric)
+        # challenge = UserSolution.objects.get(pk=usersolution).challengeName
+        context['form'] = RubricForm(initial={'challenge': userSolution.challengeName, 'evaluator': self.request.user})
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = RubricForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/evals')
+        else:
+            messages.error(request, "Error")
+            return self.render_to_response(self.get_context_data(formset=form))
+        # creating form that comes after RubricFormView/formsets
+        # holds general feedback, and challenge completion level.
+        # show slider on formset view for challenge completion level but store in permanently
+        # on this page.
+
+
 class RubricFormView(FormView):
     template_name = 'rubrics/rubric_form.html'
     model = UserSolution
@@ -108,6 +134,8 @@ class RubricFormView(FormView):
 
         context['userRole'] = self.request.user.profile.role
 
+        # edit view, checks for rubricsLine objects from this userSolution
+        # and sets the formset query to that instance
         if RubricLine.objects.all().filter(student=usersolution).exists():
             RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=0, fields=(
                 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel',
@@ -115,6 +143,8 @@ class RubricFormView(FormView):
 
             formset = RubricLineFormset(queryset=RubricLine.objects.all().filter(student=usersolution))
 
+        # create new rubric, checked for rubricline objects from this userSolution
+        # and none existed, so queryset is none and extra forms is set to LO count
         else:
             RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=loCount, fields=(
                 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel',
