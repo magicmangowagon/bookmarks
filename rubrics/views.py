@@ -8,6 +8,7 @@ from django.urls import reverse
 from django.forms import modelformset_factory
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
+from django.shortcuts import redirect
 
 
 class challenge_detail(DetailView, FormMixin):
@@ -79,7 +80,6 @@ class SolutionListView(ListView):
             return queryset
 
     context_object_name = 'solutions'
-    # paginate_by = 3
     template_name = 'rubrics/solution_list.html'
 
 
@@ -93,9 +93,9 @@ class RubricFinalFormView(FormView):
         context = super(RubricFinalFormView, self).get_context_data(**kwargs)
         rubric = self.kwargs['pk']
         context['evaluation'] = RubricLine.objects.all().filter(student=rubric)
-        userSolution = UserSolution.objects.get(pk=rubric)
-        # challenge = UserSolution.objects.get(pk=usersolution).challengeName
-        context['form'] = RubricForm(initial={'challenge': userSolution.challengeName, 'evaluator': self.request.user})
+        userSolution = UserSolution.objects.get(id=rubric)
+        challenge = userSolution.challengeName
+        context['form'] = RubricForm(initial={'userSolution': userSolution, 'challenge': challenge, 'evaluator': self.request.user})
         return context
 
     def post(self, request, *args, **kwargs):
@@ -106,6 +106,7 @@ class RubricFinalFormView(FormView):
         else:
             messages.error(request, "Error")
             return self.render_to_response(self.get_context_data(formset=form))
+
         # creating form that comes after RubricFormView/formsets
         # holds general feedback, and challenge completion level.
         # show slider on formset view for challenge completion level but store in permanently
@@ -119,9 +120,6 @@ class RubricFormView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super(RubricFormView, self).get_context_data(**kwargs)
-        # seems like there is more code here than I need
-        # capture current pk, then get the pk associated with it
-        # then pass it to the filter
         usersolution = self.kwargs['pk']
         challenge = UserSolution.objects.get(pk=usersolution).challengeName
         context['lo_list'] = LearningObjective.objects.filter(challenge=challenge)
@@ -161,7 +159,8 @@ class RubricFormView(FormView):
         formset = RubricLineFormset(request.POST)
         if formset.is_valid():
             formset.save()
-            return HttpResponseRedirect('/evals')
+            return redirect('solution-end-eval', self.kwargs['pk'])
+                # HttpResponseRedirect(reverse('solution-end-eval', args=(self.kwargs['pk']),))
         else:
             messages.error(request, "Error")
             return self.render_to_response(self.get_context_data(formset=formset))
@@ -176,7 +175,6 @@ class RubricFormView(FormView):
 class EvalListView(ListView):
 
     def get_queryset(self, **kwargs):
-        # profile = self.request.user.get_profile
         if self.request.user.is_staff:
             queryset = UserSolution.objects.all()
             return queryset

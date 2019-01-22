@@ -35,7 +35,7 @@ class RubricLineForm(BaseModelFormSet):
 class RubricForm(ModelForm):
     class Meta:
         model = Rubric
-        fields = ('generalFeedback', 'userSolution', 'challengeCompletionLevel', 'evaluator')
+        fields = ('generalFeedback', 'userSolution', 'challengeCompletionLevel', 'evaluator', 'challenge')
         # widgets = {'userSolution': forms.HiddenInput(), 'challengeCompletionLevel': forms.HiddenInput()}
 
 

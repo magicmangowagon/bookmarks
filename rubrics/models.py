@@ -117,7 +117,7 @@ class RubricLine(models.Model):
 
 
 class Rubric(models.Model):
-    competencies = models.ForeignKey(Competency, on_delete=models.CASCADE)
+    # competencies = models.ForeignKey(Competency, on_delete=models.CASCADE)
     generalFeedback = models.TextField(blank=True, default='')
     challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
     evaluator = models.ForeignKey(User, on_delete=models.CASCADE)
