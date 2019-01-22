@@ -27,6 +27,18 @@
         </ul>
         <p>Completion Level - {{ rubricLine.completionLevel }}</p>
     {% endfor %}
+    <p>General Feedback</p>
+    <p>{{ evalFinalForm.generalFeedback }}</p>
+    <p>Completed?</p>
+    <p>
+        {% if evalFinalForm.challengeCompletionLevel > 49 %}
+        Yes
+        {% else %}
+        No
+        {% endif %}
+    </p>
+
+
 
 <p><a href="/media/{{ usersolution.file }}">{{ usersolution.file }}</a> </p>
 

@@ -200,6 +200,7 @@ class EvalDetailView(DetailView):
         rubric = self.kwargs['pk']
         student = UserSolution.objects.get(pk=rubric)
         context['evaluation'] = RubricLine.objects.all().filter(student=rubric)
+        context['evalFinalForm'] = Rubric.objects.get(userSolution=rubric)
         context['userRole'] = self.request.user.profile.role
         return context
 
