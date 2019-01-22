@@ -93,9 +93,14 @@ class RubricFinalFormView(FormView):
         context = super(RubricFinalFormView, self).get_context_data(**kwargs)
         rubric = self.kwargs['pk']
         context['evaluation'] = RubricLine.objects.all().filter(student=rubric)
+        completionLevelObj = RubricLine.objects.all().filter(student=rubric)
+        fart = 0
+        for object in completionLevelObj:
+            fart += int(object.completionLevel)
+
         userSolution = UserSolution.objects.get(id=rubric)
         challenge = userSolution.challengeName
-        context['form'] = RubricForm(initial={'userSolution': userSolution, 'challenge': challenge, 'evaluator': self.request.user})
+        context['form'] = RubricForm(initial={'userSolution': userSolution, 'challenge': challenge, 'evaluator': self.request.user, 'challengeCompletionLevel': fart})
         return context
 
     def post(self, request, *args, **kwargs):

@@ -26,9 +26,11 @@
             </p>{{  rubricLine.feedback }}</li>
         </ul>
         <p>Completion Level - {{ rubricLine.completionLevel }}</p>
+
     {% endfor %}
     <form action=""  method="post">
     {{ form }}
+
     {% csrf_token %}
         <p><input type="submit" value="Submit evaluation"></p>
     </form>
