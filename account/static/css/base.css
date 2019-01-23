@@ -415,3 +415,18 @@ img.user-detail {
     top: 100px;
     right: 24px;
 }
+
+.progressContainer {
+    height: 100px;
+    width: 24px;
+    background-color: #efefef;
+    position: relative;
+}
+
+#progressBar {
+    height: 1%;
+    width: 100%;
+    background-color: #0ac33e;
+    position: absolute;
+    bottom: 0px;
+}

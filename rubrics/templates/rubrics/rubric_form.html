@@ -53,6 +53,7 @@ Evaluate a Challenge
                 slider{{ form.learningObjective.value }}.oninput = function()
                 {
                     output{{ form.learningObjective.value }}.value = this.value;
+                    updateChallengeTotal(this.value);
                 }
             </script>
         {{ form.id }}
@@ -68,24 +69,28 @@ Evaluate a Challenge
 
     <div class="vertSliderContainer">
     <h3>Ready?</h3>
-        <input type="range" min="1" max="sliderMax" value="0" class="vertSlider" id="challengeSlider">
-        <p id="sliderValues">Val</p>
+        <div class="progressContainer">
+            <div id="progressBar">
 
-        <p id="sliderTotal"></p>
+            </div>
+        </div>
+
     <script>
         var sliderFields = document.getElementsByClassName("slider");
+        var progressBar = document.getElementById("progressBar")
         var sliderTotals = 0;
         var sliderMax = 0;
 
         for(var i = 0; i < sliderFields.length; i++)
         {
-            sliderMax += parseInt(sliderFields[i].value);
+            sliderMax += parseInt(sliderFields[i].max);
+            sliderTotals += parseInt(sliderFields[i].value);
         }
-        document.getElementById("sliderTotal").innerHTML = sliderMax;
+        progressBar.style.height = (sliderTotals/sliderFields.length) + '%';
 
-        sliderFields.oninput = function()
+        function updateChallengeTotal(int)
         {
-            document.getElementById("challengeSlider").value = this.value;
+            progressBar.style.height = int + '%';
         }
     </script>
 
