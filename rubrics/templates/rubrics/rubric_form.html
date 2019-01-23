@@ -50,9 +50,16 @@ Evaluate a Challenge
                 var output{{ form.learningObjective.value }} = document.getElementById("{{ form.completionLevel.auto_id }}");
                 slider{{ form.learningObjective.value }}.value = output{{ form.learningObjective.value }}.value;
 
+                slider{{ form.learningObjective.value }}.onmousedown = function()
+                {
+                    var farts = document.getElementsByClassName("slider");
+                    updateChallengeTotal(fartCity(farts[{{ form.learningObjective.value }} - 1].value))
+                }
+
                 slider{{ form.learningObjective.value }}.oninput = function()
                 {
                     output{{ form.learningObjective.value }}.value = this.value;
+
                     updateChallengeTotal(this.value);
                 }
             </script>
@@ -91,6 +98,11 @@ Evaluate a Challenge
         function updateChallengeTotal(int)
         {
             progressBar.style.height = int + '%';
+        }
+
+        function fartCity(int)
+        {
+            return sliderTotals - int;
         }
     </script>
 
