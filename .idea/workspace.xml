@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f9d2353c-1e9e-47b8-8190-35e7ab7af957" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/templates/rubrics/rubric_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/templates/rubrics/rubric_form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account/static/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/account/static/css/base.css" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -109,17 +109,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/rubricFinalForm.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="28" selection-start-line="28" selection-end-line="28" />
+            <state relative-caret-position="476">
+              <caret line="37" column="14" lean-forward="true" selection-start-line="37" selection-start-column="14" selection-end-line="37" selection-end-column="14" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/rubric_form.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="51" lean-forward="true" selection-start-line="51" selection-end-line="51" />
+            <state relative-caret-position="165">
+              <caret line="75" column="7" selection-start-line="75" selection-start-column="7" selection-end-line="75" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -160,17 +160,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/evalDetail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="446">
+            <state relative-caret-position="344">
               <caret line="35" column="18" lean-forward="true" selection-start-line="35" selection-start-column="18" selection-end-line="35" selection-end-column="18" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/account/static/css/base.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="310">
-              <caret line="419" column="18" lean-forward="true" selection-start-line="419" selection-start-column="18" selection-end-line="419" selection-end-column="18" />
+            <state relative-caret-position="437">
+              <caret line="425" column="18" selection-start-line="425" selection-start-column="18" selection-end-line="425" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -233,17 +233,17 @@
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/solution_list.html" />
         <option value="$PROJECT_DIR$/rubrics/models.py" />
         <option value="$PROJECT_DIR$/rubrics/forms.py" />
-        <option value="$PROJECT_DIR$/rubrics/templates/rubrics/rubricFinalForm.html" />
         <option value="$PROJECT_DIR$/rubrics/views.py" />
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/evalDetail.html" />
-        <option value="$PROJECT_DIR$/account/static/css/base.css" />
+        <option value="$PROJECT_DIR$/rubrics/templates/rubrics/rubricFinalForm.html" />
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/rubric_form.html" />
+        <option value="$PROJECT_DIR$/account/static/css/base.css" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1038" />
-    <option name="width" value="890" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="952" />
+    <option name="width" value="976" />
     <option name="height" value="1048" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -392,21 +392,7 @@
       <workItem from="1547565888884" duration="25608000" />
       <workItem from="1547684153502" duration="31000" />
       <workItem from="1547686593612" duration="16583000" />
-      <workItem from="1548171349767" duration="27274000" />
-    </task>
-    <task id="LOCAL-00021" summary="Running on Heroku. Need to set up S3 for file handling. Good enough for now. Moving on to Rubric based assessment form.">
-      <created>1543874492793</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1543874492793</updated>
-    </task>
-    <task id="LOCAL-00022" summary="Hooked up some registration stuff, added rich text for solution upload, started with formsets for rubric eval">
-      <created>1543955241246</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1543955241246</updated>
+      <workItem from="1548171349767" duration="31559000" />
     </task>
     <task id="LOCAL-00023" summary="Hooked up some registration stuff, added rich text for solution upload, started with formsets for rubric eval">
       <created>1543959489299</created>
@@ -737,17 +723,31 @@
       <option name="project" value="LOCAL" />
       <updated>1548283801855</updated>
     </task>
-    <option name="localTasksCounter" value="70" />
+    <task id="LOCAL-00070" summary="Total slider now moves with individual slider updates and correctly &#10;computes total progress.">
+      <created>1548284369321</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1548284369321</updated>
+    </task>
+    <task id="LOCAL-00071" summary="styled vert slider a bit: made wider, taller, bolded &quot;Ready&quot;.">
+      <created>1548300030626</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1548300030626</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="265311000" />
+    <option name="totallyTimeSpent" value="269596000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="952" y="0" width="976" height="1048" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.098614074" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.20196506" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -761,7 +761,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49848944" weight="0.32896176" />
       <window_info anchor="bottom" id="Database Changes" order="9" weight="0.32954547" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5056526" side_tool="true" weight="0.33224043" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.4943474" visible="true" weight="0.36403033" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.4943474" visible="true" weight="0.3672131" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.49924472" weight="0.32954547" />
       <window_info anchor="bottom" id="Database Console" order="13" sideWeight="0.49848944" weight="0.32954547" />
       <window_info anchor="bottom" id="SQL Generator" order="14" weight="0.32896176" />
@@ -840,8 +840,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Rubric forms are working. Data goes is, now to create view." />
-    <MESSAGE value="cleaned up forms a bit. Rubric form is storing username from solution now. Not displaying it &#10;correctly in admin due to foreignKey relationship." />
     <MESSAGE value="Eval list view functioning, eval detail partly done. Correctly displaying number of rubricLines but not the actual data within." />
     <MESSAGE value="Rubric form not functioning correctly. Switched to formset, now not saving at all. Before was only saving last entry of challenge learning objectives." />
     <MESSAGE value="Rolled back to forms instead of formsets. Might need to write a function based view to get this model to work." />
@@ -865,7 +863,9 @@
     <MESSAGE value="Completion level for challenge hooked up." />
     <MESSAGE value="Added completion level and general feedback to eval detail view. Currently&#10;possible to submit multiple instances of feedback form. Need to put &#10;check in for existing feedback instance or switch to formsets and use&#10;solution from RubricLineFormset" />
     <MESSAGE value="Working on challenge total slider." />
-    <option name="LAST_COMMIT_MESSAGE" value="Working on challenge total slider." />
+    <MESSAGE value="Total slider now moves with individual slider updates and correctly &#10;computes total progress." />
+    <MESSAGE value="styled vert slider a bit: made wider, taller, bolded &quot;Ready&quot;." />
+    <option name="LAST_COMMIT_MESSAGE" value="styled vert slider a bit: made wider, taller, bolded &quot;Ready&quot;." />
   </component>
   <component name="editorHistoryManager">
     <entry file="das://cd8b9ece-a841-453b-a5a7-7ec1a6ec5a87/database/postgres/schema/public/table/rubrics_learningobjective" />
@@ -1145,13 +1145,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/account/static/css/base.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="419" column="18" lean-forward="true" selection-start-line="419" selection-start-column="18" selection-end-line="419" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/solution_form.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -1159,24 +1152,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/rubricFinalForm.html">
+    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/evalDetail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="28" selection-start-line="28" selection-end-line="28" />
+        <state relative-caret-position="344">
+          <caret line="35" column="18" lean-forward="true" selection-start-line="35" selection-start-column="18" selection-end-line="35" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/evalDetail.html">
+    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/rubricFinalForm.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="446">
-          <caret line="35" column="18" lean-forward="true" selection-start-line="35" selection-start-column="18" selection-end-line="35" selection-end-column="18" />
+        <state relative-caret-position="476">
+          <caret line="37" column="14" lean-forward="true" selection-start-line="37" selection-start-column="14" selection-end-line="37" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/rubric_form.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="51" lean-forward="true" selection-start-line="51" selection-end-line="51" />
+        <state relative-caret-position="165">
+          <caret line="75" column="7" selection-start-line="75" selection-start-column="7" selection-end-line="75" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/account/static/css/base.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="425" column="18" selection-start-line="425" selection-start-column="18" selection-end-line="425" selection-end-column="18" />
         </state>
       </provider>
     </entry>
