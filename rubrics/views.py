@@ -97,7 +97,7 @@ class RubricFinalFormView(FormView):
         fart = 0
         for object in completionLevelObj:
             fart += int(object.completionLevel)
-
+        context['usersolution'] = UserSolution.objects.get(id=rubric)
         userSolution = UserSolution.objects.get(id=rubric)
         challenge = userSolution.challengeName
         context['form'] = RubricForm(initial={'userSolution': userSolution, 'challenge': challenge, 'evaluator': self.request.user, 'challengeCompletionLevel': fart})

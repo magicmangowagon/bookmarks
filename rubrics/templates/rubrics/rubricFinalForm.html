@@ -7,7 +7,7 @@
 {% block content %}
 
     <h1>{{ usersolution.challengeName }}</h1>
-<p>Submitted by {{ usersolution.userOwner }}</p>
+<p>Submitted by {{ usersolution.userOwner.first_name }} {{ usersolution.userOwner.last_name }}</p>
 
     {% if userRole == 4 or 3 %}
     <a href="/solutionEval/{{ usersolution.id }}">Edit</a>
@@ -25,7 +25,7 @@
             <li style="width: 19%"><p>Feedback
             </p>{{  rubricLine.feedback }}</li>
         </ul>
-        <p>Completion Level - {{ rubricLine.completionLevel }}</p>
+        <div class="completionLevel">Completion Level &nbsp;<span class="scoreBubble">{{ rubricLine.completionLevel }}</span></div>
         </div>
     {% endfor %}
     <form action=""  method="post">
