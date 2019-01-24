@@ -414,19 +414,27 @@ img.user-detail {
     position: fixed;
     top: 100px;
     right: 24px;
+    background-color: #efefef;
+    padding: 12px;
+    align: center;
+
 }
 
-.progressContainer {
+.vertSliderContainer h3
+{
+    font-weight: bolder;
+}
+
+#progressContainer {
     height: 100px;
-    width: 24px;
-    background-color: #efefef;
+    background-color: #ffffff;
     position: relative;
 }
 
 #progressBar {
     height: 1%;
     width: 100%;
-    background-color: #0ac33e;
+    background-color: #003469;
     position: absolute;
     bottom: 0px;
 }

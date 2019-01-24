@@ -74,7 +74,7 @@ Evaluate a Challenge
 
     <div class="vertSliderContainer">
     <h3>Ready?</h3>
-        <div class="progressContainer">
+        <div id="progressContainer">
             <div id="progressBar">
 
             </div>
@@ -82,9 +82,13 @@ Evaluate a Challenge
 
     <script>
         var sliderFields = document.getElementsByClassName("slider");
-        var progressBar = document.getElementById("progressBar")
+        var progressBar = document.getElementById("progressBar");
+        var progressContainer = document.getElementById("progressContainer");
+
         var sliderTotals = 0;
         var sliderMax = 0;
+
+        updateScreenHeight();
 
         for(var i = 0; i < sliderFields.length; i++)
         {
@@ -95,12 +99,18 @@ Evaluate a Challenge
 
         function updateChallengeTotal()
         {
-            sliderTotals = 0
+            sliderTotals = 0;
             for(var i = 0; i < sliderFields.length; i++)
             {
                 sliderTotals += parseInt(sliderFields[i].value);
             }
             progressBar.style.height = (sliderTotals/sliderFields.length) + '%';
+        }
+
+        function updateScreenHeight()
+        {
+            var screenHeight = window.innerHeight;
+            progressContainer.style.height = (screenHeight - (screenHeight * .35)) + 'px';
         }
     </script>
 
