@@ -13,8 +13,8 @@
     <a href="/solutionEval/{{ usersolution.id }}">Edit</a>
     {% endif %}
     {% for rubricLine in evaluation %}
-        <h2>{{ rubricLine.learningObjective }}</h2>
         <div class="evalField">
+        <h3>{{ rubricLine.learningObjective }}</h3>
         <ul style="width: 100%">
             <li style="width: 30%"><p>Evidence Present
             </p>{{  rubricLine.evidencePresent }}</li>

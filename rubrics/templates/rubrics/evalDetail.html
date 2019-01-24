@@ -13,8 +13,9 @@
     <a href="/solutionEval/{{ usersolution.id }}">Edit</a>
     {% endif %}
     {% for rubricLine in evaluation %}
-        <h2>{{ rubricLine.learningObjective }}</h2>
+
         <div class="evalField">
+        <h3>{{ rubricLine.learningObjective }}</h3>
         <ul style="width: 100%">
             <li style="width: 30%"><p>Evidence Present
             </p>{{  rubricLine.evidencePresent }}</li>
@@ -25,11 +26,20 @@
             <li style="width: 19%"><p>Feedback
             </p>{{  rubricLine.feedback }}</li>
         </ul>
+
+        </div>
         <p>Completion Level - {{ rubricLine.completionLevel }}</p>
     {% endfor %}
-    <p>General Feedback</p>
-    <p>{{ evalFinalForm.generalFeedback }}</p>
-    <p>Completed?</p>
+    <h2>General Feedback</h2>
+
+    <div class="evalField">
+        <ul>
+            <li>{{ evalFinalForm.generalFeedback }}</li>
+        </ul>
+    </div>
+
+    <p></p>
+    <h3>Completed?</h3>
     <p>
         {% if evalFinalForm.challengeCompletionLevel > 49 %}
         Yes

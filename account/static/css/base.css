@@ -4,9 +4,34 @@ ul{
     padding: 0;
 }
 
+.evalField ul {
+    display: flex;
+    flex-direction: row;
+}
+
 .evalField li {
-    display: inline-block;
+    flex: 1;
     background-color: #efefef;
+    margin: 6px;
+    padding: 3px;
+    justify-content: center;
+    display: inline-block;
+    min-height: 100px;
+}
+
+.evalField h3 {
+    font-size: 18pt;
+    font-weight: 400;
+    color: white;
+    padding-left: 6px;
+    background-color: #00a497;
+}
+
+.evalField p {
+    font-weight: bold;
+    margin-top: 0px;
+    text-align: center;
+    border-bottom: 1px solid #bbb;
 }
 
 .rubricField li {
@@ -424,6 +449,7 @@ img.user-detail {
 {
     font-weight: bolder;
     color: #00a497;
+    margin-top: 0px;
 }
 
 #progressContainer {
