@@ -27,11 +27,28 @@ ul{
     background-color: #00a497;
 }
 
-.evalField p {
+.evalField ul p {
     font-weight: bold;
     margin-top: 0px;
     text-align: center;
     border-bottom: 1px solid #bbb;
+}
+
+.completionLevel {
+    padding: 10px;
+    margin-bottom: 24px;
+    background-color: #003469;
+    border-radius: 0 14px 14px 0;
+    font-weight: bolder;
+    color: #ffffff;
+    display: inline-block;
+}
+
+.scoreBubble{
+    border-radius: 90px;
+    background-color: white;
+    color: #00a497;
+    padding: 6px;
 }
 
 .rubricField li {
@@ -441,7 +458,7 @@ img.user-detail {
     right: 24px;
     background-color: #efefef;
     padding: 12px;
-    align: center;
+    text-align: center;
 
 }
 

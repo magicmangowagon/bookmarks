@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="f9d2353c-1e9e-47b8-8190-35e7ab7af957" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account/static/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/account/static/css/base.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rubrics/templates/rubrics/evalDetail.html" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/templates/rubrics/evalDetail.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -84,8 +86,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="198" column="72" lean-forward="true" selection-start-line="198" selection-start-column="72" selection-end-line="198" selection-end-column="72" />
+            <state relative-caret-position="306">
+              <caret line="199" column="34" lean-forward="true" selection-start-line="199" selection-start-column="34" selection-end-line="199" selection-end-column="34" />
               <folding>
                 <element signature="e#0#54#0" expanded="true" />
               </folding>
@@ -108,8 +110,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/rubricFinalForm.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="37" column="14" lean-forward="true" selection-start-line="37" selection-start-column="14" selection-end-line="37" selection-end-column="14" />
+            <state relative-caret-position="136">
+              <caret line="11" column="31" lean-forward="true" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -133,34 +135,18 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rubrics/forms.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="403">
-              <caret line="41" column="123" selection-start-line="41" selection-start-column="123" selection-end-line="41" selection-end-column="123" />
-              <folding>
-                <element signature="e#0#24#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rubrics/admin.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="833">
-              <caret line="52" column="33" selection-start-line="52" selection-start-column="33" selection-end-line="52" selection-end-column="33" />
-              <folding>
-                <element signature="e#0#32#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/evalDetail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="344">
-              <caret line="35" column="18" lean-forward="true" selection-start-line="35" selection-start-column="18" selection-end-line="35" selection-end-column="18" />
+            <state relative-caret-position="310">
+              <caret line="30" column="60" selection-start-line="30" selection-start-column="60" selection-end-line="30" selection-end-column="60" />
+              <folding>
+                <element signature="n#style#0;n#ul#0;n#div#0;n#table#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#li#0;n#ul#0;n#div#0;n#table#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#li#1;n#ul#0;n#div#0;n#table#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#li#0;n#ul#0;n#div#0;n#table#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#li#1;n#ul#0;n#div#0;n#table#0;n#!!top" expanded="true" />
+                <element signature="e#971#977#0#HTML" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -168,8 +154,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/account/static/css/base.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="425" column="18" selection-start-line="425" selection-start-column="18" selection-end-line="425" selection-end-column="18" />
+            <state relative-caret-position="429">
+              <caret line="46" column="13" lean-forward="true" selection-start-line="46" selection-start-column="13" selection-end-line="46" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -233,16 +219,16 @@
         <option value="$PROJECT_DIR$/rubrics/models.py" />
         <option value="$PROJECT_DIR$/rubrics/forms.py" />
         <option value="$PROJECT_DIR$/rubrics/views.py" />
-        <option value="$PROJECT_DIR$/rubrics/templates/rubrics/evalDetail.html" />
-        <option value="$PROJECT_DIR$/rubrics/templates/rubrics/rubricFinalForm.html" />
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/rubric_form.html" />
+        <option value="$PROJECT_DIR$/rubrics/templates/rubrics/rubricFinalForm.html" />
+        <option value="$PROJECT_DIR$/rubrics/templates/rubrics/evalDetail.html" />
         <option value="$PROJECT_DIR$/account/static/css/base.css" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="952" />
-    <option name="width" value="976" />
+    <option name="x" value="843" />
+    <option name="width" value="1085" />
     <option name="height" value="1048" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -391,21 +377,7 @@
       <workItem from="1547565888884" duration="25608000" />
       <workItem from="1547684153502" duration="31000" />
       <workItem from="1547686593612" duration="16583000" />
-      <workItem from="1548171349767" duration="32197000" />
-    </task>
-    <task id="LOCAL-00024" summary="Adding migrations to commit for Heroku upload">
-      <created>1543959552526</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1543959552526</updated>
-    </task>
-    <task id="LOCAL-00025" summary="Trying to fix heroku deploy. Messing with Rubric form (submission from that from is broken).">
-      <created>1543976203379</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1543976203379</updated>
+      <workItem from="1548171349767" duration="37734000" />
     </task>
     <task id="LOCAL-00026" summary="Change LO rubric fields to optional">
       <created>1543981440247</created>
@@ -736,14 +708,28 @@
       <option name="project" value="LOCAL" />
       <updated>1548300092145</updated>
     </task>
-    <option name="localTasksCounter" value="73" />
+    <task id="LOCAL-00073" summary="styled vert slider a bit: made wider, taller, bolded &quot;Ready&quot;.">
+      <created>1548300948699</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1548300948699</updated>
+    </task>
+    <task id="LOCAL-00074" summary="Cleaned up front end. Flex boxes for Eval Fields, cleaned up feedback box&#10;titles, added bg color to all fields. Need to fix issue with existing&#10;general feedback in the rubric.">
+      <created>1548356121340</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1548356121340</updated>
+    </task>
+    <option name="localTasksCounter" value="75" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="270234000" />
+    <option name="totallyTimeSpent" value="275771000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="952" y="0" width="976" height="1048" extended-state="0" />
+    <frame x="843" y="0" width="1085" height="1048" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.20196506" />
@@ -768,7 +754,7 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="SciView" order="3" />
-      <window_info anchor="right" id="Database" order="4" weight="0.6943231" />
+      <window_info anchor="right" id="Database" order="4" weight="0.6932907" />
     </layout>
     <layout-to-restore>
       <window_info content_ui="combo" id="Project" order="0" weight="0.26171428" />
@@ -839,7 +825,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Eval list view functioning, eval detail partly done. Correctly displaying number of rubricLines but not the actual data within." />
     <MESSAGE value="Rubric form not functioning correctly. Switched to formset, now not saving at all. Before was only saving last entry of challenge learning objectives." />
     <MESSAGE value="Rolled back to forms instead of formsets. Might need to write a function based view to get this model to work." />
     <MESSAGE value="Formset is displaying correctly but still only saving the last entry to the DB." />
@@ -864,7 +849,8 @@
     <MESSAGE value="Working on challenge total slider." />
     <MESSAGE value="Total slider now moves with individual slider updates and correctly &#10;computes total progress." />
     <MESSAGE value="styled vert slider a bit: made wider, taller, bolded &quot;Ready&quot;." />
-    <option name="LAST_COMMIT_MESSAGE" value="styled vert slider a bit: made wider, taller, bolded &quot;Ready&quot;." />
+    <MESSAGE value="Cleaned up front end. Flex boxes for Eval Fields, cleaned up feedback box&#10;titles, added bg color to all fields. Need to fix issue with existing&#10;general feedback in the rubric." />
+    <option name="LAST_COMMIT_MESSAGE" value="Cleaned up front end. Flex boxes for Eval Fields, cleaned up feedback box&#10;titles, added bg color to all fields. Need to fix issue with existing&#10;general feedback in the rubric." />
   </component>
   <component name="editorHistoryManager">
     <entry file="das://cd8b9ece-a841-453b-a5a7-7ec1a6ec5a87/database/postgres/schema/public/table/rubrics_learningobjective" />
@@ -1090,12 +1076,53 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="293">
+          <caret line="118" column="27" lean-forward="true" selection-start-line="118" selection-start-column="27" selection-end-line="118" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/rubric_form.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="75" column="7" selection-start-line="75" selection-start-column="7" selection-end-line="75" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="16" column="108" selection-start-line="16" selection-start-column="91" selection-end-line="16" selection-end-column="108" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://dac5d1e4-a2f5-4c92-bb01-b991b9cb2863/database/postgres/schema/public/table/rubrics_usersolution">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://dac5d1e4-a2f5-4c92-bb01-b991b9cb2863/database/postgres/schema/public/table/rubrics_rubric">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="199" column="34" lean-forward="true" selection-start-line="199" selection-start-column="34" selection-end-line="199" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#54#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1110,40 +1137,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://dac5d1e4-a2f5-4c92-bb01-b991b9cb2863/database/postgres/schema/public/table/rubrics_usersolution">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="118" column="27" lean-forward="true" selection-start-line="118" selection-start-column="27" selection-end-line="118" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="198" column="72" lean-forward="true" selection-start-line="198" selection-start-column="72" selection-end-line="198" selection-end-column="72" />
-          <folding>
-            <element signature="e#0#54#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://dac5d1e4-a2f5-4c92-bb01-b991b9cb2863/database/postgres/schema/public/table/rubrics_rubric">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/solution_form.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -1151,31 +1144,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/evalDetail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="35" column="18" lean-forward="true" selection-start-line="35" selection-start-column="18" selection-end-line="35" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/rubricFinalForm.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="37" column="14" lean-forward="true" selection-start-line="37" selection-start-column="14" selection-end-line="37" selection-end-column="14" />
+        <state relative-caret-position="136">
+          <caret line="11" column="31" lean-forward="true" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/rubric_form.html">
+    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/evalDetail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="75" column="7" selection-start-line="75" selection-start-column="7" selection-end-line="75" selection-end-column="7" />
+        <state relative-caret-position="310">
+          <caret line="30" column="60" selection-start-line="30" selection-start-column="60" selection-end-line="30" selection-end-column="60" />
+          <folding>
+            <element signature="n#style#0;n#ul#0;n#div#0;n#table#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#li#0;n#ul#0;n#div#0;n#table#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#li#1;n#ul#0;n#div#0;n#table#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#li#0;n#ul#0;n#div#0;n#table#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#li#1;n#ul#0;n#div#0;n#table#0;n#!!top" expanded="true" />
+            <element signature="e#971#977#0#HTML" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/account/static/css/base.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="425" column="18" selection-start-line="425" selection-start-column="18" selection-end-line="425" selection-end-column="18" />
+        <state relative-caret-position="429">
+          <caret line="46" column="13" lean-forward="true" selection-start-line="46" selection-start-column="13" selection-end-line="46" selection-end-column="13" />
         </state>
       </provider>
     </entry>
