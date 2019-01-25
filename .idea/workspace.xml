@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9d2353c-1e9e-47b8-8190-35e7ab7af957" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/bookmarks.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/bookmarks.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bookmarks/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/bookmarks/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/templates/rubrics/solution_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/templates/rubrics/solution_form.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -121,8 +118,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bookmarks/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="293">
-              <caret line="128" lean-forward="true" selection-start-line="128" selection-end-line="128" />
+            <state relative-caret-position="310">
+              <caret line="129" column="21" selection-start-line="129" selection-start-column="21" selection-end-line="129" selection-end-column="21" />
               <folding>
                 <element signature="e#310#319#0" expanded="true" />
               </folding>
@@ -219,10 +216,10 @@
         <option value="$PROJECT_DIR$/account/static/css/base.css" />
         <option value="$PROJECT_DIR$/rubrics/views.py" />
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/rubricFinalForm.html" />
-        <option value="$PROJECT_DIR$/bookmarks/settings.py" />
         <option value="$PROJECT_DIR$/rubrics/models.py" />
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/solution_form.html" />
         <option value="$PROJECT_DIR$/bookmarks/urls.py" />
+        <option value="$PROJECT_DIR$/bookmarks/settings.py" />
       </list>
     </option>
   </component>
@@ -358,14 +355,7 @@
       <workItem from="1547684153502" duration="31000" />
       <workItem from="1547686593612" duration="16583000" />
       <workItem from="1548171349767" duration="40298000" />
-      <workItem from="1548429317666" duration="7353000" />
-    </task>
-    <task id="LOCAL-00028" summary="printing Learning Objectives on Challenge page now. Added competency group letter and number">
-      <created>1544038439325</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1544038439325</updated>
+      <workItem from="1548429317666" duration="7552000" />
     </task>
     <task id="LOCAL-00029" summary="Learning Objective loop working on rubric form. Formset dropping in the correct fields. Need to change layout and confirm feedback is stored correctly.">
       <created>1544107627619</created>
@@ -703,11 +693,18 @@
       <option name="project" value="LOCAL" />
       <updated>1548357830572</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="Setting up s3 storage. 403 error at the moment. Need to add a message &#10;about empty files not uploading.">
+      <created>1548450336108</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1548450336108</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="285688000" />
+    <option name="totallyTimeSpent" value="285887000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="943" y="0" width="985" height="1048" extended-state="0" />
@@ -807,7 +804,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Rubric form not functioning correctly. Switched to formset, now not saving at all. Before was only saving last entry of challenge learning objectives." />
     <MESSAGE value="Rolled back to forms instead of formsets. Might need to write a function based view to get this model to work." />
     <MESSAGE value="Formset is displaying correctly but still only saving the last entry to the DB." />
     <MESSAGE value="Completely redoing rubric form with formsets. Currently have the framework in.&#10;Need to define extra fields from challenge.learningObjs count and feed the LO &#10;field from that as well." />
@@ -832,7 +828,8 @@
     <MESSAGE value="Total slider now moves with individual slider updates and correctly &#10;computes total progress." />
     <MESSAGE value="styled vert slider a bit: made wider, taller, bolded &quot;Ready&quot;." />
     <MESSAGE value="Cleaned up front end. Flex boxes for Eval Fields, cleaned up feedback box&#10;titles, added bg color to all fields. Need to fix issue with existing&#10;general feedback in the rubric." />
-    <option name="LAST_COMMIT_MESSAGE" value="Cleaned up front end. Flex boxes for Eval Fields, cleaned up feedback box&#10;titles, added bg color to all fields. Need to fix issue with existing&#10;general feedback in the rubric." />
+    <MESSAGE value="Setting up s3 storage. 403 error at the moment. Need to add a message &#10;about empty files not uploading." />
+    <option name="LAST_COMMIT_MESSAGE" value="Setting up s3 storage. 403 error at the moment. Need to add a message &#10;about empty files not uploading." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/097b6c5f-6f5e-48f8-bdc6-fb00a1d03d0c/console.sql">
@@ -1151,8 +1148,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bookmarks/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="128" lean-forward="true" selection-start-line="128" selection-end-line="128" />
+        <state relative-caret-position="310">
+          <caret line="129" column="21" selection-start-line="129" selection-start-column="21" selection-end-line="129" selection-end-column="21" />
           <folding>
             <element signature="e#310#319#0" expanded="true" />
           </folding>

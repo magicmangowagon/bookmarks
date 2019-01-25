@@ -127,8 +127,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-AWS_ACCESS_KEY_ID = 'AKIAJVJMFWNZR5JG5D5Q'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
 AWS_STORAGE_BUCKET_NAME = 'rubrics-bucket'
 
 STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
