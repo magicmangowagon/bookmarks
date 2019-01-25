@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tinymce',
-    'djrichtextfield'
+    'djrichtextfield',
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -126,12 +127,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
+AWS_ACCESS_KEY_ID = 'AKIAJVJMFWNZR5JG5D5Q'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'rubrics-bucket'
+
+STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-STATIC_URL = '/static/'
+STATIC_URL = 'http://s3.amazonaws.com/%s' % AWS_STORAGE_BUCKET_NAME + '/'
 
 STATIC_FILES_DIRS = (os.path.join(PROJECT_ROOT, 'static'))
 
-MEDIA_URL = '/media/'
+MEDIA_URL = 'http://s3.amazonaws.com/%s' % AWS_STORAGE_BUCKET_NAME + '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 LOGIN_REDIRECT_URL = 'dashboard'
