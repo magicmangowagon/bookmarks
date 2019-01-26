@@ -102,20 +102,18 @@ class RubricFinalFormView(FormView):
         challenge = userSolution.challengeName
 
         if Rubric.objects.all().filter(userSolution=userSolution).exists():
-            RubricFormSet = modelformset_factory(Rubric, extra=0,  formset=RubricForm, fields=(
-                'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel',
-                'student'), )
+            RubricFormSet = modelformset_factory(Rubric, extra=0,  formset=RubricForm, fields=('userSolution', 'challenge', 'evaluator',
+                                                                       'challengeCompletionLevel'), )
 
             formset = RubricFormSet(queryset=Rubric.objects.all().filter(userSolution=userSolution))
 
-        # create new rubric, checked for rubricline objects from this userSolution
-        # and none existed, so queryset is none and extra forms is set to LO count
         else:
             RubricFormSet = modelformset_factory(Rubric, extra=1, formset=RubricForm, fields=('userSolution', 'challenge', 'evaluator',
                                                                        'challengeCompletionLevel'), )
 
-            formset = RubricFormSet(initial={'userSolution': userSolution, 'challenge': challenge,
-                                                 'evaluator': self.request.user, 'challengeCompletionLevel': fart})
+            formset = RubricFormSet(initial={'userSolution': userSolution.pk, 'challenge': challenge,
+                                                 'evaluator': self.request.user, 'challengeCompletionLevel': fart},
+                                    queryset=Rubric.objects.none())
 
         context['form'] = formset
         return context
