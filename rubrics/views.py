@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from .models import Challenge, UserSolution, Rubric, RubricLine, User, LearningObjective, Competency
-from .forms import ChallengeForm, UserFileForm, RubricLineForm, RubricLineFormset, RubricForm
+from .forms import ChallengeForm, UserFileForm, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet
 from django.views.generic import ListView, DetailView, FormView, UpdateView
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
@@ -86,7 +86,7 @@ class SolutionListView(ListView):
 class RubricFinalFormView(FormView):
     template_name = 'rubrics/rubricFinalForm.html'
     model = UserSolution
-    form_class = RubricForm
+    form_class = RubricFormSet
     success_url = '/evals'
 
     def get_context_data(self, **kwargs):
@@ -100,11 +100,29 @@ class RubricFinalFormView(FormView):
         context['usersolution'] = UserSolution.objects.get(id=rubric)
         userSolution = UserSolution.objects.get(id=rubric)
         challenge = userSolution.challengeName
-        context['form'] = RubricForm(initial={'userSolution': userSolution, 'challenge': challenge, 'evaluator': self.request.user, 'challengeCompletionLevel': fart})
+
+        if Rubric.objects.all().filter(userSolution=userSolution).exists():
+            RubricFormSet = modelformset_factory(Rubric, extra=0,  formset=RubricForm, fields=(
+                'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel',
+                'student'), )
+
+            formset = RubricFormSet(queryset=Rubric.objects.all().filter(userSolution=userSolution))
+
+        # create new rubric, checked for rubricline objects from this userSolution
+        # and none existed, so queryset is none and extra forms is set to LO count
+        else:
+            RubricFormSet = modelformset_factory(Rubric, extra=1, formset=RubricForm, fields=('userSolution', 'challenge', 'evaluator',
+                                                                       'challengeCompletionLevel'), )
+
+            formset = RubricFormSet(initial={'userSolution': userSolution, 'challenge': challenge,
+                                                 'evaluator': self.request.user, 'challengeCompletionLevel': fart})
+
+        context['form'] = formset
         return context
 
     def post(self, request, *args, **kwargs):
-        form = RubricForm(request.POST)
+        form = RubricFormSet(request.POST)
+
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/evals')

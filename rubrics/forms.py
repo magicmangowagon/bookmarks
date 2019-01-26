@@ -32,12 +32,12 @@ class RubricLineForm(BaseModelFormSet):
         # self.queryset = RubricLine.objects.none()
 
 
-class RubricForm(ModelForm):
-    class Meta:
-        model = Rubric
-        fields = ('generalFeedback', 'userSolution', 'challengeCompletionLevel', 'evaluator', 'challenge')
-        # widgets = {'userSolution': forms.HiddenInput(), 'challengeCompletionLevel': forms.HiddenInput()}
+class RubricForm(BaseModelFormSet):
+    def __init__(self, *args, **kwargs):
+        super(RubricForm, self).__init__(*args, **kwargs)
 
 
 RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, fields=('evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student',
                   'learningObjective', ))
+
+RubricFormSet = modelformset_factory(RubricForm, formset=RubricForm, fields=('generalFeedback', 'userSolution', 'challengeCompletionLevel', 'evaluator', 'challenge'))

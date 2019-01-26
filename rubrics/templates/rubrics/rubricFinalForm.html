@@ -29,6 +29,7 @@
         </div>
     {% endfor %}
     <form action=""  method="post">
+    {{ formset.management_form }}
     {{ form }}
 
     {% csrf_token %}
