@@ -1,13 +1,12 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect, HttpResponseForbidden
-from .models import Challenge, UserSolution, Rubric, RubricLine, User, LearningObjective, Competency
-from .forms import ChallengeForm, UserFileForm, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet
-from django.views.generic import ListView, DetailView, FormView, UpdateView
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective
+from .forms import UserFileForm, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet
+from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
 from django.forms import modelformset_factory
 from django.contrib import messages
-from django.contrib.auth.models import User, Group
 from django.shortcuts import redirect
 
 
@@ -103,17 +102,16 @@ class RubricFinalFormView(FormView):
 
         if Rubric.objects.all().filter(userSolution=userSolution).exists():
             RubricFormSet = modelformset_factory(Rubric, extra=0,  formset=RubricForm, fields=('userSolution', 'challenge', 'evaluator',
-                                                                       'challengeCompletionLevel'), )
+                                                                                               'generalFeedback', 'challengeCompletionLevel'), )
 
             formset = RubricFormSet(queryset=Rubric.objects.all().filter(userSolution=userSolution))
 
         else:
             RubricFormSet = modelformset_factory(Rubric, extra=1, formset=RubricForm, fields=('userSolution', 'challenge', 'evaluator',
-                                                                       'challengeCompletionLevel'), )
+                                                                                              'generalFeedback', 'challengeCompletionLevel'), )
 
-            formset = RubricFormSet(initial={'userSolution': userSolution.pk, 'challenge': challenge,
-                                                 'evaluator': self.request.user, 'challengeCompletionLevel': fart},
-                                    queryset=Rubric.objects.none())
+            formset = RubricFormSet(initial=[{'userSolution': userSolution, 'challenge': challenge,
+                                                 'evaluator': self.request.user, 'challengeCompletionLevel': fart}], queryset=Rubric.objects.none())
 
         context['form'] = formset
         return context
