@@ -1,6 +1,6 @@
 from django import forms
-from django.forms import modelformset_factory, ModelForm, BaseModelFormSet
-from .models import LearningObjective, Challenge, UserSolution, Rubric, RubricLine
+from django.forms import modelformset_factory, ModelForm, BaseModelFormSet, inlineformset_factory
+from .models import LearningObjective, Challenge, UserSolution, Rubric, RubricLine, CriteriaLine, Criterion
 from django.views.generic import DetailView
 
 
@@ -34,6 +34,9 @@ class RubricLineForm(BaseModelFormSet):
 class RubricForm(BaseModelFormSet):
     def __init__(self, *args, **kwargs):
         super(RubricForm, self).__init__(*args, **kwargs)
+
+
+CriterionFormSet = inlineformset_factory(Criterion, CriteriaLine, fields=('achievement',))
 
 
 RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, fields=('evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student',

@@ -116,6 +116,20 @@ class RubricLine(models.Model):
     learningObjective = models.ForeignKey(LearningObjective, on_delete=models.CASCADE)
 
 
+class CriteriaLine(models.Model):
+    criteria = models.ForeignKey(Criterion, on_delete=models.CASCADE)
+    student = models.ForeignKey(UserSolution, on_delete=models.CASCADE)
+    A = 'A'
+    B = 'B'
+    C = 'C'
+    groupLetter = (
+        ('A', "Yes"),
+        ('B', "No"),
+        ('C', "Evidence for and against")
+    )
+    achievement = models.CharField(max_length=1, choices=groupLetter, default='')
+
+
 class Rubric(models.Model):
     # competencies = models.ForeignKey(Competency, on_delete=models.CASCADE)
     generalFeedback = models.TextField(blank=True, default='')

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective
-from .forms import UserFileForm, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet
+from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion
+from .forms import UserFileForm, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, CriterionFormSet
 from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
@@ -102,7 +102,7 @@ class RubricFinalFormView(FormView):
 
         if Rubric.objects.all().filter(userSolution=userSolution).exists():
             RubricFormSet = modelformset_factory(Rubric, extra=0,  formset=RubricForm, fields=('userSolution', 'challenge', 'evaluator',
-                                                                                               'generalFeedback', 'challengeCompletionLevel'), )
+                                                                                               'generalFeedback', 'challengeCompletionLevel', ), )
 
             formset = RubricFormSet(queryset=Rubric.objects.all().filter(userSolution=userSolution))
 
@@ -146,26 +146,26 @@ class RubricFormView(FormView):
         student = UserSolution.objects.get(pk=usersolution)
         context['student'] = student
         context['challenge'] = challenge
-        los = challenge.learningObjs.all()
         loCount = LearningObjective.objects.filter(challenge=challenge).count()
-
         context['userRole'] = self.request.user.profile.role
 
-        # edit view, checks for rubricsLine objects from this userSolution
+        # edit view, checks for rubricLine objects from this userSolution
         # and sets the formset query to that instance
+
         if RubricLine.objects.all().filter(student=usersolution).exists():
             RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=0, fields=(
                 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel',
-                'student'), )
+                'student', ), )
 
             formset = RubricLineFormset(queryset=RubricLine.objects.all().filter(student=usersolution))
 
         # create new rubric, checked for rubricline objects from this userSolution
         # and none existed, so queryset is none and extra forms is set to LO count
+
         else:
             RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=loCount, fields=(
                 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel',
-                'student'), )
+                'student', ), )
 
             formset = RubricLineFormset(
                 initial=[{'learningObjective': learningObjective.pk, 'student': student} for learningObjective in
@@ -179,7 +179,7 @@ class RubricFormView(FormView):
         if formset.is_valid():
             formset.save()
             return redirect('solution-end-eval', self.kwargs['pk'])
-                # HttpResponseRedirect(reverse('solution-end-eval', args=(self.kwargs['pk']),))
+
         else:
             messages.error(request, "Error")
             return self.render_to_response(self.get_context_data(formset=formset))
