@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion
-from .forms import UserFileForm, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, CriterionFormSet
+from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion, CriteriaLine
+from .forms import UserFileForm, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, CriterionFormSet, CriteriaForm
 from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
@@ -148,9 +148,13 @@ class RubricFormView(FormView):
         context['challenge'] = challenge
         loCount = LearningObjective.objects.filter(challenge=challenge).count()
         context['userRole'] = self.request.user.profile.role
+        criteriaList = Criterion.objects.all()
+        # for learningObjective in lo_list:
+           # criteriaList[lo_list.index].append(Criterion.objects.all().filter(learningObj=learningObjective.pk))
 
         # edit view, checks for rubricLine objects from this userSolution
         # and sets the formset query to that instance
+        context['criteria'] = criteriaList
 
         if RubricLine.objects.all().filter(student=usersolution).exists():
             RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=0, fields=(
@@ -171,7 +175,10 @@ class RubricFormView(FormView):
                 initial=[{'learningObjective': learningObjective.pk, 'student': student} for learningObjective in
                          lo_list], queryset=RubricLine.objects.none())
 
+        CriterionFormSet = modelformset_factory(CriteriaLine, form=CriteriaForm, fields=('criteria', 'achievement', ), )
+        cformset = CriterionFormSet
         context['formset'] = formset
+        context['cformset'] = cformset
         return context
 
     def post(self, request, *args, **kwargs):
@@ -223,24 +230,4 @@ def success(request, pk):
     return render(request, 'rubrics/success.html', )
 
 
-# function based view not being used, supplanted by Class based view above
-def solution_submission(request, pk):
-    submitted = False
-    if request.method == "POST":
-        form = UserFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            usersolution = form.save(commit=False)
-            try:
-                usersolution.userOwner = request.user
-                usersolution.challengeName = Challenge.pk
-            except Exception:
-                pass
-            form.save()
-            return HttpResponseRedirect('?submitted=True')
-    else:
-        form = UserFileForm()
-        if 'submitted' in request.GET:
-            submitted = True
-
-    return render(request, 'rubrics/solution_form.html', {'form': form, 'submitted': submitted})
 

@@ -36,7 +36,13 @@ class RubricForm(BaseModelFormSet):
         super(RubricForm, self).__init__(*args, **kwargs)
 
 
-CriterionFormSet = inlineformset_factory(Criterion, CriteriaLine, fields=('achievement',))
+class CriteriaForm(ModelForm):
+    class Meta:
+        model = CriteriaLine
+        fields = ('criteria', 'achievement', )
+
+
+CriterionFormSet = inlineformset_factory(Criterion, CriteriaLine, form=CriteriaForm)
 
 
 RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, fields=('evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student',
