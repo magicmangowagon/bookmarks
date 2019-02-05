@@ -103,16 +103,17 @@ class RubricFinalFormView(FormView):
 
         if Rubric.objects.all().filter(userSolution=userSolution).exists():
             RubricFormSet = modelformset_factory(Rubric, extra=0,  formset=RubricForm, fields=('userSolution', 'challenge', 'evaluator',
-                                                                                               'generalFeedback', 'challengeCompletionLevel', ), )
+                                                                                               'generalFeedback', 'challengeCompletionLevel', ), widgets={'userSolution': forms.HiddenInput, 'challenge': forms.HiddenInput, 'evaluator': forms.HiddenInput})
 
-            formset = RubricFormSet(queryset=Rubric.objects.all().filter(userSolution=userSolution))
+            formset = RubricFormSet(queryset=Rubric.objects.all().filter(userSolution=userSolution), )
 
         else:
             RubricFormSet = modelformset_factory(Rubric, extra=1, formset=RubricForm, fields=('userSolution', 'challenge', 'evaluator',
                                                                                               'generalFeedback', 'challengeCompletionLevel'), )
 
             formset = RubricFormSet(initial=[{'userSolution': userSolution, 'challenge': challenge,
-                                                 'evaluator': self.request.user, 'challengeCompletionLevel': fart}], queryset=Rubric.objects.none())
+                                                 'evaluator': self.request.user, 'challengeCompletionLevel': fart}], queryset=Rubric.objects.none(),
+                                    widget={'userSolution': forms.HiddenInput, 'challenge': forms.HiddenInput, 'evaluator': forms.HiddenInput})
 
         context['form'] = formset
         return context
