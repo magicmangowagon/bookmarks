@@ -149,8 +149,6 @@ class RubricFormView(FormView):
         loCount = LearningObjective.objects.filter(challenge=challenge).count()
         context['userRole'] = self.request.user.profile.role
         criteriaList = Criterion.objects.all()
-        # for learningObjective in lo_list:
-           # criteriaList[lo_list.index].append(Criterion.objects.all().filter(learningObj=learningObjective.pk))
 
         # edit view, checks for rubricLine objects from this userSolution
         # and sets the formset query to that instance
@@ -175,10 +173,7 @@ class RubricFormView(FormView):
                 initial=[{'learningObjective': learningObjective.pk, 'student': student} for learningObjective in
                          lo_list], queryset=RubricLine.objects.none())
 
-        CriterionFormSet = modelformset_factory(CriteriaLine, form=CriteriaForm, fields=('criteria', 'achievement', ), )
-        cformset = CriterionFormSet
         context['formset'] = formset
-        context['cformset'] = cformset
         return context
 
     def post(self, request, *args, **kwargs):
