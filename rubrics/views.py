@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django import forms
 from django.http import HttpResponseRedirect
 from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion, CriteriaLine
 from .forms import UserFileForm, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, CriterionFormSet, CriteriaForm
@@ -157,7 +158,7 @@ class RubricFormView(FormView):
         if RubricLine.objects.all().filter(student=usersolution).exists():
             RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=0, fields=(
                 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel',
-                'student', ), )
+                'student', ), widgets={'student': forms.HiddenInput, })
 
             formset = RubricLineFormset(queryset=RubricLine.objects.all().filter(student=usersolution))
 
@@ -167,7 +168,7 @@ class RubricFormView(FormView):
         else:
             RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=loCount, fields=(
                 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel',
-                'student', ), )
+                'student', ), widgets={'student': forms.HiddenInput, })
 
             formset = RubricLineFormset(
                 initial=[{'learningObjective': learningObjective.pk, 'student': student} for learningObjective in

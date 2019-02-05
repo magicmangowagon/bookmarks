@@ -30,6 +30,9 @@ class RubricLineForm(BaseModelFormSet):
     def __init__(self, *args, **kwargs):
         super(RubricLineForm, self).__init__(*args, **kwargs)
 
+    class Meta:
+        widgets = {'student': forms.HiddenInput(), }
+
 
 class RubricForm(BaseModelFormSet):
     def __init__(self, *args, **kwargs):

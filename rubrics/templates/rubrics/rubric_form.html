@@ -48,6 +48,7 @@ Evaluate a Challenge
             <script>
                 var slider{{ form.learningObjective.value }} = document.getElementById("slider{{ form.learningObjective.value }}");
                 var output{{ form.learningObjective.value }} = document.getElementById("{{ form.completionLevel.auto_id }}");
+                var options = document.getElementById("{{ form.learningObjective.auto_id }}").getElementsByTagName("options").selected
                 slider{{ form.learningObjective.value }}.value = output{{ form.learningObjective.value }}.value;
 
                 slider{{ form.learningObjective.value }}.oninput = function()
@@ -60,6 +61,8 @@ Evaluate a Challenge
                 {
                     updateChallengeTotal();
                 }
+
+                
             </script>
         {{ form.id }}
 
@@ -115,6 +118,8 @@ Evaluate a Challenge
             var screenHeight = window.innerHeight;
             progressContainer.style.height = (screenHeight - (screenHeight * .35)) + 'px';
         }
+
+
     </script>
 
 
