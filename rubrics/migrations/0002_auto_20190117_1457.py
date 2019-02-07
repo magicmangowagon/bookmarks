@@ -11,10 +11,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='rubric',
-            name='rubricLines',
-        ),
+
         migrations.AddField(
             model_name='rubric',
             name='userSolution',
