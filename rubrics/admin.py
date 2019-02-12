@@ -40,7 +40,7 @@ class LearningObjectiveAdmin(admin.ModelAdmin):
 
 @admin.register(Competency)
 class CompetencyAdmin(admin.ModelAdmin):
-    list_display = ['name', 'description']
+    list_display = ['compGroup', 'compNumber', 'name', 'description']
 
 
 @admin.register(Challenge)

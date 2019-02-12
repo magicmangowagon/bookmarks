@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django import forms
 from django.http import HttpResponseRedirect
-from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion, CriteriaLine
+from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion, CriteriaLine, Competency
 from .forms import UserFileForm, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, CriterionFormSet, CriteriaForm
 from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.edit import FormMixin
@@ -227,6 +227,16 @@ class EvalDetailView(DetailView):
 
 def success(request, pk):
     return render(request, 'rubrics/success.html', )
+
+
+class CompetencyView(ListView):
+    model = Competency
+    template_name = "rubrics/compList.html"
+
+    def get_queryset(self, **kwargs):
+        queryset = Competency.objects.all()
+        return queryset
+    context_object_name = 'comps'
 
 
 

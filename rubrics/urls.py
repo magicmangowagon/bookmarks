@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import challenge_detail, ChallengeListView, SolutionDetailView, SolutionListView, RubricFormView, EvalDetailView, EvalListView, RubricFinalFormView
+from .views import challenge_detail, ChallengeListView, SolutionDetailView, SolutionListView, RubricFormView, EvalDetailView, EvalListView, RubricFinalFormView, CompetencyView
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
@@ -15,6 +15,6 @@ urlpatterns = [
     path('evals', login_required(EvalListView.as_view()), name='eval-list'),
     path('evals/<int:pk>', login_required(EvalDetailView.as_view()), name='eval-detail'),
     path('solutionEval/end/<int:pk>', login_required(RubricFinalFormView.as_view()), name='solution-end-eval'),
-
+    path('competency', login_required(CompetencyView.as_view()), name='competency-list'),
     # path('edit/', views.edit, name='edit'),
 ]
