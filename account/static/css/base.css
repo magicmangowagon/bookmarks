@@ -4,19 +4,18 @@ ul{
     padding: 0;
 }
 
-.evalField ul {
+.evalFieldFlexContainer {
     display: flex;
-    flex-direction: row;
+    flex-flow: row wrap;
 }
 
-.evalField li {
-    flex: 1;
+.evalFieldFlexBox {
     background-color: #efefef;
-    margin: 6px;
-    padding: 3px;
+    margin: 12px 6px;
+    padding: 10px;
     justify-content: center;
-    display: inline-block;
     min-height: 100px;
+    width: 45%;
 }
 
 .evalField h3 {
@@ -25,6 +24,12 @@ ul{
     color: white;
     padding-left: 6px;
     background-color: #00a497;
+}
+
+.evalField h4 {
+    font-size: 14pt;
+    font-weight: 400;
+    margin: 4pt 6pt 6pt 0;
 }
 
 .evalField ul p {
@@ -36,7 +41,7 @@ ul{
 
 .completionLevel {
     padding: 10px;
-    margin-bottom: 24px;
+    margin: 12px 0 24px 6px;
     background-color: #003469;
     border-radius: 0 14px 14px 0;
     font-weight: bolder;
