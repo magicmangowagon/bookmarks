@@ -241,7 +241,8 @@ class CompetencyView(ListView):
         context = super(CompetencyView, self).get_context_data(**kwargs)
 
         # put list of attached learning objectives with rubric line score for user if it exists
-
+        # I want: All learning objectives with the same compGroup and compNumber as the competency
+        # could do this in template, get whole list, print if these parameters match
         return context
     context_object_name = 'comps'
 
