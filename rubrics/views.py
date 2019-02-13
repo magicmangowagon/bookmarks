@@ -234,7 +234,7 @@ class CompetencyView(ListView):
     template_name = "rubrics/compList.html"
 
     def get_queryset(self, **kwargs):
-        queryset = Competency.objects.all()
+        queryset = Competency.objects.all().order_by('compGroup')
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -244,9 +244,7 @@ class CompetencyView(ListView):
         rubricLines = RubricLine.objects.all()
         context['rubricLines'] = rubricLines
         context['currentUser'] = self.request.user
-        # put list of attached learning objectives with rubric line score for user if it exists
-        # I want: All learning objectives with the same compGroup and compNumber as the competency
-        # could do this in template, get whole list, print if these parameters match
+
         return context
     context_object_name = 'comps'
 
