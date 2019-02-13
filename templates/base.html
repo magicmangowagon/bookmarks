@@ -9,6 +9,7 @@
 </head>
 <body>
     <div id="header">
+    <div class="headerBottom">
         <span class="logo">WWA</span>
         {% if request.user.is_authenticated %}
         <ul class="menu">
@@ -17,6 +18,9 @@
             </li>
             <li {% if section == "challenges" %}class="selected"{% endif %}>
             <a href="/">Challenges</a>
+            </li>
+            <li {% if section == "competency" %}class="selected"{% endif %}>
+            <a href="/competency">Competency</a>
             </li>
             <li {% if section == "discussion" %}class="selected"{% endif %}>
             <a href="http://discourse.wwa-tsl.org">Discussion</a>
@@ -34,6 +38,7 @@
             <a href="{% url "register" %}">Register</a>
         {% endif %}
     </span>
+    </div>
     </div>
     <div id="content">
         {% block content %}

@@ -13,7 +13,7 @@
         <div class="competencyPodContent">
         {% for learningObj in learningObjs %}
             {% if learningObj.compGroup == comp.compGroup and learningObj.compNumber == comp.compNumber %}
-                <p>{{ learningObj.compGroup }} - {{ learningObj.compNumber }}.{{ learningObj.loNumber }} {{ learningObj.name }}</p>
+                <h4>{{ learningObj.compGroup }} - {{ learningObj.compNumber }}.{{ learningObj.loNumber }} {{ learningObj.name }}</h4>
                 {% for rubricLine in rubricLines %}
                     {% if rubricLine.learningObjective.id == learningObj.id and currentUser == rubricLine.student.userOwner %}
                         <p>{{ rubricLine.student.challengeName }} - {{ rubricLine.completionLevel }}</p>

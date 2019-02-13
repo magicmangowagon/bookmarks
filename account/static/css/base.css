@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=IBM+Plex+Sans+Condensed|IBM+Plex+Sans:100,400,700|PT+Sans);
+@import url(https://fonts.googleapis.com/css?family=Dosis|Oswald);
 
 ul{
     padding: 0;
@@ -95,22 +95,31 @@ ul{
 }
 
 .competencyPod h3 {
-    font-weight: bold;
+    font-weight: 500;
     color: #FFFFFF;
     background-color: #00A495;
     padding: .5em 2em .5em .5em;
-    margin: 0 0 0 -3px;
+    margin: 0 0 0 -13px;
     box-shadow: 1px 3px 1px 0 #7f8b85;
+    font-size: 125%;
+    letter-spacing: 1px;
+}
+
+.competencyPod h4 {
+    border-bottom: 1px solid #bbb;
 }
 
 .competencyPodContent {
     padding: .5em;
 }
 
+.headerBottom {
+}
+
 body {
     margin:0;
     padding:0;
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: 'Dosis', sans-serif;
 }
 
 p {
@@ -126,7 +135,7 @@ a:hover {
     color:#12c064;
 }
 
-h1, h2, h3, h4, h5 , h6 { font-family: 'IBM Plex Sans Condensed', sans-serif; font-weight:normal; }
+h1, h2, h3, h4, h5 , h6 { font-family: 'Oswald', sans-serif; font-weight:normal; }
 
 h1 {
     border-bottom:1px solid #bbb;
@@ -147,27 +156,29 @@ ol {
     font-size:14px;
     background:#003469;
     color:#fff;
-    border-bottom:4px solid #00a497;
+    border-bottom:12px solid #00a497;
+    box-shadow: 0px 4px 7px 0px rgba(0, 0, 0, 0.2);
     overflow:auto;
 }
 
 #header .logo {
-    font-family: 'PT Sans', sans-serif;
+    font-family: 'Oswald', sans-serif;
     float:left;
     color:#ffffff;
-    font-size:20px;
+    font-size:3em;
     margin-right:10%;
+    letter-spacing: -2px;
 }
 
 #header ul.menu {
     list-style:none;
     float:left;
-    margin:0;
     padding:0;
 }
 #header ul.menu li {
     float:left;
     padding:4px 10px;
+    font-size: 12pt;
 }
 
 #header ul.menu li.selected a, #header ul.menu li.selected a:hover {
