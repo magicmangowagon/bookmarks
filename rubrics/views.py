@@ -236,6 +236,13 @@ class CompetencyView(ListView):
     def get_queryset(self, **kwargs):
         queryset = Competency.objects.all()
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(CompetencyView, self).get_context_data(**kwargs)
+
+        # put list of attached learning objectives with rubric line score for user if it exists
+
+        return context
     context_object_name = 'comps'
 
 
