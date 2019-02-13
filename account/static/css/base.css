@@ -83,6 +83,30 @@ ul{
     color: #003469;
 }
 
+.compFlexContainer {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.competencyPod {
+    background-color: #EEEEEE;
+    margin: 1em ;
+    width: 400px;
+}
+
+.competencyPod h3 {
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: #00A495;
+    padding: .5em 2em .5em .5em;
+    margin: 0 0 0 -3px;
+    box-shadow: 1px 3px 1px 0 #7f8b85;
+}
+
+.competencyPodContent {
+    padding: .5em;
+}
+
 body {
     margin:0;
     padding:0;

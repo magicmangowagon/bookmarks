@@ -6,19 +6,23 @@
 {% block content %}
 
 <h1>Competencies - {{ currentUser.first_name }}</h1>
-
+<div class="compFlexContainer">
     {% for comp in comps %}
-        {{ comp.compGroup }}.{{ comp.compNumber }} - {{ comp.name }}
+    <div class="competencyPod">
+        <h3>{{ comp.compGroup }}.{{ comp.compNumber }} - {{ comp.name }}</h3>
+        <div class="competencyPodContent">
         {% for learningObj in learningObjs %}
-            {% if learningObj.compGroup == comp.compGroup %}
+            {% if learningObj.compGroup == comp.compGroup and learningObj.compNumber == comp.compNumber %}
                 <p>{{ learningObj.compGroup }} - {{ learningObj.compNumber }}.{{ learningObj.loNumber }} {{ learningObj.name }}</p>
                 {% for rubricLine in rubricLines %}
                     {% if rubricLine.learningObjective.id == learningObj.id and currentUser == rubricLine.student.userOwner %}
-                        <p>{{ rubricLine.completionLevel }}</p>
+                        <p>{{ rubricLine.student.challengeName }} - {{ rubricLine.completionLevel }}</p>
                     {% endif %}
                 {% endfor %}
             {% endif %}
         {% endfor %}
+        </div>
+    </div>
     {% endfor %}
-
+</div>
 {% endblock content %}
