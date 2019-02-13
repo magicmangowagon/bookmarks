@@ -178,7 +178,8 @@ ol {
 #header ul.menu li {
     float:left;
     padding:4px 10px;
-    font-size: 12pt;
+    font-size: 15pt;
+    letter-spacing: 0.5px;
 }
 
 #header ul.menu li.selected a, #header ul.menu li.selected a:hover {
