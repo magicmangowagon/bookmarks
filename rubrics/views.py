@@ -239,7 +239,7 @@ class CompetencyView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(CompetencyView, self).get_context_data(**kwargs)
-        learningObjs = LearningObjective.objects.all()
+        learningObjs = LearningObjective.objects.all().order_by('compGroup', 'compNumber', 'loNumber')
         context['learningObjs'] = learningObjs
         rubricLines = RubricLine.objects.all()
         context['rubricLines'] = rubricLines

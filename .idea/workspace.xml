@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f9d2353c-1e9e-47b8-8190-35e7ab7af957" name="Default Changelist" comment="">
+    <list default="true" id="f9d2353c-1e9e-47b8-8190-35e7ab7af957" name="Default Changelist" comment="Made menu bigger.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/static/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/account/static/css/base.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/templates/rubrics/compList.html" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/templates/rubrics/compList.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rubrics/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -72,11 +70,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/rubrics/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="626">
-              <caret line="244" column="44" lean-forward="true" selection-start-line="244" selection-start-column="44" selection-end-line="244" selection-end-column="44" />
+            <state relative-caret-position="446">
+              <caret line="241" column="100" selection-start-line="241" selection-start-column="100" selection-end-line="241" selection-end-column="100" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -88,7 +86,7 @@
         <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/compList.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="300">
-              <caret line="15" column="19" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="19" />
+              <caret line="15" column="16" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -96,35 +94,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/account/static/css/base.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="419">
-              <caret line="115" column="15" selection-start-line="115" selection-start-column="15" selection-end-line="115" selection-end-column="15" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/account/templates/account/dashboard.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="21" selection-start-line="21" selection-end-line="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/challenge_detail.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="440">
-              <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/templates/base.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
-              <caret line="16" column="49" lean-forward="true" selection-start-line="16" selection-start-column="49" selection-end-line="16" selection-end-column="49" />
+            <state relative-caret-position="345">
+              <caret line="184" column="68" lean-forward="true" selection-start-line="184" selection-start-column="68" selection-end-line="184" selection-end-column="68" />
             </state>
           </provider>
         </entry>
@@ -141,6 +112,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>head</find>
+      <find>header</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -195,13 +167,13 @@
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/eval_list.html" />
         <option value="$PROJECT_DIR$/rubrics/admin.py" />
         <option value="$PROJECT_DIR$/rubrics/models.py" />
-        <option value="$PROJECT_DIR$/rubrics/views.py" />
         <option value="$PROJECT_DIR$/bookmarks/settings.py" />
         <option value="$PROJECT_DIR$/staticfiles/css/base.css" />
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/compList.html" />
-        <option value="$PROJECT_DIR$/account/static/css/base.css" />
         <option value="$PROJECT_DIR$/account/templates/account/dashboard.html" />
         <option value="$PROJECT_DIR$/templates/base.html" />
+        <option value="$PROJECT_DIR$/account/static/css/base.css" />
+        <option value="$PROJECT_DIR$/rubrics/views.py" />
       </list>
     </option>
   </component>
@@ -229,51 +201,13 @@
             <path>
               <item name="bookmarks" type="b2602c69:ProjectViewProjectNode" />
               <item name="bookmarks" type="462c0819:PsiDirectoryNode" />
-              <item name="account" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bookmarks" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bookmarks" type="462c0819:PsiDirectoryNode" />
-              <item name="account" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bookmarks" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bookmarks" type="462c0819:PsiDirectoryNode" />
-              <item name="account" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bookmarks" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bookmarks" type="462c0819:PsiDirectoryNode" />
-              <item name="account" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bookmarks" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bookmarks" type="462c0819:PsiDirectoryNode" />
-              <item name="account" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="account" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bookmarks" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bookmarks" type="462c0819:PsiDirectoryNode" />
               <item name="rubrics" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="bookmarks" type="b2602c69:ProjectViewProjectNode" />
               <item name="bookmarks" type="462c0819:PsiDirectoryNode" />
               <item name="rubrics" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bookmarks" type="b2602c69:ProjectViewProjectNode" />
-              <item name="bookmarks" type="462c0819:PsiDirectoryNode" />
-              <item name="rubrics" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="rubrics" type="462c0819:PsiDirectoryNode" />
+              <item name="migrations" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="bookmarks" type="b2602c69:ProjectViewProjectNode" />
@@ -370,42 +304,7 @@
       <workItem from="1549754879335" duration="3221000" />
       <workItem from="1549985752129" duration="7338000" />
       <workItem from="1550020196406" duration="5291000" />
-      <workItem from="1550072161327" duration="11013000" />
-    </task>
-    <task id="LOCAL-00048" summary="Eval display all getting dumped into first entry. Need to fix query set so it's displaying properly.&#10;By Usersolution">
-      <created>1546546510793</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1546546510793</updated>
-    </task>
-    <task id="LOCAL-00049" summary="Evaluation entries now displaying correctly. Need to clean everything up&#10;and improve navigation now. Work on better querys for non-staff users &#10;and better views for staff users of student work/evals&#10;&#10;Split eval into 2 stages, evidence provided by clinical advisor, the rest &#10;by user and coach.">
-      <created>1546550938524</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1546550938524</updated>
-    </task>
-    <task id="LOCAL-00050" summary="Evaluation entries now displaying correctly. Need to clean everything up&#10;and improve navigation now. Work on better querys for non-staff users &#10;and better views for staff users of student work/evals&#10;&#10;Split eval into 2 stages, evidence provided by clinical advisor, the rest &#10;by user and coach.">
-      <created>1546550984211</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1546550984211</updated>
-    </task>
-    <task id="LOCAL-00051" summary="Had to nuke entire DB due to issue with auth_user table when I created a &#10;custom user profile. User profile now in the user admin section.">
-      <created>1546980622253</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1546980622253</updated>
-    </task>
-    <task id="LOCAL-00052" summary="Fixed user profile creation - now each new user has a profile created&#10;with role contained within.">
-      <created>1547224021615</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1547224021615</updated>
+      <workItem from="1550072161327" duration="14397000" />
     </task>
     <task id="LOCAL-00053" summary="Limiting solution list queryset by User role now. Need to read group membership from&#10;UserSolution and limit ClinicalSuper query to that.">
       <created>1547236490493</created>
@@ -715,17 +614,52 @@
       <option name="project" value="LOCAL" />
       <updated>1550080695909</updated>
     </task>
-    <option name="localTasksCounter" value="97" />
+    <task id="LOCAL-00097" summary="Competency view has styled pods with learning objectives, rubricLines&#10;and the challenge name said learning objective was tackled. Added Competency to menu.">
+      <created>1550087990939</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1550087990939</updated>
+    </task>
+    <task id="LOCAL-00098" summary="Made menu bigger.">
+      <created>1550088428994</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1550088428994</updated>
+    </task>
+    <task id="LOCAL-00099" summary="manually removed rubricLine migration">
+      <created>1550088491114</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1550088491114</updated>
+    </task>
+    <task id="LOCAL-00100" summary="Added competency sorting by compGroup">
+      <created>1550089837474</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1550089837474</updated>
+    </task>
+    <task id="LOCAL-00101" summary="Added sort to competency view so they are displayed vy compGroup and compNumber">
+      <created>1550090017177</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1550090017177</updated>
+    </task>
+    <option name="localTasksCounter" value="102" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="392999000" />
+    <option name="totallyTimeSpent" value="396383000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1663113" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1663113" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -739,7 +673,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49848944" weight="0.32896176" />
       <window_info anchor="bottom" id="Database Changes" order="9" weight="0.32954547" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5056526" side_tool="true" weight="0.33224043" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.4943474" visible="true" weight="0.248104" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.4943474" visible="true" weight="0.248104" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.49924472" weight="0.32896176" />
       <window_info anchor="bottom" id="Database Console" order="13" sideWeight="0.49848944" weight="0.32954547" />
       <window_info anchor="bottom" id="SQL Generator" order="14" weight="0.32896176" />
@@ -829,11 +763,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Form validation not working correctly with custom template set up. Works when&#10;I dump it all into a basic table, does not validate when it's manually rendered." />
-    <MESSAGE value="Form validation working correctly now. Needed {{ form.id }} in each loop&#10;iteration." />
-    <MESSAGE value="Added edit button to Eval list, limited to admin users." />
-    <MESSAGE value="Added slider that feeds completion level." />
-    <MESSAGE value="Did some work on completion slider, still not updating automatically but&#10;it is reading it in on reload. Started work on a final form for rubric&#10;with general challenge feedback and a place to commit challenge completion&#10;level. Not reading PK in correctly at the moment, thinking of passing it&#10;from formset view on submission and making it the next button." />
     <MESSAGE value="Secondary form hooked up and submitting correctly. Need to hide inputs&#10;that are set initially and work on completion level for challenge." />
     <MESSAGE value="Completion level for challenge hooked up." />
     <MESSAGE value="Added completion level and general feedback to eval detail view. Currently&#10;possible to submit multiple instances of feedback form. Need to put &#10;check in for existing feedback instance or switch to formsets and use&#10;solution from RubricLineFormset" />
@@ -854,7 +783,12 @@
     <MESSAGE value="Added better commenting to the models." />
     <MESSAGE value="Competency view is working. Need to style and add some logic to the view to calculate completion across multiple instances of a learning objective." />
     <MESSAGE value="Competency view has styled pods with learning objectives, rubricLines&#10;and the challenge name said learning objective was tackled." />
-    <option name="LAST_COMMIT_MESSAGE" value="Competency view has styled pods with learning objectives, rubricLines&#10;and the challenge name said learning objective was tackled." />
+    <MESSAGE value="Competency view has styled pods with learning objectives, rubricLines&#10;and the challenge name said learning objective was tackled. Added Competency to menu." />
+    <MESSAGE value="Made menu bigger." />
+    <MESSAGE value="manually removed rubricLine migration" />
+    <MESSAGE value="Added competency sorting by compGroup" />
+    <MESSAGE value="Added sort to competency view so they are displayed vy compGroup and compNumber" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added sort to competency view so they are displayed vy compGroup and compNumber" />
   </component>
   <component name="editorHistoryManager">
     <entry file="das://dac5d1e4-a2f5-4c92-bb01-b991b9cb2863/database/postgres/schema/public/table/rubrics_usersolution">
@@ -1024,13 +958,6 @@
     <entry file="file://$PROJECT_DIR$/Procfile">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/migrations/0012_auto_20190212_1220.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="12" column="18" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/admin.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="482">
@@ -1126,13 +1053,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/account/static/css/base.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="419">
-          <caret line="115" column="15" selection-start-line="115" selection-start-column="15" selection-end-line="115" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/rubric_form.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1594">
@@ -1164,23 +1084,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/compList.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="15" column="19" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="626">
-          <caret line="244" column="44" lean-forward="true" selection-start-line="244" selection-start-column="44" selection-end-line="244" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/account/templates/account/dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
@@ -1190,8 +1093,39 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="16" column="49" lean-forward="true" selection-start-line="16" selection-start-column="49" selection-end-line="16" selection-end-column="49" />
+        <state relative-caret-position="540">
+          <caret line="30" lean-forward="true" selection-start-line="30" selection-end-line="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/migrations/0012_auto_20190212_1220.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/account/static/css/base.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="184" column="68" lean-forward="true" selection-start-line="184" selection-start-column="68" selection-end-line="184" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/compList.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="15" column="16" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="446">
+          <caret line="241" column="100" selection-start-line="241" selection-start-column="100" selection-end-line="241" selection-end-column="100" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
