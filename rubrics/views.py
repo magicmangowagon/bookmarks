@@ -234,7 +234,7 @@ class CompetencyView(ListView):
     template_name = "rubrics/compList.html"
 
     def get_queryset(self, **kwargs):
-        queryset = Competency.objects.all().order_by('compGroup')
+        queryset = Competency.objects.all().order_by('compGroup', 'compNumber')
         return queryset
 
     def get_context_data(self, **kwargs):
