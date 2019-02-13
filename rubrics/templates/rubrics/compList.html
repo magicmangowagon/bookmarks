@@ -4,10 +4,21 @@
 {% block title %}Woodrow Wilson Academy{% endblock %}
 
 {% block content %}
-<h1>Competencies</h1>
+
+<h1>Competencies - {{ currentUser.first_name }}</h1>
 
     {% for comp in comps %}
         {{ comp.compGroup }}.{{ comp.compNumber }} - {{ comp.name }}
+        {% for learningObj in learningObjs %}
+            {% if learningObj.compGroup == comp.compGroup %}
+                <p>{{ learningObj.compGroup }} - {{ learningObj.compNumber }}.{{ learningObj.loNumber }} {{ learningObj.name }}</p>
+                {% for rubricLine in rubricLines %}
+                    {% if rubricLine.learningObjective.id == learningObj.id and currentUser == rubricLine.student.userOwner %}
+                        <p>{{ rubricLine.completionLevel }}</p>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
     {% endfor %}
 
 {% endblock content %}
