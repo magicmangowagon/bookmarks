@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f9d2353c-1e9e-47b8-8190-35e7ab7af957" name="Default Changelist" comment="">
+    <list default="true" id="f9d2353c-1e9e-47b8-8190-35e7ab7af957" name="Default Changelist" comment="added email field to profile">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/account/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/account/admin.py" afterDir="false" />
     </list>
     <ignored path="bookmarks/settings.py" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -90,18 +90,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rubrics/forms.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="21" column="36" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
-              <folding>
-                <element signature="e#0#24#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="616">
@@ -149,13 +137,37 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/account/models.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="506">
               <caret line="23" column="39" selection-start-line="23" selection-start-column="39" selection-end-line="23" selection-end-column="39" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bookmarks/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="581">
+              <caret line="35" column="33" lean-forward="true" selection-start-line="35" selection-start-column="33" selection-end-line="35" selection-end-column="33" />
+              <folding>
+                <element signature="e#310#319#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/account/admin.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="132">
+              <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+              <folding>
+                <element signature="e#0#32#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -209,7 +221,6 @@
         <option value="$PROJECT_DIR$/rubrics/templates/evalDetail.html" />
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/list.html" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/.datagrid/cell" />
-        <option value="$PROJECT_DIR$/account/admin.py" />
         <option value="$PROJECT_DIR$/rubrics/migrations/0002_auto_20190117_1434.py" />
         <option value="$PROJECT_DIR$/account/migrations/0001_initial.py" />
         <option value="$PROJECT_DIR$/rubrics/migrations/0003_auto_20190117_1445.py" />
@@ -233,10 +244,11 @@
         <option value="$PROJECT_DIR$/rubrics/views.py" />
         <option value="$PROJECT_DIR$/account/static/css/base.css" />
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/evalDetail.html" />
-        <option value="$PROJECT_DIR$/bookmarks/settings.py" />
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/solution_detail.html" />
         <option value="$PROJECT_DIR$/templates/base.html" />
         <option value="$PROJECT_DIR$/account/models.py" />
+        <option value="$PROJECT_DIR$/bookmarks/settings.py" />
+        <option value="$PROJECT_DIR$/account/admin.py" />
       </list>
     </option>
   </component>
@@ -336,24 +348,6 @@
             <path>
               <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="rubrics" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="rubrics" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="templates" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="rubrics" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="templates" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="rubrics" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="templates" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
           </expand>
@@ -368,7 +362,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/bookmarks/settings.py" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Ignored.Files" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -447,20 +441,6 @@
       <workItem from="1550020196406" duration="5291000" />
       <workItem from="1550072161327" duration="19159000" />
       <workItem from="1550248769825" duration="7569000" />
-    </task>
-    <task id="LOCAL-00060" summary="Form validation not working correctly with custom template set up. Works when&#10;I dump it all into a basic table, does not validate when it's manually rendered.">
-      <created>1547581550300</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1547581550300</updated>
-    </task>
-    <task id="LOCAL-00061" summary="Form validation working correctly now. Needed {{ form.id }} in each loop&#10;iteration.">
-      <created>1547584987030</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1547584987030</updated>
     </task>
     <task id="LOCAL-00062" summary="Added edit button to Eval list, limited to admin users.">
       <created>1547588826681</created>
@@ -791,17 +771,31 @@
       <option name="project" value="LOCAL" />
       <updated>1551908811302</updated>
     </task>
-    <option name="localTasksCounter" value="109" />
+    <task id="LOCAL-00109" summary="added email field to profile">
+      <created>1551910558823</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1551910558823</updated>
+    </task>
+    <task id="LOCAL-00110" summary="added email field to profile">
+      <created>1551910645856</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1551910645856</updated>
+    </task>
+    <option name="localTasksCounter" value="111" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="411092000" />
+    <option name="totallyTimeSpent" value="411337000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.123667374" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.123667374" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -815,7 +809,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49848944" weight="0.32896176" />
       <window_info anchor="bottom" id="Database Changes" order="9" weight="0.32954547" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5063966" side_tool="true" weight="0.248104" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.49253732" visible="true" weight="0.248104" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49253732" visible="true" weight="0.248104" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.49924472" weight="0.32896176" />
       <window_info anchor="bottom" id="Database Console" order="13" sideWeight="0.49848944" weight="0.32954547" />
       <window_info anchor="bottom" id="SQL Generator" order="14" weight="0.32896176" />
@@ -905,7 +899,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Cleaned up front end. Flex boxes for Eval Fields, cleaned up feedback box&#10;titles, added bg color to all fields. Need to fix issue with existing&#10;general feedback in the rubric." />
     <MESSAGE value="Setting up s3 storage. 403 error at the moment. Need to add a message &#10;about empty files not uploading." />
     <MESSAGE value="Reverting to non s3 for now to appease Amazon" />
     <MESSAGE value="Utterly broken formset attempt for final rubricForm. Doing this to &#10;ensure users cannot submit multiple version of rubric (general feedback&#10;and challenge completion level." />
@@ -930,16 +923,10 @@
     <MESSAGE value="Setting up static files for production" />
     <MESSAGE value="fixing botched merge" />
     <MESSAGE value="changed discourse link" />
-    <option name="LAST_COMMIT_MESSAGE" value="changed discourse link" />
+    <MESSAGE value="added email field to profile" />
+    <option name="LAST_COMMIT_MESSAGE" value="added email field to profile" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/site-packages/django/forms/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="138" selection-start-line="138" selection-end-line="138" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/migrations/0006_rubricline_criteria.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -1152,16 +1139,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bookmarks/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="144" column="21" lean-forward="true" selection-start-line="144" selection-start-column="21" selection-end-line="144" selection-end-column="21" />
-          <folding>
-            <element signature="e#310#319#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="386">
@@ -1206,6 +1183,26 @@
           <caret line="23" column="39" selection-start-line="23" selection-start-column="39" selection-end-line="23" selection-end-column="39" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bookmarks/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="581">
+          <caret line="35" column="33" lean-forward="true" selection-start-line="35" selection-start-column="33" selection-end-line="35" selection-end-column="33" />
+          <folding>
+            <element signature="e#310#319#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/account/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
           </folding>
         </state>
       </provider>
