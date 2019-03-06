@@ -239,13 +239,12 @@ input, textarea {
     font-size:14px;
 }
 input[type=submit], a.button {
-    font-weight:bold;
+    font-weight:500;
     background:#003469;
     color:#fff;
     padding:10px 20px;
     font-size:14px;
     text-transform:uppercase;
-    border-radius: 4px;
 }
 input:hover[type=submit], a.button {
     font-weight:bold;

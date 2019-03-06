@@ -20,11 +20,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['SECRET_KEY']
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
+
+# SECURITY WARNING: keep the secret key used in production secret!
+if DEBUG:
+    SECRET_KEY = 'e7+_=2dkn(4n64id2m_8v&fqvbw61f5u06mgp#io2ilwz$$drg'
+else:
+    SECRET_KEY = os.environ['SECRET_KEY']
 
 ALLOWED_HOSTS = []
 
@@ -139,7 +144,12 @@ LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.mailgun.org'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'postmaster@mg.wwa-lms.org'
+EMAIL_HOST_PASSWORD = '28b01a7786a16898cea08e91f72c7f5f-1b65790d-61bf6f65'
+EMAIL_USE_TLS = True
 
 DJRICHTEXTFIELD_CONFIG = {
     'js': ['//tinymce.cachefly.net/4.1/tinymce.min.js'],
