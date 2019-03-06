@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f9d2353c-1e9e-47b8-8190-35e7ab7af957" name="Default Changelist" comment="Setting up static files for production">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/static/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/account/static/css/base.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookmarks/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/bookmarks/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/templates/rubrics/solution_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/templates/rubrics/solution_detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/templates/rubrics/solution_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/templates/rubrics/solution_form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-    </list>
+    <list default="true" id="f9d2353c-1e9e-47b8-8190-35e7ab7af957" name="Default Changelist" comment="" />
     <ignored path="bookmarks/settings.py" />
     <ignored path=".idea/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -151,8 +141,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bookmarks/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="514">
-              <caret line="33" column="24" lean-forward="true" selection-start-line="33" selection-start-column="24" selection-end-line="33" selection-end-column="24" />
+            <state relative-caret-position="250">
+              <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
               <folding>
                 <element signature="e#310#319#0" expanded="true" />
               </folding>
@@ -447,13 +437,6 @@
       <workItem from="1550020196406" duration="5291000" />
       <workItem from="1550072161327" duration="19159000" />
       <workItem from="1550248769825" duration="7569000" />
-    </task>
-    <task id="LOCAL-00058" summary="Cleaned up various templates and improved dashboard. Form fields limited &#10;by user role, but not fully functional as a split form.">
-      <created>1547504210483</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
-      <option name="project" value="LOCAL" />
-      <updated>1547504210483</updated>
     </task>
     <task id="LOCAL-00059" summary="I believe I have fixed formsets not loading previous material correctly?">
       <created>1547570612937</created>
@@ -791,11 +774,18 @@
       <option name="project" value="LOCAL" />
       <updated>1550252232198</updated>
     </task>
-    <option name="localTasksCounter" value="107" />
+    <task id="LOCAL-00107" summary="Trying to merge to master">
+      <created>1551905526776</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1551905526776</updated>
+    </task>
+    <option name="localTasksCounter" value="108" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="409183000" />
+    <option name="totallyTimeSpent" value="409551000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -808,9 +798,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12260128" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12260128" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -823,7 +812,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49848944" weight="0.32827735" />
       <window_info anchor="bottom" id="Database Changes" order="9" weight="0.32954547" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50692964" side_tool="true" weight="0.248104" />
+      <window_info active="true" anchor="bottom" id="Event Log" order="10" sideWeight="0.50692964" side_tool="true" visible="true" weight="0.248104" />
       <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49307036" visible="true" weight="0.248104" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.49924472" weight="0.32896176" />
       <window_info anchor="bottom" id="Database Console" order="13" sideWeight="0.49848944" weight="0.32954547" />
@@ -914,7 +903,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Total slider now moves with individual slider updates and correctly &#10;computes total progress." />
     <MESSAGE value="styled vert slider a bit: made wider, taller, bolded &quot;Ready&quot;." />
     <MESSAGE value="Cleaned up front end. Flex boxes for Eval Fields, cleaned up feedback box&#10;titles, added bg color to all fields. Need to fix issue with existing&#10;general feedback in the rubric." />
     <MESSAGE value="Setting up s3 storage. 403 error at the moment. Need to add a message &#10;about empty files not uploading." />
@@ -939,7 +927,8 @@
     <MESSAGE value="Added padding to LO boxes on Challenge page" />
     <MESSAGE value="Changed eval fields to flex boxes and other small CSS fixes/changes." />
     <MESSAGE value="Setting up static files for production" />
-    <option name="LAST_COMMIT_MESSAGE" value="Setting up static files for production" />
+    <MESSAGE value="Trying to merge to master" />
+    <option name="LAST_COMMIT_MESSAGE" value="Trying to merge to master" />
   </component>
   <component name="editorHistoryManager">
     <entry file="das://dac5d1e4-a2f5-4c92-bb01-b991b9cb2863/database/postgres/schema/public/table/rubrics_rubricline_criteria" />
@@ -1196,8 +1185,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bookmarks/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="514">
-          <caret line="33" column="24" lean-forward="true" selection-start-line="33" selection-start-column="24" selection-end-line="33" selection-end-column="24" />
+        <state relative-caret-position="250">
+          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
           <folding>
             <element signature="e#310#319#0" expanded="true" />
           </folding>
