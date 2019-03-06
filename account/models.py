@@ -21,6 +21,7 @@ class Profile(models.Model):
     date_of_birth = models.DateField(blank=True, null=True)
     photo = models.ImageField(upload_to='users/%Y/%m/%d/', blank=True)
     role = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, null=True, blank=True)
+    email = models.EmailField(default="")
 
     def __str__(self):
         return 'Profile for user {}' .format(self.user.username)
