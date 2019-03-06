@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+
+{% block title %}Woodrow Wilson Academy{% endblock %}
+
+{% block content %}
+
+<h1>Competencies - {{ currentUser.first_name }}</h1>
+<div class="compFlexContainer">
+    {% for comp in comps %}
+    <div class="competencyPod">
+        <h3>{{ comp.compGroup }}.{{ comp.compNumber }} - {{ comp.name }}</h3>
+        <div class="competencyPodContent">
+        {% for learningObj in learningObjs %}
+            {% if learningObj.compGroup == comp.compGroup and learningObj.compNumber == comp.compNumber %}
+                <h4>{{ learningObj.compGroup }} - {{ learningObj.compNumber }}.{{ learningObj.loNumber }} {{ learningObj.name }}</h4>
+                {% for rubricLine in rubricLines %}
+                    {% if rubricLine.learningObjective.id == learningObj.id and currentUser == rubricLine.student.userOwner %}
+                        <p>{{ rubricLine.student.challengeName }} - {{ rubricLine.completionLevel }}</p>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

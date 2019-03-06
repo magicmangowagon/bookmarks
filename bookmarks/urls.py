@@ -20,9 +20,9 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('rubrics/', include('rubrics.urls')),
-    path('account/', include('account.urls')),
-    path('djrichtextfield/', include('djrichtextfield.urls'))
+    path('', include('rubrics.urls')),
+    path('', include('account.urls')),
+    path('djrichtextfield/', include('djrichtextfield.urls')),
 ]
 
 if settings.DEBUG:

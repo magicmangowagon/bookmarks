@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+
+{% block title %}Woodrow Wilson Academy: Solutions{% endblock %}
+
+{% block content %}
+<h1>Solutions</h1>
+
+<p>User Role - {{ user.profile.role }}</p>
+
+<table cellpadding="6px" border="1px">
+
+{% for usersolution in object_list %}
+
+    <tr>
+    <td>{{ usersolution.userOwner }}</td>
+    <td></td>
+    <td>{{ usersolution.challengeName }}</td>
+    <td><a href="solutions/{{ usersolution.id }}">Details</a></td>
+    </tr>
+
+
+
+{% endfor %}
+
+</table>
+{% endblock content %}

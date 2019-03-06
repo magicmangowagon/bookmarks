@@ -1,15 +1,131 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Create an Challenge
+Evaluate a Challenge
 {% endblock %}
 
 {% block content %}
-<h1>Create a Challenge</h1>
-    <p>Create a Challenge:</p>
+
+<h1>{{ challenge }} - {{ student.userOwner.first_name }} {{ student.userOwner.last_name }}</h1>
+
+    <h2>Evaluate {{ student.userOwner.first_name }}'s solution</h2>
+
     <form action=""  method="post">
-    {{ form.as_p }}
-    {% csrf_token %}
-    <p><input type="submit" value="Create Challenge"></p>
+
+        <div class="rubricField">
+        {{ formset.management_form }}
+
+        {% for form in formset %}
+
+            <h3 id="h3{{ form.learningObjective.auto_id }}"></h3>
+            <span style="display: none">{{ form.learningObjective }}</span>
+            <p>{{ form.student }}</p>
+
+            <ul>
+                {% if userRole == 4 or 2 %}
+                    <li><label>{{ form.evidenceMissing.label }}</label>
+                        {{ form.evidencePresent }}</li>
+
+                    <li><label>{{ form.evidencePresent.label }}</label>
+                        {{ form.evidenceMissing }}</li>
+                {% endif %}
+
+                <li><label>{{ form.feedback.label }}</label>
+                    {{ form.feedback }}</li>
+
+                <li><label>{{ form.suggestions.label }}</label>
+                    {{ form.suggestions }}</li>
+
+            </ul>
+
+            <p><label>Ready to move on</label>
+                {{ form.completionLevel }}</p>
+
+            <div class="slidecontainer">
+                <input type="range" min="1" max="100" value="0" class="slider" id="slider{{ form.learningObjective.value }}">
+            <div class="readyTick"></div>
+            </div>
+            <p></p>
+            <script>
+                var slider{{ form.learningObjective.value }} = document.getElementById("slider{{ form.learningObjective.value }}");
+                var output{{ form.learningObjective.value }} = document.getElementById("{{ form.completionLevel.auto_id }}");
+                var options = document.getElementById("{{ form.learningObjective.auto_id }}");
+                var selectedText = options.options[options.selectedIndex].text;
+                document.getElementById("h3{{ form.learningObjective.auto_id }}").innerHTML = selectedText;
+                slider{{ form.learningObjective.value }}.value = output{{ form.learningObjective.value }}.value;
+
+                slider{{ form.learningObjective.value }}.oninput = function()
+                {
+                    output{{ form.learningObjective.value }}.value = this.value;
+
+                    updateChallengeTotal();
+                }
+                slider{{ form.learningObjective.value }}.onchange = function()
+                {
+                    updateChallengeTotal();
+                }
+
+
+            </script>
+        {{ form.id }}
+
+
+        {% endfor %}
+        <p>{{ criteria }}</p>
+
+        </div>
+
+        {% csrf_token %}
+
+
+        <p><input type="submit" value="Submit evaluation"></p>
     </form>
+
+    <div class="vertSliderContainer">
+    <h3>Ready?</h3>
+        <div id="progressContainer">
+            <div id="progressBar">
+
+            </div>
+        </div>
+
+    <script>
+        var sliderFields = document.getElementsByClassName("slider");
+        var progressBar = document.getElementById("progressBar");
+        var progressContainer = document.getElementById("progressContainer");
+
+        var sliderTotals = 0;
+        var sliderMax = 0;
+
+        updateScreenHeight();
+
+        for(var i = 0; i < sliderFields.length; i++)
+        {
+            sliderMax += parseInt(sliderFields[i].max);
+            sliderTotals += parseInt(sliderFields[i].value);
+        }
+        progressBar.style.height = (sliderTotals/sliderFields.length) + '%';
+
+        function updateChallengeTotal()
+        {
+            sliderTotals = 0;
+            for(var i = 0; i < sliderFields.length; i++)
+            {
+                sliderTotals += parseInt(sliderFields[i].value);
+            }
+            progressBar.style.height = (sliderTotals/sliderFields.length) + '%';
+        }
+
+        function updateScreenHeight()
+        {
+            var screenHeight = window.innerHeight;
+            progressContainer.style.height = (screenHeight - (screenHeight * .35)) + 'px';
+        }
+
+
+    </script>
+
+
+    </div>
+
 {% endblock %}

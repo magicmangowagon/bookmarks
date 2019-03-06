@@ -6,26 +6,22 @@
 
 {% block content %}
 
-    <h1>{{ challenge.name }}</h1>
+<h1>{{ challenge.name }}</h1>
+
+<h2>Learning Objectives</h2>
+    <ul class="challengeListObj">
+        {% for learningObjective in learningObjectives_list %}
+                <li class="challengeListObj"><strong>{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}
+                    .{{ learningObjective.loNumber }}</strong>
+                {{ learningObjective.name }}</li>
+        {% endfor %}
+    </ul>
+<p>&nbsp;</p>
+<h2>Description</h2>
 <p>{{ challenge.description|safe }}  </p>
 
-    <h2><a href="upload">Solution Upload</a></h2>
 
-     {% if submitted %}
-    <p>Solution successfully submitted</p>
 
-    {% else %}
-        <form action=""  enctype="multipart/form-data" method="post">
-        <table>
-            {{ form.as_table }}
-            <tr>
-                <td></td>
-                <td><input type="submit" value="Upload Solution"></td>
-            </tr>
-        </table>
-
-        {% csrf_token %}
-    </form>
-    {% endif %}
+    {% include 'rubrics/solution_form.html' %}
 
 {% endblock %}
