@@ -8,9 +8,9 @@
 
     <h1>{{ usersolution.challengeName }}</h1>
 <p>Submitted by {{ usersolution.userOwner.first_name }} {{ usersolution.userOwner.last_name }}</p>
-   <p>{{ usersolution.solution|safe|urlize }}</p>
+   <a href="{{ usersolution.solution|safe }}">{{ usersolution.solution|safe }}</a>
 
-<!-- <p><a href="/media/{{ usersolution.file }}">{{ usersolution.file }}</a> </p> -->
+<p><a href="/media/{{ usersolution.file }}">{{ usersolution.file }}</a> </p>
 
                 <a href="/solutionEval/{{ usersolution.id }}">Evaluations</a>
 

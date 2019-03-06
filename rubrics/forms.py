@@ -22,7 +22,7 @@ class ChallengeDisplay(DetailView):
 class UserFileForm(forms.ModelForm):
     class Meta:
         model = UserSolution
-        fields = ('solution', 'challengeName', 'userOwner')
+        fields = ('file', 'solution', 'challengeName', 'userOwner')
         widgets = {'challengeName': forms.HiddenInput(), 'userOwner': forms.HiddenInput}
 
 

@@ -23,15 +23,7 @@ class challenge_detail(DetailView, FormMixin):
         context = super(challenge_detail, self).get_context_data(**kwargs)
         context['rubric_list'] = Challenge.objects.all()
         context['learningObjectives_list'] = LearningObjective.objects.all().filter(challenge=self.kwargs['pk'])
-        thisUsersSolutions = UserSolution.objects.all().filter(userOwner=self.request.user)
-
-        if thisUsersSolutions.filter(challengeName=self.object.pk).exists():
-            thisSolution = thisUsersSolutions.get(challengeName=self.object.pk)
-            context['file_exists'] = thisSolution
-
-        else:
-            context['form'] = UserFileForm(initial={'challengeName': self.object, 'userOwner': self.request.user})
-
+        context['form'] = UserFileForm(initial={'challengeName': self.object, 'userOwner': self.request.user})
         return context
 
     def post(self, request, *args, **kwargs):

@@ -5,11 +5,7 @@
       <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="SQLITE" exact-version="0.0" />
     </data-source>
     <data-source name="Django default" uuid="f579f337-c614-4ec2-857e-03fe3b947157">
-      <database-info product="SQLite" version="3.25.1" jdbc-version="2.1" driver-name="SQLite JDBC" driver-version="3.25.1" dbms="SQLITE" exact-version="3.25.1">
-        <identifier-quote-string>&quot;</identifier-quote-string>
-      </database-info>
-      <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
-      <auth-required>false</auth-required>
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="SQLITE" exact-version="0" />
       <introspection-schemas>*:@</introspection-schemas>
     </data-source>
     <data-source name="postgres@localhost" uuid="dac5d1e4-a2f5-4c92-bb01-b991b9cb2863">

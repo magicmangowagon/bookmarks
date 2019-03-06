@@ -10,6 +10,7 @@ class CriteriaInline(admin.TabularInline):
 
 class LearningObjsInline(admin.TabularInline):
     model = LearningObjective
+
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         field = super(LearningObjsInline, self).formfield_for_foreignkey(db_field, request, **kwargs)
         return field
@@ -45,7 +46,6 @@ class CompetencyAdmin(admin.ModelAdmin):
 @admin.register(Challenge)
 class ChallengeAdmin(admin.ModelAdmin):
     list_display = ['name']
-    filter_horizontal = ('learningObjs',)
 
 
 @admin.register(Rubric)
