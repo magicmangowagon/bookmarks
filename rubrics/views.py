@@ -9,6 +9,7 @@ from django.urls import reverse
 from django.forms import modelformset_factory
 from django.contrib import messages
 from django.shortcuts import redirect
+import leather
 
 
 class challenge_detail(DetailView, FormMixin):
@@ -252,6 +253,13 @@ class CompetencyView(ListView):
         rubricLines = RubricLine.objects.all()
         context['rubricLines'] = rubricLines
         context['currentUser'] = self.request.user
+
+        data = [(0, 1),
+                (2, 8),
+                ]
+        chart = leather.Chart('Simple Pairs')
+        chart.add_dots(data)
+        context['chart'] = chart.to_svg('staticfiles/charts/simple_pairs.svg')
 
         return context
     context_object_name = 'comps'
