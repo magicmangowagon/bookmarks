@@ -151,12 +151,23 @@ class RubricFormView(FormView):
         context['student'] = student
         context['challenge'] = challenge
         loCount = LearningObjective.objects.filter(challenge=challenge).count()
+
         context['userRole'] = self.request.user.profile.role
         criteriaList = Criterion.objects.all()
 
+        # The idea: Run through the list of learning objectives attached to this challenge and add criterion
+        # to contextual list if they match one of the learning objectives.
+        neededCriteria = []
+        for criterion in criteriaList:
+            for learningObjective in lo_list:
+                if (criterion.learningObj.id == learningObjective.id):
+                    neededCriteria.append(criterion)
+
+
+
         # edit view, checks for rubricLine objects from this userSolution
         # and sets the formset query to that instance
-        context['criteria'] = criteriaList
+        context['criteria'] = neededCriteria
 
         if RubricLine.objects.all().filter(student=usersolution).exists():
             RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=0, fields=(
@@ -165,6 +176,10 @@ class RubricFormView(FormView):
 
             formset = RubricLineFormset(queryset=RubricLine.objects.all().filter(student=usersolution))
 
+            CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, extra=0, fields=(
+                'achievement'))
+
+            critFormset = CriterionFormSet(queryset=CriteriaLine.objects.all().filter(userSolution=userSolution))
         # create new rubric, checked for rubricline objects from this userSolution
         # and none existed, so queryset is none and extra forms is set to LO count
 

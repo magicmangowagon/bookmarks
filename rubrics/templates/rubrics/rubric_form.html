@@ -37,6 +37,15 @@ Evaluate a Challenge
                     {{ form.suggestions }}</li>
 
             </ul>
+            <p>Count: {{ criteria.count }}</p>
+            <ul>
+                {% for criteria in criteria %}
+
+                    {% if criteria.learningObj_id == form.learningObjective.value %}
+                        <li>{{ criteria }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
 
             <p><label>Ready to move on</label>
                 {{ form.completionLevel }}</p>
@@ -71,7 +80,6 @@ Evaluate a Challenge
 
 
         {% endfor %}
-        <p>{{ criteria }}</p>
 
         </div>
 
