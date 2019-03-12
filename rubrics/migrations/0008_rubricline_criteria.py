@@ -9,10 +9,4 @@ class Migration(migrations.Migration):
         ('rubrics', '0007_remove_rubricline_criteria'),
     ]
 
-    operations = [
-        migrations.AddField(
-            model_name='rubricline',
-            name='criteria',
-            field=models.ManyToManyField(to='rubrics.Criterion'),
-        ),
-    ]
+

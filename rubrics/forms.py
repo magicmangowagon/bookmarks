@@ -22,7 +22,7 @@ class ChallengeDisplay(DetailView):
 class UserFileForm(forms.ModelForm):
     class Meta:
         model = UserSolution
-        fields = ('file', 'solution', 'challengeName', 'userOwner')
+        fields = ('solution', 'challengeName', 'userOwner')
         widgets = {'challengeName': forms.HiddenInput(), 'userOwner': forms.HiddenInput}
 
 
@@ -42,7 +42,7 @@ class RubricForm(BaseModelFormSet):
 class CriteriaForm(ModelForm):
     class Meta:
         model = CriteriaLine
-        fields = ('criteria', 'achievement', )
+        fields = ('criteria', 'achievement', 'userSolution', )
 
 
 CriterionFormSet = inlineformset_factory(Criterion, CriteriaLine, form=CriteriaForm)

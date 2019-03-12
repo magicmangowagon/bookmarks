@@ -8,10 +8,3 @@ class Migration(migrations.Migration):
     dependencies = [
         ('rubrics', '0003_rubric_challengecompletionlevel'),
     ]
-
-    operations = [
-        migrations.RemoveField(
-            model_name='rubric',
-            name='competencies',
-        ),
-    ]

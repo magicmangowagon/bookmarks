@@ -11,10 +11,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='criterialine',
-            name='student',
-        ),
+
         migrations.AddField(
             model_name='criterialine',
             name='rubricLine',

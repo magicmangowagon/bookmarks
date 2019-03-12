@@ -8,10 +8,3 @@ class Migration(migrations.Migration):
     dependencies = [
         ('rubrics', '0006_rubricline_criteria'),
     ]
-
-    operations = [
-        migrations.RemoveField(
-            model_name='rubricline',
-            name='criteria',
-        ),
-    ]

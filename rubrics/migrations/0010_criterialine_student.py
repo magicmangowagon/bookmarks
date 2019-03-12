@@ -9,12 +9,3 @@ class Migration(migrations.Migration):
     dependencies = [
         ('rubrics', '0009_auto_20190129_1621'),
     ]
-
-    operations = [
-        migrations.AddField(
-            model_name='criterialine',
-            name='student',
-            field=models.ForeignKey(default='', on_delete=django.db.models.deletion.CASCADE, to='rubrics.UserSolution'),
-            preserve_default=False,
-        ),
-    ]

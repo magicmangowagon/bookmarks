@@ -57,7 +57,6 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('generalFeedback', models.TextField(blank=True, default='')),
                 ('challenge', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='rubrics.Challenge')),
-                ('competencies', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='rubrics.Competency')),
                 ('evaluator', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
@@ -87,11 +86,6 @@ class Migration(migrations.Migration):
             model_name='rubricline',
             name='student',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='rubrics.UserSolution'),
-        ),
-        migrations.AddField(
-            model_name='rubric',
-            name='rubricLines',
-            field=models.ManyToManyField(blank=True, to='rubrics.RubricLine'),
         ),
         migrations.AddField(
             model_name='criterion',

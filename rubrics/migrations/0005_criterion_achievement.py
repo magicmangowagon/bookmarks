@@ -8,11 +8,3 @@ class Migration(migrations.Migration):
     dependencies = [
         ('rubrics', '0004_remove_rubric_competencies'),
     ]
-
-    operations = [
-        migrations.AddField(
-            model_name='criterion',
-            name='achievement',
-            field=models.CharField(choices=[('A', 'Yes'), ('B', 'No'), ('C', 'Evidence for and against')], default='', max_length=1),
-        ),
-    ]

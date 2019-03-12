@@ -177,9 +177,9 @@ class RubricFormView(FormView):
             formset = RubricLineFormset(queryset=RubricLine.objects.all().filter(student=usersolution))
 
             CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, extra=0, fields=(
-                'achievement'))
+                'achievement', ))
 
-            critFormset = CriterionFormSet(queryset=CriteriaLine.objects.all().filter(userSolution=userSolution))
+            critFormset = CriterionFormSet(queryset=CriteriaLine.objects.all().filter(userSolution=usersolution))
         # create new rubric, checked for rubricline objects from this userSolution
         # and none existed, so queryset is none and extra forms is set to LO count
 

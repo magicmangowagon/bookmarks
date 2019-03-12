@@ -10,11 +10,3 @@ class Migration(migrations.Migration):
         ('rubrics', '0005_criterion_achievement'),
     ]
 
-    operations = [
-        migrations.AddField(
-            model_name='rubricline',
-            name='criteria',
-            field=models.ForeignKey(default='1', on_delete=django.db.models.deletion.CASCADE, to='rubrics.Criterion'),
-            preserve_default=False,
-        ),
-    ]

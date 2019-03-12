@@ -18,14 +18,7 @@ class Migration(migrations.Migration):
                 ('achievement', models.CharField(choices=[('A', 'Yes'), ('B', 'No'), ('C', 'Evidence for and against')], default='', max_length=1)),
             ],
         ),
-        migrations.RemoveField(
-            model_name='criterion',
-            name='achievement',
-        ),
-        migrations.RemoveField(
-            model_name='rubricline',
-            name='criteria',
-        ),
+
         migrations.AddField(
             model_name='criterialine',
             name='criteria',
