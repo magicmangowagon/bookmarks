@@ -40,11 +40,19 @@ Evaluate a Challenge
             <p>Count: {{ criteria.count }}</p>
             <ul>
                 {% for criteria in criteria %}
-
                     {% if criteria.learningObj_id == form.learningObjective.value %}
-                        <li>{{ criteria }}</li>
+                        <li>{{ criteria }}
+                            {% for CriteriaForm in critFormset %}
+                                {% if CriteriaForm.criteria.value == criteria.id %}
+                                    {{ CriteriaForm.achievement }}</li><br>
+                                {% endif %}
+                            {% endfor %}
                     {% endif %}
                 {% endfor %}
+            </ul>
+
+            <ul>
+
             </ul>
 
             <p><label>Ready to move on</label>

@@ -163,7 +163,7 @@ class RubricFormView(FormView):
                 if (criterion.learningObj.id == learningObjective.id):
                     neededCriteria.append(criterion)
 
-
+        criteriaLength = len(neededCriteria)
 
         # edit view, checks for rubricLine objects from this userSolution
         # and sets the formset query to that instance
@@ -180,6 +180,7 @@ class RubricFormView(FormView):
                 'achievement', ))
 
             critFormset = CriterionFormSet(queryset=CriteriaLine.objects.all().filter(userSolution=usersolution))
+
         # create new rubric, checked for rubricline objects from this userSolution
         # and none existed, so queryset is none and extra forms is set to LO count
 
@@ -192,13 +193,23 @@ class RubricFormView(FormView):
                 initial=[{'learningObjective': learningObjective.pk, 'student': student} for learningObjective in
                          lo_list], queryset=RubricLine.objects.none())
 
+            CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, extra=criteriaLength, fields=(
+                'achievement', 'criteria', ))
+
+            critFormset = CriterionFormSet(
+                initial=[{'userSolution': usersolution, 'criteria': criterion} for criterion in neededCriteria]
+            )
+
         context['formset'] = formset
+        context['critFormset'] = critFormset
         return context
 
     def post(self, request, *args, **kwargs):
         formset = RubricLineFormset(request.POST)
-        if formset.is_valid():
+        critFormset = CriterionFormSet(request.POST)
+        if formset.is_valid() & critFormset.is_valid():
             formset.save()
+            critFormset.save()
             return redirect('solution-end-eval', self.kwargs['pk'])
 
         else:
