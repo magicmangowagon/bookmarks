@@ -38,6 +38,7 @@ Evaluate a Challenge
 
             </ul>
             {{ critFormset.management_form }}
+            <h2>Criteria</h2>
             <ul>
                 {% for criteria in criteria %}
                     {% if criteria.learningObj_id == form.learningObjective.value %}

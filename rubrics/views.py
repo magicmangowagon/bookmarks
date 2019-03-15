@@ -177,7 +177,7 @@ class RubricFormView(FormView):
             formset = RubricLineFormset(queryset=RubricLine.objects.all().filter(student=usersolution))
 
             CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, extra=0, fields=(
-                'achievement', 'criteria', 'userSolution',), widgets={'criteria': forms.HiddenInput, })
+                'achievement', 'criteria', 'userSolution',), widgets={'criteria': forms.HiddenInput, 'userSolution': forms.HiddenInput})
 
             critFormset = CriterionFormSet(queryset=CriteriaLine.objects.all().filter(userSolution=student))
 
@@ -187,7 +187,7 @@ class RubricFormView(FormView):
         else:
             RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=loCount, fields=(
                 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel',
-                'student', ), widgets={'student': forms.HiddenInput, 'userSolution': forms.HiddenInput})
+                'student', ), widgets={'student': forms.HiddenInput, })
 
             formset = RubricLineFormset(prefix='rubriclines',
                 initial=[{'learningObjective': learningObjective.pk, 'student': student} for learningObjective in
