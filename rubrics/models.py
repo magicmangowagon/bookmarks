@@ -154,8 +154,8 @@ class RubricLine(models.Model):
 
 class CriteriaLine(models.Model):
     criteria = models.ForeignKey(Criterion, on_delete=models.CASCADE)
-    rubricLine = models.ForeignKey(RubricLine, on_delete=models.CASCADE)
-    userSolution = models.ForeignKey(UserSolution, on_delete=models.CASCADE, default='0')
+    # rubricLine = models.ForeignKey(RubricLine, on_delete=models.CASCADE)
+    userSolution = models.ForeignKey(UserSolution, on_delete=models.CASCADE)
     A = 'A'
     B = 'B'
     C = 'C'

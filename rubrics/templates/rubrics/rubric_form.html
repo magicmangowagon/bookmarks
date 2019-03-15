@@ -10,7 +10,7 @@ Evaluate a Challenge
 
     <h2>Evaluate {{ student.userOwner.first_name }}'s solution</h2>
 
-    <form action=""  method="post">
+    <form action=""  method="post" enctype="multipart/form-data">
 
         <div class="rubricField">
         {{ formset.management_form }}
@@ -37,17 +37,19 @@ Evaluate a Challenge
                     {{ form.suggestions }}</li>
 
             </ul>
-            <p>Count: {{ criteria.count }}</p>
+            {{ critFormset.management_form }}
             <ul>
                 {% for criteria in criteria %}
                     {% if criteria.learningObj_id == form.learningObjective.value %}
                         <li>{{ criteria }}
                             {% for CriteriaForm in critFormset %}
                                 {% if CriteriaForm.criteria.value == criteria.id %}
-                                    {{ CriteriaForm.achievement }}</li><br>
+                                    {{ CriteriaForm.achievement }}{{ CriteriaForm.criteria }}{{ CriteriaForm.userSolution }}</li><br>
                                 {% endif %}
+                                {{ CriteriaForm.id }}
                             {% endfor %}
                     {% endif %}
+
                 {% endfor %}
             </ul>
 

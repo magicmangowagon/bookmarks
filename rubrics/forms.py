@@ -44,11 +44,10 @@ class CriteriaForm(BaseModelFormSet):
         super(CriteriaForm, self).__init__(*args, **kwargs)
 
     class Meta:
-        model = CriteriaLine
-        fields = ('criteria', 'achievement', 'userSolution', )
+        widgets = {'criteria': forms.HiddenInput(), }
 
 
-CriterionFormSet = inlineformset_factory(Criterion, CriteriaLine, form=CriteriaForm, fields=('achievement', 'criteria',))
+CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, fields=('achievement', 'criteria', 'userSolution'))
 
 
 RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, fields=('evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student',
