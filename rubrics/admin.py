@@ -36,6 +36,10 @@ class LearningObjectiveAdmin(admin.ModelAdmin):
         CriteriaInline,
     ]
 
+    def get_queryset(self, request):
+        queryset = LearningObjective.objects.all().order_by('compGroup', 'compNumber')
+        return queryset
+
 
 @admin.register(Competency)
 class CompetencyAdmin(admin.ModelAdmin):
