@@ -37,7 +37,7 @@ class LearningObjectiveAdmin(admin.ModelAdmin):
     ]
 
     def get_queryset(self, request):
-        queryset = LearningObjective.objects.all().order_by('compGroup', 'compNumber')
+        queryset = LearningObjective.objects.all().order_by('compGroup', 'compNumber', 'loNumber')
         return queryset
 
 
