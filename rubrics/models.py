@@ -152,7 +152,7 @@ class RubricLine(models.Model):
         ('B', "No")
     )
     needsLaterAttention = models.CharField(max_length=1, choices=attentionChoices, default='B')
-    # ready = models.BooleanField(default=False)
+    ready = models.BooleanField(default=False)
 
 
 # _____________
