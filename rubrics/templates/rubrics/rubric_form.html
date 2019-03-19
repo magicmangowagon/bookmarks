@@ -42,7 +42,7 @@ Evaluate a Challenge
             <ul>
                 {% for criteria in criteria %}
                     {% if criteria.learningObj_id == form.learningObjective.value %}
-                        <li>{{ criteria }}
+                        <li>{{ criteria }}:
                             {% for CriteriaForm in critFormset %}
                                 {% if CriteriaForm.criteria.value == criteria.id %}
                                     {{ CriteriaForm.achievement }}{{ CriteriaForm.criteria }}{{ CriteriaForm.userSolution }}</li><br>
@@ -66,6 +66,9 @@ Evaluate a Challenge
             <div class="readyTick"></div>
             </div>
             <p></p>
+            <ul>
+                <li>Flag for later attention: {{ form.needsLaterAttention }}</li>
+            </ul>
             <script>
                 var slider{{ form.learningObjective.value }} = document.getElementById("slider{{ form.learningObjective.value }}");
                 var output{{ form.learningObjective.value }} = document.getElementById("{{ form.completionLevel.auto_id }}");

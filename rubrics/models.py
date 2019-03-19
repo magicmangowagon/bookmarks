@@ -145,6 +145,14 @@ class RubricLine(models.Model):
     completionLevel = models.IntegerField(default=0)
     student = models.ForeignKey(UserSolution, on_delete=models.CASCADE)
     learningObjective = models.ForeignKey(LearningObjective, on_delete=models.CASCADE)
+    A = 'A'
+    B = 'B'
+    attentionChoices = (
+        ('A', "Yes"),
+        ('B', "No")
+    )
+    needsLaterAttention = models.CharField(max_length=1, choices=attentionChoices, default='B')
+    # ready = models.BooleanField(default=False)
 
 
 # _____________

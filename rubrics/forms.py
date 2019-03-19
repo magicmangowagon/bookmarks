@@ -51,6 +51,6 @@ CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, fiel
 
 
 RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, fields=('evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student',
-                  'learningObjective', ))
+                  'learningObjective', 'needsLaterAttention', ))
 
 RubricFormSet = modelformset_factory(Rubric, formset=RubricForm, fields=('generalFeedback', 'userSolution', 'challengeCompletionLevel', 'evaluator', 'challenge'))
