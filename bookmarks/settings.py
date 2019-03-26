@@ -26,7 +26,7 @@ SECRET_KEY = 'e7+_=2dkn(4n64id2m_8v&fqvbw61f5u06mgp#io2ilwz$$drg'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
