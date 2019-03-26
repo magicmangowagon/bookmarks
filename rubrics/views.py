@@ -65,7 +65,7 @@ class ChallengeListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['lo_list'] = LearningObjective.objects.all()
+        context['lo_list'] = LearningObjective.objects.all().order_by('compGroup', 'compNumber', 'loNumber')
         return context
 
 
@@ -168,7 +168,7 @@ class RubricFormView(FormView):
         neededCriteria = []
         for criterion in criteriaList:
             for learningObjective in lo_list:
-                if (criterion.learningObj.id == learningObjective.id):
+                if (criterion.learningObj.id == learningObjective.id and criterion.learningObj.id not in criteriaList):
                     neededCriteria.append(criterion)
 
         criteriaLength = len(neededCriteria)
@@ -176,6 +176,7 @@ class RubricFormView(FormView):
         # edit view, checks for rubricLine objects from this userSolution
         # and sets the formset query to that instance
         context['criteria'] = neededCriteria
+        context['count'] = criteriaLength
 
         if RubricLine.objects.all().filter(student=usersolution).exists():
             RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=0, fields=(
@@ -206,7 +207,8 @@ class RubricFormView(FormView):
                 'achievement', 'criteria', 'userSolution', ), widgets={'criteria': forms.HiddenInput, 'userSolution': forms.HiddenInput})
 
             critFormset = CriterionFormSet(prefix='criteria',
-                initial=[{'userSolution': student, 'criteria': criterion} for criterion in neededCriteria])
+                initial=[{'userSolution': student, 'criteria': criterion} for criterion in neededCriteria],
+                                           queryset=CriteriaLine.objects.none())
 
         context['formset'] = formset
         context['critFormset'] = critFormset
