@@ -154,7 +154,7 @@ class RubricFormView(FormView):
         usersolution = self.kwargs['pk']
         challenge = UserSolution.objects.get(pk=usersolution).challengeName
         context['lo_list'] = LearningObjective.objects.filter(challenge=challenge)
-        lo_list = LearningObjective.objects.filter(challenge=challenge)
+        lo_list = LearningObjective.objects.filter(challenge=challenge).order_by('compGroup', 'compNumber', 'loNumber')
         student = UserSolution.objects.get(pk=usersolution)
         context['student'] = student
         context['challenge'] = challenge
