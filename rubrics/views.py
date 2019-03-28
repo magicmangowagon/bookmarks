@@ -183,13 +183,13 @@ class RubricFormView(FormView):
                 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel',
                 'student', 'needsLaterAttention', ), widgets={'student': forms.HiddenInput, })
 
-            formset = RubricLineFormset(queryset=RubricLine.objects.all().filter(student=usersolution).order_by(
+            formset = RubricLineFormset(prefix='rubriclines', queryset=RubricLine.objects.all().filter(student=usersolution).order_by(
                 'learningObjective__compGroup', 'learningObjective__compNumber', 'learningObjective__loNumber'))
 
             CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, extra=0, fields=(
                 'achievement', 'criteria', 'userSolution',), widgets={'criteria': forms.HiddenInput, 'userSolution': forms.HiddenInput})
 
-            critFormset = CriterionFormSet(queryset=CriteriaLine.objects.all().filter(userSolution=student))
+            critFormset = CriterionFormSet(prefix='criteria', queryset=CriteriaLine.objects.all().filter(userSolution=student))
 
         # create new rubric, checked for rubricline objects from this userSolution
         # and none existed, so queryset is none and extra forms is set to LO count
@@ -218,13 +218,11 @@ class RubricFormView(FormView):
         formset = RubricLineFormset(request.POST, prefix='rubriclines')
         critFormset = CriterionFormSet(request.POST, prefix='criteria')
         if formset.is_valid() and critFormset.is_valid():
-            print("inside valid check")
             formset.save()
             critFormset.save()
             return redirect('solution-end-eval', self.kwargs['pk'])
 
         else:
-            print("Get Fucked")
             messages.error(request, "Error")
             return self.render_to_response(self.get_context_data(formset=formset))
 
@@ -282,6 +280,8 @@ class CompetencyView(ListView):
         rubricLines = RubricLine.objects.all()
         context['rubricLines'] = rubricLines
         context['currentUser'] = self.request.user
+
+        # Add a dropdown for admins to pull up comps for any user
 
         return context
     context_object_name = 'comps'
