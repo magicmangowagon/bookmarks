@@ -6,23 +6,39 @@
 {% block content %}
 
 <h1>Competencies - {{ currentUser.first_name }}</h1>
+    {% if request.user.profile.role == 4 %}
+        <form action=""  method="get">
+            {% csrf_token %}
+            {{ chosenUserForm }}
+
+            <input type="submit" value="change student">
+        </form>
+
+    {% endif %}
 <div class="compFlexContainer">
     {% for comp in comps %}
     <div class="competencyPod">
+
         <h3>{{ comp.compGroup }}.{{ comp.compNumber }} - {{ comp.name }}</h3>
         <div class="competencyPodContent">
         {% for learningObj in learningObjs %}
             {% if learningObj.compGroup == comp.compGroup and learningObj.compNumber == comp.compNumber %}
-                <h4>{{ learningObj.compGroup }} - {{ learningObj.compNumber }}.{{ learningObj.loNumber }} {{ learningObj.name }}</h4>
+                <div class={{ colorCode }}>
+                    <h4>{{ learningObj.compGroup }} - {{ learningObj.compNumber }}.{{ learningObj.loNumber }} {{ learningObj.name }}</h4>
+                </div>
                 {% for rubricLine in rubricLines %}
-                    {% if rubricLine.learningObjective.id == learningObj.id and currentUser == rubricLine.student.userOwner %}
-                        <p>{{ rubricLine.student.challengeName }} - {{ rubricLine.completionLevel }}</p>
+                    {% if rubricLine.learningObjective.id == learningObj.id %}
+                        {% if rubricLine.completionLevel >= 50 %}<div class="colorCodeGreen">{% else %}<div class="colorCodePink">{% endif %}
+                            <p>{{ rubricLine.student.challengeName }} - {{ rubricLine.completionLevel }}</p>
+                        </div>
                     {% endif %}
                 {% endfor %}
+
             {% endif %}
         {% endfor %}
         </div>
     </div>
+
     {% endfor %}
 </div>
 {% endblock content %}

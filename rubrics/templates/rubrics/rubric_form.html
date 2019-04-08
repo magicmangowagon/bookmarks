@@ -21,22 +21,6 @@ Evaluate a Challenge
             <span style="display: none">{{ form.learningObjective }}</span>
             <p>{{ form.student }}</p>
 
-            <ul>
-                {% if userRole == 4 or 2 %}
-                    <li><label>{{ form.evidenceMissing.label }}</label>
-                        {{ form.evidencePresent }}</li>
-
-                    <li><label>{{ form.evidencePresent.label }}</label>
-                        {{ form.evidenceMissing }}</li>
-                {% endif %}
-
-                <li><label>{{ form.feedback.label }}</label>
-                    {{ form.feedback }}</li>
-
-                <li><label>{{ form.suggestions.label }}</label>
-                    {{ form.suggestions }}</li>
-
-            </ul>
             {{ critFormset.management_form }}
             <h2>Criteria</h2>
             <ul>
@@ -54,15 +38,34 @@ Evaluate a Challenge
                 {% endfor %}
             </ul>
 
+
+            <ul>
+                {% if userRole == 4 or 2 %}
+                    <li><label>{{ form.evidenceMissing.label }}</label>
+                        {{ form.evidencePresent }}</li>
+
+                    <li><label>{{ form.evidencePresent.label }}</label>
+                        {{ form.evidenceMissing }}</li>
+                {% endif %}
+
+                <li><label>{{ form.feedback.label }}</label>
+                    {{ form.feedback }}</li>
+
+                <li><label>{{ form.suggestions.label }}</label>
+                    {{ form.suggestions }}</li>
+
+            </ul>
+
+
             <ul>
 
             </ul>
 
             <p><label>Ready to move on</label>
-                {{ form.completionLevel }}</p>
+                <span style="display: none">{{ form.completionLevel }}</span></p>
 
             <div class="slidecontainer">
-                <input type="range" min="1" max="100" value="0" class="slider" id="slider{{ form.learningObjective.value }}">
+                <input type="range" min="0" max="100" value="0" step="25" class="slider" id="slider{{ form.learningObjective.value }}">
             <div class="readyTick"></div>
             </div>
             <p></p>

@@ -132,10 +132,13 @@ class UserSolution(models.Model):
     userOwner = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     challengeName = models.ForeignKey(Challenge, blank=True, null=True, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.userOwner.username
 
 # ___________
 # RUBRIC LINE
 # Evaluator submitted response to learningObjectives
+
 
 class RubricLine(models.Model):
     evidenceMissing = models.TextField(blank=True, default='')

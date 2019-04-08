@@ -4,6 +4,10 @@ ul{
     padding: 0;
 }
 
+.colorCode {
+    border-left: 3px solid #81ce81;
+}
+
 .evalField ul {
     display: flex;
     flex-direction: row;

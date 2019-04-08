@@ -2,13 +2,15 @@ from django.shortcuts import render
 from django import forms
 from django.http import HttpResponseRedirect
 from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion, CriteriaLine, Competency
-from .forms import UserFileForm, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, CriterionFormSet, CriteriaForm
+from .forms import UserFileForm, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, CriterionFormSet, CriteriaForm, CurrentStudentToView
 from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
 from django.forms import modelformset_factory
 from django.contrib import messages
 from django.shortcuts import redirect
+from django.contrib.auth.models import User
+from .functions import somethingswrong
 
 
 class challenge_detail(DetailView, FormMixin):
@@ -236,7 +238,8 @@ class RubricFormView(FormView):
 class EvalListView(ListView):
 
     def get_queryset(self, **kwargs):
-        if self.request.user.is_staff:
+        profile = self.request.user.profile
+        if profile.role == 4:
             queryset = UserSolution.objects.all()
             return queryset
         else:
@@ -265,9 +268,10 @@ def success(request, pk):
     return render(request, 'rubrics/success.html', )
 
 
-class CompetencyView(ListView):
+class CompetencyView(ListView, FormMixin):
     model = Competency
     template_name = "rubrics/compList.html"
+    form_class = CurrentStudentToView
 
     def get_queryset(self, **kwargs):
         queryset = Competency.objects.all().order_by('compGroup', 'compNumber')
@@ -277,13 +281,50 @@ class CompetencyView(ListView):
         context = super(CompetencyView, self).get_context_data(**kwargs)
         learningObjs = LearningObjective.objects.all().order_by('compGroup', 'compNumber', 'loNumber')
         context['learningObjs'] = learningObjs
-        rubricLines = RubricLine.objects.all()
+        colorCode = 'colorCodeDefault'
+
+        if self.request.user.profile.role == 4:
+            firstStudent = User.objects.order_by('last_name').filter()[:1].get()
+            form = CurrentStudentToView(self.request.GET)
+            context['chosenUserForm'] = form
+
+            # Ping server to load RubricLines for chosen user
+            # Should put this into an AJAX call eventually
+
+            if form.is_valid():
+                rubricLines = RubricLine.objects.all().filter(student__userOwner=form.cleaned_data['chooseUser'])
+                context['currentUser'] = form.cleaned_data['chooseUser']
+
+                # Figure out how to pass a list of models to an external function
+                # so I can clean this up
+                for rubricLine in rubricLines:
+                    if somethingswrong(rubricLine):
+                        # colorCode = 'colorCodePink'
+                        break
+                    else:
+                        colorCode = 'colorCodeGreen'
+
+                context['colorCode'] = colorCode
+
+            else:
+                rubricLines = RubricLine.objects.all().filter(student__userOwner=firstStudent)
+                context['currentUser'] = firstStudent
+
+        else:
+            rubricLines = RubricLine.objects.all().filter(student__userOwner=self.request.user)
+            context['currentUser'] = self.request.user
+
+            # Annoyed that I am repeating code here
+            for rubricLine in rubricLines:
+                if somethingswrong(rubricLine):
+                    # colorCode = 'colorCodePink'
+                    break
+                else:
+                    colorCode = 'colorCodeGreen'
+
         context['rubricLines'] = rubricLines
-        context['currentUser'] = self.request.user
-
-        # Add a dropdown for admins to pull up comps for any user
-
         return context
+
     context_object_name = 'comps'
 
 

@@ -4,6 +4,24 @@ ul{
     padding: 0;
 }
 
+.colorCodePink {
+    border-left: 9px solid #FF7BAC;
+    margin: 0 0 0 -9px;
+    padding: 0 0 0 9px;
+}
+
+.colorCodeGreen {
+    border-left: 9px solid #81ce81;
+    margin: 0 0 0 -9px;
+    padding: 0 0 0 9px;
+}
+
+.colorCodeDefault {
+    border-left: 9px solid #989FA9;
+    margin: 0 0 0 -9px;
+    padding: 0 0 0 9px;
+}
+
 .evalFieldFlexContainer {
     display: flex;
     flex-flow: row wrap;
