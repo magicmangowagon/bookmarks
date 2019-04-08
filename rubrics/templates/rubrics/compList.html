@@ -23,13 +23,13 @@
         <div class="competencyPodContent">
         {% for learningObj in learningObjs %}
             {% if learningObj.compGroup == comp.compGroup and learningObj.compNumber == comp.compNumber %}
-                <div class={{ colorCode }}>
+                <div class="colorCodeDefault">
                     <h4>{{ learningObj.compGroup }} - {{ learningObj.compNumber }}.{{ learningObj.loNumber }} {{ learningObj.name }}</h4>
                 </div>
                 {% for rubricLine in rubricLines %}
                     {% if rubricLine.learningObjective.id == learningObj.id %}
-                        {% if rubricLine.completionLevel >= 50 %}<div class="colorCodeGreen">{% else %}<div class="colorCodePink">{% endif %}
-                            <p>{{ rubricLine.student.challengeName }} - {{ rubricLine.completionLevel }}</p>
+                        {% if rubricLine.ready %}<div class="colorCodeGreen">{% else %}<div class="colorCodePink">{% endif %}
+                            <p><a href="evals/{{ rubricLine.student.id }}">{{ rubricLine.student.challengeName }}</a></p>
                         </div>
                     {% endif %}
                 {% endfor %}

@@ -10,7 +10,7 @@ from django.forms import modelformset_factory
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
-from .functions import somethingswrong
+from .functions import process_rubricLine
 
 
 class challenge_detail(DetailView, FormMixin):
@@ -281,7 +281,6 @@ class CompetencyView(ListView, FormMixin):
         context = super(CompetencyView, self).get_context_data(**kwargs)
         learningObjs = LearningObjective.objects.all().order_by('compGroup', 'compNumber', 'loNumber')
         context['learningObjs'] = learningObjs
-        colorCode = 'colorCodeDefault'
 
         if self.request.user.profile.role == 4:
             firstStudent = User.objects.order_by('last_name').filter()[:1].get()
@@ -289,22 +288,14 @@ class CompetencyView(ListView, FormMixin):
             context['chosenUserForm'] = form
 
             # Ping server to load RubricLines for chosen user
-            # Should put this into an AJAX call eventually
-
+            # Will put this into an AJAX call eventually
             if form.is_valid():
                 rubricLines = RubricLine.objects.all().filter(student__userOwner=form.cleaned_data['chooseUser'])
                 context['currentUser'] = form.cleaned_data['chooseUser']
 
-                # Figure out how to pass a list of models to an external function
-                # so I can clean this up
-                for rubricLine in rubricLines:
-                    if somethingswrong(rubricLine):
-                        # colorCode = 'colorCodePink'
-                        break
-                    else:
-                        colorCode = 'colorCodeGreen'
-
-                context['colorCode'] = colorCode
+                # Function checks if conditions are met and returns true or false rubricLine.ready
+                # will add some more logic to check if competency is complete
+                process_rubricLine(rubricLines)
 
             else:
                 rubricLines = RubricLine.objects.all().filter(student__userOwner=firstStudent)
@@ -313,16 +304,10 @@ class CompetencyView(ListView, FormMixin):
         else:
             rubricLines = RubricLine.objects.all().filter(student__userOwner=self.request.user)
             context['currentUser'] = self.request.user
-
-            # Annoyed that I am repeating code here
-            for rubricLine in rubricLines:
-                if somethingswrong(rubricLine):
-                    # colorCode = 'colorCodePink'
-                    break
-                else:
-                    colorCode = 'colorCodeGreen'
+            process_rubricLine(rubricLines)
 
         context['rubricLines'] = rubricLines
+
         return context
 
     context_object_name = 'comps'
