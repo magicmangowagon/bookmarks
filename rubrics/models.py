@@ -135,10 +135,10 @@ class UserSolution(models.Model):
     def __str__(self):
         return self.userOwner.username
 
+
 # ___________
 # RUBRIC LINE
 # Evaluator submitted response to learningObjectives
-
 
 class RubricLine(models.Model):
     evidenceMissing = models.TextField(blank=True, default='')
@@ -190,6 +190,20 @@ class Rubric(models.Model):
     evaluator = models.ForeignKey(User, on_delete=models.CASCADE)
     userSolution = models.ForeignKey(UserSolution, on_delete=models.CASCADE, default='0')
     challengeCompletionLevel = models.IntegerField(default=0)
+
+
+#__________
+# CompetencyProgress
+# Store TC progress on attached learning objectives
+# Act as a place for Evaluators to record different metrics in the future
+# (namely, I think a human override of machine decisions would occur here)
+
+class CompetencyProgress(models.Model):
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    competency = models.ForeignKey(Competency, on_delete=models.CASCADE)
+    rubricLines = models.ManyToManyField(RubricLine, blank=True)
+    complete = bool(False)
+    manualOverride = models.BooleanField(default=False)
 
 
 

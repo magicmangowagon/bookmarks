@@ -1,14 +1,5 @@
-from .models import RubricLine, Competency
-
-def somethingswrong(rubricLine):
-        if rubricLine.completionLevel < 50 and rubricLine.needsLaterAttention is not True:
-            return True
-
-        elif rubricLine.completionLevel >= 50 and rubricLine.needsLaterAttention is True:
-            return True
-
-        else:
-            return False
+from .models import RubricLine, Competency, CompetencyProgress
+from django.db import transaction
 
 
 def process_rubricLine(rubricLines):
@@ -18,12 +9,40 @@ def process_rubricLine(rubricLines):
         else:
             RubricLine.ready = True
 
+    assess_competency_done(rubricLines)
+
     return rubricLines
 
 
 def assess_competency_done(rubricLines):
-    choices = Competency.objects.all()
+    competencies = Competency.objects.all()
+    user = rubricLines[0].student.userOwner
+    for competencies in competencies:
+        neededID = type(competencies).objects.get(id=competencies.id)
+        compProg = CompetencyProgress(
+            competency=neededID,
+            student=user
+        )
+        compProg.save()
 
+    compProgs = CompetencyProgress.objects.all()
+
+    for object in compProgs:
+        for RubricLine in rubricLines:
+            if RubricLine.learningObjective.compGroup == object.competency.compGroup and RubricLine.learningObjective.compNumber == object.competency.compNumber:
+                compProg = type(object).objects.get(pk=object.id)
+                rbID = type(RubricLine).objects.get(pk=RubricLine.id)
+                compProg.save()
+
+                compProg.rubricLines.add(rbID)
+
+                if RubricLine.ready is False:
+                    object.complete = False
+                    break
+                else:
+                    object.complete = True
+
+    return compProgs
     # take list of RubricLines, break down into compLetter-compNumber
     # evaluate if ready bool is checked for all in group, record this bool
     # and add to a list, return list

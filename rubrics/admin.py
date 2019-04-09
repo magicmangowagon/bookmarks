@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
-from .models import LearningObjective, Rubric, Criterion, Competency, Challenge, UserSolution, RubricLine, CriteriaLine
+from .models import LearningObjective, Rubric, Criterion, Competency, Challenge, UserSolution, RubricLine, CriteriaLine, CompetencyProgress
 
 
 class CriteriaInline(admin.TabularInline):
@@ -65,3 +65,8 @@ class RubricAdmin(admin.ModelAdmin):
 @admin.register(Criterion)
 class LearningObjectiveAdmin(admin.ModelAdmin):
     list_display = ['name']
+
+
+@admin.register(CompetencyProgress)
+class CompProgressAdmin(admin.ModelAdmin):
+    list_display = ['competency']
