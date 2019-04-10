@@ -157,6 +157,10 @@ class RubricLine(models.Model):
     needsLaterAttention = models.CharField(max_length=1, choices=attentionChoices, default='B')
     ready = models.BooleanField(default=False)
 
+    def __str__(self):
+        name = self.student.userOwner.__str__() + self.learningObjective.name.__str__()
+        return name
+
 
 # _____________
 # CRITERIA LINE
@@ -202,7 +206,8 @@ class CompetencyProgress(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     competency = models.ForeignKey(Competency, on_delete=models.CASCADE)
     rubricLines = models.ManyToManyField(RubricLine, blank=True)
-    complete = bool(False)
+    attempted = models.BooleanField(default=False)
+    complete = models.BooleanField(default=False)
     manualOverride = models.BooleanField(default=False)
 
 

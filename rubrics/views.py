@@ -10,7 +10,7 @@ from django.forms import modelformset_factory
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
-from .functions import process_rubricLine
+from .functions import process_rubricLine, assess_competency_done
 
 
 class challenge_detail(DetailView, FormMixin):
@@ -290,12 +290,17 @@ class CompetencyView(ListView, FormMixin):
             # Ping server to load RubricLines for chosen user
             # Will put this into an AJAX call eventually
             if form.is_valid():
-                rubricLines = RubricLine.objects.all().filter(student__userOwner=form.cleaned_data['chooseUser'])
-                context['currentUser'] = form.cleaned_data['chooseUser']
+                if RubricLine.objects.all().filter(student__userOwner=form.cleaned_data['chooseUser']).exists():
+                    rubricLines = RubricLine.objects.all().filter(student__userOwner=form.cleaned_data['chooseUser'])
+                    context['currentUser'] = form.cleaned_data['chooseUser']
 
-                # Function checks if conditions are met and returns true or false rubricLine.ready
-                # will add some more logic to check if competency is complete
-                process_rubricLine(rubricLines)
+                    # Function checks if conditions are met and returns true or false rubricLine.ready
+                    # will add some more logic to check if competency is complete
+                    process_rubricLine(rubricLines)
+                    context['assess_competency_done'] = assess_competency_done(rubricLines)
+                    context['process_rubricLine'] = process_rubricLine(rubricLines)
+                else:
+                    print('no data')
 
             else:
                 rubricLines = RubricLine.objects.all().filter(student__userOwner=firstStudent)
@@ -305,6 +310,7 @@ class CompetencyView(ListView, FormMixin):
             rubricLines = RubricLine.objects.all().filter(student__userOwner=self.request.user)
             context['currentUser'] = self.request.user
             process_rubricLine(rubricLines)
+            context['assess_competency_done'] = assess_competency_done(rubricLines)
 
         context['rubricLines'] = rubricLines
 

@@ -13,13 +13,31 @@
 
             <input type="submit" value="change student">
         </form>
-
     {% endif %}
 <div class="compFlexContainer">
     {% for comp in comps %}
+
     <div class="competencyPod">
 
+
+        {% for competencyProgress in assess_competency_done %}
+            {% if competencyProgress.competency.id == comp.id %}
+                {% if competencyProgress.complete == True %}
+                    <div class="competencyComplete">
+                    <p>Complete</p>
+                {% elif competencyProgress.complete == False and competencyProgress.attempted == True  %}
+                    <div class="competencyStarted">
+                    <p>In Progress</p>
+                {% elif competencyProgress.attempted == False %}
+                    <div class="competencyCompletion">
+                    <p>Not Started</p>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
+
         <h3>{{ comp.compGroup }}.{{ comp.compNumber }} - {{ comp.name }}</h3>
+
         <div class="competencyPodContent">
         {% for learningObj in learningObjs %}
             {% if learningObj.compGroup == comp.compGroup and learningObj.compNumber == comp.compNumber %}

@@ -3,6 +3,7 @@ from django.forms import modelformset_factory, ModelForm, BaseModelFormSet, inli
 from .models import LearningObjective, Challenge, UserSolution, Rubric, RubricLine, CriteriaLine, Criterion
 from django.views.generic import DetailView
 from django.contrib.auth.models import User
+from account.models import Profile
 
 
 class ChallengeForm(forms.ModelForm):
@@ -28,7 +29,7 @@ class UserFileForm(forms.ModelForm):
 
 
 class CurrentStudentToView(forms.Form):
-    chooseUser = forms.ModelChoiceField(queryset=User.objects.all(), initial=0, label='Choose User')
+    chooseUser = forms.ModelChoiceField(queryset=User.objects.all().filter(profile__role=1), initial=0, label='Choose User')
 
 
 class RubricLineForm(BaseModelFormSet):

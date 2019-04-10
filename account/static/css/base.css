@@ -91,6 +91,8 @@ ul{
     background-color: #00a497;
 }
 
+
+
 .challengeListObj ul {
     padding-left: 0px;
     border-bottom: 1px solid #003469;
@@ -127,6 +129,45 @@ ul{
     box-shadow: 1px 3px 1px 0 #7f8b85;
     font-size: 125%;
     letter-spacing: 1px;
+}
+
+.competencyCompletion{
+    height: 12pt;
+    background-color: #7f8b85;
+    font-weight: 500;
+    color: #FFFFFF;
+    margin: 0 0 0 -13px;
+    box-shadow: 1px 3px 1px 0 #7f8b85;
+    font-size: 75%;
+    letter-spacing: 1px;
+}
+
+.competencyStarted{
+    height: 12pt;
+    background-color: #FF7BAC;
+    font-weight: 500;
+    color: #FFFFFF;
+    margin: 0 0 0 -13px;
+    box-shadow: 1px 3px 1px 0 #7f8b85;
+    font-size: 75%;
+    letter-spacing: 1px;
+}
+
+.competencyComplete{
+    height: 12pt;
+    background-color: #81ce81;
+    font-weight: 500;
+    color: #FFFFFF;
+    margin: 0 0 0 -13px;
+    box-shadow: 1px 3px 1px 0 #7f8b85;
+    font-size: 75%;
+    letter-spacing: 1px;
+}
+
+.competencyCompletion .competencyComplete .competencyStarted, p {
+    line-height: 1.8;
+    padding: 0;
+    margin: 0
 }
 
 .competencyPod h4 {
