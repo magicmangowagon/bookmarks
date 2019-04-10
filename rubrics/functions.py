@@ -18,13 +18,15 @@ def assess_competency_done(rubricLines):
     competencies = Competency.objects.all()
     user = rubricLines[0].student.userOwner
     for competencies in competencies:
-        neededID = type(competencies).objects.get(id=competencies.id)
-        compProg = CompetencyProgress(
-            competency=neededID,
-            student=user
-        )
-        compProg.save()
-
+        if CompetencyProgress.objects.filter(competency=competencies, student=user).exists():
+            print('already exists')
+        else:
+            neededID = type(competencies).objects.get(id=competencies.id)
+            compProg = CompetencyProgress(
+                competency=neededID,
+                student=user
+            )
+            compProg.save()
     compProgs = CompetencyProgress.objects.all()
 
     for object in compProgs:
