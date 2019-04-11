@@ -15,10 +15,7 @@
     {% endif %}
 <div class="compFlexContainer">
     {% for comp in comps %}
-
     <div class="competencyPod">
-
-
         {% for competencyProgress in assess_competency_done %}
             {% if competencyProgress.competency.id == comp.id %}
                 {% if competencyProgress.complete == True %}
