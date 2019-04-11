@@ -8,7 +8,6 @@
 <h1>Competencies - {{ currentUser.first_name }}</h1>
     {% if request.user.profile.role == 4 %}
         <form action=""  method="get">
-            {% csrf_token %}
             {{ chosenUserForm }}
 
             <input type="submit" value="change student">
