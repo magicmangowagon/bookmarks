@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django import forms
 from django.http import HttpResponseRedirect
-from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion, CriteriaLine, Competency
+from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion, CriteriaLine, Competency, CompetencyProgress
 from .forms import UserFileForm, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, CriterionFormSet, CriteriaForm, CurrentStudentToView
 from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.edit import FormMixin
@@ -104,9 +104,9 @@ class RubricFinalFormView(FormView):
         rubric = self.kwargs['pk']
         context['evaluation'] = RubricLine.objects.all().filter(student=rubric)
         completionLevelObj = RubricLine.objects.all().filter(student=rubric)
-        fart = 0
+        incrementor = 0
         for object in completionLevelObj:
-            fart += int(object.completionLevel)
+            incrementor += int(object.completionLevel)
         context['usersolution'] = UserSolution.objects.get(id=rubric)
         userSolution = UserSolution.objects.get(id=rubric)
         challenge = userSolution.challengeName
@@ -125,16 +125,19 @@ class RubricFinalFormView(FormView):
                                                          'challenge': forms.HiddenInput, 'evaluator': forms.HiddenInput})
 
             formset = RubricFormSet(initial=[{'userSolution': userSolution, 'challenge': challenge,
-                                                 'evaluator': self.request.user, 'challengeCompletionLevel': fart}], queryset=Rubric.objects.none(),)
+                                                 'evaluator': self.request.user, 'challengeCompletionLevel': incrementor}], queryset=Rubric.objects.none(),)
 
         context['form'] = formset
         return context
 
     def post(self, request, *args, **kwargs):
         form = RubricFormSet(request.POST)
+        completionLevelObj = RubricLine.objects.all().filter(student=self.kwargs['pk'])
 
         if form.is_valid():
             form.save()
+            process_rubricLine(completionLevelObj)
+            assess_competency_done(completionLevelObj)
             return HttpResponseRedirect('/evals')
         else:
             messages.error(request, "Error")
@@ -286,6 +289,9 @@ class CompetencyView(ListView, FormMixin):
             firstStudent = User.objects.order_by('last_name').filter()[:1].get()
             form = CurrentStudentToView(self.request.GET)
             context['chosenUserForm'] = form
+            rubricLines = RubricLine.objects.all().filter(student__userOwner=firstStudent)
+            context['assess_competency_done'] = CompetencyProgress.objects.all().filter(
+                student=firstStudent)
 
             # Ping server to load RubricLines for chosen user
             # Will put this into an AJAX call eventually
@@ -296,9 +302,7 @@ class CompetencyView(ListView, FormMixin):
 
                     # Function checks if conditions are met and returns true or false rubricLine.ready
                     # will add some more logic to check if competency is complete
-                    process_rubricLine(rubricLines)
-                    context['assess_competency_done'] = assess_competency_done(rubricLines)
-                    context['process_rubricLine'] = process_rubricLine(rubricLines)
+                    context['assess_competency_done'] = CompetencyProgress.objects.all().filter(student=form.cleaned_data['chooseUser'])
                 else:
                     print('no data')
 
@@ -309,8 +313,7 @@ class CompetencyView(ListView, FormMixin):
         else:
             rubricLines = RubricLine.objects.all().filter(student__userOwner=self.request.user)
             context['currentUser'] = self.request.user
-            process_rubricLine(rubricLines)
-            context['assess_competency_done'] = assess_competency_done(rubricLines)
+            context['assess_competency_done'] = CompetencyProgress.objects.all().filter(student=self.request.user)
 
         context['rubricLines'] = rubricLines
 
