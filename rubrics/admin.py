@@ -69,4 +69,4 @@ class LearningObjectiveAdmin(admin.ModelAdmin):
 
 @admin.register(CompetencyProgress)
 class CompProgressAdmin(admin.ModelAdmin):
-    list_display = ['competency']
+    list_display = ['competency', 'student', 'attempted', 'complete']
