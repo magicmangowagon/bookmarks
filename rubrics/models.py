@@ -1,7 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from djrichtextfield.models import RichTextField
-from tinymce import models as tinymce_models
 
 
 # __________________
@@ -141,6 +140,7 @@ class UserSolution(models.Model):
 # Evaluator submitted response to learningObjectives
 
 class RubricLine(models.Model):
+
     evidenceMissing = models.TextField(blank=True, default='')
     evidencePresent = models.TextField(blank=True, default='')
     feedback = models.TextField(blank=True, default='')
@@ -155,7 +155,12 @@ class RubricLine(models.Model):
         ('B', "No")
     )
     needsLaterAttention = models.CharField(max_length=1, choices=attentionChoices, default='B')
+    BOOL_CHOICES = (
+        (True, "Yes"),
+        (False, "No")
+    )
     ready = models.BooleanField(default=False)
+    ignore = models.BooleanField(choices=BOOL_CHOICES, default=False)
 
     def __str__(self):
         name = self.student.userOwner.__str__() + self.learningObjective.name.__str__()
@@ -196,7 +201,7 @@ class Rubric(models.Model):
     challengeCompletionLevel = models.IntegerField(default=0)
 
 
-#__________
+# __________
 # CompetencyProgress
 # Store TC progress on attached learning objectives
 # Act as a place for Evaluators to record different metrics in the future
@@ -211,6 +216,19 @@ class CompetencyProgress(models.Model):
     manualOverride = models.BooleanField(default=False)
 
 
+# _________
+# ChallengeAddendum
+# First attempt at a flexible model for creating
+# individualized challenges
 
+class ChallengeAddendum(models.Model):
+    name = models.CharField(max_length=250)
+    note = models.TextField(blank=True, default='')
+    parentChallenge = models.ForeignKey(Challenge, on_delete=models.CASCADE)
+    userSolution = models.ForeignKey(UserSolution, on_delete=models.CASCADE)
+    learningObjs = models.ManyToManyField(LearningObjective, blank=True)
+    group = models.ForeignKey(Group, blank=True, null=True, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.name
 

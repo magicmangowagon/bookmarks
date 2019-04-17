@@ -37,7 +37,7 @@ class RubricLineForm(BaseModelFormSet):
         super(RubricLineForm, self).__init__(*args, **kwargs)
 
     class Meta:
-        widgets = {'student': forms.HiddenInput(), }
+        widgets = {'student': forms.HiddenInput()}
 
 
 class RubricForm(BaseModelFormSet):
@@ -56,7 +56,7 @@ class CriteriaForm(BaseModelFormSet):
 CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, fields=('achievement', 'criteria', 'userSolution'))
 
 
-RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, fields=('evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student',
+RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, fields=('ignore', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student',
                   'learningObjective', 'needsLaterAttention', ))
 
 RubricFormSet = modelformset_factory(Rubric, formset=RubricForm, fields=('generalFeedback', 'userSolution', 'challengeCompletionLevel', 'evaluator', 'challenge'))

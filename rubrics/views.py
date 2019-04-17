@@ -185,7 +185,7 @@ class RubricFormView(FormView):
 
         if RubricLine.objects.all().filter(student=usersolution).exists():
             RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=0, fields=(
-                'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel',
+                'ignore', 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel',
                 'student', 'needsLaterAttention', ), widgets={'student': forms.HiddenInput, })
 
             formset = RubricLineFormset(prefix='rubriclines', queryset=RubricLine.objects.all().filter(student=usersolution).order_by(
@@ -201,7 +201,7 @@ class RubricFormView(FormView):
 
         else:
             RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=loCount, fields=(
-                'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel',
+                'ignore', 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel',
                 'student', 'needsLaterAttention', ), widgets={'student': forms.HiddenInput, })
 
             formset = RubricLineFormset(prefix='rubriclines',
