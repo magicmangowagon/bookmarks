@@ -560,6 +560,7 @@ img.user-detail {
     background-color: #efefef;
     padding: 12px;
     text-align: center;
+    display: none;
 
 }
 

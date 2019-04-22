@@ -34,8 +34,6 @@ def assess_competency_done(rubricLines):
 
     compProgs = CompetencyProgress.objects.all().filter(student=user)
 
-    # Once a switch to turn LO's on and off for certain challenges and users is implemented
-    # this query below needs to be filtered by user, user rubricLine.student to do it in the filter
     learningObjs = LearningObjective.objects.all()
     print('Running assessment for ' + user.first_name)
 
