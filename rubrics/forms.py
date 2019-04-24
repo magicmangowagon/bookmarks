@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import modelformset_factory, ModelForm, BaseModelFormSet, inlineformset_factory
-from .models import LearningObjective, Challenge, UserSolution, Rubric, RubricLine, CriteriaLine, Criterion
+from .models import LearningObjective, Challenge, UserSolution, Rubric, RubricLine, CriteriaLine, Criterion, ChallengeAddendum
 from django.views.generic import DetailView
 from django.contrib.auth.models import User
 from account.models import Profile
@@ -40,6 +40,14 @@ class RubricLineForm(BaseModelFormSet):
         widgets = {'student': forms.HiddenInput()}
 
 
+class RubricAddendumForm(BaseModelFormSet):
+    def __init__(self, *args, **kwargs):
+        super(RubricAddendumForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        widgets = {'userSolution': forms.HiddenInput()}
+
+
 class RubricForm(BaseModelFormSet):
     def __init__(self, *args, **kwargs):
         super(RubricForm, self).__init__(*args, **kwargs)
@@ -58,5 +66,7 @@ CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, fiel
 
 RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, fields=('ignore', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student',
                   'learningObjective', 'needsLaterAttention', ))
+
+RubricAddendumFormset = modelformset_factory(ChallengeAddendum, formset=RubricAddendumForm, fields=('name', 'note', 'learningObjs', 'group'))
 
 RubricFormSet = modelformset_factory(Rubric, formset=RubricForm, fields=('generalFeedback', 'userSolution', 'challengeCompletionLevel', 'evaluator', 'challenge'))

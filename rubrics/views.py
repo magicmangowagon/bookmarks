@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django import forms
 from django.http import HttpResponseRedirect
-from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion, CriteriaLine, Competency, CompetencyProgress
-from .forms import UserFileForm, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, CriterionFormSet, CriteriaForm, CurrentStudentToView
+from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion, CriteriaLine, Competency, CompetencyProgress, ChallengeAddendum
+from .forms import UserFileForm, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, CriterionFormSet, CriteriaForm, CurrentStudentToView, RubricAddendumForm
 from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
@@ -236,6 +236,20 @@ class RubricFormView(FormView):
 
     def form_invalid(self, form):
         print("Error")
+
+
+class RubricAddendum(FormView):
+    template_name = 'rubrics/rubric_addendum.html'
+    model = ChallengeAddendum
+    form_class = RubricAddendumForm
+
+    def get_context_data(self, **kwargs):
+        context = super(RubricAddendum, self).get_context_data(**kwargs)
+        solution = self.kwargs['pk']
+        RubricAddendumFormset = modelformset_factory(ChallengeAddendum, formset=RubricAddendumForm, fields=('name', 'note', 'learningObjs', 'group'))
+        challengeAddendumForm = RubricAddendumFormset()
+        context['challengeAddendumForm'] = challengeAddendumForm
+        return context
 
 
 class EvalListView(ListView):
