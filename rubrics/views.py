@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django import forms
 from django.http import HttpResponseRedirect
 from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion, CriteriaLine, Competency, CompetencyProgress, ChallengeAddendum
-from .forms import UserFileForm, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, CriterionFormSet, CriteriaForm, CurrentStudentToView, RubricAddendumForm
+from .forms import UserFileForm, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, CriterionFormSet, CriteriaForm, CurrentStudentToView, RubricAddendumForm, RubricAddendumFormset
 from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
@@ -240,16 +240,25 @@ class RubricFormView(FormView):
 
 class RubricAddendum(FormView):
     template_name = 'rubrics/rubric_addendum.html'
-    model = ChallengeAddendum
-    form_class = RubricAddendumForm
+    model = UserSolution
+    form_class = RubricAddendumFormset
 
     def get_context_data(self, **kwargs):
         context = super(RubricAddendum, self).get_context_data(**kwargs)
         solution = self.kwargs['pk']
-        RubricAddendumFormset = modelformset_factory(ChallengeAddendum, formset=RubricAddendumForm, fields=('name', 'note', 'learningObjs', 'group'))
-        challengeAddendumForm = RubricAddendumFormset()
+        challenge = UserSolution.objects.get(pk=solution).challengeName
+        lo_list = LearningObjective.objects.filter(challenge=challenge)
+        RubricAddendumFormset = modelformset_factory(ChallengeAddendum, formset=RubricAddendumForm, fields=('name', 'note', 'parentChallenge', 'learningObjs', 'group'))
+        challengeAddendumForm = RubricAddendumFormset(initial=[{'learningObjs': learningObjective.pk, 'parentChallenge': challenge} for learningObjective in lo_list])
         context['challengeAddendumForm'] = challengeAddendumForm
         return context
+
+    def post(self, request, *args, **kwargs):
+        formset = RubricAddendumFormset(request.POST)
+
+        if formset.is_valid():
+            formset.save()
+            return redirect('solution-end-eval', self.kwargs['pk'])
 
 
 class EvalListView(ListView):
