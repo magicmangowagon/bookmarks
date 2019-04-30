@@ -245,11 +245,15 @@ class RubricAddendum(FormView):
 
     def get_context_data(self, **kwargs):
         context = super(RubricAddendum, self).get_context_data(**kwargs)
-        solution = self.kwargs['pk']
-        challenge = UserSolution.objects.get(pk=solution).challengeName
+        pk = self.kwargs['pk']
+        solution = UserSolution.objects.get(pk=pk)
+        challenge = UserSolution.objects.get(pk=pk).challengeName
         lo_list = LearningObjective.objects.filter(challenge=challenge)
-        RubricAddendumFormset = modelformset_factory(ChallengeAddendum, formset=RubricAddendumForm, fields=('name', 'note', 'parentChallenge', 'learningObjs', 'group'))
-        challengeAddendumForm = RubricAddendumFormset(initial=[{'learningObjs': learningObjective.pk, 'parentChallenge': challenge} for learningObjective in lo_list])
+        RubricAddendumFormset = modelformset_factory(ChallengeAddendum, formset=RubricAddendumForm, fields=
+        ('name', 'note', 'parentChallenge', 'learningObjs', 'group', 'userSolution'))
+        challengeAddendumForm = RubricAddendumFormset(initial=
+                                                      [{'learningObjs': learningObjective.pk, 'parentChallenge': challenge, 'userSolution': solution}
+                                                       for learningObjective in lo_list])
         context['challengeAddendumForm'] = challengeAddendumForm
         return context
 
@@ -258,7 +262,9 @@ class RubricAddendum(FormView):
 
         if formset.is_valid():
             formset.save()
-            return redirect('solution-end-eval', self.kwargs['pk'])
+            return redirect('solution-eval', self.kwargs['pk'])
+        else:
+            return self.render_to_response(self.get_context_data(formset=formset))
 
 
 class EvalListView(ListView):
