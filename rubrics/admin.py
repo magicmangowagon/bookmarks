@@ -21,7 +21,7 @@ class CompetencyInline(admin.TabularInline):
 
 @admin.register(UserSolution)
 class UserSolution(admin.ModelAdmin):
-    list_display = ['userOwner', 'challengeName']
+    list_display = ['userOwner', 'challengeName', 'customized']
 
 
 @admin.register(RubricLine)

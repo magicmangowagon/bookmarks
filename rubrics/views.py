@@ -10,7 +10,7 @@ from django.forms import modelformset_factory
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
-from .functions import process_rubricLine, assess_competency_done
+from .functions import process_rubricLine, assess_competency_done, custom_rubric_producer
 
 
 class challenge_detail(DetailView, FormMixin):
@@ -160,8 +160,8 @@ class RubricFormView(FormView):
         challenge = UserSolution.objects.get(pk=usersolution).challengeName
         context['lo_list'] = LearningObjective.objects.filter(challenge=challenge)
         lo_list = LearningObjective.objects.filter(challenge=challenge).order_by('compGroup', 'compNumber', 'loNumber')
-        student = UserSolution.objects.get(pk=usersolution)
-        context['student'] = student
+        thisUserSolution = UserSolution.objects.get(pk=usersolution)
+        context['student'] = thisUserSolution
         context['challenge'] = challenge
         loCount = LearningObjective.objects.filter(challenge=challenge).count()
 
@@ -194,8 +194,13 @@ class RubricFormView(FormView):
             CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, extra=0, fields=(
                 'achievement', 'criteria', 'userSolution',), widgets={'criteria': forms.HiddenInput, 'userSolution': forms.HiddenInput})
 
-            critFormset = CriterionFormSet(prefix='criteria', queryset=CriteriaLine.objects.all().filter(userSolution=student))
+            critFormset = CriterionFormSet(prefix='criteria', queryset=CriteriaLine.objects.all().filter(userSolution=thisUserSolution))
 
+        # if userSolution has been flagged for customization
+        # reroute it to this function to apply the corrected learning
+        # objectives and return it to the view
+        elif thisUserSolution.customized is True:
+            custom_rubric_producer(ChallengeAddendum.objects.get(userSolution=thisUserSolution))
         # create new rubric, checked for rubricline objects from this userSolution
         # and none existed, so queryset is none and extra forms is set to LO count
 
@@ -205,14 +210,14 @@ class RubricFormView(FormView):
                 'student', 'needsLaterAttention', ), widgets={'student': forms.HiddenInput, })
 
             formset = RubricLineFormset(prefix='rubriclines',
-                initial=[{'learningObjective': learningObjective.pk, 'student': student} for learningObjective in
+                initial=[{'learningObjective': learningObjective.pk, 'student': thisUserSolution} for learningObjective in
                          lo_list], queryset=RubricLine.objects.none())
 
             CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, extra=criteriaLength, fields=(
                 'achievement', 'criteria', 'userSolution', ), widgets={'criteria': forms.HiddenInput, 'userSolution': forms.HiddenInput})
 
             critFormset = CriterionFormSet(prefix='criteria',
-                initial=[{'userSolution': student, 'criteria': criterion} for criterion in neededCriteria],
+                initial=[{'userSolution': thisUserSolution, 'criteria': criterion} for criterion in neededCriteria],
                                            queryset=CriteriaLine.objects.none())
 
         context['formset'] = formset
@@ -251,15 +256,15 @@ class RubricAddendum(FormView):
         lo_list = LearningObjective.objects.filter(challenge=challenge)
 
         if ChallengeAddendum.objects.all().filter(userSolution=solution).exists():
-            RubricAddendumFormset = modelformset_factory(ChallengeAddendum, formset=RubricAddendumForm, extra=0, fields=('name', 'note', 'parentChallenge', 'learningObjs', 'group', 'userSolution'))
-            challengeAddendumForm = RubricAddendumFormset(queryset=ChallengeAddendum.objects.all().filter(userSolution=solution))
+            RubricAddendumFormset = modelformset_factory(ChallengeAddendum, formset=RubricAddendumForm, extra=0,
+                                 fields=('name', 'note', 'parentChallenge', 'learningObjs', 'group', 'userSolution'))
+            challengeAddendumForm = RubricAddendumFormset(queryset=
+                                                          ChallengeAddendum.objects.all().filter(userSolution=solution))
 
         else:
-            RubricAddendumFormset = modelformset_factory(ChallengeAddendum, formset=RubricAddendumForm, fields=
-                ('name', 'note', 'parentChallenge', 'learningObjs', 'group', 'userSolution'))
-            challengeAddendumForm = RubricAddendumFormset(initial=
-                                                          [{'learningObjs': learningObjective.pk, 'parentChallenge': challenge, 'userSolution': solution}
-                                                           for learningObjective in lo_list])
+            RubricAddendumFormset = modelformset_factory(ChallengeAddendum, formset=RubricAddendumForm, fields=('name', 'note', 'parentChallenge', 'learningObjs', 'group', 'userSolution'))
+            challengeAddendumForm = RubricAddendumFormset(initial=[{'learningObjs': learningObjective.pk, 'parentChallenge': challenge, 'userSolution': solution}
+                                                                   for learningObjective in lo_list])
         context['challengeAddendumForm'] = challengeAddendumForm
         return context
 
