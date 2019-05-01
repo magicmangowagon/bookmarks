@@ -94,13 +94,12 @@ Evaluate a Challenge
                 slider{{ form.learningObjective.value }}.value = output{{ form.learningObjective.value }}.value;
 
 
-
                 slider{{ form.learningObjective.value }}.oninput = function()
                 {
                     output{{ form.learningObjective.value }}.value = this.value;
-
                     updateChallengeTotal();
                 };
+
                 slider{{ form.learningObjective.value }}.onchange = function()
                 {
                     updateChallengeTotal();
@@ -130,7 +129,6 @@ Evaluate a Challenge
     <h3>Ready?</h3>
         <div id="progressContainer">
             <div id="progressBar">
-
             </div>
         </div>
 
@@ -182,14 +180,13 @@ Evaluate a Challenge
 
         function grayOut(changeSomething, headerToGrayOut)
         {
-            color = headerToGrayOut.style.backgroundColor;
             if(changeSomething[changeSomething.selectedIndex].value === "True")
             {
                 headerToGrayOut.style.backgroundColor = "gray";
             }
             else
             {
-                headerToGrayOut.style.backgroundColor = color;
+                headerToGrayOut.style.backgroundColor = "#00a497";
             }
         }
 
