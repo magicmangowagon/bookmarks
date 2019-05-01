@@ -287,7 +287,7 @@ class RubricAddendum(FormView):
         else:
             RubricAddendumFormset = modelformset_factory(ChallengeAddendum, formset=RubricAddendumForm, extra=1, fields=('name', 'note', 'parentChallenge', 'learningObjs', 'group', 'userSolution'))
             challengeAddendumForm = RubricAddendumFormset(initial=[{'learningObjs': learningObjective.pk, 'parentChallenge': challenge, 'userSolution': solution}
-                                                                   for learningObjective in lo_list])
+                                                                   for learningObjective in lo_list], queryset=ChallengeAddendum.objects.none())
 
         context['challengeAddendumForm'] = challengeAddendumForm
         return context
