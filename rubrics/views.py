@@ -203,7 +203,6 @@ class RubricFormView(FormView):
             challenge = ChallengeAddendum.objects.get(userSolution=thisUserSolution)
             lo_list = LearningObjective.objects.filter(challengeaddendum=challenge).order_by('compGroup', 'compNumber', 'loNumber',)
             loCount = lo_list.count()
-            # challengeAddendumInstance = LearningObjective.objects.filter(challenge=challenge).order_by('compGroup', 'compNumber', 'loNumber')
             RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=loCount, fields=(
                 'ignore', 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions',
                 'completionLevel',

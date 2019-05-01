@@ -109,6 +109,7 @@ Evaluate a Challenge
                 ignoreValue{{ form.learningObjective.value }}.onchange = function ()
                 {
                     showOrHide(ignoreValue{{ form.learningObjective.value }}, ignoreDiv{{ form.learningObjective.value }});
+                    grayOut(ignoreValue{{ form.learningObjective.value }}, document.getElementById("h3{{ form.learningObjective.auto_id }}"));
                 };
 
             </script>
@@ -176,6 +177,19 @@ Evaluate a Challenge
             else
             {
                 thingToChange.style.display = "";
+            }
+        }
+
+        function grayOut(changeSomething, headerToGrayOut)
+        {
+            color = headerToGrayOut.style.backgroundColor;
+            if(changeSomething[changeSomething.selectedIndex].value === "True")
+            {
+                headerToGrayOut.style.backgroundColor = "gray";
+            }
+            else
+            {
+                headerToGrayOut.style.backgroundColor = color;
             }
         }
 
