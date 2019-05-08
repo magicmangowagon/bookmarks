@@ -209,9 +209,8 @@ class RubricFormView(FormView):
                 'student', 'needsLaterAttention',), widgets={'student': forms.HiddenInput, })
 
             formset = RubricLineFormset(prefix='rubriclines',
-                                        initial=[
-                                            {'learningObjective': learningObjective.pk, 'student': thisUserSolution} for
-                                            learningObjective in
+                                        initial=[{'learningObjective': learningObjective.pk, 'student': thisUserSolution}
+                                                 for learningObjective in
                                             lo_list], queryset=RubricLine.objects.none())
 
             CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, extra=criteriaLength, fields=(
@@ -302,6 +301,12 @@ class RubricAddendum(FormView):
             return redirect('solution-eval', self.kwargs['pk'])
         else:
             return self.render_to_response(self.get_context_data(formset=formset))
+
+
+class PreEvaluationUpdate(ListView):
+    model = UserSolution
+    template_name = "rubrics/pre_evaluation.html"
+    # put the information page needed to properly evaluate a solution with a TC
 
 
 class EvalListView(ListView):
