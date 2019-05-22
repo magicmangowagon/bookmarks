@@ -58,6 +58,14 @@ class SolutionDetailView(DetailView):
         context['solution_list'] = UserSolution.objects.all()
         return context
 
+        # Should pre-eval information go here?
+
+
+class PreEvaluationUpdate(ListView):
+    model = UserSolution
+    template_name = "rubrics/pre_evaluation.html"
+    # put the information page needed to properly evaluate a solution with a TC
+
 
 class ChallengeListView(ListView):
     model = Challenge
@@ -301,12 +309,6 @@ class RubricAddendum(FormView):
             return redirect('solution-eval', self.kwargs['pk'])
         else:
             return self.render_to_response(self.get_context_data(formset=formset))
-
-
-class PreEvaluationUpdate(ListView):
-    model = UserSolution
-    template_name = "rubrics/pre_evaluation.html"
-    # put the information page needed to properly evaluate a solution with a TC
 
 
 class EvalListView(ListView):

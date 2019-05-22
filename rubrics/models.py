@@ -60,7 +60,7 @@ class Challenge(models.Model):
 
     name = models.CharField(max_length=250)
     description = RichTextField()
-    learningObjs = models.ManyToManyField(LearningObjective, blank=True)
+    learningObjs = models.ManyToManyField(LearningObjective, blank=True, related_name="challenge")
 
     def __str__(self):
         return self.name
@@ -135,6 +135,19 @@ class UserSolution(models.Model):
     def __str__(self):
         return self.userOwner.username
 
+
+# ____________
+# FRAMING FEEDBACK
+# Model for form that will become part of challenge form.
+class FeedbackFrame(models.Model):
+    userSolution = models.ForeignKey(UserSolution, blank=True, null=True, on_delete=models.CASCADE)
+    goodTitle = models.TextField(blank=True, default='')
+    workFit = models.TextField(blank=True, default='')
+    proudDetail = models.TextField(blank=True, default='')
+    hardDetail = models.TextField(blank=True, default='')
+    objectiveWell = models.TextField(blank=True, default='')
+    objectivePoor = models.TextField(blank=True, default='')
+    personalLearningObjective = models.TextField(blank=True, default='')
 
 # ___________
 # RUBRIC LINE
