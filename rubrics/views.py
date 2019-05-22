@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django import forms
 from django.http import HttpResponseRedirect
-from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion, CriteriaLine, Competency, CompetencyProgress, ChallengeAddendum
-from .forms import UserFileForm, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, CriterionFormSet, CriteriaForm, CurrentStudentToView, RubricAddendumForm, RubricAddendumFormset
+from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion, CriteriaLine, Competency, CompetencyProgress, ChallengeAddendum, FeedbackFrame
+from .forms import UserFileForm, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, CriterionFormSet, CriteriaForm, CurrentStudentToView, RubricAddendumForm, RubricAddendumFormset, FramingFeedbackFormSet, FramingFeedbackForm
 from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
 from .functions import process_rubricLine, assess_competency_done, custom_rubric_producer
 
 
-class challenge_detail(DetailView, FormMixin):
+class ChallengeDetail(DetailView, FormMixin):
     template_name = 'rubrics/challenge_detail.html'
     model = Challenge
     form_class = UserFileForm
@@ -22,11 +22,11 @@ class challenge_detail(DetailView, FormMixin):
         return reverse('success', kwargs={'pk': self.object.id})
 
     def get_context_data(self, **kwargs):
-        context = super(challenge_detail, self).get_context_data(**kwargs)
+        context = super(ChallengeDetail, self).get_context_data(**kwargs)
         context['rubric_list'] = Challenge.objects.all()
         context['learningObjectives_list'] = LearningObjective.objects.all().filter(challenge=self.kwargs['pk'])
         thisUsersSolutions = UserSolution.objects.all().filter(userOwner=self.request.user)
-
+        context['something'] = Challenge
         if thisUsersSolutions.filter(challengeName=self.object.pk).exists():
             thisSolution = thisUsersSolutions.get(challengeName=self.object.pk)
             context['file_exists'] = thisSolution
@@ -46,7 +46,7 @@ class challenge_detail(DetailView, FormMixin):
 
     def form_valid(self, form):
         form.save()
-        return super(challenge_detail, self).form_valid(form)
+        return super(ChallengeDetail, self).form_valid(form)
 
 
 class SolutionDetailView(DetailView):

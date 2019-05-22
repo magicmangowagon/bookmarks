@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.forms import modelformset_factory, ModelForm, BaseModelFormSet, inlineformset_factory
-from .models import LearningObjective, Challenge, UserSolution, Rubric, RubricLine, CriteriaLine, Criterion, ChallengeAddendum
+from .models import LearningObjective, Challenge, UserSolution, Rubric, RubricLine, CriteriaLine, Criterion, ChallengeAddendum, FeedbackFrame
 from django.views.generic import DetailView
 from django.contrib.auth.models import User
 from account.models import Profile
@@ -25,12 +25,20 @@ class ChallengeDisplay(DetailView):
 class UserFileForm(forms.ModelForm):
     class Meta:
         model = UserSolution
-        fields = ('solution', 'challengeName', 'userOwner')
+        fields = ('solution', 'challengeName', 'userOwner', 'goodTitle', 'workFit', 'proudDetail', 'hardDetail', 'objectiveWell', 'objectivePoor', 'personalLearningObjective')
         widgets = {'challengeName': forms.HiddenInput(), 'userOwner': forms.HiddenInput}
 
 
 class CurrentStudentToView(forms.Form):
     chooseUser = forms.ModelChoiceField(queryset=User.objects.all().filter(profile__role=1), initial=0, label='Choose User')
+
+
+class FramingFeedbackForm(BaseModelFormSet):
+    def __init__(self, *args, **kwargs):
+        super(FramingFeedbackForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        widgets = {'userSolution', forms.HiddenInput()}
 
 
 class RubricLineForm(BaseModelFormSet):
@@ -62,6 +70,10 @@ class CriteriaForm(BaseModelFormSet):
         widgets = {'criteria': forms.HiddenInput(), }
 
 
+FramingFeedbackFormSet = modelformset_factory(FeedbackFrame, formset=FramingFeedbackForm, fields=('user', 'challenge',
+    'goodTitle', 'workFit', 'proudDetail', 'hardDetail', 'objectiveWell', 'objectivePoor', 'personalLearningObjective'))
+
+
 CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, fields=('achievement', 'criteria', 'userSolution'))
 
 
@@ -69,5 +81,6 @@ RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, fie
                   'learningObjective', 'needsLaterAttention', ))
 
 RubricAddendumFormset = modelformset_factory(ChallengeAddendum, formset=RubricAddendumForm, fields=('name', 'note', 'parentChallenge', 'learningObjs', 'group', 'userSolution'))
+
 
 RubricFormSet = modelformset_factory(Rubric, formset=RubricForm, fields=('generalFeedback', 'userSolution', 'challengeCompletionLevel', 'evaluator', 'challenge'))

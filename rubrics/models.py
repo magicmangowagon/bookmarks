@@ -130,6 +130,13 @@ class UserSolution(models.Model):
     solution = models.TextField(blank=True, default='')
     userOwner = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     challengeName = models.ForeignKey(Challenge, blank=True, null=True, on_delete=models.CASCADE)
+    goodTitle = models.TextField(blank=True, default='')
+    workFit = models.TextField(blank=True, default='')
+    proudDetail = models.TextField(blank=True, default='')
+    hardDetail = models.TextField(blank=True, default='')
+    objectiveWell = models.TextField(blank=True, default='')
+    objectivePoor = models.TextField(blank=True, default='')
+    personalLearningObjective = models.TextField(blank=True, default='')
     customized = models.BooleanField(default=False)
 
     def __str__(self):
@@ -139,7 +146,10 @@ class UserSolution(models.Model):
 # ____________
 # FRAMING FEEDBACK
 # Model for form that will become part of challenge form.
+
 class FeedbackFrame(models.Model):
+    challenge = models.ForeignKey(Challenge, blank=True, null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     userSolution = models.ForeignKey(UserSolution, blank=True, null=True, on_delete=models.CASCADE)
     goodTitle = models.TextField(blank=True, default='')
     workFit = models.TextField(blank=True, default='')
@@ -148,6 +158,7 @@ class FeedbackFrame(models.Model):
     objectiveWell = models.TextField(blank=True, default='')
     objectivePoor = models.TextField(blank=True, default='')
     personalLearningObjective = models.TextField(blank=True, default='')
+
 
 # ___________
 # RUBRIC LINE

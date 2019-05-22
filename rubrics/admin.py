@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
-from .models import LearningObjective, Rubric, Criterion, Competency, Challenge, UserSolution, RubricLine, CriteriaLine, CompetencyProgress, ChallengeAddendum
+from .models import LearningObjective, Rubric, Criterion, Competency, Challenge, UserSolution, RubricLine, CriteriaLine, CompetencyProgress, ChallengeAddendum, FeedbackFrame
 
 
 class CriteriaInline(admin.TabularInline):
@@ -10,6 +10,7 @@ class CriteriaInline(admin.TabularInline):
 
 class LearningObjsInline(admin.TabularInline):
     model = LearningObjective
+
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         field = super(LearningObjsInline, self).formfield_for_foreignkey(db_field, request, **kwargs)
         return field
