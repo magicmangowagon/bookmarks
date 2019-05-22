@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.forms import modelformset_factory, ModelForm, BaseModelFormSet, inlineformset_factory
-from .models import LearningObjective, Challenge, UserSolution, Rubric, RubricLine, CriteriaLine, Criterion, ChallengeAddendum, FeedbackFrame
+from .models import LearningObjective, Challenge, UserSolution, Rubric, RubricLine, CriteriaLine, Criterion, ChallengeAddendum
 from django.views.generic import DetailView
 from django.contrib.auth.models import User
 from account.models import Profile
@@ -11,22 +11,6 @@ class ChallengeForm(forms.ModelForm):
     class Meta:
         model = Challenge
         fields = ('name', 'description', 'learningObjs')
-
-
-class ChallengeDisplay(DetailView):
-    model = Challenge
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form'] = UserFileForm()
-        return context
-
-
-class UserFileForm(forms.ModelForm):
-    class Meta:
-        model = UserSolution
-        fields = ('solution', 'challengeName', 'userOwner', 'goodTitle', 'workFit', 'proudDetail', 'hardDetail', 'objectiveWell', 'objectivePoor', 'personalLearningObjective')
-        widgets = {'challengeName': forms.HiddenInput(), 'userOwner': forms.HiddenInput}
 
 
 class CurrentStudentToView(forms.Form):
@@ -70,7 +54,15 @@ class CriteriaForm(BaseModelFormSet):
         widgets = {'criteria': forms.HiddenInput(), }
 
 
-FramingFeedbackFormSet = modelformset_factory(FeedbackFrame, formset=FramingFeedbackForm, fields=('user', 'challenge',
+class UserFileForm(BaseModelFormSet):
+    def __init__(self, *args, **kwargs):
+        super(UserFileForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        widgets = {'challengeName': forms.HiddenInput(), 'userOwner': forms.HiddenInput}
+
+
+UserFileFormset = modelformset_factory(UserSolution, formset=UserFileForm, fields=('userOwner', 'challengeName',
     'goodTitle', 'workFit', 'proudDetail', 'hardDetail', 'objectiveWell', 'objectivePoor', 'personalLearningObjective'))
 
 

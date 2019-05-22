@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django import forms
 from django.http import HttpResponseRedirect
-from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion, CriteriaLine, Competency, CompetencyProgress, ChallengeAddendum, FeedbackFrame
-from .forms import UserFileForm, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, CriterionFormSet, CriteriaForm, CurrentStudentToView, RubricAddendumForm, RubricAddendumFormset, FramingFeedbackFormSet, FramingFeedbackForm
+from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion, CriteriaLine, Competency, CompetencyProgress, ChallengeAddendum
+from .forms import UserFileForm, UserFileFormset, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, CriterionFormSet, CriteriaForm, CurrentStudentToView, RubricAddendumForm, RubricAddendumFormset
 from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
@@ -16,7 +16,7 @@ from .functions import process_rubricLine, assess_competency_done, custom_rubric
 class ChallengeDetail(DetailView, FormMixin):
     template_name = 'rubrics/challenge_detail.html'
     model = Challenge
-    form_class = UserFileForm
+    form_class = UserFileFormset
 
     def get_success_url(self):
         return reverse('success', kwargs={'pk': self.object.id})
@@ -26,14 +26,20 @@ class ChallengeDetail(DetailView, FormMixin):
         context['rubric_list'] = Challenge.objects.all()
         context['learningObjectives_list'] = LearningObjective.objects.all().filter(challenge=self.kwargs['pk'])
         thisUsersSolutions = UserSolution.objects.all().filter(userOwner=self.request.user)
-        context['something'] = Challenge
+
         if thisUsersSolutions.filter(challengeName=self.object.pk).exists():
             thisSolution = thisUsersSolutions.get(challengeName=self.object.pk)
-            context['file_exists'] = thisSolution
+
+            UserFileFormSet = modelformset_factory(UserSolution, extra=0, formset=UserFileForm, fields=('userOwner', 'challengeName',
+    'goodTitle', 'workFit', 'proudDetail', 'hardDetail', 'objectiveWell', 'objectivePoor', 'personalLearningObjective'))
+            formset = UserFileFormSet(queryset=UserSolution.objects.get(id=thisSolution.id))
 
         else:
-            context['form'] = UserFileForm(initial={'challengeName': self.object, 'userOwner': self.request.user})
+            UserFileFormSet = modelformset_factory(UserSolution, extra=1, formset=UserFileForm, fields=('userOwner', 'challengeName',
+    'goodTitle', 'workFit', 'proudDetail', 'hardDetail', 'objectiveWell', 'objectivePoor', 'personalLearningObjective'))
+            formset = UserFileFormSet(initial={'challengeName': self.object, 'userOwner': self.request.user}, queryset=UserSolution.objects.none())
 
+        context['form'] = formset
         return context
 
     def post(self, request, *args, **kwargs):
