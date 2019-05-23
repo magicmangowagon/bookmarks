@@ -4,6 +4,24 @@ ul{
     padding: 0;
 }
 
+.colorCodePink {
+    border-left: 9px solid #FF7BAC;
+    margin: 0 0 0 -9px;
+    padding: 0 0 0 9px;
+}
+
+.colorCodeGreen {
+    border-left: 9px solid #81ce81;
+    margin: 0 0 0 -9px;
+    padding: 0 0 0 9px;
+}
+
+.colorCodeDefault {
+    border-left: 9px solid #EEEEEE;
+    margin: 0 0 0 -9px;
+    padding: 0 0 0 9px;
+}
+
 .evalFieldFlexContainer {
     display: flex;
     flex-flow: row wrap;
@@ -39,6 +57,31 @@ ul{
     border-bottom: 1px solid #bbb;
 }
 
+.framingFeedback {
+    list-style: none;
+}
+
+.framingFeedback li {
+    list-style: none;
+}
+
+.evalField ul {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+}
+
+.evalField ul li{
+    flex: 1;
+    background-color: #efefef;
+    margin: 6px;
+    padding: 3px;
+    justify-content: center;
+    display: inline-block;
+    min-height: 100px;
+    list-style: none;
+}
+
 .completionLevel {
     padding: 10px;
     margin: 12px 0 24px 6px;
@@ -72,6 +115,8 @@ ul{
     padding-left: 6px;
     background-color: #00a497;
 }
+
+
 
 .challengeListObj ul {
     padding-left: 0px;
@@ -109,6 +154,45 @@ ul{
     box-shadow: 1px 3px 1px 0 #7f8b85;
     font-size: 125%;
     letter-spacing: 1px;
+}
+
+.competencyCompletion{
+    height: 12pt;
+    background-color: #7f8b85;
+    font-weight: 500;
+    color: #FFFFFF;
+    margin: 0 0 0 -13px;
+    box-shadow: 1px 3px 1px 0 #7f8b85;
+    font-size: 75%;
+    letter-spacing: 1px;
+}
+
+.competencyStarted{
+    height: 12pt;
+    background-color: #FF7BAC;
+    font-weight: 500;
+    color: #FFFFFF;
+    margin: 0 0 0 -13px;
+    box-shadow: 1px 3px 1px 0 #7f8b85;
+    font-size: 75%;
+    letter-spacing: 1px;
+}
+
+.competencyComplete{
+    height: 12pt;
+    background-color: #81ce81;
+    font-weight: 500;
+    color: #FFFFFF;
+    margin: 0 0 0 -13px;
+    box-shadow: 1px 3px 1px 0 #7f8b85;
+    font-size: 75%;
+    letter-spacing: 1px;
+}
+
+.competencyCompletion .competencyComplete .competencyStarted, p {
+    line-height: 1.8;
+    padding: 0;
+    margin: 0
 }
 
 .competencyPod h4 {
@@ -501,6 +585,7 @@ img.user-detail {
     background-color: #efefef;
     padding: 12px;
     text-align: center;
+    display: none;
 
 }
 
