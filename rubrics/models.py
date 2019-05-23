@@ -127,16 +127,20 @@ class Criterion(models.Model):
 
 class UserSolution(models.Model):
     file = models.FileField(upload_to='uploads/', blank=True)
-    solution = models.CharField(max_length=2000)
+    solution = models.CharField(max_length=2000, blank=False)
     userOwner = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     challengeName = models.ForeignKey(Challenge, blank=True, null=True, on_delete=models.CASCADE)
-    goodTitle = models.TextField(blank=True, default='')
-    workFit = models.TextField(blank=True, default='')
-    proudDetail = models.TextField(blank=True, default='')
-    hardDetail = models.TextField(blank=True, default='')
-    objectiveWell = models.TextField(blank=True, default='')
-    objectivePoor = models.TextField(blank=True, default='')
-    personalLearningObjective = models.TextField(blank=True, default='')
+    goodTitle = models.TextField(verbose_name='What’s a good title for your work?', blank=True, default='', )
+    workFit = models.TextField('How does this piece of work fit into the story of your development as a teacher?', blank=False, default='')
+    proudDetail = models.TextField('What’s a specific detail in this work that you are especially proud of? why?', blank=False, default='')
+    hardDetail = models.TextField('Which detail shows what was especially hard for you?  how?', blank=False, default='')
+    objectiveWell = models.TextField('What’s one objective that you met really well? What’s your evidence?',blank=True, default='')
+    objectivePoor = models.TextField('What’s one objective that you still want to work on? What evidence leads you to think this is  an area of growth for you?', blank=True, default='')
+    personalLearningObjective = models.TextField('Do you have any learning objectives of your own--in addition to those specified below--that you’d like the Observer to consider when they look at your work?  If so, add them at the top of the Observation Form.', blank=True, default='')
+    helpfulLearningExp = models.TextField('Choose one of the above learning experiences that you found helpful. How did it help you?', blank=False, default='')
+    notHelpfulLearningExp = models.TextField("Choose one of the above learning experiences that was less helpful. Why wasn't it helpful?", blank=False, default='')
+    changeLearningExp = models.TextField('What is one learning experience that you would change? How would you change it?', blank=True, default='')
+    notIncludedLearningExp = models.TextField('Did you engage in any helpful learning experiences that were not included in the challenge guide? Please let us know what they were so that we can think about adding them.', blank=True, default='')
     customized = models.BooleanField(default=False)
 
     def __str__(self):

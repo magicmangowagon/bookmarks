@@ -1,13 +1,7 @@
-
-
-
 {% block content %}
 <div>
-
-
     {% if submitted %}
-    <p>Solution successfully submitted</p>
-
+        <p>Solution successfully submitted</p>
     {% elif file_exists %}
         <h2>{{ file_exists.userOwner.first_name }}'s Solution</h2>
         <a href="{{ file_exists.solution|safe }}" target="_blank">{{ file_exists.solution|safe }} </a>

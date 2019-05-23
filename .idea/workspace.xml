@@ -3,11 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="f9d2353c-1e9e-47b8-8190-35e7ab7af957" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rubrics/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/templates/rubrics/challenge_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/templates/rubrics/challenge_detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rubrics/templates/rubrics/solution_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/templates/rubrics/solution_form.html" afterDir="false" />
     </list>
     <ignored path="bookmarks/settings.py" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -78,8 +75,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="143" lean-forward="true" selection-start-line="143" selection-end-line="143" />
+            <state relative-caret-position="440">
+              <caret line="140" column="150" selection-start-line="140" selection-start-column="150" selection-end-line="140" selection-end-column="150" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -90,8 +87,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="64" column="110" selection-start-line="64" selection-start-column="110" selection-end-line="64" selection-end-column="110" />
+            <state relative-caret-position="352">
+              <caret line="55" lean-forward="true" selection-start-line="55" selection-end-line="55" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -99,18 +96,13 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="440">
-              <caret line="35" column="74" selection-start-line="35" selection-start-column="74" selection-end-line="35" selection-end-column="74" />
+            <state relative-caret-position="220">
+              <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
-                <element signature="e#1901#2089#0" />
-                <element signature="e#2131#2204#0" />
-                <element signature="e#2249#2573#0" />
-                <element signature="e#2809#3172#0" />
-                <element signature="e#3214#3768#0" />
               </folding>
             </state>
           </provider>
@@ -119,43 +111,15 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/challenge_detail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="402">
-              <caret line="33" column="35" lean-forward="true" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
+            <state relative-caret-position="138">
+              <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/solution_form.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="572">
-              <caret line="26" column="6" lean-forward="true" selection-start-line="4" selection-end-line="26" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rubrics/admin.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="19" column="22" lean-forward="true" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
-              <folding>
-                <element signature="e#0#32#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rubrics/urls.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="22" selection-start-line="22" selection-end-line="22" />
-              <folding>
-                <element signature="e#0#28#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -170,8 +134,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/rubric_form.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="27" column="26" lean-forward="true" selection-start-line="27" selection-start-column="26" selection-end-line="27" selection-end-column="26" />
+            <state relative-caret-position="1430">
+              <caret line="65" lean-forward="true" selection-start-line="65" selection-end-line="65" />
             </state>
           </provider>
         </entry>
@@ -203,6 +167,7 @@
       <find>process</find>
       <find>vertslid</find>
       <find>show</find>
+      <find>requi</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\liamp\python_practice\django2examplesBook\bookmarks\staticfiles</dir>
@@ -264,18 +229,18 @@
         <option value="$PROJECT_DIR$/rubrics/urls.py" />
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/compList.html" />
         <option value="$PROJECT_DIR$/bookmarks/settings.py" />
-        <option value="$PROJECT_DIR$/rubrics/templates/rubrics/solution_form.html" />
-        <option value="$PROJECT_DIR$/rubrics/models.py" />
         <option value="$PROJECT_DIR$/rubrics/admin.py" />
         <option value="$PROJECT_DIR$/rubrics/forms.py" />
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/challenge_detail.html" />
         <option value="$PROJECT_DIR$/rubrics/views.py" />
+        <option value="$PROJECT_DIR$/rubrics/models.py" />
+        <option value="$PROJECT_DIR$/rubrics/templates/rubrics/solution_form.html" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
-    <option name="width" value="976" />
+    <option name="width" value="862" />
     <option name="height" value="1048" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -286,54 +251,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Scope 'Changed Files'; set:Changed Files; ALL; class com.intellij.packageDependencies.ChangeListScope">
-          <expand>
-            <path>
-              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-            </path>
-            <path>
-              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name=".idea" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
-          <expand>
-            <path>
-              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
-            </path>
-            <path>
-              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="bookmarks" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="rubrics" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="rubrics" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="templates" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="rubrics" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="templates" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="rubrics" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -377,6 +294,85 @@
             <path>
               <item name="bookmarks" type="b2602c69:ProjectViewProjectNode" />
               <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Scope 'Changed Files'; set:Changed Files; ALL; class com.intellij.packageDependencies.ChangeListScope">
+          <expand>
+            <path>
+              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+            <path>
+              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name=".idea" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+            <path>
+              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="account" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="account" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="static" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="account" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="static" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="css" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="account" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="templates" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="account" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="templates" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="registration" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="bookmarks" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="rubrics" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="rubrics" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="templates" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="rubrics" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="templates" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="rubrics" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
           </expand>
           <select />
@@ -491,21 +487,8 @@
       <workItem from="1557154862953" duration="14503000" />
       <workItem from="1557781129758" duration="1838000" />
       <workItem from="1558015834112" duration="1299000" />
-      <workItem from="1558535282997" duration="20116000" />
-    </task>
-    <task id="LOCAL-00113" summary="added email field to profile">
-      <created>1551912987577</created>
-      <option name="number" value="00113" />
-      <option name="presentableId" value="LOCAL-00113" />
-      <option name="project" value="LOCAL" />
-      <updated>1551912987577</updated>
-    </task>
-    <task id="LOCAL-00114" summary="added email field to profile">
-      <created>1551913037089</created>
-      <option name="number" value="00114" />
-      <option name="presentableId" value="LOCAL-00114" />
-      <option name="project" value="LOCAL" />
-      <updated>1551913037089</updated>
+      <workItem from="1558535282997" duration="25787000" />
+      <workItem from="1558620290162" duration="4265000" />
     </task>
     <task id="LOCAL-00115" summary="Removed email field from profile. Removed file field from solution form.&#10;Updated Python runtime.">
       <created>1551920107168</created>
@@ -836,11 +819,25 @@
       <option name="project" value="LOCAL" />
       <updated>1558554526841</updated>
     </task>
-    <option name="localTasksCounter" value="162" />
+    <task id="LOCAL-00162" summary="Changed UserFileForm into a formset and broke it.">
+      <created>1558563049821</created>
+      <option name="number" value="00162" />
+      <option name="presentableId" value="LOCAL-00162" />
+      <option name="project" value="LOCAL" />
+      <updated>1558563049822</updated>
+    </task>
+    <task id="LOCAL-00163" summary="Changed UserFileForm into a formset and it is now fixed. Changed solution&#10;field to a CharField. Need to change the form field labels.">
+      <created>1558574281728</created>
+      <option name="number" value="00163" />
+      <option name="presentableId" value="LOCAL-00163" />
+      <option name="project" value="LOCAL" />
+      <updated>1558574281728</updated>
+    </task>
+    <option name="localTasksCounter" value="164" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="734716000" />
+    <option name="totallyTimeSpent" value="744652000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -857,7 +854,7 @@
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="1" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.1881663" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.38965884" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3261105" />
@@ -869,7 +866,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49848944" weight="0.32827735" />
       <window_info anchor="bottom" id="Database Changes" order="9" weight="0.32896176" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50852877" side_tool="true" weight="0.22643554" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.4914712" visible="true" weight="0.22643554" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.4914712" visible="true" weight="0.22643554" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.49924472" weight="0.32896176" />
       <window_info anchor="bottom" id="Database Console" order="13" sideWeight="0.49848944" weight="0.32954547" />
       <window_info anchor="bottom" id="SQL Generator" order="14" weight="0.32896176" />
@@ -962,8 +959,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Fixed ordering on Rubrclines. Now to see if criteria are working." />
-    <MESSAGE value="Fixed ordering of learning objectives on eval form." />
     <MESSAGE value="Missing prefix on both rubric formsets in edit view, caused management form &#10;validation error.&#10;&#10;Moved form.id tag into if statement for criterion, eliminates extra &#10;hidden tags being created in HTML." />
     <MESSAGE value="Added color coding for competencies. Cleaned up some messy code, wrote &#10;some more messy code (somethingswrong function should take a list)" />
     <MESSAGE value="I have begun competencyProgress work. Instantiating this new model in functions&#10;rather than in views and assigning Competencies and rubricLines to it.&#10;Need to now make the function check for existing instances before creating new ones." />
@@ -987,23 +982,11 @@
     <MESSAGE value="Adding customized field migration for userSolution model to repo" />
     <MESSAGE value="Adding feedback frame model, form incoming. Will replace user solution&#10;upload page." />
     <MESSAGE value="Reworked userSolution model to include coversheet info. Is a basic form,&#10;does it need to be editable after submission?" />
-    <option name="LAST_COMMIT_MESSAGE" value="Reworked userSolution model to include coversheet info. Is a basic form,&#10;does it need to be editable after submission?" />
+    <MESSAGE value="Changed UserFileForm into a formset and broke it." />
+    <MESSAGE value="Changed UserFileForm into a formset and it is now fixed. Changed solution&#10;field to a CharField. Need to change the form field labels." />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed UserFileForm into a formset and it is now fixed. Changed solution&#10;field to a CharField. Need to change the form field labels." />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/rubrics/migrations/0013_remove_rubric_rubriclines.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/migrations/0006_rubricline_criteria.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="29" selection-start-column="29" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="das://616a6a49-60f1-4903-b8d3-7d5c85c6a195/database/postgres/schema/public/table/django_migrations">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
@@ -1041,9 +1024,6 @@
           </folding>
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/account/templates/base.html">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
@@ -1156,24 +1136,10 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/rubric_line_form.html" />
-    <entry file="file://$PROJECT_DIR$/account/static/css/base.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="558" column="16" lean-forward="true" selection-start-line="558" selection-start-column="16" selection-end-line="558" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/rubricFinalForm.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="17" column="30" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://616a6a49-60f1-4903-b8d3-7d5c85c6a195/database/postgres/schema/public/table/rubrics_usersolution">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
@@ -1255,13 +1221,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/functions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="836">
-          <caret line="38" selection-start-line="38" selection-end-line="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/account/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
@@ -1279,24 +1238,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/rubric_form.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="27" column="26" lean-forward="true" selection-start-line="27" selection-start-column="26" selection-end-line="27" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/solution_form.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="572">
-          <caret line="26" column="6" lean-forward="true" selection-start-line="4" selection-end-line="26" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.virtualenvs/bookmarks/Lib/site-packages/django/forms/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="229">
           <caret line="265" selection-start-line="265" selection-end-line="265" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://616a6a49-60f1-4903-b8d3-7d5c85c6a195/database/postgres/schema/public/table/rubrics_challenge">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true">
+            <filter text="" />
+          </filtering>
         </state>
       </provider>
     </entry>
@@ -1310,47 +1264,81 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/challenge_detail.html">
+    <entry file="file://$PROJECT_DIR$/rubrics/functions.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
-          <caret line="33" column="35" lean-forward="true" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="35" />
+        <state relative-caret-position="836">
+          <caret line="38" selection-start-line="38" selection-end-line="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="64" column="110" selection-start-line="64" selection-start-column="110" selection-end-line="64" selection-end-column="110" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
+    <entry file="das://616a6a49-60f1-4903-b8d3-7d5c85c6a195/database/postgres/schema/public/table/rubrics_usersolution">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true">
+            <filter text="" />
+          </filtering>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="143" lean-forward="true" selection-start-line="143" selection-end-line="143" />
+        <state relative-caret-position="440">
+          <caret line="140" column="150" selection-start-line="140" selection-start-column="150" selection-end-line="140" selection-end-column="150" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/views.py">
+    <entry file="file://$PROJECT_DIR$/rubrics/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="35" column="74" selection-start-line="35" selection-start-column="74" selection-end-line="35" selection-end-column="74" />
+        <state relative-caret-position="352">
+          <caret line="55" lean-forward="true" selection-start-line="55" selection-end-line="55" />
           <folding>
-            <element signature="e#0#35#0" expanded="true" />
-            <element signature="e#1901#2089#0" />
-            <element signature="e#2131#2204#0" />
-            <element signature="e#2249#2573#0" />
-            <element signature="e#2809#3172#0" />
-            <element signature="e#3214#3768#0" />
+            <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/rubric_form.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1430">
+          <caret line="65" lean-forward="true" selection-start-line="65" selection-end-line="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/account/templates/registration/login.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/account/templates/base.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/account/static/css/base.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="239">
+          <caret line="573" column="7" selection-start-line="573" selection-start-column="7" selection-end-line="573" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/challenge_detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/solution_form.html">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
 </project>
