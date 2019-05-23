@@ -127,7 +127,7 @@ class Criterion(models.Model):
 
 class UserSolution(models.Model):
     file = models.FileField(upload_to='uploads/', blank=True)
-    solution = models.TextField(blank=True, default='')
+    solution = models.CharField(max_length=2000)
     userOwner = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     challengeName = models.ForeignKey(Challenge, blank=True, null=True, on_delete=models.CASCADE)
     goodTitle = models.TextField(blank=True, default='')

@@ -25,19 +25,23 @@ class ChallengeDetail(DetailView, FormMixin):
         context = super(ChallengeDetail, self).get_context_data(**kwargs)
         context['rubric_list'] = Challenge.objects.all()
         context['learningObjectives_list'] = LearningObjective.objects.all().filter(challenge=self.kwargs['pk'])
-        thisUsersSolutions = UserSolution.objects.all().filter(userOwner=self.request.user)
+        existingSolutions = UserSolution.objects.all().filter(challengeName=self.kwargs['pk'])
 
-        if thisUsersSolutions.filter(challengeName=self.object.pk).exists():
-            thisSolution = thisUsersSolutions.get(challengeName=self.object.pk)
+        if existingSolutions.filter(userOwner=self.request.user).exists():
+            thisSolution = existingSolutions.get(userOwner=self.request.user).id
 
             UserFileFormSet = modelformset_factory(UserSolution, extra=0, formset=UserFileForm, fields=('userOwner', 'challengeName',
-    'goodTitle', 'workFit', 'proudDetail', 'hardDetail', 'objectiveWell', 'objectivePoor', 'personalLearningObjective'))
-            formset = UserFileFormSet(queryset=UserSolution.objects.get(id=thisSolution.id))
+    'goodTitle', 'workFit', 'proudDetail', 'hardDetail', 'objectiveWell', 'objectivePoor', 'personalLearningObjective'),
+                                                   widgets={'userOwner': forms.HiddenInput, 'challengeName': forms.HiddenInput, })
+
+            formset = UserFileFormSet(queryset=UserSolution.objects.all().filter(id=thisSolution), )
 
         else:
-            UserFileFormSet = modelformset_factory(UserSolution, extra=1, formset=UserFileForm, fields=('userOwner', 'challengeName',
-    'goodTitle', 'workFit', 'proudDetail', 'hardDetail', 'objectiveWell', 'objectivePoor', 'personalLearningObjective'))
-            formset = UserFileFormSet(initial={'challengeName': self.object, 'userOwner': self.request.user}, queryset=UserSolution.objects.none())
+            UserFileFormSet = modelformset_factory(UserSolution, extra=1, formset=UserFileForm, fields=('userOwner', 'challengeName', 'solution',
+    'goodTitle', 'workFit', 'proudDetail', 'hardDetail', 'objectiveWell', 'objectivePoor', 'personalLearningObjective'),
+                                                   widgets={'userOwner': forms.HiddenInput, 'challengeName': forms.HiddenInput})
+
+            formset = UserFileFormSet(initial=[{'challengeName': self.kwargs['pk'], 'userOwner': self.request.user}], queryset=UserSolution.objects.none())
 
         context['form'] = formset
         return context
