@@ -72,7 +72,7 @@ CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, fiel
 RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, fields=('ignore', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student',
                   'learningObjective', 'needsLaterAttention', ))
 
-RubricAddendumFormset = modelformset_factory(ChallengeAddendum, formset=RubricAddendumForm, fields=('name', 'note', 'parentChallenge', 'learningObjs', 'group', 'userSolution'))
+RubricAddendumFormset = modelformset_factory(ChallengeAddendum, formset=RubricAddendumForm, fields=('name', 'note', 'parentChallenge', 'learningObjs', 'tags', 'group', 'userSolution'))
 
 
 RubricFormSet = modelformset_factory(Rubric, formset=RubricForm, fields=('generalFeedback', 'userSolution', 'challengeCompletionLevel', 'evaluator', 'challenge'))

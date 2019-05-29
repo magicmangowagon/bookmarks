@@ -16,6 +16,12 @@
                 {{ learningObjective.name }}</li>
         {% endfor %}
     </ul>
+    <p>Tags:</p>
+    <ul class="challengeListObj">
+        {% for tag in challenge.tags.all %}
+            <li class="challengeListObj">{{ tag.name }}</li>
+        {% endfor %}
+    </ul>
 <div>
 
 

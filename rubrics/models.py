@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User, Group
 from djrichtextfield.models import RichTextField
+from taggit.managers import TaggableManager
 
 
 # __________________
@@ -45,6 +46,7 @@ class LearningObjective(models.Model):
         (8, "8")
     ))
     name = models.CharField(max_length=250)
+    tags = TaggableManager(blank=True)
 
     def __str__(self):
         fullname = str(self.compGroup) + "-" + str(self.compNumber) + "." + str(self.loNumber) + " " + str(self.name)
@@ -61,6 +63,20 @@ class Challenge(models.Model):
     name = models.CharField(max_length=250)
     description = RichTextField()
     learningObjs = models.ManyToManyField(LearningObjective, blank=True, related_name="challenge")
+    tags = TaggableManager(blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+# __________
+# LEARNING EXPERIENCE
+
+class LearningExperience(models.Model):
+    name = models.CharField(max_length=600)
+    challenge = models.ForeignKey(Challenge, blank=True, on_delete=models.CASCADE, related_name="challenge")
+    description = RichTextField()
+    tags = TaggableManager(blank=True)
 
     def __str__(self):
         return self.name
@@ -73,6 +89,7 @@ class Competency(models.Model):
     name = models.CharField(max_length=250)
     description = models.TextField()
     learningObjs = models.ForeignKey(LearningObjective, blank=True, null=True, on_delete=models.CASCADE)
+    tags = TaggableManager(blank=True)
 
     # may want to store something called hasCompleted, and/or hasCompletedPreviously
     # if competence is based on mastery of learningObjectives, does that assessment ever change?
@@ -114,6 +131,7 @@ class Competency(models.Model):
 class Criterion(models.Model):
     name = models.CharField(max_length=250)
     learningObj = models.ForeignKey(LearningObjective, on_delete=models.CASCADE)
+    tags = TaggableManager(blank=True)
 
     def __str__(self):
         return self.name
@@ -240,6 +258,7 @@ class ChallengeAddendum(models.Model):
     userSolution = models.ForeignKey(UserSolution, on_delete=models.CASCADE)
     learningObjs = models.ManyToManyField(LearningObjective, blank=True)
     group = models.ForeignKey(Group, blank=True, null=True, on_delete=models.CASCADE)
+    tags = TaggableManager(blank=True)
 
     def __str__(self):
         return self.name
