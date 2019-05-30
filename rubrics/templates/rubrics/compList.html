@@ -39,11 +39,11 @@
             {% if learningObj.compGroup == comp.compGroup and learningObj.compNumber == comp.compNumber %}
                 <div class="colorCodeDefault">
                     <h4>{{ learningObj.compGroup }} - {{ learningObj.compNumber }}.{{ learningObj.loNumber }} {{ learningObj.name }}</h4>
-
+                    <!--
                     {% for challenge in learningObj.challenge.all %}
                         <p><a href="challenge/{{ challenge.id }}">{{ challenge.name }} - Challenge Page</a> </p>
                     {% endfor %}
-
+                    -->
                 </div>
                 {% for rubricLine in rubricLines %}
                     {% if rubricLine.learningObjective.id == learningObj.id %}

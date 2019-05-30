@@ -27,19 +27,20 @@ class ChallengeDetail(DetailView, FormMixin):
         context['learningObjectives_list'] = LearningObjective.objects.all().filter(challenge=self.kwargs['pk'])
         existingSolutions = UserSolution.objects.all().filter(challengeName=self.kwargs['pk'])
 
-
         if existingSolutions.filter(userOwner=self.request.user).exists():
             thisSolution = existingSolutions.get(userOwner=self.request.user).id
 
             UserFileFormSet = modelformset_factory(UserSolution, extra=0, formset=UserFileForm, fields=('userOwner', 'challengeName',
-            'goodTitle', 'workFit', 'proudDetail', 'hardDetail', 'objectiveWell', 'objectivePoor', 'personalLearningObjective'),
+            'goodTitle', 'workFit', 'proudDetail', 'hardDetail', 'objectiveWell', 'objectivePoor', 'personalLearningObjective', 'helpfulLearningExp',
+            'notHelpfulLearningExp', 'changeLearningExp', 'notIncludedLearningExp'),
                                                    widgets={'userOwner': forms.HiddenInput, 'challengeName': forms.HiddenInput, })
 
             formset = UserFileFormSet(queryset=UserSolution.objects.all().filter(id=thisSolution), )
 
         else:
             UserFileFormSet = modelformset_factory(UserSolution, extra=1, formset=UserFileForm, fields=('userOwner', 'challengeName', 'solution',
-            'goodTitle', 'workFit', 'proudDetail', 'hardDetail', 'objectiveWell', 'objectivePoor', 'personalLearningObjective'),
+            'goodTitle', 'workFit', 'proudDetail', 'hardDetail', 'objectiveWell', 'objectivePoor', 'personalLearningObjective', 'helpfulLearningExp',
+            'notHelpfulLearningExp', 'changeLearningExp', 'notIncludedLearningExp'),
                                                    widgets={'userOwner': forms.HiddenInput, 'challengeName': forms.HiddenInput})
 
             formset = UserFileFormSet(initial=[{'challengeName': self.kwargs['pk'], 'userOwner': self.request.user}], queryset=UserSolution.objects.none())
