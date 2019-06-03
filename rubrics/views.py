@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django import forms
 from django.http import HttpResponseRedirect
-from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion, CriteriaLine, Competency, CompetencyProgress, ChallengeAddendum
-from .forms import UserFileForm, UserFileFormset, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, CriterionFormSet, CriteriaForm, CurrentStudentToView, RubricAddendumForm, RubricAddendumFormset
+from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion, CriteriaLine, Competency, CompetencyProgress, ChallengeAddendum, LearningExperience
+from .forms import UserFileForm, UserFileFormset, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, \
+    CriterionFormSet, CriteriaForm, CurrentStudentToView, RubricAddendumForm, RubricAddendumFormset, LearningExperienceFormset, LearningExperienceForm
 from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
@@ -283,6 +284,20 @@ class RubricFormView(FormView):
 
     def form_invalid(self, form):
         print("Error")
+
+
+class LearningExperienceView(DetailView):
+    template_name = 'rubrics/learningExperience.html'
+    model = LearningExperience
+
+
+class LearningExperienceCreator(FormView):
+    template_name = 'rubrics/learningExperienceCreator.html'
+    model = LearningExperience
+    form_class = LearningExperienceFormset
+
+    def get_context_data(self, **kwargs):
+        context = super(LearningExperienceCreator, self).get_context_data(**kwargs)
 
 
 class RubricAddendum(FormView):

@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.forms import modelformset_factory, ModelForm, BaseModelFormSet, inlineformset_factory
-from .models import LearningObjective, Challenge, UserSolution, Rubric, RubricLine, CriteriaLine, Criterion, ChallengeAddendum
+from .models import LearningObjective, Challenge, UserSolution, Rubric, RubricLine, CriteriaLine, Criterion, ChallengeAddendum, LearningExperience
 from django.views.generic import DetailView
 from django.contrib.auth.models import User
 from account.models import Profile
@@ -62,6 +62,13 @@ class UserFileForm(BaseModelFormSet):
         widgets = {'challengeName': forms.HiddenInput(), 'userOwner': forms.HiddenInput}
 
 
+class LearningExperienceForm(BaseModelFormSet):
+    def __init__(self, *args, **kwargs):
+        super(LearningExperienceForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        widgets = {''}
+
 UserFileFormset = modelformset_factory(UserSolution, formset=UserFileForm, fields=('userOwner', 'challengeName', 'solution',
     'goodTitle', 'workFit', 'proudDetail', 'hardDetail', 'objectiveWell', 'objectivePoor', 'personalLearningObjective', 'helpfulLearningExp',
     'notHelpfulLearningExp', 'changeLearningExp', 'notIncludedLearningExp'))
@@ -77,3 +84,7 @@ RubricAddendumFormset = modelformset_factory(ChallengeAddendum, formset=RubricAd
 
 
 RubricFormSet = modelformset_factory(Rubric, formset=RubricForm, fields=('generalFeedback', 'userSolution', 'challengeCompletionLevel', 'evaluator', 'challenge'))
+
+
+LearningExperienceFormset = modelformset_factory(LearningExperience, formset=LearningExperienceForm, fields=('name',
+                 'challenge', 'learningObjectives', 'description', 'tags'))
