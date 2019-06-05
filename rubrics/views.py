@@ -290,11 +290,18 @@ class LearningExperienceView(DetailView):
     template_name = 'rubrics/learningExperience.html'
     model = LearningExperience
 
+    def get_context_data(self, **kwargs):
+        context = super(LearningExperienceView, self).get_context_data(**kwargs)
+        learningExpo = LearningExperience.objects.get(pk=self.kwargs['pk'])
+        context['learningExpo'] = learningExpo
+        return context
+
 
 class LearningExperienceCreator(FormView):
     template_name = 'rubrics/learningExperienceCreator.html'
     model = LearningExperience
     form_class = LearningExperienceFormset
+    # success_url = '/'
 
     def get_context_data(self, **kwargs):
         context = super(LearningExperienceCreator, self).get_context_data(**kwargs)
@@ -305,6 +312,15 @@ class LearningExperienceCreator(FormView):
         learningExpoformset = LearningExperienceFormset(queryset=LearningExperience.objects.none())
         context['form'] = learningExpoformset
         return context
+
+    def post(self, request, *args, **kwargs):
+        formset = LearningExperienceFormset(request.POST)
+
+        if formset.is_valid():
+            formset.save()
+            return redirect('learningExperience', self.kwargs['pk'])
+        else:
+            return self.render_to_response(self.get_context_data(formset=formset))
 
 
 class RubricAddendum(FormView):
