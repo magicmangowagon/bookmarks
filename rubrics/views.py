@@ -298,6 +298,13 @@ class LearningExperienceCreator(FormView):
 
     def get_context_data(self, **kwargs):
         context = super(LearningExperienceCreator, self).get_context_data(**kwargs)
+        LearningExperienceFormset = modelformset_factory(LearningExperience, formset=LearningExperienceForm, extra=1,
+                                                        fields=('name',
+                                                                'challenge', 'learningObjectives', 'description',
+                                                                'tags'))
+        learningExpoformset = LearningExperienceFormset(queryset=LearningExperience.objects.none())
+        context['form'] = learningExpoformset
+        return context
 
 
 class RubricAddendum(FormView):
