@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f9d2353c-1e9e-47b8-8190-35e7ab7af957" name="Default Changelist" comment="">
+    <list default="true" id="f9d2353c-1e9e-47b8-8190-35e7ab7af957" name="Default Changelist" comment="Created super basic form for creating learning experiences. Added view for &#10;created learning experiences.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/templates/rubrics/learningExperienceCreator.html" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/templates/rubrics/learningExperienceCreator.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rubrics/templates/rubrics/learningExperience.html" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/templates/rubrics/learningExperience.html" afterDir="false" />
     </list>
     <ignored path="bookmarks/settings.py" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -76,8 +74,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1924">
-              <caret line="77" column="102" selection-start-line="77" selection-start-column="102" selection-end-line="77" selection-end-column="102" />
+            <state relative-caret-position="173">
+              <caret line="78" column="26" selection-start-line="78" selection-start-column="18" selection-end-line="78" selection-end-column="26" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -112,10 +110,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-52">
-              <caret line="306" column="22" selection-start-line="306" selection-start-column="22" selection-end-line="306" selection-end-column="22" />
+            <state relative-caret-position="1014">
+              <caret line="325" column="31" lean-forward="true" selection-start-line="325" selection-start-column="31" selection-end-line="325" selection-end-column="31" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
+                <element signature="e#15331#16728#0" />
                 <element signature="e#15712#16119#0" />
               </folding>
             </state>
@@ -123,10 +122,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/learningExperience.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="312">
+              <caret line="12" column="41" selection-start-line="12" selection-start-column="41" selection-end-line="12" selection-end-column="41" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/learningExperienceCreator.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="15" column="32" selection-start-line="15" selection-start-column="32" selection-end-line="15" selection-end-column="32" />
+            <state relative-caret-position="468">
+              <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
             </state>
           </provider>
         </entry>
@@ -134,17 +142,24 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/challenge_detail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="890">
-              <caret line="66" column="61" lean-forward="true" selection-start-line="66" selection-start-column="16" selection-end-line="66" selection-end-column="61" />
+            <state relative-caret-position="214">
+              <caret line="64" column="28" lean-forward="true" selection-start-line="64" selection-start-column="28" selection-end-line="64" selection-end-column="28" />
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/evalDetail.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-468" />
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="422">
-              <caret line="22" column="45" lean-forward="true" selection-start-line="22" selection-start-column="45" selection-end-line="22" selection-end-column="45" />
+            <state relative-caret-position="442">
+              <caret line="23" column="101" lean-forward="true" selection-start-line="23" selection-start-column="101" selection-end-line="23" selection-end-column="101" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -183,6 +198,7 @@
       <find>requi</find>
       <find>.eval</find>
       <find>evalfield</find>
+      <find>richtext</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\liamp\python_practice\django2examplesBook\bookmarks\staticfiles</dir>
@@ -245,11 +261,11 @@
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/challenge_detail.html" />
         <option value="$PROJECT_DIR$/rubrics/models.py" />
         <option value="$PROJECT_DIR$/rubrics/admin.py" />
-        <option value="$PROJECT_DIR$/rubrics/templates/rubrics/learningExperience.html" />
         <option value="$PROJECT_DIR$/rubrics/forms.py" />
+        <option value="$PROJECT_DIR$/rubrics/templates/rubrics/learningExperienceCreator.html" />
         <option value="$PROJECT_DIR$/rubrics/urls.py" />
         <option value="$PROJECT_DIR$/rubrics/views.py" />
-        <option value="$PROJECT_DIR$/rubrics/templates/rubrics/learningExperienceCreator.html" />
+        <option value="$PROJECT_DIR$/rubrics/templates/rubrics/learningExperience.html" />
       </list>
     </option>
   </component>
@@ -328,6 +344,19 @@
             <path>
               <item name="bookmarks" type="b2602c69:ProjectViewProjectNode" />
               <item name="bookmarks" type="462c0819:PsiDirectoryNode" />
+              <item name="rubrics" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bookmarks" type="b2602c69:ProjectViewProjectNode" />
+              <item name="bookmarks" type="462c0819:PsiDirectoryNode" />
+              <item name="rubrics" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bookmarks" type="b2602c69:ProjectViewProjectNode" />
+              <item name="bookmarks" type="462c0819:PsiDirectoryNode" />
+              <item name="rubrics" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="rubrics" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -457,28 +486,7 @@
       <workItem from="1559232356718" duration="70000" />
       <workItem from="1559232483159" duration="3959000" />
       <workItem from="1559576431110" duration="5705000" />
-      <workItem from="1559743618194" duration="3189000" />
-    </task>
-    <task id="LOCAL-00120" summary="Criteria and CriteriaLines now showing on rubric correctly. Not saving yet.">
-      <created>1552506920259</created>
-      <option name="number" value="00120" />
-      <option name="presentableId" value="LOCAL-00120" />
-      <option name="project" value="LOCAL" />
-      <updated>1552506920260</updated>
-    </task>
-    <task id="LOCAL-00121" summary="Criteria has been added. Working correctly.">
-      <created>1552676443395</created>
-      <option name="number" value="00121" />
-      <option name="presentableId" value="LOCAL-00121" />
-      <option name="project" value="LOCAL" />
-      <updated>1552676443395</updated>
-    </task>
-    <task id="LOCAL-00122" summary="Criteria has been added. Working correctly.">
-      <created>1552676686754</created>
-      <option name="number" value="00122" />
-      <option name="presentableId" value="LOCAL-00122" />
-      <option name="project" value="LOCAL" />
-      <updated>1552676686754</updated>
+      <workItem from="1559743618194" duration="6954000" />
     </task>
     <task id="LOCAL-00123" summary="Criteria has been added. Working correctly.">
       <created>1552933731391</created>
@@ -802,11 +810,32 @@
       <option name="project" value="LOCAL" />
       <updated>1559596316871</updated>
     </task>
-    <option name="localTasksCounter" value="169" />
+    <task id="LOCAL-00169" summary="Created super basic form for creating learning experiences.">
+      <created>1559756796469</created>
+      <option name="number" value="00169" />
+      <option name="presentableId" value="LOCAL-00169" />
+      <option name="project" value="LOCAL" />
+      <updated>1559756796469</updated>
+    </task>
+    <task id="LOCAL-00170" summary="Created super basic form for creating learning experiences. Added view for &#10;created learning experiences.">
+      <created>1559763156688</created>
+      <option name="number" value="00170" />
+      <option name="presentableId" value="LOCAL-00170" />
+      <option name="project" value="LOCAL" />
+      <updated>1559763156688</updated>
+    </task>
+    <task id="LOCAL-00171" summary="Created super basic form for creating learning experiences. Added view for &#10;created learning experiences.">
+      <created>1559763238459</created>
+      <option name="number" value="00171" />
+      <option name="presentableId" value="LOCAL-00171" />
+      <option name="project" value="LOCAL" />
+      <updated>1559763238459</updated>
+    </task>
+    <option name="localTasksCounter" value="172" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="781826000" />
+    <option name="totallyTimeSpent" value="785591000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -928,8 +957,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Fixed issue with competency not saving correctly. Fixed issue with rubricLines&#10;not being evaluated correctly. Trimmed size of query for rubricLines &#10;and compProgress. Started javascript to change color. Added CSS for progress &#10;on each comp. Currently setting it with bools in template tags." />
-    <MESSAGE value="Moved rubricline processor and assessment functions to POST call on the&#10;rubricFinalForm view. Changed GET request on competency view to just &#10;pull this data." />
     <MESSAGE value="Removed csfr token from compList template, didn't need it on GET request." />
     <MESSAGE value="Fixed issue with TC's having comps marked complete with unattempted LO's" />
     <MESSAGE value="Broke attempt check out of  the assessment function loop, wasn't correctly&#10;reading the rubricLines. Now comp completion is false if no rubricLine&#10;instance exists for a given LO before running through the whole list." />
@@ -953,12 +980,11 @@
     <MESSAGE value="Added tags with the Taggit extension. Currently displays on Challenge page.&#10;Hass been added to all non-TC generated models at the moment, though.&#10;Started a model for learning experiences." />
     <MESSAGE value="Finished the new solution upload form, need to restyle it as per Juliannas&#10;suggestion." />
     <MESSAGE value="Started user facing view for learning experiences (user as in admin view, to create an LE)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Started user facing view for learning experiences (user as in admin view, to create an LE)" />
+    <MESSAGE value="Created super basic form for creating learning experiences." />
+    <MESSAGE value="Created super basic form for creating learning experiences. Added view for &#10;created learning experiences." />
+    <option name="LAST_COMMIT_MESSAGE" value="Created super basic form for creating learning experiences. Added view for &#10;created learning experiences." />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/rubrics/migrations/0023_competencyprogress.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/eval_list.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1204,32 +1230,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1924">
-          <caret line="77" column="102" selection-start-line="77" selection-start-column="102" selection-end-line="77" selection-end-column="102" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/admin.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1560">
           <caret line="63" column="46" selection-start-line="63" selection-start-column="46" selection-end-line="63" selection-end-column="46" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="422">
-          <caret line="22" column="45" lean-forward="true" selection-start-line="22" selection-start-column="45" selection-end-line="22" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1251,35 +1257,61 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/learningExperience.html">
+    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/learningExperienceCreator.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        <state relative-caret-position="468">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/challenge_detail.html">
+    <entry file="file://$PROJECT_DIR$/rubrics/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="890">
-          <caret line="66" column="61" lean-forward="true" selection-start-line="66" selection-start-column="16" selection-end-line="66" selection-end-column="61" />
+        <state relative-caret-position="442">
+          <caret line="23" column="101" lean-forward="true" selection-start-line="23" selection-start-column="101" selection-end-line="23" selection-end-column="101" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-52">
-          <caret line="306" column="22" selection-start-line="306" selection-start-column="22" selection-end-line="306" selection-end-column="22" />
+        <state relative-caret-position="1014">
+          <caret line="325" column="31" lean-forward="true" selection-start-line="325" selection-start-column="31" selection-end-line="325" selection-end-column="31" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#15331#16728#0" />
             <element signature="e#15712#16119#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/learningExperienceCreator.html">
+    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/challenge_detail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="15" column="32" selection-start-line="15" selection-start-column="32" selection-end-line="15" selection-end-column="32" />
+        <state relative-caret-position="214">
+          <caret line="64" column="28" lean-forward="true" selection-start-line="64" selection-start-column="28" selection-end-line="64" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/evalDetail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-468" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="78" column="26" selection-start-line="78" selection-start-column="18" selection-end-line="78" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/learningExperience.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="12" column="41" selection-start-line="12" selection-start-column="41" selection-end-line="12" selection-end-column="41" />
         </state>
       </provider>
     </entry>

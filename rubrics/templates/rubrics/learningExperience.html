@@ -6,5 +6,9 @@
 
 {% block content %}
 
-
+    <p>{{ learningExpo.name }}</p>
+    <ul>
+        <li>{{ learningExpo.learningObjectives.name }}</li>
+    </ul>
+    <p>{{ learningExpo.description | safe }}</p>
 {% endblock %}
