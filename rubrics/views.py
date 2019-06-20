@@ -41,7 +41,7 @@ class ChallengeDetail(FormView):
             formset = UserFileFormSet(prefix='user', queryset=UserSolution.objects.all().filter(id=thisSolution), )
 
             LearningExpoFeedbackFormset = modelformset_factory(LearningExpoResponses, extra=0, formset=LearningExpoFeedbackForm,
-                fields=('notApplicable', 'negative', 'neutral', 'positive', 'user', 'learningExperience'),
+                fields=('learningExperienceResponse', 'user', 'learningExperience'),
                    widgets={'user': forms.HiddenInput})
 
             feedbackFormset = LearningExpoFeedbackFormset(prefix='expo', queryset=LearningExpoResponses.objects.all().filter(user=self.request.user))
@@ -56,7 +56,7 @@ class ChallengeDetail(FormView):
                                       queryset=UserSolution.objects.none())
 
             LearningExpoFeedbackFormset = modelformset_factory(LearningExpoResponses, extra=theseLearningExpos.count(),
-                fields=('notApplicable', 'negative', 'neutral', 'positive', 'learningExperience', 'user'),
+                fields=('learningExperienceResponse', 'learningExperience', 'user'),
                     widgets={'user': forms.HiddenInput})
 
             feedbackFormset = LearningExpoFeedbackFormset(prefix='expo', initial=[{'learningExperience': learningExperience, 'user': self.request.user}

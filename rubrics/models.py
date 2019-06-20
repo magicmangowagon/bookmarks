@@ -184,8 +184,10 @@ class LearningExpoResponses(models.Model):
         (POSITIVE, 'Positive')
     ]
     learningExperienceResponse = models.CharField(
+        'Response',
         max_length=2,
         choices=experienceChoices,
+        default=''
     )
 
 # ___________

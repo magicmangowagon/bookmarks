@@ -104,4 +104,4 @@ LearningExperienceFormset = modelformset_factory(LearningExperience, formset=Lea
 
 
 LearningExpoFeedbackFormset = modelformset_factory(LearningExpoResponses, formset=LearningExpoFeedbackForm, fields=(
-    'experienceChoices', 'learningExperience', 'user'))
+    'learningExperienceResponse', 'learningExperience', 'user'))
