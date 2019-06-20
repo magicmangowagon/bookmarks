@@ -6,7 +6,7 @@
 
 {% block content %}
 
-<h1>{{ challenge.name }}</h1>
+<h1>{{ challenge }}</h1>
 
 <h2>Learning Objectives</h2>
     <ul class="challengeListObj">
@@ -23,48 +23,88 @@
         {% endfor %}
     </ul>
 <div>
-
-
     {% if submitted %}
     <p>Solution successfully submitted</p>
 
-
-
     {% else %}
         <h2>Solution Upload</h2>
-        <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+        <form action="" method="post" enctype="multipart/form-data">
 
                 {{ form.management_form }}
 
-            <ul class="framingFeedback">
+            
                 {% for form in form %}
+                    <p>{{ form.userOwner }}{{ form.challengeName }}</p>
+                    <p>
+                        <label>{{ form.solution.label }}</label>
+                        {{ form.solution }}
+                    </p>
 
-                    <li><label>{{ form.solution.label }}</label>{{ form.solution }}</li>
+                    <label>{{ form.goodTitle.label }}</label>
+                    <p>{{ form.goodTitle }}</p>
 
-                    <li><label>{{ form.goodTitle.label }}</label>{{ form.goodTitle }}</li>
+                    <label>{{ form.workFit.label }}</label>
+                    <p>{{ form.workFit }}</p>
 
-                    <li><label>{{ form.workFit.label }}</label>{{ form.workFit }}</li>
+                    <label>{{ form.proudDetail.label }}</label>
+                    <p>{{ form.proudDetail }}</p>
 
-                    <li><label>{{ form.proudDetail.label }}</label>{{ form.proudDetail }}</li>
+                    <label>{{ form.hardDetail.label }}</label>
+                    <p>{{ form.hardDetail }}</p>
 
-                    <li><label>{{ form.hardDetail.label }}</label>{{ form.hardDetail }}</li>
+                    <label>{{ form.objectiveWell.label }}</label>
+                    <p>{{ form.objectiveWell }}</p>
 
-                    <li><label>{{ form.objectiveWell.label }}</label>{{ form.objectiveWell }}</li>
+                    <label>{{ form.objectivePoor.label }}</label>
+                    <p>{{ form.objectivePoor }}</p>
 
-                    <li><label>{{ form.objectivePoor.label }}</label>{{ form.objectivePoor }}</li>
+                    <label>{{ form.personalLearningObjective.label }}</label>
+                    <p>{{ form.personalLearningObjective }}</p>
 
-                    <li><label>{{ form.personalLearningObjective.label }}</label>{{ form.personalLearningObjective }}</li>
+                    {{ feedbackForm.management_form }}
+                    <div>
+                        {% for LearningExpoResponses in feedbackForm %}
+                            <p id="learnExpo{{ LearningExpoResponses.learningExperience.auto_id }}"> </p>
+                            <span style="display: none">{{ LearningExpoResponses.learningExperience }}</span>
+                            <p>{{ LearningExpoResponses.user }}</p>
+                            <label>{{ LearningExpoResponses.notApplicable.label }}</label>
+                            <p>{{ LearningExpoResponses.notApplicable }}</p>
 
-                    <li><label>{{ form.helpfulLearningExp.label }}</label>{{ form.helpfulLearningExp }}</li>
+                            <label>{{ LearningExpoResponses.negative.label }}</label>
+                            <p>{{ LearningExpoResponses.negative }}</p>
 
-                    <li><label>{{ form.notHelpfulLearningExp.label }}</label>{{ form.notHelpfulLearningExp }}</li>
+                            <label>{{ LearningExpoResponses.neutral.label }}</label>
+                            <p>{{ LearningExpoResponses.neutral }}</p>
 
-                    <li><label>{{ form.changeLearningExp.label }}</label>{{ form.changeLearningExp }}</li>
+                            <label>{{ LearningExpoResponses.positive.label }}</label>
+                            <p>{{ LearningExpoResponses.positive }}</p>
+                            {{ LearningExpoResponses.id }}
+                            <script>
+                                var options = document.getElementById("{{ LearningExpoResponses.learningExperience.auto_id }}");
+                                var selectedText = options.options[options.selectedIndex].text;
+                                document.getElementById("learnExpo{{ LearningExpoResponses.learningExperience.auto_id }}").innerHTML = selectedText;
+                            </script>
+                        {% endfor %}
+                    </div>
 
-                    <li><label>{{ form.notIncludedLearningExp.label }}</label>{{ form.notIncludedLearningExp }}</li>
+                    <label>{{ form.helpfulLearningExp.label }}</label>
+                    <p>{{ form.helpfulLearningExp }}</p>
+
+                    <label>{{ form.notHelpfulLearningExp.label }}</label>
+                    <p>{{ form.notHelpfulLearningExp }}</p>
+
+                    <label>{{ form.changeLearningExp.label }}</label>
+                    <p>{{ form.changeLearningExp }}</p>
+
+                    <label>{{ form.notIncludedLearningExp.label }}</label>
+                    <p>{{ form.notIncludedLearningExp }}</p>
+                    {{ form.id }}
                 {% endfor %}
-            </ul>
-                <input type="submit" value="Upload Solution">
+
+
+            <input type="submit" value="Upload Solution">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
         </form>
     {% endif %}
 </div>

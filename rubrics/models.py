@@ -167,6 +167,19 @@ class UserSolution(models.Model):
 
 
 # ___________
+# LEARNING EXPERIENCE LIKERT ENTRIES
+# Model to store the TCs bool responses to learning expo matrix table thing
+
+class LearningExpoResponses(models.Model):
+    notApplicable = models.BooleanField(default=False)
+    negative = models.BooleanField(default=False)
+    neutral = models.BooleanField(default=False)
+    positive = models.BooleanField(default=False)
+    learningExperience = models.ForeignKey(LearningExperience, null=True, blank=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
+
+
+# ___________
 # RUBRIC LINE
 # Evaluator submitted response to learningObjectives
 
@@ -220,7 +233,7 @@ class CriteriaLine(models.Model):
 
 # _________
 # RUBRIC
-# Named for the app and one of the simpler models. Stores the generalFeedback for a userSolution, as well
+# Named for the app and one of the simpler models. Stores the generalFeedback for a challenge, as well
 # as the completionScore for the challenge.
 
 class Rubric(models.Model):

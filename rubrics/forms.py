@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.forms import modelformset_factory, ModelForm, BaseModelFormSet, inlineformset_factory
-from .models import LearningObjective, Challenge, UserSolution, Rubric, RubricLine, CriteriaLine, Criterion, ChallengeAddendum, LearningExperience
+from .models import LearningObjective, Challenge, UserSolution, Rubric, RubricLine, CriteriaLine, Criterion, ChallengeAddendum, LearningExperience, LearningExpoResponses
 from django.views.generic import DetailView
 from django.contrib.auth.models import User
 from account.models import Profile
@@ -69,22 +69,39 @@ class LearningExperienceForm(BaseModelFormSet):
     class Meta:
         widgets = {''}
 
+
+class LearningExpoFeedbackForm(BaseModelFormSet):
+    def __init__(self, *args, **kwargs):
+        super(LearningExpoFeedbackForm, self).__init__(*args, **kwargs)
+
+    class Meta:
+        widgets = {'user': forms.HiddenInput()}
+
+
 UserFileFormset = modelformset_factory(UserSolution, formset=UserFileForm, fields=('userOwner', 'challengeName', 'solution',
-    'goodTitle', 'workFit', 'proudDetail', 'hardDetail', 'objectiveWell', 'objectivePoor', 'personalLearningObjective', 'helpfulLearningExp',
-    'notHelpfulLearningExp', 'changeLearningExp', 'notIncludedLearningExp'))
+    'goodTitle', 'workFit', 'proudDetail', 'hardDetail', 'objectiveWell', 'objectivePoor', 'personalLearningObjective',
+   'helpfulLearningExp', 'notHelpfulLearningExp', 'changeLearningExp', 'notIncludedLearningExp'))
 
 
-CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, fields=('achievement', 'criteria', 'userSolution'))
+CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, fields=('achievement', 'criteria',
+                                                                                    'userSolution'))
 
 
-RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, fields=('ignore', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student',
-                  'learningObjective', 'needsLaterAttention', ))
+RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, fields=('ignore', 'evidencePresent',
+                 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student', 'learningObjective',
+                                                                                     'needsLaterAttention', ))
 
-RubricAddendumFormset = modelformset_factory(ChallengeAddendum, formset=RubricAddendumForm, fields=('name', 'note', 'parentChallenge', 'learningObjs', 'tags', 'group', 'userSolution'))
+RubricAddendumFormset = modelformset_factory(ChallengeAddendum, formset=RubricAddendumForm, fields=('name', 'note',
+                                                'parentChallenge', 'learningObjs', 'tags', 'group', 'userSolution'))
 
 
-RubricFormSet = modelformset_factory(Rubric, formset=RubricForm, fields=('generalFeedback', 'userSolution', 'challengeCompletionLevel', 'evaluator', 'challenge'))
+RubricFormSet = modelformset_factory(Rubric, formset=RubricForm, fields=('generalFeedback', 'challenge',
+                                                 'challengeCompletionLevel', 'evaluator', 'userSolution'))
 
 
 LearningExperienceFormset = modelformset_factory(LearningExperience, formset=LearningExperienceForm, fields=('name',
                  'challenge', 'learningObjectives', 'description', 'tags'))
+
+
+LearningExpoFeedbackFormset = modelformset_factory(LearningExpoResponses, formset=LearningExpoFeedbackForm, fields=(
+    'notApplicable', 'negative', 'neutral', 'positive', 'learningExperience', 'user'))
