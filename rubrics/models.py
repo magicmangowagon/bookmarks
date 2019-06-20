@@ -171,13 +171,22 @@ class UserSolution(models.Model):
 # Model to store the TCs bool responses to learning expo matrix table thing
 
 class LearningExpoResponses(models.Model):
-    notApplicable = models.BooleanField(default=False)
-    negative = models.BooleanField(default=False)
-    neutral = models.BooleanField(default=False)
-    positive = models.BooleanField(default=False)
     learningExperience = models.ForeignKey(LearningExperience, null=True, blank=True, on_delete=models.CASCADE)
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
-
+    NOTAPPLICABLE = 0
+    NEGATIVE = 1
+    NEUTRAL = 2
+    POSITIVE = 3
+    experienceChoices = [
+        (NOTAPPLICABLE, 'Not Applicable'),
+        (NEGATIVE, 'Negative'),
+        (NEUTRAL, 'Neutral'),
+        (POSITIVE, 'Positive')
+    ]
+    learningExperienceResponse = models.CharField(
+        max_length=2,
+        choices=experienceChoices,
+    )
 
 # ___________
 # RUBRIC LINE
