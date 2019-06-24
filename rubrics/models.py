@@ -65,9 +65,9 @@ class LearningObjective(models.Model):
 class Challenge(models.Model):
 
     name = models.CharField(max_length=250)
-    description = RichTextField()
-    clinicalNeeds = RichTextField(default='')
-    standardSolution = RichTextField(default='')
+    description = RichTextField('Challenge Overview', )
+    clinicalNeeds = RichTextField('Clinical Needs', default='')
+    standardSolution = RichTextField('Standard Solution', default='')
     pullQuote = models.CharField('Pull Quote', max_length=500, default='')
 
     A = 'A'
@@ -114,19 +114,19 @@ class Challenge(models.Model):
 
     degreeImplementation = models.CharField(
         'Degree of Implementation',
-        max_length=2,
+        max_length=4,
         choices=degree,
         default=''
     )
     scaleImplementation = models.CharField(
         'Scale of Implementation',
-        max_length=2,
+        max_length=4,
         choices=scale,
         default=''
     )
     typeImplementation = models.CharField(
         'Type of Evidence Required',
-        max_length=2,
+        max_length=4,
         choices=type,
         default=''
     )
@@ -241,10 +241,10 @@ class UserSolution(models.Model):
 class LearningExpoResponses(models.Model):
     learningExperience = models.ForeignKey(LearningExperience, null=True, blank=True, on_delete=models.CASCADE)
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
-    NOTAPPLICABLE = 0
-    NEGATIVE = 1
-    NEUTRAL = 2
-    POSITIVE = 3
+    NOTAPPLICABLE = '0'
+    NEGATIVE = '1'
+    NEUTRAL = '2'
+    POSITIVE = '3'
     experienceChoices = [
         (NOTAPPLICABLE, 'Not Applicable'),
         (NEGATIVE, 'Negative'),

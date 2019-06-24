@@ -35,8 +35,8 @@ class ChallengeCover(DetailView):
             for competency in competencies:
                 if competency.compGroup == learningObjective.compGroup and competency.compNumber == learningObjective.compNumber:
                     theseComps.append(competency)
-
         context['competencies'] = theseComps
+
         return context
 
 

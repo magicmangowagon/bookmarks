@@ -14,18 +14,25 @@
     <h3>Challenge Overview</h3>
         <p>{{ challengeCover.description | safe }}</p>
 
-    <h3>Learning Objectives</h3>
-
-    {% for competency in competencies %}
-        <div>
-            <p><strong>{{ competency.compGroup }} - {{ competency.compNumber }} {{ competency.name }}</strong></p>
-            {% for learningObjective in learningObjectives %}
-                {% if learningObjective.compGroup == competency.compGroup and learningObjective.compNumber == competency.compNumber %}
-                    <p>{{ learningObjective.loNumber }}: {{ learningObjective.name }}</p>
-                {% endif %}
-            {% endfor %}
+    <div class="learningObjectives">
+        <h3>Learning Objectives</h3>
+        {% for competency in competencies %}
+            <div class="competencies">
+                <p><strong>{{ competency.compGroup }} - {{ competency.compNumber }} {{ competency.name }}</strong></p>
+                {% for learningObjective in learningObjectives %}
+                    {% if learningObjective.compGroup == competency.compGroup and learningObjective.compNumber == competency.compNumber %}
+                        <p>{{ learningObjective.loNumber }}: {{ learningObjective.name }}</p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <div class="standardSolution">
+            <h3>Standard Solution</h3>
+            <p>{{ challengeCover.standardSolution | safe }}</p>
         </div>
-
-    {% endfor %}
-
+        <div class="solutionBounds">
+            <h3>Solution Bounds</h3>
+            <p>{{ challengeCover.}}</p>
+        </div>
+    </div>
 {% endblock %}
