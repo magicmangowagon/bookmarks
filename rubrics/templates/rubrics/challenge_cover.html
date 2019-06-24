@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ challengeCover.name }}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ challengeCover.name }}</h1>
+    <div>
+        <h2>{{ challengeCover.pullQuote }}</h2>
+    </div>
+
+
+    <h3>Challenge Overview</h3>
+        <p>{{ challengeCover.description | safe }}</p>
+
+    <h3>Learning Objectives</h3>
+
+    {% for competency in competencies %}
+        <div>
+            <p><strong>{{ competency.compGroup }} - {{ competency.compNumber }} {{ competency.name }}</strong></p>
+            {% for learningObjective in learningObjectives %}
+                {% if learningObjective.compGroup == competency.compGroup and learningObjective.compNumber == competency.compNumber %}
+                    <p>{{ learningObjective.loNumber }}: {{ learningObjective.name }}</p>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+    {% endfor %}
+
+{% endblock %}

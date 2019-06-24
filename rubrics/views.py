@@ -16,6 +16,30 @@ from django.contrib.auth.models import User
 from .functions import process_rubricLine, assess_competency_done, custom_rubric_producer
 
 
+class ChallengeCover(DetailView):
+    template_name = 'rubrics/challenge_cover.html'
+    model = Challenge
+
+    def get_context_data(self, **kwargs):
+        context = super(ChallengeCover, self).get_context_data(**kwargs)
+
+        challengeCover = Challenge.objects.get(pk=self.kwargs['pk'])
+        context['challengeCover'] = challengeCover
+
+        learningObjectives = LearningObjective.objects.all().filter(challenge=self.kwargs['pk']).order_by('compGroup', 'compNumber', 'loNumber')
+        context['learningObjectives'] = learningObjectives
+
+        theseComps = []
+        competencies = Competency.objects.all()
+        for learningObjective in learningObjectives:
+            for competency in competencies:
+                if competency.compGroup == learningObjective.compGroup and competency.compNumber == learningObjective.compNumber:
+                    theseComps.append(competency)
+
+        context['competencies'] = theseComps
+        return context
+
+
 class ChallengeDetail(FormView):
     template_name = 'rubrics/challenge_detail.html'
     model = Challenge

@@ -52,6 +52,10 @@ class LearningObjective(models.Model):
         fullname = str(self.compGroup) + "-" + str(self.compNumber) + "." + str(self.loNumber) + " " + str(self.name)
         return fullname
 
+#____________________
+#CHALLENGE COVER PAGE
+# New model of challenges, linear structure
+
 
 # __________
 # CHALLENGES
@@ -62,6 +66,70 @@ class Challenge(models.Model):
 
     name = models.CharField(max_length=250)
     description = RichTextField()
+    clinicalNeeds = RichTextField(default='')
+    standardSolution = RichTextField(default='')
+    pullQuote = models.CharField('Pull Quote', max_length=500, default='')
+
+    A = 'A'
+    B = 'B'
+    C = 'C'
+    D = 'D'
+    group = [
+        (A, 'A'),
+        (B, 'B'),
+        (C, 'C'),
+        (D, 'D')
+    ]
+    challengeGroupChoices = models.CharField(
+        'Challenge Group',
+        max_length=2,
+        choices=group,
+        default=''
+    )
+    DESIGN = 1
+    SIMULATE = 2
+    IMPLEMENT = 3
+    ONEONONE = 1
+    SMALLGROUP = 2
+    FULLCLASS = 3
+    REFLECTION = 1
+    CLASSROOMEVIDENCE = 2
+    OBSERVATION = 3
+
+    degree = [
+        (DESIGN, 'Design'),
+        (SIMULATE, 'Simulate'),
+        (IMPLEMENT, 'Implement')
+    ]
+    scale = [
+        (ONEONONE, 'One on One'),
+        (SMALLGROUP, 'Small Group'),
+        (FULLCLASS, 'Full Class'),
+    ]
+    type = [
+        (REFLECTION, 'Reflection'),
+        (CLASSROOMEVIDENCE, 'Classroom Evidence'),
+        (OBSERVATION, 'Observation')
+    ]
+
+    degreeImplementation = models.CharField(
+        'Degree of Implementation',
+        max_length=2,
+        choices=degree,
+        default=''
+    )
+    scaleImplementation = models.CharField(
+        'Scale of Implementation',
+        max_length=2,
+        choices=scale,
+        default=''
+    )
+    typeImplementation = models.CharField(
+        'Type of Evidence Required',
+        max_length=2,
+        choices=type,
+        default=''
+    )
     learningObjs = models.ManyToManyField(LearningObjective, blank=True, related_name="challenge")
     tags = TaggableManager(blank=True)
 
