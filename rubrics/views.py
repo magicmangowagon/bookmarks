@@ -37,6 +37,15 @@ class ChallengeCover(DetailView):
                     theseComps.append(competency)
         context['competencies'] = theseComps
 
+        degree = challengeCover.degree
+        context['degree'] = degree
+
+        scale = challengeCover.scale
+        context['scale'] = scale
+
+        type = challengeCover.type
+        context['type'] = type
+
         return context
 
 

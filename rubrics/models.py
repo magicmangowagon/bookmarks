@@ -112,9 +112,9 @@ class Challenge(models.Model):
         (OBSERVATION, 'Observation'),
     )
 
-    degreeImplementation = models.IntegerField(choices=degree, default=DESIGN)
-    scaleImplementation = models.IntegerField(choices=scale, default=ONEONONE)
-    typeImplementation = models.IntegerField(choices=type, default=REFLECTION)
+    degreeImplementation = models.IntegerField('Degree of Implementation', choices=degree, default=DESIGN)
+    scaleImplementation = models.IntegerField('Scale of Implementation', choices=scale, default=ONEONONE)
+    typeImplementation = models.IntegerField('Type of Implementation', choices=type, default=REFLECTION)
 
     learningObjs = models.ManyToManyField(LearningObjective, blank=True, related_name="challenge")
     tags = TaggableManager(blank=True)

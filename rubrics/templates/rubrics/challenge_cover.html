@@ -5,41 +5,111 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{{ challengeCover.name }}</h1>
-    <div>
-        <h2>{{ challengeCover.pullQuote }}</h2>
+    <div class="coverSheet">
+    <div class="coverSheetTitleContainer">
+        <div class="coverSheetTitle">
+            <h1>{{ challengeCover.name }}</h1>
+        </div>
+
+        <div class="challengeGroup">
+            group
+            <h2>{{ challengeCover.challengeGroupChoices }}</h2>
+        </div>
+    </div>
+    <div class="pullQuote">
+            <h2>{{ challengeCover.pullQuote }}</h2>
     </div>
 
+    <div class="course-content-container">
 
-    <h3>Challenge Overview</h3>
-        <p>{{ challengeCover.description | safe }}</p>
 
-    <div class="learningObjectives">
-        <h3>Learning Objectives</h3>
-        {% for competency in competencies %}
-            <div class="competencies">
-                <p><strong>{{ competency.compGroup }} - {{ competency.compNumber }} {{ competency.name }}</strong></p>
-                {% for learningObjective in learningObjectives %}
-                    {% if learningObjective.compGroup == competency.compGroup and learningObjective.compNumber == competency.compNumber %}
-                        <p>{{ learningObjective.loNumber }}: {{ learningObjective.name }}</p>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        {% endfor %}
-        <div class="standardSolution">
+        <div class="course-content-box">
+            <h3>Challenge Overview</h3>
+            <p>{{ challengeCover.description | safe }}</p>
+        </div>
+
+        <div class="course-content-box">
+            <h3>Learning Objectives</h3>
+            {% for competency in competencies %}
+                <div class="competencies">
+                    <p><strong>{{ competency.compGroup }} - {{ competency.compNumber }} {{ competency.name }}</strong></p>
+                    {% for learningObjective in learningObjectives %}
+                        {% if learningObjective.compGroup == competency.compGroup and learningObjective.compNumber == competency.compNumber %}
+                            <p>{{ learningObjective.loNumber }}: {{ learningObjective.name }}</p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="course-content-box">
             <h3>Standard Solution</h3>
             <p>{{ challengeCover.standardSolution | safe }}</p>
         </div>
-        <div class="solutionBounds">
-            <h3>Solution Bounds</h3>
-            <p>{{ challengeCover.degreeImplementation }}</p>
-            <p>{{ challengeCover.scaleImplementation }}</p>
-            <p>{{ challengeCover.typeImplementation }}</p>
-        </div>
-        <div class="clinicalNeeds">
-            <h3>Clinical Needs</h3>
+        <div class="sub-container">
+            <div class="course-content-box">
+                <p>Pre-reqs???</p>
+            </div>
+            <div class="course-content-box">
+                <h3>Solution Bounds</h3>
 
-            <p>{{ challengeCover.clinicalNeeds | safe }}</p>
+                <h4>Degree of Implementation</h4>
+                <div class="circleField-container">
+                    {% for degree in degree %}
+                        <div class="circleField">
+                            {% if degree.0 <= challengeCover.degreeImplementation %}
+                                <p>&#x25CD;<br>
+                                {{ degree.1 }}</p>
+                            {% else %}
+                                <p>&#9676;<br>
+                                {{ degree.1 }}</p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <h4>Scale of Implementation</h4>
+                <div class="circleField-container">
+                    {% for scale in scale %}
+                        <div class="circleField">
+                            {% if scale.0 <= challengeCover.scaleImplementation %}
+                                <p>&#x25CD;<br>
+                                {{ scale.1 }}</p>
+                            {% else %}
+                                <p>&#9676;<br>
+                                {{ scale.1 }}</p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <h4>Type of Implementation</h4>
+                <div class="circleField-container">
+                    {% for type in type %}
+                        <div class="circleField">
+                            {% if type.0 <= challengeCover.typeImplementation %}
+                                <p>&#x25CD;<br>
+                                {{ type.1 }}</p>
+                            {% else %}
+                                <p>&#9676;<br>
+                                {{ type.1 }}</p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+
+
+            </div>
+        </div>
+            <div class="course-content-box">
+                <h3>Clinical Needs</h3>
+
+                <p>{{ challengeCover.clinicalNeeds | safe }}</p>
+            </div>
         </div>
     </div>
+    <div>
+        <input type="button" value="Next">
+    </div>
+
+
 {% endblock %}
