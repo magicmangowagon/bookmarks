@@ -96,40 +96,26 @@ class Challenge(models.Model):
     CLASSROOMEVIDENCE = 2
     OBSERVATION = 3
 
-    degree = [
+    degree = (
         (DESIGN, 'Design'),
         (SIMULATE, 'Simulate'),
-        (IMPLEMENT, 'Implement')
-    ]
-    scale = [
+        (IMPLEMENT, 'Implement'),
+    )
+    scale = (
         (ONEONONE, 'One on One'),
         (SMALLGROUP, 'Small Group'),
         (FULLCLASS, 'Full Class'),
-    ]
-    type = [
+    )
+    type = (
         (REFLECTION, 'Reflection'),
         (CLASSROOMEVIDENCE, 'Classroom Evidence'),
-        (OBSERVATION, 'Observation')
-    ]
+        (OBSERVATION, 'Observation'),
+    )
 
-    degreeImplementation = models.CharField(
-        'Degree of Implementation',
-        max_length=4,
-        choices=degree,
-        default=''
-    )
-    scaleImplementation = models.CharField(
-        'Scale of Implementation',
-        max_length=4,
-        choices=scale,
-        default=''
-    )
-    typeImplementation = models.CharField(
-        'Type of Evidence Required',
-        max_length=4,
-        choices=type,
-        default=''
-    )
+    degreeImplementation = models.IntegerField(choices=degree, default=DESIGN)
+    scaleImplementation = models.IntegerField(choices=scale, default=ONEONONE)
+    typeImplementation = models.IntegerField(choices=type, default=REFLECTION)
+
     learningObjs = models.ManyToManyField(LearningObjective, blank=True, related_name="challenge")
     tags = TaggableManager(blank=True)
 
@@ -257,6 +243,7 @@ class LearningExpoResponses(models.Model):
         choices=experienceChoices,
         default=''
     )
+
 
 # ___________
 # RUBRIC LINE

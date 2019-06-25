@@ -32,7 +32,13 @@
         </div>
         <div class="solutionBounds">
             <h3>Solution Bounds</h3>
-            <p>{{ challengeCover.}}</p>
+            <p>{{ challengeCover.degreeImplementation }}</p>
+            <p>{{ challengeCover.scaleImplementation }}</p>
+            <p>{{ challengeCover.typeImplementation }}</p>
+        </div>
+        <div class="clinicalNeeds">
+            <h3>Clinical Needs</h3>
+            <p>{{ challengeCover.clinicalNeeds | safe }}</p>
         </div>
     </div>
 {% endblock %}
