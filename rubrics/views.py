@@ -52,12 +52,11 @@ class ChallengeDetail(FormView):
         existingSolutions = UserSolution.objects.all().filter(challengeName=self.kwargs['pk'])
         theseLearningExpos = LearningExperience.objects.all().filter(challenge=self.kwargs['pk'])
         thisChallenge = Challenge.objects.get(pk=self.kwargs['pk'])
-        print(theseLearningExpos.count())
 
         if existingSolutions.filter(userOwner=self.request.user).exists():
             thisSolution = existingSolutions.get(userOwner=self.request.user).id
 
-            UserFileFormSet = modelformset_factory(UserSolution, extra=0, formset=UserFileForm, fields=('userOwner', 'challengeName',
+            UserFileFormSet = modelformset_factory(UserSolution, extra=0, formset=UserFileForm, fields=('userOwner', 'challengeName', 'solution',
             'goodTitle', 'workFit', 'proudDetail', 'hardDetail', 'objectiveWell', 'objectivePoor', 'personalLearningObjective', 'helpfulLearningExp',
             'notHelpfulLearningExp', 'changeLearningExp', 'notIncludedLearningExp'),
             widgets={'userOwner': forms.HiddenInput, 'challengeName': forms.HiddenInput, })
@@ -65,10 +64,10 @@ class ChallengeDetail(FormView):
             formset = UserFileFormSet(prefix='user', queryset=UserSolution.objects.all().filter(id=thisSolution), )
 
             LearningExpoFeedbackFormset = modelformset_factory(LearningExpoResponses, extra=0, formset=LearningExpoFeedbackForm,
-                fields=('learningExperienceResponse', 'user', 'learningExperience'),
-                   widgets={'user': forms.HiddenInput})
+                   fields=('learningExperienceResponse', 'learningExperience', 'user'), widgets={'user': forms.HiddenInput})
 
-            feedbackFormset = LearningExpoFeedbackFormset(prefix='expo', queryset=LearningExpoResponses.objects.all().filter(user=self.request.user))
+            feedbackFormset = LearningExpoFeedbackFormset(prefix='expo', queryset=LearningExpoResponses.objects.all().filter(
+                user=self.request.user, learningExperience__challenge=thisChallenge))
 
         else:
             UserFileFormset = modelformset_factory(UserSolution, extra=1, formset=UserFileForm, fields=('userOwner', 'challengeName', 'solution',
@@ -80,7 +79,7 @@ class ChallengeDetail(FormView):
                                       queryset=UserSolution.objects.none())
 
             LearningExpoFeedbackFormset = modelformset_factory(LearningExpoResponses, extra=theseLearningExpos.count(),
-                fields=('learningExperienceResponse', 'learningExperience', 'user'),
+                formset=LearningExpoFeedbackForm, fields=('learningExperienceResponse', 'learningExperience', 'user'),
                     widgets={'user': forms.HiddenInput})
 
             feedbackFormset = LearningExpoFeedbackFormset(prefix='expo', initial=[{'learningExperience': learningExperience, 'user': self.request.user}
@@ -102,6 +101,7 @@ class ChallengeDetail(FormView):
         else:
             messages.error(request, "Error")
             print(messages.error(request, "Error"))
+            print("Form invalid")
             return self.render_to_response(self.get_context_data(formset=form))
 
     def form_valid(self, formset):
