@@ -130,8 +130,12 @@ class LearningExperience(models.Model):
     name = models.CharField(max_length=600)
     challenge = models.ForeignKey(Challenge, blank=True, on_delete=models.CASCADE, related_name="challenge")
     learningObjectives = models.ManyToManyField(LearningObjective, blank=True, related_name="learningObjective")
+    index = models.IntegerField('Index', default=0)
     description = RichTextField()
     tags = TaggableManager(blank=True)
+
+    class Meta:
+        order_with_respect_to = 'challenge'
 
     def __str__(self):
         return self.name

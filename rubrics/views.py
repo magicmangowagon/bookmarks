@@ -47,6 +47,9 @@ class ChallengeCover(DetailView):
         type = challengeCover.type
         context['type'] = type
 
+        relatedLearningExperiences = LearningExperience.objects.all().filter(challenge=challengeCover).order_by('index')
+        context['next'] = relatedLearningExperiences.first().pk
+
         return context
 
 
@@ -347,7 +350,14 @@ class LearningExperienceView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(LearningExperienceView, self).get_context_data(**kwargs)
         learningExpo = LearningExperience.objects.get(pk=self.kwargs['pk'])
+        relatedLearningExperiences = LearningExperience.objects.all().filter(challenge=learningExpo.challenge).order_by('index')
+        context['expoList'] = relatedLearningExperiences
         context['learningExpo'] = learningExpo
+        if learningExpo != relatedLearningExperiences.last():
+            context['nextLearningExpo'] = learningExpo.get_next_in_order
+        else:
+            context['nextLearningExpo'] = learningExpo.challenge
+        print(learningExpo)
         return context
 
 
