@@ -10,5 +10,18 @@
         <li>{{ learningExpo.learningObjectives.name }}</li>
     </ul>
     <p>{{ learningExpo.description | safe }}</p>
+    <div class="learningExpoList">
+        <h3><a href="/challengeCover/{{ learningExpo.challenge.pk }}">{{ learningExpo.challenge.name }}</a></h3>
+        <ul>
+
+            {% for expoList in expoList %}
+                <li><a href="{{ expoList.pk }}">{{ expoList.name }}</a> </li>
+            {% endfor %}
+                <li><a href="/challenge/{{ learningExpo.challenge.pk }}">Solution Upload </a> </li>
+
+        </ul>
+    </div>
+
     <p><a href="{{ nextLearningExpo.pk }}">Next </a></p>
+    <p><a href="{{ previous.pk }}">Previous </a></p>
 {% endblock %}

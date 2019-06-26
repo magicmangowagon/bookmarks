@@ -614,6 +614,20 @@ img.user-detail {
     margin-top: 0px;
 }
 
+.learningExpoList {
+    position: fixed;
+    top: 100px;
+    right: 24px;
+    background-color: #efefef;
+    padding: 12px;
+    text-align: center;
+}
+
+.learningExpoList li {
+    list-style: none;
+    margin: 6pt 0;
+}
+
 #progressContainer {
     height: 100px;
     background-color: #ffffff;
