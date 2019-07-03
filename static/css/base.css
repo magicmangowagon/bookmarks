@@ -316,7 +316,7 @@ label {
     margin: 0 0 0 2pt;
     border-radius: 4pt 4pt 0 0;
     background-color: #00a497;
-    width: 90%;
+    max-width: 90%;
 }
 
 input, textarea {
