@@ -310,9 +310,14 @@ form p {
 label {
     float:left;
     clear:both;
-    color:#333;
-    margin-bottom:4px;
+    color: #fff;
+    font-weight: 500;
+    padding: 4pt;
+    margin: 0 0 0 2pt;
+    border-radius: 4pt 4pt 0 0;
+    background-color: #00a497;
 }
+
 input, textarea {
     clear:both;
     float:left;
@@ -323,11 +328,10 @@ input, textarea {
     font-size:14px;
 }
 input[type=submit], a.button {
-    font-weight:bold;
     background:#003469;
     color:#fff;
-    padding:10px 20px;
-    font-size:14px;
+    padding:10px;
+    font-size:12px;
     text-transform:uppercase;
     border-radius: 2pt;
 }
@@ -339,11 +343,10 @@ input:hover[type=submit], a.button {
 
 }
 input[type=button], a.button {
-    font-weight:bold;
     background:#003469;
     color:#fff;
-    padding:10px 20px;
-    font-size:14px;
+    padding:10px;
+    font-size:12px;
     text-transform:uppercase;
     border-radius: 2pt;
 }
@@ -722,10 +725,8 @@ img.user-detail {
 }
 
 .circleField {
-
     width: 30%;
     font-size: 110%;
-
 }
 
 .circleField p {
@@ -760,4 +761,41 @@ img.user-detail {
 .prereq {
     background-color: #7f8b85;
     margin: 1em;
+}
+
+.learningExpoResponseFlex {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    width: 90%;
+    padding: 12pt;
+    margin: 0 2pt 24pt;
+    resize: none;
+    border: 1px solid #00a497;
+    border-top: 12pt solid #00a497;
+    border-radius: 0 4pt 4pt 4pt;
+}
+
+.learningExpoResponseBox {
+    margin: 1em;
+    padding: 12pt;
+    border-right: 1pt solid #00a497;
+}
+
+textarea {
+    width: 90%;
+    padding: 12pt;
+    margin: 0 2pt 24pt;
+    resize: none;
+    border: 1px solid #00a497;
+    border-top: 12pt solid #00a497;
+    border-radius: 0 4pt 4pt 4pt;
+    background-color: #ebebeb;
+}
+
+input[type=text] {
+    width: 50%;
+    margin: 0 2pt 24pt;
+    border: 1px solid #00a497;
+    border-radius: 0 4pt 4pt 4pt;
 }

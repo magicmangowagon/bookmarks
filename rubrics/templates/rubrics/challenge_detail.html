@@ -7,7 +7,10 @@
 {% block content %}
 
 <h1>{{ challenge }}</h1>
-
+    <p>
+        <input type="button" onclick='window.location.href="/learningExperience/{{ previous }}";' value="Previous">
+    </p>
+    <br/>
 <h2>Learning Objectives</h2>
     <ul class="challengeListObj">
         {% for learningObjective in learningObjectives_list %}
@@ -63,13 +66,16 @@
 
                     {{ feedbackForm.management_form }}
                     <div>
+                    <label>How did you feel about each learning experience in this challenge?</label>
+                    <ul class="learningExpoResponseFlex">
+
                         {% for LearningExpoResponses in feedbackForm %}
+                            <li class="learningExpoResponseBox">
                             <p id="learnExpo{{ LearningExpoResponses.learningExperience.auto_id }}"> </p>
                             <span style="display: none">{{ LearningExpoResponses.learningExperience }}</span>
 
                             <p>{{ LearningExpoResponses.user }}</p>
 
-                            <label>{{ LearningExpoResponses.learningExperienceResponse.label }}</label>
                             <p>{{ LearningExpoResponses.learningExperienceResponse }}</p>
 
                             {{ LearningExpoResponses.id }}
@@ -78,7 +84,9 @@
                                 var selectedText = options.options[options.selectedIndex].text;
                                 document.getElementById("learnExpo{{ LearningExpoResponses.learningExperience.auto_id }}").innerHTML = selectedText;
                             </script>
+                            </li>
                         {% endfor %}
+                    </ul>
                     </div>
 
                     <label>{{ form.helpfulLearningExp.label }}</label>

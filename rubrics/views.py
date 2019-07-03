@@ -66,6 +66,9 @@ class ChallengeDetail(FormView):
         theseLearningExpos = LearningExperience.objects.all().filter(challenge=self.kwargs['pk'])
         thisChallenge = Challenge.objects.get(pk=self.kwargs['pk'])
 
+        relatedLearningExperiences = LearningExperience.objects.all().filter(challenge=thisChallenge).order_by('index')
+        context['previous'] = relatedLearningExperiences.last().pk
+
         if existingSolutions.filter(userOwner=self.request.user).exists():
             thisSolution = existingSolutions.get(userOwner=self.request.user).id
 
