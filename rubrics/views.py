@@ -206,7 +206,7 @@ class RubricFinalFormView(FormView):
 
         else:
             RubricFormSet = modelformset_factory(Rubric, extra=1, formset=RubricForm, fields=(
-            'challenge', 'challenge', 'evaluator', 'generalFeedback', 'challengeCompletionLevel'),
+            'userSolution', 'challenge', 'evaluator', 'generalFeedback', 'challengeCompletionLevel'),
              widgets={'userSolution': forms.HiddenInput, 'challenge': forms.HiddenInput, 'evaluator': forms.HiddenInput})
 
             formset = RubricFormSet(initial=[{'userSolution': userSolution, 'challenge': challenge,
