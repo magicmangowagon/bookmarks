@@ -767,6 +767,7 @@ img.user-detail {
     display: flex;
     flex-direction: row;
     list-style: none;
+    flex-wrap: wrap;
     width: 90%;
     padding: 12pt;
     margin: 0 2pt 24pt;
@@ -780,6 +781,7 @@ img.user-detail {
     margin: 1em;
     padding: 12pt;
     border-right: 1pt solid #00a497;
+    width: 11%;
 }
 
 textarea {
