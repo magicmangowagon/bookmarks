@@ -782,6 +782,7 @@ img.user-detail {
     padding: 12pt;
     border-right: 1pt solid #00a497;
     width: 11%;
+    min-width: 8em;
 }
 
 textarea {

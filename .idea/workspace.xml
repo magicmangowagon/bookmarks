@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f9d2353c-1e9e-47b8-8190-35e7ab7af957" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/templates/footer.html" afterDir="false" />
+    <list default="true" id="f9d2353c-1e9e-47b8-8190-35e7ab7af957" name="Default Changelist" comment="Styled challenge cover sheet, mostly works for rubric form as well.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/templates/rubrics/challenge_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/templates/rubrics/challenge_detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/templates/rubrics/learningExperience.html" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/templates/rubrics/learningExperience.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/base.css" afterDir="false" />
     </list>
     <ignored path="bookmarks/settings.py" />
@@ -130,11 +126,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1794">
-              <caret line="69" column="63" selection-start-line="69" selection-start-column="63" selection-end-line="69" selection-end-column="63" />
+            <state relative-caret-position="332">
+              <caret line="211" column="43" selection-start-line="211" selection-start-column="43" selection-end-line="211" selection-end-column="43" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
-                <element signature="e#8138#10762#0" />
                 <element signature="e#10801#17309#0" />
               </folding>
             </state>
@@ -162,8 +157,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/static/css/base.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="371">
-              <caret line="800" column="1" lean-forward="true" selection-start-line="800" selection-start-column="1" selection-end-line="800" selection-end-column="1" />
+            <state relative-caret-position="423">
+              <caret line="784" column="18" selection-start-line="784" selection-start-column="18" selection-end-line="784" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -196,8 +191,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>head</find>
-      <find>header</find>
       <find>.challengeListObj li</find>
       <find>completionLevel</find>
       <find>crit</find>
@@ -226,6 +219,8 @@
       <find>text</find>
       <find>textarea</find>
       <find>flex</find>
+      <find>input</find>
+      <find>rubricfin</find>
     </findStrings>
     <replaceStrings>
       <replace>&lt;/p&gt;</replace>
@@ -291,10 +286,10 @@
         <option value="$PROJECT_DIR$/rubrics/models.py" />
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/rubric_form.html" />
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/challenge_cover.html" />
-        <option value="$PROJECT_DIR$/rubrics/views.py" />
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/learningExperience.html" />
         <option value="$PROJECT_DIR$/templates/footer.html" />
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/challenge_detail.html" />
+        <option value="$PROJECT_DIR$/rubrics/views.py" />
         <option value="$PROJECT_DIR$/static/css/base.css" />
       </list>
     </option>
@@ -532,28 +527,7 @@
       <workItem from="1561128091479" duration="19838000" />
       <workItem from="1561479037878" duration="30202000" />
       <workItem from="1561992874447" duration="3595000" />
-      <workItem from="1562168213408" duration="6264000" />
-    </task>
-    <task id="LOCAL-00135" summary="Added color coding for competencies. Cleaned up some messy code, wrote &#10;some more messy code (somethingswrong function should take a list)">
-      <created>1554761747595</created>
-      <option name="number" value="00135" />
-      <option name="presentableId" value="LOCAL-00135" />
-      <option name="project" value="LOCAL" />
-      <updated>1554761747595</updated>
-    </task>
-    <task id="LOCAL-00136" summary="I have begun competencyProgress work. Instantiating this new model in functions&#10;rather than in views and assigning Competencies and rubricLines to it.&#10;Need to now make the function check for existing instances before creating new ones.">
-      <created>1554845562240</created>
-      <option name="number" value="00136" />
-      <option name="presentableId" value="LOCAL-00136" />
-      <option name="project" value="LOCAL" />
-      <updated>1554845562240</updated>
-    </task>
-    <task id="LOCAL-00137" summary="Competency Progress appears to be working correctly. Creates a record if none exists&#10;by competency and user, then associates Rubric Lines with it. Need to work &#10;on implementing it in the view now.">
-      <created>1554913083556</created>
-      <option name="number" value="00137" />
-      <option name="presentableId" value="LOCAL-00137" />
-      <option name="project" value="LOCAL" />
-      <updated>1554913083557</updated>
+      <workItem from="1562168213408" duration="7119000" />
     </task>
     <task id="LOCAL-00138" summary="Fixed issue with competency not saving correctly. Fixed issue with rubricLines&#10;not being evaluated correctly. Trimmed size of query for rubricLines &#10;and compProgress. Started javascript to change color. Added CSS for progress &#10;on each comp. Currently setting it with bools in template tags.">
       <created>1554934874358</created>
@@ -877,11 +851,32 @@
       <option name="project" value="LOCAL" />
       <updated>1562166434754</updated>
     </task>
-    <option name="localTasksCounter" value="184" />
+    <task id="LOCAL-00184" summary="Styled challenge cover sheet, probably filtered into rubrics as well.">
+      <created>1562183012654</created>
+      <option name="number" value="00184" />
+      <option name="presentableId" value="LOCAL-00184" />
+      <option name="project" value="LOCAL" />
+      <updated>1562183012655</updated>
+    </task>
+    <task id="LOCAL-00185" summary="Styled challenge cover sheet, mostly works for rubric form as well.">
+      <created>1562183210051</created>
+      <option name="number" value="00185" />
+      <option name="presentableId" value="LOCAL-00185" />
+      <option name="project" value="LOCAL" />
+      <updated>1562183210051</updated>
+    </task>
+    <task id="LOCAL-00186" summary="Styled challenge cover sheet, mostly works for rubric form as well.">
+      <created>1562183640794</created>
+      <option name="number" value="00186" />
+      <option name="presentableId" value="LOCAL-00186" />
+      <option name="project" value="LOCAL" />
+      <updated>1562183640794</updated>
+    </task>
+    <option name="localTasksCounter" value="187" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="897429000" />
+    <option name="totallyTimeSpent" value="898284000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -898,7 +893,7 @@
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="1" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" visible="true" weight="0.18336888" />
+      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.18336888" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32887402" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32552955" />
@@ -910,7 +905,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49848944" weight="0.32827735" />
       <window_info anchor="bottom" id="Database Changes" order="9" weight="0.32896176" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50852877" side_tool="true" weight="0.22643554" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.4914712" visible="true" weight="0.30546266" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.4914712" visible="true" weight="0.30546266" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.49924472" weight="0.32887402" />
       <window_info anchor="bottom" id="Database Console" order="13" sideWeight="0.49848944" weight="0.32954547" />
       <window_info anchor="bottom" id="SQL Generator" order="14" weight="0.32896176" />
@@ -1003,8 +998,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Custom rubrics advanced a bit. Now need to run the the custom challenge object through the rubric view to regenerate more rubriclines" />
-    <MESSAGE value="custom_rubric_producer hooked in, need to write logic. Should I return a &#10;formset?" />
     <MESSAGE value="Customization form appears to be working correcly. Need to play around &#10;with it and refactor the rubricLines view, it's a functional mess at the &#10;moment" />
     <MESSAGE value="Gray out the H3 of an ignored learning objective" />
     <MESSAGE value="Changed h3 display to gray or standard color based on whether the LO is &#10;being ignored or not." />
@@ -1028,7 +1021,9 @@
     <MESSAGE value="Fixed issue with competencies showing up too often on cover sheet" />
     <MESSAGE value="Added navigation to learning experiences and challengeCover sheet" />
     <MESSAGE value="Fixed next and previous when at beginning and end of expo list, meaning Challenge cover and solution upload are working." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed next and previous when at beginning and end of expo list, meaning Challenge cover and solution upload are working." />
+    <MESSAGE value="Styled challenge cover sheet, probably filtered into rubrics as well." />
+    <MESSAGE value="Styled challenge cover sheet, mostly works for rubric form as well." />
+    <option name="LAST_COMMIT_MESSAGE" value="Styled challenge cover sheet, mostly works for rubric form as well." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/learningExperienceCreator.html">
@@ -1310,18 +1305,6 @@
     <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/solution_detail.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1794">
-          <caret line="69" column="63" selection-start-line="69" selection-start-column="63" selection-end-line="69" selection-end-column="63" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-            <element signature="e#8138#10762#0" />
-            <element signature="e#10801#17309#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1000">
@@ -1370,10 +1353,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="332">
+          <caret line="211" column="43" selection-start-line="211" selection-start-column="43" selection-end-line="211" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#10801#17309#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/static/css/base.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="371">
-          <caret line="800" column="1" lean-forward="true" selection-start-line="800" selection-start-column="1" selection-end-line="800" selection-end-column="1" />
+        <state relative-caret-position="423">
+          <caret line="784" column="18" selection-start-line="784" selection-start-column="18" selection-end-line="784" selection-end-column="18" />
         </state>
       </provider>
     </entry>
