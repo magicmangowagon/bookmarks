@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f9d2353c-1e9e-47b8-8190-35e7ab7af957" name="Default Changelist" comment="Styled challenge cover sheet, mostly works for rubric form as well.">
+    <list default="true" id="f9d2353c-1e9e-47b8-8190-35e7ab7af957" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/base.css" afterDir="false" />
     </list>
@@ -157,8 +157,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/static/css/base.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="423">
-              <caret line="784" column="18" selection-start-line="784" selection-start-column="18" selection-end-line="784" selection-end-column="18" />
+            <state relative-caret-position="409">
+              <caret line="318" column="15" selection-start-line="318" selection-start-column="15" selection-end-line="318" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -527,14 +527,7 @@
       <workItem from="1561128091479" duration="19838000" />
       <workItem from="1561479037878" duration="30202000" />
       <workItem from="1561992874447" duration="3595000" />
-      <workItem from="1562168213408" duration="7119000" />
-    </task>
-    <task id="LOCAL-00138" summary="Fixed issue with competency not saving correctly. Fixed issue with rubricLines&#10;not being evaluated correctly. Trimmed size of query for rubricLines &#10;and compProgress. Started javascript to change color. Added CSS for progress &#10;on each comp. Currently setting it with bools in template tags.">
-      <created>1554934874358</created>
-      <option name="number" value="00138" />
-      <option name="presentableId" value="LOCAL-00138" />
-      <option name="project" value="LOCAL" />
-      <updated>1554934874358</updated>
+      <workItem from="1562168213408" duration="7733000" />
     </task>
     <task id="LOCAL-00139" summary="Fixed issue with competency not saving correctly. Fixed issue with rubricLines&#10;not being evaluated correctly. Trimmed size of query for rubricLines &#10;and compProgress. Started javascript to change color. Added CSS for progress &#10;on each comp. Currently setting it with bools in template tags.">
       <created>1554934893150</created>
@@ -872,11 +865,18 @@
       <option name="project" value="LOCAL" />
       <updated>1562183640794</updated>
     </task>
-    <option name="localTasksCounter" value="187" />
+    <task id="LOCAL-00187" summary="Styled challenge cover sheet, mostly works for rubric form as well.">
+      <created>1562183846166</created>
+      <option name="number" value="00187" />
+      <option name="presentableId" value="LOCAL-00187" />
+      <option name="project" value="LOCAL" />
+      <updated>1562183846166</updated>
+    </task>
+    <option name="localTasksCounter" value="188" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="898284000" />
+    <option name="totallyTimeSpent" value="898898000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -1366,8 +1366,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/static/css/base.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
-          <caret line="784" column="18" selection-start-line="784" selection-start-column="18" selection-end-line="784" selection-end-column="18" />
+        <state relative-caret-position="409">
+          <caret line="318" column="15" selection-start-line="318" selection-start-column="15" selection-end-line="318" selection-end-column="15" />
         </state>
       </provider>
     </entry>
