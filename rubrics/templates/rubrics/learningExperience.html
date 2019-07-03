@@ -21,7 +21,16 @@
 
         </ul>
     </div>
+    {% if last == True %}
+        <input type="button" onclick='window.location.href="/challenge/{{ learningExpo.challenge.pk }}";' value="Next">
+        {% else %}
+            <input type="button" onclick='window.location.href="{{ nextLearningExpo.pk }}";' value="Next">
+    {% endif %}
 
-    <p><a href="{{ nextLearningExpo.pk }}">Next </a></p>
-    <p><a href="{{ previous.pk }}">Previous </a></p>
+    {% if first == True %}
+        <input type="button" onclick='window.location.href="/challengeCover/{{ learningExpo.challenge.pk }}";' value="Previous">
+        {% else %}
+        <input type="button" onclick='window.location.href="{{ previous.pk }}";' value="Previous">
+    {% endif %}
+
 {% endblock %}

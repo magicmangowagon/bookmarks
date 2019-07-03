@@ -355,13 +355,17 @@ class LearningExperienceView(DetailView):
         context['learningExpo'] = learningExpo
         if learningExpo != relatedLearningExperiences.last():
             context['nextLearningExpo'] = learningExpo.get_next_in_order
+            context['last'] = False
         else:
             context['nextLearningExpo'] = learningExpo.challenge
+            context['last'] = True
 
         if learningExpo != relatedLearningExperiences.first():
             context['previous'] = learningExpo.get_previous_in_order
+            context['first'] = False
         else:
             context['previous'] = learningExpo.challenge
+            context['first'] = True
 
         print(learningExpo)
         return context
