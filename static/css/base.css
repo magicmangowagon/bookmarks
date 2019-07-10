@@ -786,6 +786,17 @@ img.user-detail {
     min-width: 8em;
 }
 
+.previousExamples {
+    list-style: none;
+}
+
+.previousExamplesEntry {
+    margin: 2em auto 0;
+    border: 2pt solid #00a497;
+    padding: 0 12pt 12pt;
+    border-radius: 4pt;
+}
+
 textarea {
     width: 90%;
     padding: 12pt;

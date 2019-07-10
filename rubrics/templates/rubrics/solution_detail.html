@@ -8,24 +8,26 @@
 
     <h1>{{ usersolution.challengeName }}</h1>
 <p>Submitted by {{ usersolution.userOwner.first_name }} {{ usersolution.userOwner.last_name }}</p>
-   <p><a href="{{ usersolution.solution }}" target="_blank">{{ usersolution.solution }}</a></p>
+   <p>Link to solution: <a href="{{ usersolution.solution }}" target="_blank">{{ usersolution.solution }}</a></p>
 
                <p><a href="/solutionEval/{{ usersolution.id }}">Evaluation</a></p>
 
     <h3>Previous examples of student work on related learning objectives:</h3>
-    {% for rubricLine in otherInstances %}
-        <p>{{ rubricLine.learningObjective.compGroup }} - {{ rubricLine.learningObjective.compNumber }}.{{ rubricLine.learningObjective.loNumber }}
-            {{ rubricLine.learningObjective.name }} - <strong>{{ rubricLine.student.challengeName }}</strong></p>
-        <p>Feedback:<br>
-        {{ rubricLine.feedback }}</p>
-        <p><strong>
-            {% if rubricLine.ready == True %}
-            Complete
-            {% else %}
-            Incomplete
-            {% endif %}
-        </strong></p>
-        <hr>
-
-    {% endfor %}
+    <ul class="previousExamples">
+        {% for rubricLine in otherInstances %}
+            <li class="previousExamplesEntry">
+                <h4>{{ rubricLine.learningObjective.compGroup }} - {{ rubricLine.learningObjective.compNumber }}.{{ rubricLine.learningObjective.loNumber }}
+                    {{ rubricLine.learningObjective.name }} - <strong>{{ rubricLine.student.challengeName }}</strong></h4>
+                <p>Feedback:<br>
+                {{ rubricLine.feedback }}</p>
+                <p><strong>
+                    {% if rubricLine.ready == True %}
+                        Complete
+                    {% else %}
+                        Incomplete
+                    {% endif %}
+                </strong></p>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}

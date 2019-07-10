@@ -148,6 +148,7 @@ class SolutionDetailView(DetailView):
             for rubricLine in usersRubricLines:
                 if rubricLine.learningObjective == learningObjective and rubricLine.student != thisSolution:
                     otherLOinstances.append(rubricLine)
+
         context['otherInstances'] = otherLOinstances
         print(usersRubricLines.count())
         return context
