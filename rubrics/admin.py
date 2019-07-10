@@ -23,12 +23,12 @@ class CompetencyInline(admin.TabularInline):
 
 @admin.register(UserSolution)
 class UserSolution(admin.ModelAdmin):
-    list_display = ['userOwner', 'challengeName', 'customized']
+    list_display = ['pk', 'userOwner', 'challengeName', 'customized']
 
 
 @admin.register(RubricLine)
 class RubricLine(admin.ModelAdmin):
-    list_display = ['student', 'learningObjective']
+    list_display = ['pk', 'student', 'learningObjective']
 
 
 @admin.register(CriteriaLine)

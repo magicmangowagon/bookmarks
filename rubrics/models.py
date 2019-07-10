@@ -220,9 +220,6 @@ class UserSolution(models.Model):
     notIncludedLearningExp = models.TextField('Did you engage in any helpful learning experiences that were not included in the challenge guide? Please let us know what they were so that we can think about adding them.', blank=True, default='')
     customized = models.BooleanField(default=False)
 
-    def __str__(self):
-        return self.userOwner.username
-
 
 # ___________
 # LEARNING EXPERIENCE LIKERT ENTRIES
