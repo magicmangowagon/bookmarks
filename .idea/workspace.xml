@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9d2353c-1e9e-47b8-8190-35e7ab7af957" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookmarks/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/bookmarks/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rubrics/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/views.py" afterDir="false" />
     </list>
     <ignored path="bookmarks/settings.py" />
@@ -76,7 +74,7 @@
         <entry file="file://$PROJECT_DIR$/rubrics/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="334">
-              <caret line="145" column="51" selection-start-line="145" selection-start-column="51" selection-end-line="145" selection-end-column="51" />
+              <caret line="145" column="100" selection-start-line="145" selection-start-column="100" selection-end-line="145" selection-end-column="100" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -144,8 +142,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bookmarks/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="182">
-              <caret line="145" column="58" lean-forward="true" selection-start-line="145" selection-start-column="58" selection-end-line="145" selection-end-column="58" />
+            <state relative-caret-position="286">
+              <caret line="146" column="64" lean-forward="true" selection-start-line="146" selection-start-column="64" selection-end-line="146" selection-end-column="64" />
               <folding>
                 <element signature="e#310#319#0" expanded="true" />
               </folding>
@@ -501,14 +499,7 @@
       <workItem from="1562168213408" duration="8561000" />
       <workItem from="1562596692956" duration="1801000" />
       <workItem from="1562767553677" duration="6413000" />
-      <workItem from="1562777257850" duration="8044000" />
-    </task>
-    <task id="LOCAL-00144" summary="Broke attempt check out of  the assessment function loop, wasn't correctly&#10;reading the rubricLines. Now comp completion is false if no rubricLine&#10;instance exists for a given LO before running through the whole list.">
-      <created>1555515656109</created>
-      <option name="number" value="00144" />
-      <option name="presentableId" value="LOCAL-00144" />
-      <option name="project" value="LOCAL" />
-      <updated>1555515656109</updated>
+      <workItem from="1562777257850" duration="9175000" />
     </task>
     <task id="LOCAL-00145" summary="Added ability to ignore an LO in a challenge for a given TC. Added framework&#10;for a challengeAddendum for modifying/supplementing a challenge for one TC&#10;or a group.">
       <created>1555541769206</created>
@@ -846,11 +837,18 @@
       <option name="project" value="LOCAL" />
       <updated>1562869245235</updated>
     </task>
-    <option name="localTasksCounter" value="193" />
+    <task id="LOCAL-00193" summary="Need to fix rubricLine query, currently pulling all of them">
+      <created>1562869526629</created>
+      <option name="number" value="00193" />
+      <option name="presentableId" value="LOCAL-00193" />
+      <option name="project" value="LOCAL" />
+      <updated>1562869526629</updated>
+    </task>
+    <option name="localTasksCounter" value="194" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="915984000" />
+    <option name="totallyTimeSpent" value="917115000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -972,7 +970,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Gray out the H3 of an ignored learning objective" />
     <MESSAGE value="Changed h3 display to gray or standard color based on whether the LO is &#10;being ignored or not." />
     <MESSAGE value="Pre-evaluation view skeleton in place, add some logic!" />
     <MESSAGE value="Adding customized field migration for userSolution model to repo" />
@@ -997,7 +994,8 @@
     <MESSAGE value="Styled challenge cover sheet, probably filtered into rubrics as well." />
     <MESSAGE value="Styled challenge cover sheet, mostly works for rubric form as well." />
     <MESSAGE value="Added some context to the solution detail page, providing past examples of tc work related to a learning objective. Will expand on this to make it into a full pre-evaluation page." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added some context to the solution detail page, providing past examples of tc work related to a learning objective. Will expand on this to make it into a full pre-evaluation page." />
+    <MESSAGE value="Need to fix rubricLine query, currently pulling all of them" />
+    <option name="LAST_COMMIT_MESSAGE" value="Need to fix rubricLine query, currently pulling all of them" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/learningExperienceCreator.html">
@@ -1327,8 +1325,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bookmarks/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="145" column="58" lean-forward="true" selection-start-line="145" selection-start-column="58" selection-end-line="145" selection-end-column="58" />
+        <state relative-caret-position="286">
+          <caret line="146" column="64" lean-forward="true" selection-start-line="146" selection-start-column="64" selection-end-line="146" selection-end-column="64" />
           <folding>
             <element signature="e#310#319#0" expanded="true" />
           </folding>
@@ -1348,7 +1346,7 @@
     <entry file="file://$PROJECT_DIR$/rubrics/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="334">
-          <caret line="145" column="51" selection-start-line="145" selection-start-column="51" selection-end-line="145" selection-end-column="51" />
+          <caret line="145" column="100" selection-start-line="145" selection-start-column="100" selection-end-line="145" selection-end-column="100" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>
