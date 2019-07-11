@@ -143,7 +143,7 @@ class SolutionDetailView(DetailView):
 
         otherLOinstances = []
         theseLearningObjectives = LearningObjective.objects.all().filter(challenge=thisChallenge)
-        usersRubricLines = RubricLine.objects.all().filter(student=thisSolution.userOwner)
+        usersRubricLines = RubricLine.objects.all()
         for learningObjective in theseLearningObjectives:
             for rubricLine in usersRubricLines:
                 if rubricLine.learningObjective == learningObjective and rubricLine.student != thisSolution:

@@ -28,7 +28,7 @@ SECRET_KEY = 'e7+_=2dkn(4n64id2m_8v&fqvbw61f5u06mgp#io2ilwz$$drg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['206.189.180.88']
 
 
 # Application definition
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'tinymce',
     'djrichtextfield',
     "taggit",
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -132,15 +133,23 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 TAGGIT_CASE_INSENSITIVE = True
 
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+DO_ACCESS_KEY = os.environ['DO_ACCESS_KEY']
+DO_SECRET_KEY = os.environ['DO_SECRET_KEY']
+DO_STORAGE_BUCKET_NAME = 'wwgstl'
+DO_ENDPOINT = 'sfo2.digitaloceanspaces.com'
+DO_LOCATION = 'platform'
+STATIC_URL = 'https://%s/%s/' % (DO_ENDPOINT, DO_LOCATION)
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 
-MEDIA_URL = '/media/'
+MEDIA_URL = 'https://%s/%s/' % (DO_ENDPOINT, DO_LOCATION)
+# MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 LOGIN_REDIRECT_URL = 'dashboard'
