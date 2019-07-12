@@ -7,7 +7,7 @@
         <a href="{{ file_exists.solution|safe }}" target="_blank">{{ file_exists.solution|safe }} </a>
         
     {% else %}
-        <h2>Solution Upload</h2>
+        <h2>Link to Solution</h2>
         <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
             <table>
                 {{ form.as_table }}

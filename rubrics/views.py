@@ -12,7 +12,7 @@ from django.urls import reverse
 from django.forms import modelformset_factory
 from django.contrib import messages
 from django.shortcuts import redirect
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from .functions import process_rubricLine, assess_competency_done, custom_rubric_producer
 
 
@@ -183,9 +183,11 @@ class SolutionListView(ListView):
             queryset = UserSolution.objects.all()
             return queryset
 
-        if profile.role == 2:
+        if profile.role == 3:
 
-            queryset = UserSolution.objects.filter()
+            group = self.request.user.groups.all()
+            print(group)
+            queryset = UserSolution.objects.filter(userOwner__groups__in=group)
             return queryset
 
         else:
