@@ -11,7 +11,76 @@
    <p>Link to solution: <a href="{{ usersolution.solution }}" target="_blank">{{ usersolution.solution }}</a></p>
 
                <p><a href="/solutionEval/{{ usersolution.id }}">Evaluation</a></p>
+    <div class="evalFieldFlexContainer">
+        <div class="evalFieldFlexBox">
+            <p>What's a good title for your work</p>
+            {{ usersolution.goodTitle }}
+        </div>
 
+        <div class="evalFieldFlexBox">
+            <p>How does this piece of work fit into the story of your development as a teacher?</p>
+            {{ usersolution.workFit }}
+        </div>
+
+        <div class="evalFieldFlexBox">
+            <p>What’s a specific detail in this work that you are especially proud of? why?</p>
+            {{ usersolution.proudDetail }}
+        </div>
+
+        <div class="evalFieldFlexBox">
+            <p>Which detail shows what was especially hard for you? how?</p>
+            {{ usersolution.hardDetail }}
+        </div>
+
+        <div class="evalFieldFlexBox">
+            <p>What’s one objective that you met really well? What’s your evidence?</p>
+            {{ usersolution.objectiveWell }}
+        </div>
+
+        <div class="evalFieldFlexBox">
+            <p>What’s one objective that you still want to work on? What evidence leads you to think this is an area of growth for you?</p>
+            {{ usersolution.objectivePoor }}
+        </div>
+
+        <div class="evalFieldFlexBox">
+            <p>Do you have any learning objectives of your own--in addition to those specified below--that you’d like the Observer to consider when they look at your work? If so, add them at the top of the Observation Form</p>
+            {{ usersolution.personalLearningObjective }}
+        </div>
+
+        <div class="evalFieldFlexBox">
+            <p>Do you have any learning objectives of your own--in addition to those specified below--that you’d like the Observer to consider when they look at your work? If so, add them at the top of the Observation Form</p>
+            {{ usersolution.personalLearningObjective }}
+        </div>
+
+        <div class="learningExpoResponseFlex">
+            {% for theseLearningExpos in theseLearningExpos  %}
+                <div class="learningExpoResponseBox">
+                    <p>{{ theseLearningExpos.learningExperience.name }}</p>
+                    <p>{{ theseLearningExpos.get_learningExperienceResponse_display }}</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="evalFieldFlexBox">
+            <p>Choose one of the above learning experiences that you found helpful. How did it help you?</p>
+            {{ usersolution.helpfulLearningExp }}
+        </div>
+
+        <div class="evalFieldFlexBox">
+            <p>Choose one of the above learning experiences that was less helpful. Why wasn't it helpful?</p>
+            {{ usersolution.notHelpfulLearningExp }}
+        </div>
+
+        <div class="evalFieldFlexBox">
+            <p>What is one learning experience that you would change? How would you change it?</p>
+            {{ usersolution.changeLearningExp }}
+        </div>
+
+        <div class="evalFieldFlexBox">
+            <p>Did you engage in any helpful learning experiences that were not included in the challenge guide? Please let us know what they were so that we can think about adding them.</p>
+            {{ usersolution.notIncludedLearningExp }}
+        </div>
+    </div>
     <h3>Previous examples of student work on related learning objectives:</h3>
     <ul class="previousExamples">
         {% for rubricLine in otherInstances %}

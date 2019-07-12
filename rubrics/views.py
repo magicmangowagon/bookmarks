@@ -56,6 +56,10 @@ class ChallengeCover(DetailView):
         return context
 
 
+# Murphy Page was the first TC user
+# July 12, 2019, they uploaded their solution for
+# Caregiver Engagement. Now we have users, so we should
+# probably fix this thing!
 class ChallengeDetail(FormView):
     template_name = 'rubrics/challenge_detail.html'
     model = Challenge
@@ -140,7 +144,9 @@ class SolutionDetailView(DetailView):
         thisSolution = UserSolution.objects.get(pk=self.kwargs['pk'])
         print(thisSolution)
         thisChallenge = thisSolution.challengeName
-
+        theselos = LearningObjective.objects.all().filter(challenge=thisChallenge)
+        theseLearningExpos = LearningExpoResponses.objects.all().filter(user=thisSolution.userOwner, learningExperience__learningObjectives__in=theselos)
+        context['theseLearningExpos'] = theseLearningExpos
         otherLOinstances = []
         theseLearningObjectives = LearningObjective.objects.all().filter(challenge=thisChallenge)
         usersRubricLines = RubricLine.objects.all().filter(student__userOwner=thisSolution.userOwner)
