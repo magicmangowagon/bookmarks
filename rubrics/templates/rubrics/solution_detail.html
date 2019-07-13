@@ -11,7 +11,9 @@
    <p>Link to solution: <a href="{{ usersolution.solution }}" target="_blank">{{ usersolution.solution }}</a></p>
 
                <p><a href="/solutionEval/{{ usersolution.id }}">Evaluation</a></p>
+    <h3>Framing the Feedback</h3>
     <div class="evalFieldFlexContainer">
+
         <div class="evalFieldFlexBox">
             <p>What's a good title for your work</p>
             {{ usersolution.goodTitle }}
@@ -51,7 +53,7 @@
             <p>Do you have any learning objectives of your own--in addition to those specified below--that you’d like the Observer to consider when they look at your work? If so, add them at the top of the Observation Form</p>
             {{ usersolution.personalLearningObjective }}
         </div>
-
+        <h3>Challenge Feedback</h3>
         <div class="learningExpoResponseFlex">
             {% for theseLearningExpos in theseLearningExpos  %}
                 <div class="learningExpoResponseBox">

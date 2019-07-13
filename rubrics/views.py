@@ -142,11 +142,13 @@ class SolutionDetailView(DetailView):
         context = super(SolutionDetailView, self).get_context_data(**kwargs)
         context['solution_list'] = UserSolution.objects.all()
         thisSolution = UserSolution.objects.get(pk=self.kwargs['pk'])
-        print(thisSolution)
         thisChallenge = thisSolution.challengeName
-        theselos = LearningObjective.objects.all().filter(challenge=thisChallenge)
-        theseLearningExpos = LearningExpoResponses.objects.all().filter(user=thisSolution.userOwner, learningExperience__learningObjectives__in=theselos)
+
+        theseles = LearningExperience.objects.all().filter(challenge=thisChallenge)
+        print(theseles)
+        theseLearningExpos = LearningExpoResponses.objects.all().filter(user=thisSolution.userOwner, learningExperience__in=theseles)
         context['theseLearningExpos'] = theseLearningExpos
+
         otherLOinstances = []
         theseLearningObjectives = LearningObjective.objects.all().filter(challenge=thisChallenge)
         usersRubricLines = RubricLine.objects.all().filter(student__userOwner=thisSolution.userOwner)
@@ -157,7 +159,6 @@ class SolutionDetailView(DetailView):
                     otherLOinstances.append(rubricLine)
 
         context['otherInstances'] = otherLOinstances
-        print(usersRubricLines.count())
         return context
 
         # Should pre-eval information go here?
