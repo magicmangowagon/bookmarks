@@ -46,10 +46,10 @@ Evaluate a Challenge
                 <ul>
                     {% if userRole == 4 or 2 %}
                         <li><label>{{ form.evidenceMissing.label }}</label>
-                            {{ form.evidencePresent }}</li>
+                            {{ form.evidenceMissing }}</li>
 
                         <li><label>{{ form.evidencePresent.label }}</label>
-                            {{ form.evidenceMissing }}</li>
+                            {{ form.evidencePresent }}</li>
                     {% endif %}
 
                     <li><label>{{ form.feedback.label }}</label>
