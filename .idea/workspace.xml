@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f9d2353c-1e9e-47b8-8190-35e7ab7af957" name="Default Changelist" comment="Added solution coversheet responses to solution/pre-evaluation detail view">
+    <list default="true" id="f9d2353c-1e9e-47b8-8190-35e7ab7af957" name="Default Changelist" comment="I reversed evidence present and evidence missing on upload form. Fixed now, &#10;will need to run a sql query to switch previously entered rubricLines">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/templates/rubrics/rubric_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/templates/rubrics/rubric_form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rubrics/templates/rubrics/evalDetail.html" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/templates/rubrics/evalDetail.html" afterDir="false" />
     </list>
     <ignored path="bookmarks/settings.py" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -116,19 +116,24 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/rubric_form.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="51" column="59" selection-start-line="51" selection-start-column="59" selection-end-line="51" selection-end-column="59" />
+            <state relative-caret-position="52">
+              <caret line="68" column="33" lean-forward="true" selection-start-line="68" selection-start-column="33" selection-end-line="68" selection-end-column="33" />
+              <folding>
+                <element signature="e#2626#2647#0#HTML" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/evalDetail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-234" />
+            <state relative-caret-position="390">
+              <caret line="30" column="140" selection-start-line="30" selection-start-column="140" selection-end-line="30" selection-end-column="140" />
+            </state>
           </provider>
         </entry>
       </file>
@@ -204,7 +209,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/rubrics/migrations/0004_remove_rubric_competencies.py" />
         <option value="$PROJECT_DIR$/rubrics/migrations/0006_rubricline_criteria.py" />
         <option value="$PROJECT_DIR$/rubrics/migrations/0007_remove_rubricline_criteria.py" />
         <option value="$PROJECT_DIR$/rubrics/migrations/0015_auto_20190311_1827.py" />
@@ -255,6 +259,7 @@
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/solution_detail.html" />
         <option value="$PROJECT_DIR$/rubrics/views.py" />
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/rubric_form.html" />
+        <option value="$PROJECT_DIR$/rubrics/templates/rubrics/evalDetail.html" />
       </list>
     </option>
   </component>
@@ -498,14 +503,7 @@
       <workItem from="1562767553677" duration="6413000" />
       <workItem from="1562777257850" duration="21761000" />
       <workItem from="1563029472729" duration="4799000" />
-      <workItem from="1563147615155" duration="857000" />
-    </task>
-    <task id="LOCAL-00152" summary="Adding customized field migration for userSolution model to repo">
-      <created>1556663049159</created>
-      <option name="number" value="00152" />
-      <option name="presentableId" value="LOCAL-00152" />
-      <option name="project" value="LOCAL" />
-      <updated>1556663049159</updated>
+      <workItem from="1563147615155" duration="1705000" />
     </task>
     <task id="LOCAL-00153" summary="Customization form appears to be working correcly. Need to play around &#10;with it and refactor the rubricLines view, it's a functional mess at the &#10;moment">
       <created>1556724285672</created>
@@ -843,11 +841,18 @@
       <option name="project" value="LOCAL" />
       <updated>1563034936135</updated>
     </task>
-    <option name="localTasksCounter" value="201" />
+    <task id="LOCAL-00201" summary="I reversed evidence present and evidence missing on upload form. Fixed now, &#10;will need to run a sql query to switch previously entered rubricLines">
+      <created>1563148610681</created>
+      <option name="number" value="00201" />
+      <option name="presentableId" value="LOCAL-00201" />
+      <option name="project" value="LOCAL" />
+      <updated>1563148610681</updated>
+    </task>
+    <option name="localTasksCounter" value="202" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="935357000" />
+    <option name="totallyTimeSpent" value="936205000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -969,7 +974,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Changed UserFileForm into a formset and broke it." />
     <MESSAGE value="Changed UserFileForm into a formset and it is now fixed. Changed solution&#10;field to a CharField. Need to change the form field labels." />
     <MESSAGE value="Cleaned up the CSS mess, unified the base template in bookmarks directory." />
     <MESSAGE value="Added tags with the Taggit extension. Currently displays on Challenge page.&#10;Hass been added to all non-TC generated models at the moment, though.&#10;Started a model for learning experiences." />
@@ -994,7 +998,8 @@
     <MESSAGE value="Changed submit to next on first rubric form page" />
     <MESSAGE value="Added solution coversheet responses to solution/pre-evaluation detail view" />
     <MESSAGE value="Fixed expo responses not showing up due to learning objectives&#10;not being mapped to them. Now they fill in based on learning experiences&#10;related to the challenge." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed expo responses not showing up due to learning objectives&#10;not being mapped to them. Now they fill in based on learning experiences&#10;related to the challenge." />
+    <MESSAGE value="I reversed evidence present and evidence missing on upload form. Fixed now, &#10;will need to run a sql query to switch previously entered rubricLines" />
+    <option name="LAST_COMMIT_MESSAGE" value="I reversed evidence present and evidence missing on upload form. Fixed now, &#10;will need to run a sql query to switch previously entered rubricLines" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/rubrics/migrations/__init__.py">
@@ -1355,15 +1360,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/evalDetail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-234" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/rubric_form.html">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="52">
+          <caret line="68" column="33" lean-forward="true" selection-start-line="68" selection-start-column="33" selection-end-line="68" selection-end-column="33" />
+          <folding>
+            <element signature="e#2626#2647#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/evalDetail.html">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
-          <caret line="51" column="59" selection-start-line="51" selection-start-column="59" selection-end-line="51" selection-end-column="59" />
+          <caret line="30" column="140" selection-start-line="30" selection-start-column="140" selection-end-line="30" selection-end-column="140" />
         </state>
       </provider>
     </entry>
