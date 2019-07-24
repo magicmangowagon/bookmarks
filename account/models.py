@@ -12,7 +12,7 @@ class Profile(models.Model):
     ADMIN = 4
     ROLE_CHOICES = (
         (TC, 'Teaching Candidate'),
-        (CLINICALSUPER, 'Clinical Supervisor'),
+        (CLINICALSUPER, 'Evaluator'),
         (COACH, 'Challenge Coach'),
         (ADMIN, 'Admin')
     )
@@ -23,7 +23,7 @@ class Profile(models.Model):
     role = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, null=True, blank=True, default=1)
 
     def __str__(self):
-        return 'Profile for user {}' .format(self.user.username)
+        return 'Profile for user {}' .format(self.user.name)
 
 
 @receiver(post_save, sender=User, dispatch_uid="something_here")

@@ -54,14 +54,15 @@
 
                 <h4>Degree of Implementation</h4>
                 <div class="circleField-container">
-                    {% for degree in degree %}
+                    {% for object in challengeCover.degreeImplementation %}
                         <div class="circleField">
-                            {% if degree.0 <= challengeCover.degreeImplementation %}
+                            {% if object == True %}
                                 <p>&#x25CD;<br>
-                                {{ degree.1 }}</p>
+                                {{ object.verbose_name }}</p>
                             {% else %}
                                 <p>&#9676;<br>
-                                {{ degree.1 }}</p>
+                                {{ object.verbose_name }}
+                                </p>
                             {% endif %}
                         </div>
                     {% endfor %}
@@ -69,29 +70,32 @@
 
                 <h4>Scale of Implementation</h4>
                 <div class="circleField-container">
-                    {% for scale in scale %}
+                    {% for object in challengeCover.scaleImplementation %}
                         <div class="circleField">
-                            {% if scale.0 <= challengeCover.scaleImplementation %}
+                            {% if object == True %}
                                 <p>&#x25CD;<br>
-                                {{ scale.1 }}</p>
+                                {{ object.verbose_name }}</p>
                             {% else %}
                                 <p>&#9676;<br>
-                                {{ scale.1 }}</p>
+                                {{ object.verbose_name }}
+                                </p>
                             {% endif %}
                         </div>
                     {% endfor %}
+                <p>Scale: </p>
                 </div>
 
                 <h4>Type of Implementation</h4>
                 <div class="circleField-container">
-                    {% for type in type %}
+                    {% for object in challengeCover.typeImplementation %}
                         <div class="circleField">
-                            {% if type.0 <= challengeCover.typeImplementation %}
+                            {% if object == True %}
                                 <p>&#x25CD;<br>
-                                {{ type.1 }}</p>
+                                {{ object.verbose_name }}</p>
                             {% else %}
                                 <p>&#9676;<br>
-                                {{ type.1 }}</p>
+                                {{ object.verbose_name }}
+                                </p>
                             {% endif %}
                         </div>
                     {% endfor %}

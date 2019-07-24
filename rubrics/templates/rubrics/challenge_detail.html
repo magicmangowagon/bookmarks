@@ -26,10 +26,6 @@
         {% endfor %}
     </ul>
 <div>
-    {% if submitted %}
-    <p>Solution successfully submitted</p>
-
-    {% else %}
         <h2>Link to Solution</h2>
         <form action="" method="post" enctype="multipart/form-data">
 
@@ -37,12 +33,13 @@
 
             
                 {% for form in form %}
-                    <p>{{ form.userOwner }}{{ form.challengeName }}</p>
+                <p>{{ form.userOwner }}{{ form.challengeName }}</p>
                     <p>
                         <label>{{ form.solution.label }}</label>
                         {{ form.solution }}
                     </p>
                     <h3>Framing the Feedback</h3>
+                    <p>{{ form.errors }}</p>
                     <label>{{ form.goodTitle.label }}</label>
                     <p>{{ form.goodTitle }}</p>
 
@@ -74,7 +71,6 @@
                             <li class="learningExpoResponseBox">
                             <p id="learnExpo{{ LearningExpoResponses.learningExperience.auto_id }}"> </p>
                             <span style="display: none">{{ LearningExpoResponses.learningExperience }}</span>
-
                             <p>{{ LearningExpoResponses.user }}</p>
 
                             <p>{{ LearningExpoResponses.learningExperienceResponse }}</p>
@@ -109,16 +105,7 @@
         {% csrf_token %}
 
         </form>
-        <p>{{ form.non_field_errors }}</p>
-        <p>{{ feedbackForm.non_field_errors }}</p>
-        {% if feedbackForm.errors %}
-            {% for field in form %}
-                {% for error in field.errors %}
-                    <p> {{ error }} </p>
-                {% endfor %}
-            {% endfor %}
-        {% endif %}
-    {% endif %}
+
 </div>
 
 {% endblock %}

@@ -62,6 +62,7 @@ class LearningObjective(models.Model):
 # Works as the main/only way to organize learningObjectives and therefore rubricLines for TC completion.
 # This is how users do things
 
+
 class Challenge(models.Model):
 
     name = models.CharField(max_length=250)
@@ -86,16 +87,25 @@ class Challenge(models.Model):
         choices=group,
         default=''
     )
-    DESIGN = 1
-    SIMULATE = 2
-    IMPLEMENT = 3
-    ONEONONE = 1
-    SMALLGROUP = 2
-    FULLCLASS = 3
-    REFLECTION = 1
-    CLASSROOMEVIDENCE = 2
-    OBSERVATION = 3
+    DESIGN = models.BooleanField('Design', default=False)
+    SIMULATE = models.BooleanField('Simulate', default=False)
+    IMPLEMENT = models.BooleanField('Implement', default=False)
 
+    degreeImplementation = [DESIGN, SIMULATE, IMPLEMENT]
+
+    ONEONONE = models.BooleanField('One on One', default=False)
+    SMALLGROUP = models.BooleanField('Small Group', default=False)
+    FULLCLASS = models.BooleanField('Full Class', default=False)
+
+    scaleImplementation = [ONEONONE, SMALLGROUP, FULLCLASS]
+
+    REFLECTION = models.BooleanField('Reflection', default=False)
+    CLASSROOMEVIDENCE = models.BooleanField('Classroom Evidence', default=False)
+    OBSERVATION = models.BooleanField('Observation', default=False)
+
+    typeImplementation = [REFLECTION, CLASSROOMEVIDENCE, OBSERVATION]
+
+    '''
     degree = (
         (DESIGN, 'Design'),
         (SIMULATE, 'Simulate'),
@@ -111,10 +121,10 @@ class Challenge(models.Model):
         (CLASSROOMEVIDENCE, 'Classroom Evidence'),
         (OBSERVATION, 'Observation'),
     )
-
-    degreeImplementation = models.IntegerField('Degree of Implementation', choices=degree, default=DESIGN)
-    scaleImplementation = models.IntegerField('Scale of Implementation', choices=scale, default=ONEONONE)
-    typeImplementation = models.IntegerField('Type of Implementation', choices=type, default=REFLECTION)
+    '''
+    # degreeImplementation = models.BooleanField('Degree of Implementation', choices=degree, default=DESIGN)
+    # scaleImplementation = models.BooleanField('Scale of Implementation', choices=scale, default=ONEONONE)
+    # typeImplementation = models.BooleanField('Type of Implementation', choices=type, default=REFLECTION)
 
     learningObjs = models.ManyToManyField(LearningObjective, blank=True, related_name="challenge")
     tags = TaggableManager(blank=True)

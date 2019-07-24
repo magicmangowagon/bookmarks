@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, render_to_response
 from django import forms
 from django.http import HttpResponseRedirect
 from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion, CriteriaLine, \
@@ -11,7 +11,6 @@ from django.views.generic.edit import FormMixin
 from django.urls import reverse
 from django.forms import modelformset_factory
 from django.contrib import messages
-from django.shortcuts import redirect
 from django.contrib.auth.models import User, Group
 from .functions import process_rubricLine, assess_competency_done, custom_rubric_producer
 
@@ -38,6 +37,10 @@ class ChallengeCover(DetailView):
                         theseComps.append(competency)
         context['competencies'] = theseComps
 
+        print(challengeCover.degreeImplementation[0])
+        print(challengeCover.DESIGN)
+        print(len(challengeCover.degreeImplementation))
+        '''
         degree = challengeCover.degree
         context['degree'] = degree
 
@@ -46,6 +49,8 @@ class ChallengeCover(DetailView):
 
         type = challengeCover.type
         context['type'] = type
+        '''
+
         try:
             relatedLearningExperiences = LearningExperience.objects.all().filter(challenge=challengeCover).order_by('index')
             context['next'] = relatedLearningExperiences.first().pk
@@ -115,23 +120,24 @@ class ChallengeDetail(FormView):
 
     def post(self, request, *args, **kwargs):
         # self.object = self.get_object()
-        form = UserFileFormset(request.POST, prefix='user')
-        expoForm = LearningExpoFeedbackFormset(request.POST, prefix='expo')
-        if form.is_valid() and expoForm.is_valid():
-            form.save()
-            expoForm.save()
-            return redirect('success', self.kwargs['pk'])
+        if request.method == 'POST':
+            form = UserFileFormset(request.POST, prefix='user')
+            expoForm = LearningExpoFeedbackFormset(request.POST, prefix='expo')
+
+            if form.is_valid() and expoForm.is_valid():
+                form.save()
+                expoForm.save()
+                return redirect('success', self.kwargs['pk'])
+            else:
+                print(form.errors)
         else:
-            messages.error(request, "Error")
-            print(messages.error(request, "Error"))
-            print("Form invalid")
-            return self.render_to_response(self.get_context_data(formset=form))
+            form = UserFileFormset(prefix='user')
+            expoForm = LearningExpoFeedbackFormset(prefix='expo')
+        challenge = Challenge.objects.get(pk=self.kwargs['pk'])
+        learningObjectives_list = LearningObjective.objects.all().filter(challenge=challenge)
 
-    def form_valid(self, formset):
-        formset.save()
-
-    def form_invalid(self, form):
-        print("Error")
+        context = {'form': form, 'feedbackForm': expoForm, 'challenge': challenge, 'learningObjectives_list': learningObjectives_list}
+        return render(request, self.get_template_names(), context)
 
 
 class SolutionDetailView(DetailView):
@@ -364,14 +370,16 @@ class RubricFormView(FormView):
 
         else:
             messages.error(request, "Error")
-            return self.render_to_response(self.get_context_data(formset=formset))
-
+            content = {'formset': formset}
+            return render(request, 'rubrics/rubric_form.html', content)
+            # return self.render_to_response(self.get_context_data(formset=formset))
+    '''
     def form_valid(self, formset):
         formset.save()
 
     def form_invalid(self, form):
         print("Error")
-
+    '''
 
 class LearningExperienceView(DetailView):
     template_name = 'rubrics/learningExperience.html'

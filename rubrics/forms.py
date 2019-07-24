@@ -80,7 +80,8 @@ class LearningExpoFeedbackForm(BaseModelFormSet):
 
 UserFileFormset = modelformset_factory(UserSolution, formset=UserFileForm, fields=('userOwner', 'challengeName', 'solution',
     'goodTitle', 'workFit', 'proudDetail', 'hardDetail', 'objectiveWell', 'objectivePoor', 'personalLearningObjective',
-   'helpfulLearningExp', 'notHelpfulLearningExp', 'changeLearningExp', 'notIncludedLearningExp'))
+   'helpfulLearningExp', 'notHelpfulLearningExp', 'changeLearningExp', 'notIncludedLearningExp'),
+                                       widgets={'challengeName': forms.HiddenInput(), 'userOwner': forms.HiddenInput})
 
 
 CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, fields=('achievement', 'criteria',
@@ -104,4 +105,4 @@ LearningExperienceFormset = modelformset_factory(LearningExperience, formset=Lea
 
 
 LearningExpoFeedbackFormset = modelformset_factory(LearningExpoResponses, formset=LearningExpoFeedbackForm, fields=(
-    'learningExperienceResponse', 'learningExperience', 'user'))
+    'learningExperienceResponse', 'learningExperience', 'user'), widgets={'user': forms.HiddenInput()})
