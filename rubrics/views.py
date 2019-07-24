@@ -370,16 +370,12 @@ class RubricFormView(FormView):
 
         else:
             messages.error(request, "Error")
-            content = {'formset': formset}
+            challenge = UserSolution.objects.get(pk=self.kwargs['pk']).challengeName
+            student = formset.student
+            content = {'formset': formset, 'critFormset': critFormset, 'challenge': challenge, 'student': student}
             return render(request, 'rubrics/rubric_form.html', content)
             # return self.render_to_response(self.get_context_data(formset=formset))
-    '''
-    def form_valid(self, formset):
-        formset.save()
 
-    def form_invalid(self, form):
-        print("Error")
-    '''
 
 class LearningExperienceView(DetailView):
     template_name = 'rubrics/learningExperience.html'
@@ -413,7 +409,6 @@ class LearningExperienceCreator(FormView):
     template_name = 'rubrics/learningExperienceCreator.html'
     model = LearningExperience
     form_class = LearningExperienceFormset
-    # success_url = '/'
 
     def get_context_data(self, **kwargs):
         context = super(LearningExperienceCreator, self).get_context_data(**kwargs)

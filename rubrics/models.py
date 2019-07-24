@@ -52,10 +52,6 @@ class LearningObjective(models.Model):
         fullname = str(self.compGroup) + "-" + str(self.compNumber) + "." + str(self.loNumber) + " " + str(self.name)
         return fullname
 
-#____________________
-#CHALLENGE COVER PAGE
-# New model of challenges, linear structure
-
 
 # __________
 # CHALLENGES
@@ -301,6 +297,7 @@ class CriteriaLine(models.Model):
     B = 'B'
     C = 'C'
     groupLetter = (
+        ('0', "--"),
         ('A', "Yes"),
         ('B', "No"),
         ('C', "Evidence for and against")
