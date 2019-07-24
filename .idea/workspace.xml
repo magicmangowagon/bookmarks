@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f9d2353c-1e9e-47b8-8190-35e7ab7af957" name="Default Changelist" comment="">
+    <list default="true" id="f9d2353c-1e9e-47b8-8190-35e7ab7af957" name="Default Changelist" comment="Changed criteria dropdown on rubric form, now has a blank default. Stores a '0' if user forgets to check it.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/account/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/account/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/templates/rubrics/challenge_cover.html" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/templates/rubrics/challenge_cover.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/templates/rubrics/challenge_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/templates/rubrics/challenge_detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/templates/rubrics/rubric_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/templates/rubrics/rubric_form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/views.py" afterDir="false" />
     </list>
     <ignored path="bookmarks/settings.py" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -99,8 +92,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="974">
-              <caret line="137" lean-forward="true" selection-start-line="137" selection-end-line="137" />
+            <state relative-caret-position="650">
+              <caret line="58" column="42" lean-forward="true" selection-start-line="58" selection-start-column="42" selection-end-line="58" selection-end-column="42" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -109,22 +102,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/rubrics/forms.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="364">
-              <caret line="104" lean-forward="true" selection-start-line="104" selection-end-line="104" />
-              <folding>
-                <element signature="e#0#24#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2314">
-              <caret line="92" selection-start-line="92" selection-end-line="92" />
+            <state relative-caret-position="-858">
+              <caret line="63" column="43" lean-forward="true" selection-start-line="63" selection-start-column="43" selection-end-line="63" selection-end-column="43" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -135,8 +116,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/challenge_cover.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2184">
-              <caret line="84" column="26" selection-start-line="84" selection-start-column="26" selection-end-line="84" selection-end-column="26" />
+            <state relative-caret-position="182">
+              <caret line="75" column="47" lean-forward="true" selection-start-line="75" selection-start-column="47" selection-end-line="75" selection-end-column="47" />
             </state>
           </provider>
         </entry>
@@ -144,8 +125,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/challenge_detail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="468">
+            <state relative-caret-position="1638">
               <caret line="78" column="36" lean-forward="true" selection-start-line="78" selection-start-column="36" selection-end-line="78" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/rubric_form.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="468">
+              <caret line="18" selection-start-line="18" selection-end-line="18" />
             </state>
           </provider>
         </entry>
@@ -258,12 +248,12 @@
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/solution_detail.html" />
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/evalDetail.html" />
         <option value="$PROJECT_DIR$/account/models.py" />
-        <option value="$PROJECT_DIR$/rubrics/models.py" />
-        <option value="$PROJECT_DIR$/rubrics/templates/rubrics/challenge_cover.html" />
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/rubric_form.html" />
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/challenge_detail.html" />
-        <option value="$PROJECT_DIR$/rubrics/views.py" />
         <option value="$PROJECT_DIR$/rubrics/forms.py" />
+        <option value="$PROJECT_DIR$/rubrics/views.py" />
+        <option value="$PROJECT_DIR$/rubrics/templates/rubrics/challenge_cover.html" />
+        <option value="$PROJECT_DIR$/rubrics/models.py" />
       </list>
     </option>
   </component>
@@ -301,6 +291,19 @@
             <path>
               <item name="bookmarks" type="b2602c69:ProjectViewProjectNode" />
               <item name="bookmarks" type="462c0819:PsiDirectoryNode" />
+              <item name="rubrics" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bookmarks" type="b2602c69:ProjectViewProjectNode" />
+              <item name="bookmarks" type="462c0819:PsiDirectoryNode" />
+              <item name="rubrics" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bookmarks" type="b2602c69:ProjectViewProjectNode" />
+              <item name="bookmarks" type="462c0819:PsiDirectoryNode" />
+              <item name="rubrics" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="rubrics" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -496,28 +499,7 @@
       <workItem from="1563147615155" duration="4668000" />
       <workItem from="1563809036979" duration="17902000" />
       <workItem from="1563894479362" duration="3542000" />
-      <workItem from="1563978866082" duration="15895000" />
-    </task>
-    <task id="LOCAL-00157" summary="Pre-evaluation view skeleton in place, add some logic!">
-      <created>1557346321475</created>
-      <option name="number" value="00157" />
-      <option name="presentableId" value="LOCAL-00157" />
-      <option name="project" value="LOCAL" />
-      <updated>1557346321475</updated>
-    </task>
-    <task id="LOCAL-00158" summary="Adding customized field migration for userSolution model to repo">
-      <created>1557346342033</created>
-      <option name="number" value="00158" />
-      <option name="presentableId" value="LOCAL-00158" />
-      <option name="project" value="LOCAL" />
-      <updated>1557346342033</updated>
-    </task>
-    <task id="LOCAL-00159" summary="Adding feedback frame model, form incoming. Will replace user solution&#10;upload page.">
-      <created>1558536047414</created>
-      <option name="number" value="00159" />
-      <option name="presentableId" value="LOCAL-00159" />
-      <option name="project" value="LOCAL" />
-      <updated>1558536047415</updated>
+      <workItem from="1563978866082" duration="18708000" />
     </task>
     <task id="LOCAL-00160" summary="Adding feedback frame model, form incoming. Will replace user solution&#10;upload page.">
       <created>1558536064907</created>
@@ -841,11 +823,32 @@
       <option name="project" value="LOCAL" />
       <updated>1563811690581</updated>
     </task>
-    <option name="localTasksCounter" value="206" />
+    <task id="LOCAL-00206" summary="Fixed the piece of shit user form, now shows error message when&#10;required fields aren't filled in.">
+      <created>1563999096369</created>
+      <option name="number" value="00206" />
+      <option name="presentableId" value="LOCAL-00206" />
+      <option name="project" value="LOCAL" />
+      <updated>1563999096369</updated>
+    </task>
+    <task id="LOCAL-00207" summary="Changed criteria dropdown on rubric form, now has a blank default. Stores a '0' if user forgets to check it.">
+      <created>1564001623806</created>
+      <option name="number" value="00207" />
+      <option name="presentableId" value="LOCAL-00207" />
+      <option name="project" value="LOCAL" />
+      <updated>1564001623806</updated>
+    </task>
+    <task id="LOCAL-00208" summary="Changed criteria dropdown on rubric form, now has a blank default. Stores a '0' if user forgets to check it.">
+      <created>1564001640344</created>
+      <option name="number" value="00208" />
+      <option name="presentableId" value="LOCAL-00208" />
+      <option name="project" value="LOCAL" />
+      <updated>1564001640344</updated>
+    </task>
+    <option name="localTasksCounter" value="209" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="976507000" />
+    <option name="totallyTimeSpent" value="979320000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -862,7 +865,7 @@
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="1" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="2" weight="0.21943231" />
+      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.14925373" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32887402" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32552955" />
@@ -874,7 +877,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49848944" weight="0.32827735" />
       <window_info anchor="bottom" id="Database Changes" order="9" weight="0.32896176" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50852877" side_tool="true" weight="0.22643554" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.4914712" visible="true" weight="0.30546266" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.4914712" visible="true" weight="0.30546266" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.49924472" weight="0.32887402" />
       <window_info anchor="bottom" id="Database Console" order="13" sideWeight="0.49848944" weight="0.32954547" />
       <window_info anchor="bottom" id="SQL Generator" order="14" weight="0.32896176" />
@@ -967,8 +970,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Finished the new solution upload form, need to restyle it as per Juliannas&#10;suggestion." />
-    <MESSAGE value="Started user facing view for learning experiences (user as in admin view, to create an LE)" />
     <MESSAGE value="Created super basic form for creating learning experiences." />
     <MESSAGE value="Created super basic form for creating learning experiences. Added view for &#10;created learning experiences." />
     <MESSAGE value="Added feedback matrix to solution cover sheet." />
@@ -992,7 +993,9 @@
     <MESSAGE value="Removed completion level from eval detail form" />
     <MESSAGE value="Removed completion level from eval detail form, and completeness in final eval view" />
     <MESSAGE value="made new users TC's by default" />
-    <option name="LAST_COMMIT_MESSAGE" value="made new users TC's by default" />
+    <MESSAGE value="Fixed the piece of shit user form, now shows error message when&#10;required fields aren't filled in." />
+    <MESSAGE value="Changed criteria dropdown on rubric form, now has a blank default. Stores a '0' if user forgets to check it." />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed criteria dropdown on rubric form, now has a blank default. Stores a '0' if user forgets to check it." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/rubrics/migrations/__init__.py">
@@ -1309,13 +1312,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/rubric_form.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/account/templates/account/dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="442">
@@ -1323,46 +1319,53 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/models.py">
+    <entry file="file://$PROJECT_DIR$/rubrics/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2314">
-          <caret line="92" selection-start-line="92" selection-end-line="92" />
+        <state relative-caret-position="130">
+          <caret line="86" column="110" lean-forward="true" selection-start-line="86" selection-start-column="110" selection-end-line="86" selection-end-column="110" />
           <folding>
-            <element signature="e#0#28#0" expanded="true" />
+            <element signature="e#0#24#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/challenge_cover.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2184">
-          <caret line="84" column="26" selection-start-line="84" selection-start-column="26" selection-end-line="84" selection-end-column="26" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/challenge_detail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
+        <state relative-caret-position="1638">
           <caret line="78" column="36" lean-forward="true" selection-start-line="78" selection-start-column="36" selection-end-line="78" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/rubric_form.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="468">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/challenge_cover.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="75" column="47" lean-forward="true" selection-start-line="75" selection-start-column="47" selection-end-line="75" selection-end-column="47" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="974">
-          <caret line="137" lean-forward="true" selection-start-line="137" selection-end-line="137" />
+        <state relative-caret-position="650">
+          <caret line="58" column="42" lean-forward="true" selection-start-line="58" selection-start-column="42" selection-end-line="58" selection-end-column="42" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/forms.py">
+    <entry file="file://$PROJECT_DIR$/rubrics/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="104" lean-forward="true" selection-start-line="104" selection-end-line="104" />
+        <state relative-caret-position="-858">
+          <caret line="63" column="43" lean-forward="true" selection-start-line="63" selection-start-column="43" selection-end-line="63" selection-end-column="43" />
           <folding>
-            <element signature="e#0#24#0" expanded="true" />
+            <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>
