@@ -202,6 +202,15 @@ class Criterion(models.Model):
         return self.name
 
 
+# ___________
+# Evaluated
+# Many to many model to hold user solution, who evaluated it, and when
+
+class Evaluated(models.Model):
+    whoEvaluated = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
+    date = models.DateTimeField()
+
+
 # _____________
 # USER SOLUTION
 # The connector of the TC submitted work with the admin defined objects.
@@ -225,6 +234,7 @@ class UserSolution(models.Model):
     changeLearningExp = models.TextField('What is one learning experience that you would change? How would you change it?', blank=True, default='')
     notIncludedLearningExp = models.TextField('Did you engage in any helpful learning experiences that were not included in the challenge guide? Please let us know what they were so that we can think about adding them.', blank=True, default='')
     customized = models.BooleanField(default=False)
+    evaluated = models.ManyToManyField(Evaluated, blank=True)
 
 
 # ___________
