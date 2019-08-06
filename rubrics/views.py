@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, render_to_response
+from datetime import date, datetime
 from django import forms
 from django.http import HttpResponseRedirect
 from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion, CriteriaLine, \
-    Competency, CompetencyProgress, ChallengeAddendum, LearningExperience, LearningExpoResponses
+    Competency, CompetencyProgress, ChallengeAddendum, LearningExperience, LearningExpoResponses, Evaluated
 from .forms import UserFileForm, UserFileFormset, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, \
     CriterionFormSet, CriteriaForm, CurrentStudentToView, RubricAddendumForm, RubricAddendumFormset, \
     LearningExperienceFormset, LearningExperienceForm, LearningExpoFeedbackForm, LearningExpoFeedbackFormset
@@ -363,9 +364,15 @@ class RubricFormView(FormView):
     def post(self, request, *args, **kwargs):
         formset = RubricLineFormset(request.POST, prefix='rubriclines')
         critFormset = CriterionFormSet(request.POST, prefix='criteria')
+        evaluated = Evaluated.objects.create(whoEvaluated=self.request.user, date=datetime.now())
+        userSolution = UserSolution.objects.get(pk=self.kwargs['pk'])
+        userSolution.evaluated.add(evaluated)
+        # userSolution.evaluated__whoEvaluated =
+
         if formset.is_valid() and critFormset.is_valid():
             formset.save()
             critFormset.save()
+            userSolution.save()
             return redirect('solution-end-eval', self.kwargs['pk'])
 
         else:
