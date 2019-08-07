@@ -340,7 +340,6 @@ class RubricFormView(FormView):
 
         # create new rubric, checked for rubricline objects from this challenge
         # and none existed, so queryset is none and extra forms is set to LO count
-
         else:
             RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=loCount, fields=(
                 'ignore', 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel',
@@ -367,7 +366,6 @@ class RubricFormView(FormView):
         evaluated = Evaluated.objects.create(whoEvaluated=self.request.user, date=datetime.now())
         userSolution = UserSolution.objects.get(pk=self.kwargs['pk'])
         userSolution.evaluated.add(evaluated)
-        # userSolution.evaluated__whoEvaluated =
 
         if formset.is_valid() and critFormset.is_valid():
             formset.save()
