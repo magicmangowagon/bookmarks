@@ -36,8 +36,6 @@ class Profile(models.Model):
     subjectMatter = models.PositiveIntegerField(choices=SUBJECT_MATTER_CHOICES, null=True, blank=True, default=0)
 
 
-
-
 @receiver(post_save, sender=User, dispatch_uid="something_here")
 def create_profile(sender, **kwargs):
     if kwargs.get('created', False):

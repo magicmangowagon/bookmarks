@@ -91,11 +91,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/rubrics/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="55">
-              <caret line="351" column="7" selection-start-line="351" selection-start-column="7" selection-end-line="351" selection-end-column="7" />
+            <state relative-caret-position="81">
+              <caret line="301" column="44" lean-forward="true" selection-start-line="301" selection-start-column="44" selection-end-line="301" selection-end-column="44" />
               <folding>
                 <element signature="e#0#65#0" expanded="true" />
               </folding>
@@ -103,11 +103,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/account/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="416">
-              <caret line="37" column="4" selection-start-line="37" selection-start-column="4" selection-end-line="37" selection-end-column="4" />
+            <state relative-caret-position="272">
+              <caret line="36" selection-start-line="36" selection-end-line="36" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -251,8 +251,8 @@
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/challenge_detail.html" />
         <option value="$PROJECT_DIR$/rubrics/models.py" />
         <option value="$PROJECT_DIR$/rubrics/admin.py" />
-        <option value="$PROJECT_DIR$/rubrics/views.py" />
         <option value="$PROJECT_DIR$/account/models.py" />
+        <option value="$PROJECT_DIR$/rubrics/views.py" />
       </list>
     </option>
   </component>
@@ -262,11 +262,10 @@
     <other-services-enabled>true</other-services-enabled>
     <auto-save>true</auto-save>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1096" />
+    <option name="width" value="1138" />
+    <option name="height" value="1048" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -499,21 +498,7 @@
       <workItem from="1565016304488" duration="1206000" />
       <workItem from="1565027965587" duration="1198000" />
       <workItem from="1565111890236" duration="5071000" />
-      <workItem from="1565192384247" duration="2724000" />
-    </task>
-    <task id="LOCAL-00163" summary="Changed UserFileForm into a formset and it is now fixed. Changed solution&#10;field to a CharField. Need to change the form field labels.">
-      <created>1558574281728</created>
-      <option name="number" value="00163" />
-      <option name="presentableId" value="LOCAL-00163" />
-      <option name="project" value="LOCAL" />
-      <updated>1558574281728</updated>
-    </task>
-    <task id="LOCAL-00164" summary="Changed UserFileForm into a formset and it is now fixed. Changed solution&#10;field to a CharField. Need to change the form field labels.">
-      <created>1558632227780</created>
-      <option name="number" value="00164" />
-      <option name="presentableId" value="LOCAL-00164" />
-      <option name="project" value="LOCAL" />
-      <updated>1558632227781</updated>
+      <workItem from="1565192384247" duration="4883000" />
     </task>
     <task id="LOCAL-00165" summary="Cleaned up the CSS mess, unified the base template in bookmarks directory.">
       <created>1558649342728</created>
@@ -844,11 +829,25 @@
       <option name="project" value="LOCAL" />
       <updated>1565125128259</updated>
     </task>
-    <option name="localTasksCounter" value="212" />
+    <task id="LOCAL-00212" summary="added subject matter to profile field in preparation for refactoring &#10;the way challenges solutions are reported to evaluators and coaches">
+      <created>1565198819660</created>
+      <option name="number" value="00212" />
+      <option name="presentableId" value="LOCAL-00212" />
+      <option name="project" value="LOCAL" />
+      <updated>1565198819660</updated>
+    </task>
+    <task id="LOCAL-00213" summary="added subject matter to profile field in preparation for refactoring &#10;the way challenges solutions are reported to evaluators and coaches">
+      <created>1565198837420</created>
+      <option name="number" value="00213" />
+      <option name="presentableId" value="LOCAL-00213" />
+      <option name="project" value="LOCAL" />
+      <updated>1565198837420</updated>
+    </task>
+    <option name="localTasksCounter" value="214" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="998565000" />
+    <option name="totallyTimeSpent" value="1000724000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -860,12 +859,12 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="0" width="1138" height="1048" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="1" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="2" visible="true" weight="0.16204691" />
+      <window_info content_ui="combo" id="Project" order="2" weight="0.33187774" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32887402" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32552955" />
@@ -877,7 +876,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49848944" weight="0.32827735" />
       <window_info anchor="bottom" id="Database Changes" order="9" weight="0.32896176" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50852877" side_tool="true" weight="0.22643554" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.4914712" visible="true" weight="0.30546266" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.4914712" visible="true" weight="0.30821148" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.49924472" weight="0.32887402" />
       <window_info anchor="bottom" id="Database Console" order="13" sideWeight="0.49848944" weight="0.32954547" />
       <window_info anchor="bottom" id="SQL Generator" order="14" weight="0.32896176" />
@@ -970,7 +969,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Added feedback matrix to solution cover sheet." />
     <MESSAGE value="Halfway done with new challenge cover sheet." />
     <MESSAGE value="Fixed the fucking learning expo form, I had left out the solution field on the form if a solution instance existed, like an idiot." />
     <MESSAGE value="Fixed the solution bounds form, now stores ints properly with a string description." />
@@ -995,7 +993,8 @@
     <MESSAGE value="Changed criteria dropdown on rubric form, now has a blank default. Stores a '0' if user forgets to check it." />
     <MESSAGE value="Added a new model to track evaluators and access dates on userSolutions" />
     <MESSAGE value="New model is working, saves on post, which should be good because we want every instance of when an evaluator looked at a usersolution, not just the first time." />
-    <option name="LAST_COMMIT_MESSAGE" value="New model is working, saves on post, which should be good because we want every instance of when an evaluator looked at a usersolution, not just the first time." />
+    <MESSAGE value="added subject matter to profile field in preparation for refactoring &#10;the way challenges solutions are reported to evaluators and coaches" />
+    <option name="LAST_COMMIT_MESSAGE" value="added subject matter to profile field in preparation for refactoring &#10;the way challenges solutions are reported to evaluators and coaches" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/rubrics/migrations/0038_auto_20190603_1500.py">
@@ -1356,22 +1355,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/views.py">
+    <entry file="file://$PROJECT_DIR$/account/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="55">
-          <caret line="351" column="7" selection-start-line="351" selection-start-column="7" selection-end-line="351" selection-end-column="7" />
+        <state relative-caret-position="272">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
           <folding>
-            <element signature="e#0#65#0" expanded="true" />
+            <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/account/models.py">
+    <entry file="file://$PROJECT_DIR$/rubrics/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
-          <caret line="37" column="4" selection-start-line="37" selection-start-column="4" selection-end-line="37" selection-end-column="4" />
+        <state relative-caret-position="81">
+          <caret line="301" column="44" lean-forward="true" selection-start-line="301" selection-start-column="44" selection-end-line="301" selection-end-column="44" />
           <folding>
-            <element signature="e#0#28#0" expanded="true" />
+            <element signature="e#0#65#0" expanded="true" />
           </folding>
         </state>
       </provider>
