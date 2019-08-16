@@ -141,7 +141,7 @@ class LearningExperience(models.Model):
     tags = TaggableManager(blank=True)
 
     class Meta:
-        order_with_respect_to = 'challenge'
+        ordering = ['challenge', ]
 
     def __str__(self):
         return self.name
@@ -267,7 +267,6 @@ class LearningExpoResponses(models.Model):
 # Evaluator submitted response to learningObjectives
 
 class RubricLine(models.Model):
-
     evidenceMissing = models.TextField(blank=True, default='')
     evidencePresent = models.TextField(blank=True, default='')
     feedback = models.TextField(blank=True, default='')
@@ -292,6 +291,16 @@ class RubricLine(models.Model):
     def __str__(self):
         name = self.student.userOwner.__str__() + self.learningObjective.name.__str__()
         return name
+
+
+# ____________
+# COACH REVIEW
+# Coach reviews submitted rublines from evaluator, releases them for review with TC and
+# adds comments as needed
+
+class CoachReview(models.Model):
+    rubricLine = models.ForeignKey(RubricLine, on_delete=models.CASCADE)
+    release = models.BooleanField(default=False)
 
 
 # _____________
