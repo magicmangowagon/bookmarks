@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 from .views import ChallengeDetail, ChallengeListView, SolutionDetailView, SolutionListView, RubricFormView, \
     EvalDetailView, EvalListView, RubricFinalFormView, CompetencyView, RubricAddendum, PreEvaluationUpdate, \
-    LearningExperienceCreator, LearningExperienceView, ChallengeCover
+    LearningExperienceCreator, LearningExperienceView, ChallengeCover, CoachingReviewView
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
@@ -23,6 +23,6 @@ urlpatterns = [
     path('preevaluation/<int:pk>', login_required(PreEvaluationUpdate.as_view()), name='pre-evaluation'),
     path('learningExperienceEdit/<int:pk>', LearningExperienceCreator.as_view(), name='learningExperienceEdit'),
     path('learningExperience/<int:pk>', LearningExperienceView.as_view(), name='learningExperience'),
-
+    path('coachingreview/<int:pk>', CoachingReviewView.as_view(), name='coachingReview'),
     # path('edit/', views.edit, name='edit'),
 ]

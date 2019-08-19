@@ -301,7 +301,7 @@ class RubricLine(models.Model):
 class CoachReview(models.Model):
     rubricLine = models.ForeignKey(RubricLine, on_delete=models.CASCADE)
     release = models.BooleanField(default=False)
-
+    comment = models.TextField(blank=True, default='', max_length=None)
 
 # _____________
 # CRITERIA LINE

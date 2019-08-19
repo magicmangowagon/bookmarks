@@ -3,7 +3,7 @@ from datetime import date, datetime
 from django import forms
 from django.http import HttpResponseRedirect
 from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion, CriteriaLine, \
-    Competency, CompetencyProgress, ChallengeAddendum, LearningExperience, LearningExpoResponses, Evaluated
+    Competency, CompetencyProgress, ChallengeAddendum, LearningExperience, LearningExpoResponses, Evaluated, CoachReview
 from .forms import UserFileForm, UserFileFormset, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, \
     CriterionFormSet, CriteriaForm, CurrentStudentToView, RubricAddendumForm, RubricAddendumFormset, \
     LearningExperienceFormset, LearningExperienceForm, LearningExpoFeedbackForm, LearningExpoFeedbackFormset
@@ -382,6 +382,11 @@ class RubricFormView(FormView):
             content = {'formset': formset, 'critFormset': critFormset, 'challenge': challenge, 'student': student}
             return render(request, 'rubrics/rubric_form.html', content)
             # return self.render_to_response(self.get_context_data(formset=formset))
+
+
+class CoachingReviewView(ListView):
+    template_name = 'rubrics/coachingreview.html'
+    model = CoachReview
 
 
 class LearningExperienceView(DetailView):
