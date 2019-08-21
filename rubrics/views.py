@@ -6,7 +6,8 @@ from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjecti
     Competency, CompetencyProgress, ChallengeAddendum, LearningExperience, LearningExpoResponses, Evaluated, CoachReview
 from .forms import UserFileForm, UserFileFormset, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, \
     CriterionFormSet, CriteriaForm, CurrentStudentToView, RubricAddendumForm, RubricAddendumFormset, \
-    LearningExperienceFormset, LearningExperienceForm, LearningExpoFeedbackForm, LearningExpoFeedbackFormset
+    LearningExperienceFormset, LearningExperienceForm, LearningExpoFeedbackForm, LearningExpoFeedbackFormset, \
+    CoachReviewForm, CoachReviewFormset
 from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
@@ -384,9 +385,11 @@ class RubricFormView(FormView):
             # return self.render_to_response(self.get_context_data(formset=formset))
 
 
-class CoachingReviewView(ListView):
+# Check user role on dashboard, use the pk on those links to load up this view with that user solution
+class CoachingReviewView(FormView):
     template_name = 'rubrics/coachingreview.html'
     model = CoachReview
+    form_class = CoachReviewFormset
 
 
 class LearningExperienceView(DetailView):
@@ -487,6 +490,14 @@ class EvalListView(ListView):
         if profile.role == 4:
             queryset = UserSolution.objects.all()
             return queryset
+
+        if profile.role == 3:
+
+            group = self.request.user.groups.all()
+            print(group)
+            queryset = UserSolution.objects.filter(userOwner__groups__in=group)
+            return queryset
+
         else:
             queryset = UserSolution.objects.filter(userOwner=self.request.user)
             return queryset

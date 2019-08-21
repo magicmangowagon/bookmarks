@@ -1,10 +1,8 @@
 from django import forms
-from django.contrib.admin.widgets import FilteredSelectMultiple
-from django.forms import modelformset_factory, ModelForm, BaseModelFormSet, inlineformset_factory
-from .models import LearningObjective, Challenge, UserSolution, Rubric, RubricLine, CriteriaLine, Criterion, ChallengeAddendum, LearningExperience, LearningExpoResponses
-from django.views.generic import DetailView
+from django.forms import modelformset_factory, BaseModelFormSet
+from .models import Challenge, UserSolution, Rubric, RubricLine, CriteriaLine, \
+    ChallengeAddendum, LearningExperience, LearningExpoResponses, CoachReview
 from django.contrib.auth.models import User
-from account.models import Profile
 
 
 class ChallengeForm(forms.ModelForm):
@@ -76,6 +74,15 @@ class LearningExpoFeedbackForm(BaseModelFormSet):
 
     class Meta:
         widgets = {'user': forms.HiddenInput()}
+
+
+class CoachReviewForm(BaseModelFormSet):
+    def __index__(self, *args, **kwargs):
+        super(CoachReviewForm, self).__init__(*args, **kwargs)
+
+
+CoachReviewFormset = modelformset_factory(CoachReview, formset=CoachReviewForm, fields=('rubricLine', 'comment', 'release'),
+                                          widgets={'rubricLine': forms.HiddenInput()})
 
 
 UserFileFormset = modelformset_factory(UserSolution, formset=UserFileForm, fields=('userOwner', 'challengeName', 'solution',
