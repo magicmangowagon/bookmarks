@@ -194,6 +194,7 @@ class SolutionListView(ListView):
 
     def get_queryset(self):
         profile = self.request.user.profile
+
         # groupName = self.request.user.groups('name')
         if profile.role == 4:
             queryset = UserSolution.objects.all()
@@ -305,7 +306,8 @@ class RubricFormView(FormView):
         context['criteria'] = neededCriteria
         context['count'] = criteriaLength
 
-        if RubricLine.objects.all().filter(student=usersolution).exists() and Evaluated.objects.filter(whoEvaluated=self.request.user):
+        # if RubricLine.objects.all().filter(student=usersolution).exists() and Evaluated.objects.filter(whoEvaluated=self.request.user):
+        if RubricLine.objects.all().filter(student=usersolution).exists():
             RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=0, fields=(
                 'ignore', 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel',
                 'student', 'needsLaterAttention', ), widgets={'student': forms.HiddenInput, })
