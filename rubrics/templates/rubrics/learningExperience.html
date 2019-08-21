@@ -6,15 +6,18 @@
 
 {% block content %}
     <h1>{{ learningExpo.name }}</h1>
-
-    <ul class="challengeListObj">
-        {% for learningObjective in learningObjectives %}
-                <li class="challengeListObj"><strong>{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}
-                    .{{ learningObjective.loNumber }}</strong>
-                {{ learningObjective.name }}</li>
-        {% endfor %}
-    </ul>
-    <p>{{ learningExpo.description | safe }}</p>
+    <div class="challengeListObj">
+        <ul>
+            {% for learningObjective in learningObjectives %}
+                    <li class="challengeListObj"><strong>{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}
+                        .{{ learningObjective.loNumber }}</strong>
+                    {{ learningObjective.name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="learningExpoDesc">
+        <p>{{ learningExpo.description | safe }}</p>
+    </div>
     <div class="learningExpoList">
         <h3><a href="/challengeCover/{{ learningExpo.challenge.pk }}">{{ learningExpo.challenge.name }}</a></h3>
         <ul>

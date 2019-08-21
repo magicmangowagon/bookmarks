@@ -116,11 +116,14 @@ ul{
     background-color: #00a497;
 }
 
-
+.learningExpoDesc {
+    width: 85%;
+}
 
 .challengeListObj ul {
     padding-left: 0px;
     border-bottom: 1px solid #003469;
+    width: 85%;
 }
 
 .challengeListObj li {
@@ -132,6 +135,7 @@ ul{
     font-size: 10pt;
     color: #003469;
     margin: 1pt;
+
 }
 
 .compFlexContainer {
@@ -625,6 +629,7 @@ img.user-detail {
     background-color: #efefef;
     padding: 12px;
     text-align: center;
+    width: 15%;
 }
 
 .learningExpoList li {
