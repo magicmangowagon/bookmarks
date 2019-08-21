@@ -219,7 +219,7 @@ class Evaluated(models.Model):
 
 class UserSolution(models.Model):
     file = models.FileField(upload_to='uploads/', blank=True)
-    solution = models.CharField(max_length=2000, blank=False)
+    solution = models.TextField(blank=False, default='')
     userOwner = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     challengeName = models.ForeignKey(Challenge, blank=True, null=True, on_delete=models.CASCADE)
     goodTitle = models.TextField(verbose_name='What’s a good title for your work?', blank=True, default='', )
