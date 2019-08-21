@@ -135,7 +135,7 @@ class Challenge(models.Model):
 class LearningExperience(models.Model):
     name = models.CharField(max_length=600)
     challenge = models.ForeignKey(Challenge, blank=True, on_delete=models.CASCADE, related_name="challenge")
-    learningObjectives = models.ManyToManyField(LearningObjective, blank=True, related_name="learningObjective")
+    learningObjectives = models.ManyToManyField(LearningObjective, blank=True, related_name="learningExpo")
     index = models.IntegerField('Index', default=0)
     description = RichTextField()
     tags = TaggableManager(blank=True)

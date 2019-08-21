@@ -402,6 +402,7 @@ class LearningExperienceView(DetailView):
         context = super(LearningExperienceView, self).get_context_data(**kwargs)
         learningExpo = LearningExperience.objects.get(pk=self.kwargs['pk'])
         relatedLearningExperiences = LearningExperience.objects.all().filter(challenge=learningExpo.challenge).order_by('index')
+        context['learningObjectives'] = LearningObjective.objects.all().filter(learningExpo=learningExpo)
         list(relatedLearningExperiences.order_by('index'))
         context['expoList'] = relatedLearningExperiences
         context['learningExpo'] = learningExpo
