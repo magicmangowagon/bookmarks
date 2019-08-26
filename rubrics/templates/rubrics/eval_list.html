@@ -10,7 +10,8 @@
 {% for userSolution in object_list %}
     <tr>
         <td>
-            <a href="evals/{{ userSolution.id }}">Evaluation</a>
+            <a href="evals/{{ userSolution.id }}">Evaluation</a><br>
+            <a href="coachingreview/{{ userSolution.id }}">Coaching Review</a>
         </td>
         <td>
             {{ userSolution.challengeName }}

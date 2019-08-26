@@ -390,8 +390,21 @@ class RubricFormView(FormView):
 # Check user role on dashboard, use the pk on those links to load up this view with that user solution
 class CoachingReviewView(FormView):
     template_name = 'rubrics/coachingreview.html'
-    model = CoachReview
+    model = UserSolution
     form_class = CoachReviewFormset
+
+    def get_context_data(self, **kwargs):
+        context = super(CoachingReviewView, self).get_context_data()
+        userSolution = self.kwargs['pk'] # UserSolution.objects.all().filter(pk=self.kwargs['pk'])
+        thisUserSolution = UserSolution.objects.get(pk=userSolution)
+        print(thisUserSolution)
+        challenge = UserSolution.objects.get(pk=userSolution).challengeName
+        lo_list = LearningObjective.objects.filter(challenge=challenge).order_by('compGroup', 'compNumber', 'loNumber')
+        rubricLines = RubricLine.objects.all().filter(student__rubricline__learningObjective__in=lo_list, student=thisUserSolution)
+        context['learningObjectives'] = lo_list
+        context['rubricLines'] = rubricLines
+
+        return context
 
 
 class LearningExperienceView(DetailView):

@@ -7,5 +7,12 @@ Evaluate a Challenge
 {% block content %}
 
 <h1>Coaching Review</h1>
-
+    {% for learningObjective in learningObjectives %}
+        <h3>{{ learningObjective.name }}</h3>
+        {% for rubricLine in rubricLines %}
+            {% if rubricLine.learningObjective == learningObjective %}
+                <p>{{ rubricLine.evidencePresent }}</p>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
 {% endblock %}
