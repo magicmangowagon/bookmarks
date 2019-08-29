@@ -7,12 +7,39 @@ Evaluate a Challenge
 {% block content %}
 
 <h1>Coaching Review</h1>
-    {% for learningObjective in learningObjectives %}
-        <h3>{{ learningObjective.name }}</h3>
+
         {% for rubricLine in rubricLines %}
-            {% if rubricLine.learningObjective == learningObjective %}
-                <p>{{ rubricLine.evidencePresent }}</p>
-            {% endif %}
+            {% for form in formset %}
+
+                {{ form.learningObjective.auto_id }}
+                {% if form.instance.learningObjective == rubricLine.learningObjective %}
+                    <uL>
+                        <li>{{ form.evidencePresent }}</li>
+                        <li>{{ form.evidenceMissing }}</li>
+                        <li>{{ form.suggestions }}</li>
+                        <li>{{ form.feedback }}</li>
+                    </uL>
+                {% endif %}
+
+                <script>
+                    var selectedText = options.options[options.selectedIndex].text;
+                </script>
+
+            {% endfor %}
+                <div class="evalField">
+                    <h3>{{ rubricLine.learningObjective }}</h3>
+                            <div class="evalFieldFlexContainer">
+                                <div class="evalFieldFlexBox"><h4>Evidence Present
+                                </h4><p>{{  rubricLine.evidencePresent }}</p></div>
+                                <div class="evalFieldFlexBox"><h4>Evidence Missing
+                                </h4><p>{{  rubricLine.evidenceMissing }}</p></div>
+                                <div class="evalFieldFlexBox"><h4>Suggestions
+                                </h4>{{  rubricLine.suggestions }}</div>
+                                <div class="evalFieldFlexBox"><h4>Feedback
+                                </h4><p>{{  rubricLine.feedback }}</p></div>
+                            </div>
+                        </div>
+
         {% endfor %}
-    {% endfor %}
+
 {% endblock %}

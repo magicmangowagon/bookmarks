@@ -66,6 +66,7 @@ class Challenge(models.Model):
     clinicalNeeds = RichTextField('Clinical Needs', default='')
     standardSolution = RichTextField('Standard Solution', default='')
     pullQuote = models.CharField('Pull Quote', max_length=500, default='')
+    display = models.BooleanField('Show Challenge', default=False)
 
     A = 'A'
     B = 'B'
@@ -302,6 +303,7 @@ class CoachReview(models.Model):
     rubricLine = models.ForeignKey(RubricLine, on_delete=models.CASCADE)
     release = models.BooleanField(default=False)
     comment = models.TextField(blank=True, default='', max_length=None)
+
 
 # _____________
 # CRITERIA LINE

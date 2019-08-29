@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, render_to_response
 from datetime import date, datetime
 from django import forms
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion, CriteriaLine, \
     Competency, CompetencyProgress, ChallengeAddendum, LearningExperience, LearningExpoResponses, Evaluated, CoachReview
 from .forms import UserFileForm, UserFileFormset, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, \
@@ -18,7 +18,7 @@ from .functions import process_rubricLine, assess_competency_done, custom_rubric
 
 
 class ChallengeCover(DetailView):
-    template_name = 'rubrics/challenge_cover.html'
+
     model = Challenge
 
     def get_context_data(self, **kwargs):
@@ -60,7 +60,15 @@ class ChallengeCover(DetailView):
         except:
             relatedLearningExperiences = 0
             context['next'] = relatedLearningExperiences
+
         return context
+
+    def render_to_response(self, context, **response_kwargs):
+
+        if self.request.user.is_staff or Challenge.objects.get(pk=self.kwargs['pk']).display:
+            return render_to_response('rubrics/challenge_cover.html', context)
+        else:
+            return HttpResponseForbidden()
 
 
 # Murphy Page was the first TC user
@@ -118,6 +126,7 @@ class ChallengeDetail(FormView):
         context['form'] = formset
         context['feedbackForm'] = feedbackFormset
         context['challenge'] = thisChallenge
+
         return context
 
     def post(self, request, *args, **kwargs):
@@ -180,7 +189,7 @@ class PreEvaluationUpdate(ListView):
 
 class ChallengeListView(ListView):
     model = Challenge
-    queryset = Challenge.objects.all()
+    queryset = Challenge.objects.all().filter(display=True)
     context_object_name = 'challenges'
     template_name = 'rubrics/list.html'
 
@@ -395,14 +404,24 @@ class CoachingReviewView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super(CoachingReviewView, self).get_context_data()
-        userSolution = self.kwargs['pk'] # UserSolution.objects.all().filter(pk=self.kwargs['pk'])
+        userSolution = self.kwargs['pk']
         thisUserSolution = UserSolution.objects.get(pk=userSolution)
         print(thisUserSolution)
         challenge = UserSolution.objects.get(pk=userSolution).challengeName
         lo_list = LearningObjective.objects.filter(challenge=challenge).order_by('compGroup', 'compNumber', 'loNumber')
-        rubricLines = RubricLine.objects.all().filter(student__rubricline__learningObjective__in=lo_list, student=thisUserSolution)
+        extras = len(lo_list)
+        rubricLines = RubricLine.objects.all().filter(learningObjective__in=lo_list, student=thisUserSolution)
         context['learningObjectives'] = lo_list
         context['rubricLines'] = rubricLines
+
+        RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=extras, fields=(
+            'ignore', 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions',
+            'completionLevel', 'student', 'needsLaterAttention',), widgets={'student': forms.HiddenInput, })
+
+        formset = RubricLineFormset(prefix='rubriclines',
+                                    initial=[{'learningObjective': learningObjective.pk, 'student': thisUserSolution}
+                                             for learningObjective in lo_list], queryset=RubricLine.objects.none())
+        context['formset'] = formset
 
         return context
 

@@ -21,8 +21,8 @@ urlpatterns = [
     path('solutionEval/end/<int:pk>', login_required(RubricFinalFormView.as_view()), name='solution-end-eval'),
     path('competency', login_required(CompetencyView.as_view()), name='competency-list'),
     path('preevaluation/<int:pk>', login_required(PreEvaluationUpdate.as_view()), name='pre-evaluation'),
-    path('learningExperienceEdit/<int:pk>', LearningExperienceCreator.as_view(), name='learningExperienceEdit'),
-    path('learningExperience/<int:pk>', LearningExperienceView.as_view(), name='learningExperience'),
-    path('coachingreview/<int:pk>', CoachingReviewView.as_view(), name='coachingReview'),
+    path('learningExperienceEdit/<int:pk>', login_required(LearningExperienceCreator.as_view()), name='learningExperienceEdit'),
+    path('learningExperience/<int:pk>', login_required(LearningExperienceView.as_view()), name='learningExperience'),
+    path('coachingreview/<int:pk>', login_required(CoachingReviewView.as_view()), name='coachingReview'),
     # path('edit/', views.edit, name='edit'),
 ]
