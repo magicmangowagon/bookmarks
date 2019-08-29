@@ -84,21 +84,21 @@ class Challenge(models.Model):
         choices=group,
         default=''
     )
-    DESIGN = models.BooleanField('Design', default=False)
-    SIMULATE = models.BooleanField('Simulate', default=False)
-    IMPLEMENT = models.BooleanField('Implement', default=False)
+    DESIGN = models.BooleanField(verbose_name='Design', default=False)
+    SIMULATE = models.BooleanField(verbose_name='Simulate', default=False)
+    IMPLEMENT = models.BooleanField(verbose_name='Implement', default=False)
 
     degreeImplementation = [DESIGN, SIMULATE, IMPLEMENT]
 
-    ONEONONE = models.BooleanField('One on One', default=False)
-    SMALLGROUP = models.BooleanField('Small Group', default=False)
-    FULLCLASS = models.BooleanField('Full Class', default=False)
+    ONEONONE = models.BooleanField(verbose_name='One on One', default=False)
+    SMALLGROUP = models.BooleanField(verbose_name='Small Group', default=False)
+    FULLCLASS = models.BooleanField(verbose_name='Full Class', default=False)
 
     scaleImplementation = [ONEONONE, SMALLGROUP, FULLCLASS]
 
-    REFLECTION = models.BooleanField('Reflection', default=False)
-    CLASSROOMEVIDENCE = models.BooleanField('Classroom Evidence', default=False)
-    OBSERVATION = models.BooleanField('Observation', default=False)
+    REFLECTION = models.BooleanField(verbose_name='Reflection', default=False)
+    CLASSROOMEVIDENCE = models.BooleanField(verbose_name='Classroom Evidence', default=False)
+    OBSERVATION = models.BooleanField(verbose_name='Observation', default=False)
 
     typeImplementation = [REFLECTION, CLASSROOMEVIDENCE, OBSERVATION]
 

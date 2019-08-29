@@ -29,6 +29,11 @@ class ChallengeCover(DetailView):
 
         learningObjectives = LearningObjective.objects.all().filter(challenge=self.kwargs['pk']).order_by('compGroup', 'compNumber', 'loNumber')
         context['learningObjectives'] = learningObjectives
+        degree = [challengeCover.DESIGN, challengeCover.SIMULATE, challengeCover.IMPLEMENT]
+
+        context['degree'] = [(challengeCover.DESIGN, 'Design'), (challengeCover.SIMULATE, 'Simulate'), (challengeCover.IMPLEMENT, 'Implement')]
+        context['scale'] = [(challengeCover.ONEONONE, 'One on One'), (challengeCover.SMALLGROUP, 'Small Group'), (challengeCover.FULLCLASS, 'Full Class')]
+        context['type'] = [(challengeCover.REFLECTION, 'Reflection'), (challengeCover.CLASSROOMEVIDENCE, 'Classroom Evidence'), (challengeCover.OBSERVATION, 'Observation')]
 
         theseComps = []
         competencies = Competency.objects.all()
@@ -38,20 +43,6 @@ class ChallengeCover(DetailView):
                     if competency not in theseComps:
                         theseComps.append(competency)
         context['competencies'] = theseComps
-
-        print(challengeCover.degreeImplementation[0])
-        print(challengeCover.DESIGN)
-        print(len(challengeCover.degreeImplementation))
-        '''
-        degree = challengeCover.degree
-        context['degree'] = degree
-
-        scale = challengeCover.scale
-        context['scale'] = scale
-
-        type = challengeCover.type
-        context['type'] = type
-        '''
 
         try:
             relatedLearningExperiences = LearningExperience.objects.all().filter(challenge=challengeCover).order_by('index')
