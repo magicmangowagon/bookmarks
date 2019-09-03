@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f9d2353c-1e9e-47b8-8190-35e7ab7af957" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/models.py" afterDir="false" />
     </list>
     <ignored path="bookmarks/settings.py" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -71,11 +70,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/rubrics/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="494">
-              <caret line="35" column="169" selection-start-line="35" selection-start-column="169" selection-end-line="35" selection-end-column="169" />
+            <state relative-caret-position="468">
+              <caret line="42" column="52" lean-forward="true" selection-start-line="42" selection-start-column="52" selection-end-line="42" selection-end-column="52" />
               <folding>
                 <element signature="e#0#65#0" expanded="true" />
               </folding>
@@ -83,11 +82,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="347">
-              <caret line="68" column="64" selection-start-line="68" selection-start-column="64" selection-end-line="68" selection-end-column="64" />
+            <state relative-caret-position="399">
+              <caret line="70" column="11" lean-forward="true" selection-start-line="70" selection-start-column="11" selection-end-line="70" selection-end-column="11" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -506,14 +505,7 @@
       <workItem from="1565878715136" duration="22416000" />
       <workItem from="1566309283193" duration="15344000" />
       <workItem from="1566570772380" duration="40190000" />
-      <workItem from="1567519366047" duration="733000" />
-    </task>
-    <task id="LOCAL-00179" summary="Cover sheet is good enough to go. Need to push to heroku.">
-      <created>1561504751077</created>
-      <option name="number" value="00179" />
-      <option name="presentableId" value="LOCAL-00179" />
-      <option name="project" value="LOCAL" />
-      <updated>1561504751077</updated>
+      <workItem from="1567519366047" duration="1548000" />
     </task>
     <task id="LOCAL-00180" summary="Fixed issue with competencies showing up too often on cover sheet">
       <created>1561512600499</created>
@@ -851,11 +843,18 @@
       <option name="project" value="LOCAL" />
       <updated>1567117223967</updated>
     </task>
-    <option name="localTasksCounter" value="228" />
+    <task id="LOCAL-00228" summary="Changed default display to True, go back and hide what needs to be hidden.">
+      <created>1567520149798</created>
+      <option name="number" value="00228" />
+      <option name="presentableId" value="LOCAL-00228" />
+      <option name="project" value="LOCAL" />
+      <updated>1567520149799</updated>
+    </task>
+    <option name="localTasksCounter" value="229" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1084906000" />
+    <option name="totallyTimeSpent" value="1085721000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -977,7 +976,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Changed submit to next on first rubric form page" />
     <MESSAGE value="Added solution coversheet responses to solution/pre-evaluation detail view" />
     <MESSAGE value="Fixed expo responses not showing up due to learning objectives&#10;not being mapped to them. Now they fill in based on learning experiences&#10;related to the challenge." />
     <MESSAGE value="I reversed evidence present and evidence missing on upload form. Fixed now, &#10;will need to run a sql query to switch previously entered rubricLines" />
@@ -1002,7 +1000,8 @@
     <MESSAGE value="Coaching Review is starting to shape up. Correctly pulling rubricLines&#10;and displaying them. Now to add a form for commenting, maybe add more &#10;rubricLines to it." />
     <MESSAGE value="Removed pre-reqs from coversheet. Added display bool to challenges, hides them in list view and detail view. Added log_in required to a number of the newer urls" />
     <MESSAGE value="Fixed solution parameters. Need to break that out of challenges and create&#10;a many to many with the Challenge instead" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed solution parameters. Need to break that out of challenges and create&#10;a many to many with the Challenge instead" />
+    <MESSAGE value="Changed default display to True, go back and hide what needs to be hidden." />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed default display to True, go back and hide what needs to be hidden." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/rubrics/migrations/0042_auto_20190620_1740.py">
@@ -1335,16 +1334,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="494">
-          <caret line="35" column="169" selection-start-line="35" selection-start-column="169" selection-end-line="35" selection-end-column="169" />
-          <folding>
-            <element signature="e#0#65#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/templatetags/solution_filters.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="312">
@@ -1368,10 +1357,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="347">
-          <caret line="68" column="64" selection-start-line="68" selection-start-column="64" selection-end-line="68" selection-end-column="64" />
+        <state relative-caret-position="399">
+          <caret line="70" column="11" lean-forward="true" selection-start-line="70" selection-start-column="11" selection-end-line="70" selection-end-column="11" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="468">
+          <caret line="42" column="52" lean-forward="true" selection-start-line="42" selection-start-column="52" selection-end-line="42" selection-end-column="52" />
+          <folding>
+            <element signature="e#0#65#0" expanded="true" />
           </folding>
         </state>
       </provider>
