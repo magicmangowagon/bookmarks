@@ -66,7 +66,7 @@ class Challenge(models.Model):
     clinicalNeeds = RichTextField('Clinical Needs', default='')
     standardSolution = RichTextField('Standard Solution', default='')
     pullQuote = models.CharField('Pull Quote', max_length=500, default='')
-    display = models.BooleanField('Show Challenge', default=False)
+    display = models.BooleanField('Show Challenge', default=True)
 
     A = 'A'
     B = 'B'
