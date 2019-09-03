@@ -57,6 +57,33 @@ class LearningObjective(models.Model):
 # CHALLENGES
 # Works as the main/only way to organize learningObjectives and therefore rubricLines for TC completion.
 # This is how users do things
+# _________________
+# SOLUTION INSTANCE
+class SolutionInstance(models.Model):
+    # solution = models.ForeignKey(UserSolution, blank=True, null=True, on_delete=models.CASCADE)
+    name = models.TextField(blank=True, default='')
+    learningObjectives = models.ManyToManyField(LearningObjective, blank=True)
+
+    DESIGN = models.BooleanField(verbose_name='Design', default=False)
+    SIMULATE = models.BooleanField(verbose_name='Simulate', default=False)
+    IMPLEMENT = models.BooleanField(verbose_name='Implement', default=False)
+
+    degreeImplementation = [DESIGN, SIMULATE, IMPLEMENT]
+
+    ONEONONE = models.BooleanField(verbose_name='One on One', default=False)
+    SMALLGROUP = models.BooleanField(verbose_name='Small Group', default=False)
+    FULLCLASS = models.BooleanField(verbose_name='Full Class', default=False)
+
+    scaleImplementation = [ONEONONE, SMALLGROUP, FULLCLASS]
+
+    REFLECTION = models.BooleanField(verbose_name='Reflection', default=False)
+    CLASSROOMEVIDENCE = models.BooleanField(verbose_name='Classroom Evidence', default=False)
+    OBSERVATION = models.BooleanField(verbose_name='Observation', default=False)
+
+    typeImplementation = [REFLECTION, CLASSROOMEVIDENCE, OBSERVATION]
+
+    def __str__(self):
+        return self.name
 
 
 class Challenge(models.Model):
@@ -102,27 +129,7 @@ class Challenge(models.Model):
 
     typeImplementation = [REFLECTION, CLASSROOMEVIDENCE, OBSERVATION]
 
-    '''
-    degree = (
-        (DESIGN, 'Design'),
-        (SIMULATE, 'Simulate'),
-        (IMPLEMENT, 'Implement'),
-    )
-    scale = (
-        (ONEONONE, 'One on One'),
-        (SMALLGROUP, 'Small Group'),
-        (FULLCLASS, 'Full Class'),
-    )
-    type = (
-        (REFLECTION, 'Reflection'),
-        (CLASSROOMEVIDENCE, 'Classroom Evidence'),
-        (OBSERVATION, 'Observation'),
-    )
-    '''
-    # degreeImplementation = models.BooleanField('Degree of Implementation', choices=degree, default=DESIGN)
-    # scaleImplementation = models.BooleanField('Scale of Implementation', choices=scale, default=ONEONONE)
-    # typeImplementation = models.BooleanField('Type of Implementation', choices=type, default=REFLECTION)
-
+    solutions = models.ManyToManyField(SolutionInstance, blank=True, related_name="challenge_that_owns_me")
     learningObjs = models.ManyToManyField(LearningObjective, blank=True, related_name="challenge")
     tags = TaggableManager(blank=True)
 
@@ -223,6 +230,7 @@ class UserSolution(models.Model):
     solution = models.TextField(blank=False, default='')
     userOwner = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     challengeName = models.ForeignKey(Challenge, blank=True, null=True, on_delete=models.CASCADE)
+    solutionInstance = models.ForeignKey(SolutionInstance, null=True, on_delete=models.CASCADE)
     goodTitle = models.TextField(verbose_name='What’s a good title for your work?', blank=True, default='', )
     workFit = models.TextField('How does this piece of work fit into the story of your development as a teacher? (*required)', blank=False, default='')
     proudDetail = models.TextField('What’s a specific detail in this work that you are especially proud of? why? (*required)', blank=False, default='')

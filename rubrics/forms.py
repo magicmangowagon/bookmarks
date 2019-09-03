@@ -85,7 +85,7 @@ CoachReviewFormset = modelformset_factory(CoachReview, formset=CoachReviewForm, 
                                           widgets={'rubricLine': forms.HiddenInput()})
 
 
-UserFileFormset = modelformset_factory(UserSolution, formset=UserFileForm, fields=('userOwner', 'challengeName', 'solution',
+UserFileFormset = modelformset_factory(UserSolution, formset=UserFileForm, fields=('userOwner', 'challengeName', 'solutionInstance', 'solution',
     'goodTitle', 'workFit', 'proudDetail', 'hardDetail', 'objectiveWell', 'objectivePoor', 'personalLearningObjective',
    'helpfulLearningExp', 'notHelpfulLearningExp', 'changeLearningExp', 'notIncludedLearningExp'),
                                        widgets={'challengeName': forms.HiddenInput(), 'userOwner': forms.HiddenInput})

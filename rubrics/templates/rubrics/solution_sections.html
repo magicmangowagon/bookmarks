@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+
+{% block title %}Woodrow Wilson Academy{% endblock %}
+
+{% block content %}
+<h1>{{ challenge.name }} - Solutions</h1>
+
+{% for solution in solutions %}
+    <h2>
+        <a href="/challenge/{{ solution.id }}">
+            {{ challenge.name }} - {{ solution.name }}
+            {{ solution.learningObjectives.count }}
+        </a>
+    </h2>
+    <ul class="challengeListObj">
+    {% for learningObjective in solution.learningObjectives.all %}
+        <li class="challengeListObj"><strong>{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}
+                    .{{ learningObjective.loNumber }}</strong>
+                {{ learningObjective.name }}</li>
+    {% endfor %}
+    </ul>
+{% endfor %}
+
+{% endblock content %}

@@ -3,7 +3,8 @@ from datetime import date, datetime
 from django import forms
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion, CriteriaLine, \
-    Competency, CompetencyProgress, ChallengeAddendum, LearningExperience, LearningExpoResponses, Evaluated, CoachReview
+    Competency, CompetencyProgress, ChallengeAddendum, LearningExperience, LearningExpoResponses, Evaluated, \
+    CoachReview, SolutionInstance
 from .forms import UserFileForm, UserFileFormset, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, \
     CriterionFormSet, CriteriaForm, CurrentStudentToView, RubricAddendumForm, RubricAddendumFormset, \
     LearningExperienceFormset, LearningExperienceForm, LearningExpoFeedbackForm, LearningExpoFeedbackFormset, \
@@ -68,27 +69,30 @@ class ChallengeCover(DetailView):
 # probably fix this thing!
 class ChallengeDetail(FormView):
     template_name = 'rubrics/challenge_detail.html'
-    model = Challenge
+    model = SolutionInstance
     form_class = UserFileFormset
 
     def get_context_data(self, **kwargs):
         context = super(ChallengeDetail, self).get_context_data(**kwargs)
-        context['rubric_list'] = Challenge.objects.all()
-        context['learningObjectives_list'] = LearningObjective.objects.all().filter(challenge=self.kwargs['pk'])
-        existingSolutions = UserSolution.objects.all().filter(challengeName=self.kwargs['pk'])
-        theseLearningExpos = LearningExperience.objects.all().filter(challenge=self.kwargs['pk'])
-        thisChallenge = Challenge.objects.get(pk=self.kwargs['pk'])
-
+        context['learningObjectives_list'] = LearningObjective.objects.all().filter(solutioninstance=self.kwargs['pk'])
+        # print(SolutionInstance.objects.get(pk=self.kwargs['pk']).challenge_that_owns_me.first())
+        thisChallenge = SolutionInstance.objects.get(pk=self.kwargs['pk']).challenge_that_owns_me.first()
+        existingSolutions = UserSolution.objects.all().filter(challengeName=thisChallenge, userOwner=self.request.user)
+        theseLearningExpos = LearningExperience.objects.all().filter(challenge=thisChallenge)
+        thisSolutionInstance = SolutionInstance.objects.get(pk=self.kwargs['pk'])
+        # print(existingSolutions)
         relatedLearningExperiences = LearningExperience.objects.all().filter(challenge=thisChallenge).order_by('index')
         context['previous'] = relatedLearningExperiences.last().pk
+        print(self.kwargs['pk'])
+        print(existingSolutions.filter(pk=thisSolutionInstance.pk))
+        if existingSolutions.filter(pk=thisSolutionInstance.pk).exists():
+            print("This solution exists but isn't loading correctly")
+            thisSolution = existingSolutions.get(pk=self.kwargs['pk'])
 
-        if existingSolutions.filter(userOwner=self.request.user).exists():
-            thisSolution = existingSolutions.get(userOwner=self.request.user).id
-
-            UserFileFormSet = modelformset_factory(UserSolution, extra=0, formset=UserFileForm, fields=('userOwner', 'challengeName', 'solution',
+            UserFileFormSet = modelformset_factory(UserSolution, extra=0, formset=UserFileForm, fields=('userOwner', 'challengeName', 'solutionInstance', 'solution',
             'goodTitle', 'workFit', 'proudDetail', 'hardDetail', 'objectiveWell', 'objectivePoor', 'personalLearningObjective', 'helpfulLearningExp',
             'notHelpfulLearningExp', 'changeLearningExp', 'notIncludedLearningExp'),
-            widgets={'userOwner': forms.HiddenInput, 'challengeName': forms.HiddenInput, })
+            widgets={'userOwner': forms.HiddenInput, 'challengeName': forms.HiddenInput, 'solutionInstance': forms.HiddenInput })
 
             formset = UserFileFormSet(prefix='user', queryset=UserSolution.objects.all().filter(id=thisSolution), )
 
@@ -99,12 +103,13 @@ class ChallengeDetail(FormView):
                 user=self.request.user, learningExperience__challenge=thisChallenge))
 
         else:
-            UserFileFormset = modelformset_factory(UserSolution, extra=1, formset=UserFileForm, fields=('userOwner', 'challengeName', 'solution',
+
+            UserFileFormset = modelformset_factory(UserSolution, extra=1, formset=UserFileForm, fields=('userOwner', 'challengeName', 'solution', 'solutionInstance',
             'goodTitle', 'workFit', 'proudDetail', 'hardDetail', 'objectiveWell', 'objectivePoor', 'personalLearningObjective', 'helpfulLearningExp',
             'notHelpfulLearningExp', 'changeLearningExp', 'notIncludedLearningExp'),
-                                       widgets={'userOwner': forms.HiddenInput, 'challengeName': forms.HiddenInput})
+                                       widgets={'userOwner': forms.HiddenInput, 'challengeName': forms.HiddenInput, })
 
-            formset = UserFileFormset(prefix='user', initial=[{'challengeName': thisChallenge, 'userOwner': self.request.user}],
+            formset = UserFileFormset(prefix='user', initial=[{'challengeName': thisChallenge, 'userOwner': self.request.user, 'solutionInstance': thisSolutionInstance}],
                                       queryset=UserSolution.objects.none())
 
             LearningExpoFeedbackFormset = modelformset_factory(LearningExpoResponses, extra=theseLearningExpos.count(),
@@ -135,11 +140,28 @@ class ChallengeDetail(FormView):
         else:
             form = UserFileFormset(prefix='user')
             expoForm = LearningExpoFeedbackFormset(prefix='expo')
-        challenge = Challenge.objects.get(pk=self.kwargs['pk'])
+        challenge = SolutionInstance.objects.get(pk=self.kwargs['pk']).challenge_that_owns_me.first()
         learningObjectives_list = LearningObjective.objects.all().filter(challenge=challenge)
 
         context = {'form': form, 'feedbackForm': expoForm, 'challenge': challenge, 'learningObjectives_list': learningObjectives_list}
         return render(request, self.get_template_names(), context)
+
+
+class SolutionSectionView(ListView):
+    template_name = 'rubrics/solution_sections.html'
+    model = SolutionInstance
+    context_object_name = 'solutions'
+
+    def get_queryset(self):
+        queryset = SolutionInstance.objects.all().filter(challenge_that_owns_me=self.kwargs['pk'])
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        challenge = Challenge.objects.get(id=self.kwargs['pk'])
+        context['challenge'] = challenge
+        context['lo_list'] = LearningObjective.objects.all().filter(challenge=challenge).order_by('compGroup', 'compNumber', 'loNumber')
+        return context
 
 
 class SolutionDetailView(DetailView):
