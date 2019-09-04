@@ -9,7 +9,6 @@ def check_evaluated(userSolution, user):
     return userSolution.evaluated.filter(whoEvaluated=user).exists() # check if relationship exists
 
 
-@register.filter(name='get_verbose_name')
-def get_item(object, field):
-    verbose_name = object._meta.get_field(field).verbose_name
-    return verbose_name
+@register.filter(name='get_obj_attr')
+def get_obj_attr(obj, field):
+    return getattr(obj, field)

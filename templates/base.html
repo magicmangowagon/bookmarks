@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
 {% load static %}
+{% load solution_filters %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -33,7 +34,8 @@
     <span class="user">
         {% if request.user.is_authenticated %}
             Hello {{ request.user.first_name }},
-            <a href="{% url "logout" %}">Logout</a>
+            <a href="{% url "logout" %}">Logout</a><br>
+            {% if request.user.is_staff %}<a href="admin">Edit Site</a>{% endif %}
         {% else %}
             <a href="{% url "login" %}">Log-in | </a>
             <a href="{% url "register" %}">Register</a>

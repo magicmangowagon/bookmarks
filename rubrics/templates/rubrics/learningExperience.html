@@ -5,40 +5,46 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{{ learningExpo.name }}</h1>
-    <div class="challengeListObj">
-        <ul>
-            {% for learningObjective in learningObjectives %}
-                    <li class="challengeListObj"><strong>{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}
-                        .{{ learningObjective.loNumber }}</strong>
-                    {{ learningObjective.name }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-    <div class="learningExpoDesc">
-        <p>{{ learningExpo.description | safe }}</p>
+    <div class="expoWrapper">
+        <div class="expoVertWrapper">
+        <h1>{{ learningExpo.name }}</h1>
+        <div class="challengeListObj">
+            <ul>
+                {% for learningObjective in learningObjectives %}
+                        <li class="challengeListObj"><strong>{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}
+                            .{{ learningObjective.loNumber }}</strong>
+                        {{ learningObjective.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="learningExpoDesc">
+            <p>{{ learningExpo.description | safe }}</p>
+        </div>
+
     </div>
     <div class="learningExpoList">
-        <h3><a href="/challengeCover/{{ learningExpo.challenge.pk }}">{{ learningExpo.challenge.name }}</a></h3>
-        <ul>
+            <h3><a href="/challengeCover/{{ learningExpo.challenge.pk }}">{{ learningExpo.challenge.name }}</a></h3>
+            <ul>
 
-            {% for expoList in expoList %}
-                <li><a href="{{ expoList.pk }}">{{ expoList.name }}</a> </li>
-            {% endfor %}
-                <li><a href="/solutionsection/{{ learningExpo.challenge.pk }}">Solution Upload </a> </li>
+                {% for expoList in expoList %}
+                    <li><a href="{{ expoList.pk }}">{{ expoList.name }}</a> </li>
+                {% endfor %}
+                    <li><a href="/solutionsection/{{ learningExpo.challenge.pk }}">Solution Upload </a> </li>
 
-        </ul>
+            </ul>
+        </div>
     </div>
-    {% if last == True %}
-        <input type="button" onclick='window.location.href="/solutionsection/{{ learningExpo.challenge.pk }}";' value="Next">
-        {% else %}
-            <input type="button" onclick='window.location.href="{{ nextLearningExpo.pk }}";' value="Next">
-    {% endif %}
+{% if last == True %}
+    <input type="button" onclick='window.location.href="/solutionsection/{{ learningExpo.challenge.pk }}";' value="Next">
+    {% else %}
+        <input type="button" onclick='window.location.href="{{ nextLearningExpo.pk }}";' value="Next">
+{% endif %}
 
-    {% if first == True %}
-        <input type="button" onclick='window.location.href="/challengeCover/{{ learningExpo.challenge.pk }}";' value="Previous">
-        {% else %}
-        <input type="button" onclick='window.location.href="{{ previous.pk }}";' value="Previous">
-    {% endif %}
+{% if first == True %}
+    <input type="button" onclick='window.location.href="/challengeCover/{{ learningExpo.challenge.pk }}";' value="Previous">
+    {% else %}
+    <input type="button" onclick='window.location.href="{{ previous.pk }}";' value="Previous">
+{% endif %}
 
 {% endblock %}

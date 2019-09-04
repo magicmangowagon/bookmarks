@@ -87,7 +87,6 @@ class ChallengeDetail(FormView):
         print(self.kwargs['pk'])
 
         if existingSolutions.filter(solutionInstance=thisSolutionInstance).exists():
-            print("This solution exists but isn't loading correctly")
             thisSolution = existingSolutions.get(solutionInstance=self.kwargs['pk'])
 
             UserFileFormSet = modelformset_factory(UserSolution, extra=0, formset=UserFileForm, fields=('userOwner', 'challengeName', 'solutionInstance', 'solution',
@@ -148,20 +147,39 @@ class ChallengeDetail(FormView):
         return render(request, self.get_template_names(), context)
 
 
-class SolutionSectionView(ListView):
+class SolutionSectionView(DetailView):
     template_name = 'rubrics/solution_sections.html'
-    model = SolutionInstance
-    context_object_name = 'solutions'
+    model = Challenge
+    # context_object_name = 'solutions'
 
+    '''
     def get_queryset(self):
         queryset = SolutionInstance.objects.all().filter(challenge_that_owns_me=self.kwargs['pk'])
         return queryset
+    '''
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super(SolutionSectionView, self).get_context_data(**kwargs)
         challenge = Challenge.objects.get(id=self.kwargs['pk'])
         context['challenge'] = challenge
         context['lo_list'] = LearningObjective.objects.all().filter(challenge=challenge).order_by('compGroup', 'compNumber', 'loNumber')
+        solutions = SolutionInstance.objects.all().filter(challenge_that_owns_me=challenge)
+
+        # field_value = getattr(obj, field_name)
+        for solution in solutions:
+            print(getattr(solution, 'DESIGN'))
+            context['degree'] = [(solution.DESIGN, 'Design', solution.name),
+                                 (solution.SIMULATE, 'Simulate', solution.name),
+                                 (solution.IMPLEMENT, 'Implement', solution.name)]
+            context['scale'] = [(solution.ONEONONE, 'One on One', solution.name),
+                                (solution.SMALLGROUP, 'Small Group', solution.name),
+                                (solution.FULLCLASS, 'Full Class', solution.name)]
+            context['type'] = [(solution.REFLECTION, 'Reflection', solution.name),
+                               (solution.CLASSROOMEVIDENCE, 'Classroom Evidence', solution.name),
+                               (solution.OBSERVATION, 'Observation', solution.name)]
+
+        print(solutions.count())
+        context['solutions'] = solutions
         return context
 
 
@@ -308,7 +326,11 @@ class RubricFormView(FormView):
         lo_list = LearningObjective.objects.filter(solutioninstance=challenge).order_by('compGroup', 'compNumber', 'loNumber')
         thisUserSolution = UserSolution.objects.get(pk=usersolution)
         context['student'] = thisUserSolution
-        context['challenge'] = challenge.challenge_that_owns_me.all().first
+        try:
+            context['challenge'] = challenge.challenge_that_owns_me.all().first
+        except:
+            context['challenge'] = challenge
+
         context['solutionInstance'] = challenge
         loCount = LearningObjective.objects.filter(solutioninstance=challenge).count()
 

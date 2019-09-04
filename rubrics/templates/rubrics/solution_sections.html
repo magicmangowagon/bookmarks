@@ -1,25 +1,88 @@
 {% extends "base.html" %}
-
+{% load solution_filters %}
 
 {% block title %}Woodrow Wilson Academy{% endblock %}
 
 {% block content %}
 <h1>{{ challenge.name }} - Solutions</h1>
-
+<div class="sub-container">
 {% for solution in solutions %}
-    <h2>
-        <a href="/challenge/{{ solution.id }}">
-            {{ challenge.name }} - {{ solution.name }}
-            {{ solution.learningObjectives.count }}
-        </a>
-    </h2>
-    <ul class="challengeListObj">
-    {% for learningObjective in solution.learningObjectives.all %}
-        <li class="challengeListObj"><strong>{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}
-                    .{{ learningObjective.loNumber }}</strong>
-                {{ learningObjective.name }}</li>
-    {% endfor %}
-    </ul>
+
+    <div class="solution-content-box">
+        <h2>
+            <a href="/challenge/{{ solution.id }}">
+                {{ solution.name }}
+            </a>
+        </h2>
+        <ul class="challengeListObj">
+        {% for learningObjective in solution.learningObjectives.all %}
+            <li class="challengeListObj"><strong>{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}
+                        .{{ learningObjective.loNumber }}</strong>
+                    {{ learningObjective.name }}</li>
+        {% endfor %}
+        </ul>
+            <h3>Solution Bounds</h3>
+
+            <h4>Degree of Implementation</h4>
+            <div class="circleField-container">
+
+                    {% for degree in solution.degreeImplementation %}
+
+
+                            <div class="circleField">
+
+                                {% if solution|get_obj_attr:degree.name %}
+                                    <p>&#x25CD;
+                                    </p>
+                                {% else %}
+                                    <p>&#9676;
+                                    </p>
+                                {% endif %}
+                                <p>{{ degree.verbose_name }}</p>
+                            </div>
+
+                    {% endfor %}
+
+            </div>
+
+            <h4>Scale of Implementation</h4>
+            <div class="circleField-container">
+
+                {% for scale in solution.scaleImplementation %}
+                    <div class="circleField">
+                        {% if solution|get_obj_attr:scale.name %}
+                            <p>&#x25CD;
+                            </p>
+                        {% else %}
+                            <p>&#9676;
+                            </p>
+                        {% endif %}
+                        <p>{{ scale.verbose_name }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <h4>Type of Implementation</h4>
+            <div class="circleField-container">
+                {% for type in solution.typeImplementation %}
+                    <div class="circleField">
+                        {% if solution|get_obj_attr:type.name %}
+                            <p>&#x25CD;</p>
+                        {% else %}
+                            <p>&#9676;</p>
+                        {% endif %}
+                        <p>{{ type.verbose_name }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+
 {% endfor %}
+</div>
+
+
+
+
 
 {% endblock content %}

@@ -1,7 +1,12 @@
 @import url(https://fonts.googleapis.com/css?family=Dosis|Oswald);
 
-ul{
-    padding: 0;
+.learningObj_list {
+    padding: 0 0 0 10pt;
+}
+
+.learningObj_list p {
+    padding: unset;
+    font-size: 105%;
 }
 
 .colorCodePink {
@@ -116,8 +121,36 @@ ul{
     background-color: #00a497;
 }
 
+
+.expoWrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.expoVertWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.learningExpoList {
+    position: sticky;
+    top: 0;
+    background-color: #efefef;
+    padding: 12px;
+    text-align: center;
+    min-width: 150px;
+    width: 15%;
+    height: fit-content;
+}
+
+.learningExpoList ul {
+    padding: 0;
+}
+
 .learningExpoDesc {
     width: 85%;
+    min-width: 600px;
+    min-height: calc(100vh - 10vh);
 }
 
 .challengeListObj ul {
@@ -218,6 +251,7 @@ body {
 
 p {
     line-height: 1.8;
+    padding: .25rem 0 .25rem;
 }
 
 a {
@@ -295,7 +329,7 @@ ol {
 
 #content {
     padding:30px 100px;
-    width: 85%;
+    width: 88%%;
     margin: auto;
 }
 
@@ -622,15 +656,7 @@ img.user-detail {
     margin-top: 0px;
 }
 
-.learningExpoList {
-    position: fixed;
-    top: 100px;
-    right: 24px;
-    background-color: #efefef;
-    padding: 12px;
-    text-align: center;
-    width: 15%;
-}
+
 
 .learningExpoList li {
     list-style: none;
@@ -707,6 +733,7 @@ img.user-detail {
 .sub-container {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     width: 100%;
     justify-content: space-around;
 }
@@ -717,6 +744,16 @@ img.user-detail {
     padding: 0 6pt 12pt;
     border-radius: 1pt;
     border: solid 6pt #bdc2c9;
+}
+
+.solution-content-box {
+    background-color: #e1e6ed;
+    margin: 1em .25rem;
+    padding: 0 6pt 12pt;
+    border-radius: 1pt;
+    border: solid 6pt #bdc2c9;
+    max-width: 40%;
+    min-width: 300px;
 }
 
 .circleField-container {

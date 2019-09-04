@@ -36,7 +36,7 @@
                     <p><strong>{{ competency.compGroup }} - {{ competency.compNumber }} {{ competency.name }}</strong></p>
                     {% for learningObjective in learningObjectives %}
                         {% if learningObjective.compGroup == competency.compGroup and learningObjective.compNumber == competency.compNumber %}
-                            <p>{{ learningObjective.loNumber }}: {{ learningObjective.name }}</p>
+                            <div class="learningObj_list"><p>{{ learningObjective.loNumber }}: {{ learningObjective.name }}</p></div>
                         {% endif %}
                     {% endfor %}
                 </div>
@@ -46,61 +46,8 @@
             <h3>Standard Solution</h3>
             <p>{{ challengeCover.standardSolution | safe }}</p>
         </div>
-        <div class="sub-container">
-
-            <div class="course-content-box">
-                <h3>Solution Bounds</h3>
-
-                <h4>Degree of Implementation</h4>
-                <div class="circleField-container">
-
-                    {% for degree in degree %}
-                        <div class="circleField">
-                            {% if degree.0 %}
-                                <p>&#x25CD;
-                                </p>
-                            {% else %}
-                                <p>&#9676;
-                                </p>
-                            {% endif %}
-                            <p>{{ degree.1 }}</p>
-                        </div>
-                    {% endfor %}
-                </div>
-
-                <h4>Scale of Implementation</h4>
-                <div class="circleField-container">
-
-                    {% for scale in scale %}
-                        <div class="circleField">
-                            {% if scale.0 %}
-                                <p>&#x25CD;
-                                </p>
-                            {% else %}
-                                <p>&#9676;
-                                </p>
-                            {% endif %}
-                            <p>{{ scale.1 }}</p>
-                        </div>
-                    {% endfor %}
-                </div>
-
-                <h4>Type of Implementation</h4>
-                <div class="circleField-container">
-                    {% for type in type %}
-                        <div class="circleField">
-                            {% if type %}
-                                <p>&#x25CD;</p>
-                            {% else %}
-                                <p>&#9676;</p>
-                            {% endif %}
-                            <p>{{ type.1 }}</p>
-                        </div>
-                    {% endfor %}
-                </div>
 
 
-            </div>
         </div>
             <div class="course-content-box">
                 <h3>Clinical Needs</h3>
