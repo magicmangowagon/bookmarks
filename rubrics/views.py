@@ -84,17 +84,17 @@ class ChallengeDetail(FormView):
         relatedLearningExperiences = LearningExperience.objects.all().filter(challenge=thisChallenge).order_by('index')
         context['previous'] = relatedLearningExperiences.last().pk
         print(self.kwargs['pk'])
-        print(existingSolutions.filter(pk=thisSolutionInstance.pk))
-        if existingSolutions.filter(pk=thisSolutionInstance.pk).exists():
+
+        if existingSolutions.filter(solutionInstance=thisSolutionInstance).exists():
             print("This solution exists but isn't loading correctly")
-            thisSolution = existingSolutions.get(pk=self.kwargs['pk'])
+            thisSolution = existingSolutions.get(solutionInstance=self.kwargs['pk'])
 
             UserFileFormSet = modelformset_factory(UserSolution, extra=0, formset=UserFileForm, fields=('userOwner', 'challengeName', 'solutionInstance', 'solution',
             'goodTitle', 'workFit', 'proudDetail', 'hardDetail', 'objectiveWell', 'objectivePoor', 'personalLearningObjective', 'helpfulLearningExp',
             'notHelpfulLearningExp', 'changeLearningExp', 'notIncludedLearningExp'),
             widgets={'userOwner': forms.HiddenInput, 'challengeName': forms.HiddenInput, 'solutionInstance': forms.HiddenInput })
 
-            formset = UserFileFormSet(prefix='user', queryset=UserSolution.objects.all().filter(id=thisSolution), )
+            formset = UserFileFormSet(prefix='user', queryset=UserSolution.objects.all().filter(id=thisSolution.id), )
 
             LearningExpoFeedbackFormset = modelformset_factory(LearningExpoResponses, extra=0, formset=LearningExpoFeedbackForm,
                    fields=('learningExperienceResponse', 'learningExperience', 'user'), widgets={'user': forms.HiddenInput})
