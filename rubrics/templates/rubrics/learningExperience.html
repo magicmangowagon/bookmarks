@@ -25,12 +25,12 @@
             {% for expoList in expoList %}
                 <li><a href="{{ expoList.pk }}">{{ expoList.name }}</a> </li>
             {% endfor %}
-                <li><a href="/challenge/{{ learningExpo.challenge.pk }}">Solution Upload </a> </li>
+                <li><a href="/solutionsection/{{ learningExpo.challenge.pk }}">Solution Upload </a> </li>
 
         </ul>
     </div>
     {% if last == True %}
-        <input type="button" onclick='window.location.href="/challenge/{{ learningExpo.challenge.pk }}";' value="Next">
+        <input type="button" onclick='window.location.href="/solutionsection/{{ learningExpo.challenge.pk }}";' value="Next">
         {% else %}
             <input type="button" onclick='window.location.href="{{ nextLearningExpo.pk }}";' value="Next">
     {% endif %}

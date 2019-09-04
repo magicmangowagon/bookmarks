@@ -80,8 +80,9 @@ class ChallengeDetail(FormView):
         existingSolutions = UserSolution.objects.all().filter(challengeName=thisChallenge, userOwner=self.request.user)
         theseLearningExpos = LearningExperience.objects.all().filter(challenge=thisChallenge)
         thisSolutionInstance = SolutionInstance.objects.get(pk=self.kwargs['pk'])
-        # print(existingSolutions)
+
         relatedLearningExperiences = LearningExperience.objects.all().filter(challenge=thisChallenge).order_by('index')
+        print(relatedLearningExperiences.count())
         context['previous'] = relatedLearningExperiences.last().pk
         print(self.kwargs['pk'])
 
@@ -302,13 +303,14 @@ class RubricFormView(FormView):
     def get_context_data(self, **kwargs):
         context = super(RubricFormView, self).get_context_data(**kwargs)
         usersolution = self.kwargs['pk']
-        challenge = UserSolution.objects.get(pk=usersolution).challengeName
-        context['lo_list'] = LearningObjective.objects.filter(challenge=challenge)
-        lo_list = LearningObjective.objects.filter(challenge=challenge).order_by('compGroup', 'compNumber', 'loNumber')
+        challenge = UserSolution.objects.get(pk=usersolution).solutionInstance
+        context['lo_list'] = LearningObjective.objects.filter(solutioninstance=challenge)
+        lo_list = LearningObjective.objects.filter(solutioninstance=challenge).order_by('compGroup', 'compNumber', 'loNumber')
         thisUserSolution = UserSolution.objects.get(pk=usersolution)
         context['student'] = thisUserSolution
-        context['challenge'] = challenge
-        loCount = LearningObjective.objects.filter(challenge=challenge).count()
+        context['challenge'] = challenge.challenge_that_owns_me.all().first
+        context['solutionInstance'] = challenge
+        loCount = LearningObjective.objects.filter(solutioninstance=challenge).count()
 
         context['userRole'] = self.request.user.profile.role
         criteriaList = Criterion.objects.all()

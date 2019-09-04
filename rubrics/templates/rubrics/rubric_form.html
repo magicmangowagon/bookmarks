@@ -6,7 +6,7 @@ Evaluate a Challenge
 
 {% block content %}
 
-<h1>{{ challenge }} - {{ student.userOwner.first_name }} {{ student.userOwner.last_name }}</h1>
+<h1>{{ challenge }}: {{ solutionInstance }} - {{ student.userOwner.first_name }} {{ student.userOwner.last_name }}</h1>
 
     <h2>Evaluate {{ student.userOwner.first_name }}'s solution</h2>
     <a href="/customRubric/{{ student.id }}">Modify Challenge Instance</a>
