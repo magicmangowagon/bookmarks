@@ -63,7 +63,7 @@ class SolutionInstance(models.Model):
     # solution = models.ForeignKey(UserSolution, blank=True, null=True, on_delete=models.CASCADE)
     name = models.TextField(blank=True, default='')
     learningObjectives = models.ManyToManyField(LearningObjective, blank=True)
-
+    prompt = RichTextField('Solution Prompt', default='')
     DESIGN = models.BooleanField(verbose_name='Design', default=False)
     SIMULATE = models.BooleanField(verbose_name='Simulate', default=False)
     IMPLEMENT = models.BooleanField(verbose_name='Implement', default=False)
