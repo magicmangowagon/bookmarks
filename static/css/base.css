@@ -132,14 +132,18 @@
     flex-direction: column;
 }
 
+.expoVertWrapper h1 {
+    border-bottom: none;
+}
+
 .learningExpoList {
     position: sticky;
     top: 0;
     background-color: #efefef;
     padding: 12px;
     text-align: center;
-    min-width: 150px;
-    width: 15%;
+    min-width: 200px;
+    width: fit-content;
     height: fit-content;
 }
 
@@ -329,7 +333,7 @@ ol {
 
 #content {
     padding:30px 100px;
-    width: 88%%;
+    width: 88%;
     margin: auto;
 }
 
