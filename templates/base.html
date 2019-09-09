@@ -35,7 +35,7 @@
         {% if request.user.is_authenticated %}
             Hello {{ request.user.first_name }},
             <a href="{% url "logout" %}">Logout</a><br>
-            {% if request.user.is_staff %}<a href="admin">Edit Site</a>{% endif %}
+            {% if request.user.is_staff %}<a href="admin" target="_blank">Edit Site</a>{% endif %}
         {% else %}
             <a href="{% url "login" %}">Log-in | </a>
             <a href="{% url "register" %}">Register</a>
