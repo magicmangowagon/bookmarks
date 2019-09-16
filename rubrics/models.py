@@ -86,6 +86,16 @@ class SolutionInstance(models.Model):
         return self.name
 
 
+# MEGACHALLENGE - Ties multiple challenges into one
+class MegaChallenge(models.Model):
+    name = models.CharField(default='', max_length=500)
+    solutions = models.ManyToManyField(SolutionInstance, blank=True, related_name="mega_challenge_that_owns_me")
+    overRide = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name
+
+
 class Challenge(models.Model):
 
     name = models.CharField(max_length=250)
@@ -94,6 +104,7 @@ class Challenge(models.Model):
     standardSolution = RichTextField('Standard Solution', default='')
     pullQuote = models.CharField('Pull Quote', max_length=500, default='')
     display = models.BooleanField('Show Challenge', default=True)
+    megaChallenge = models.ForeignKey(MegaChallenge, null=True, on_delete=models.CASCADE, blank=True)
 
     A = 'A'
     B = 'B'

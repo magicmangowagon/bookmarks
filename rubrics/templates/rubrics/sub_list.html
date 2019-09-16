@@ -4,18 +4,19 @@
 {% block title %}Woodrow Wilson Academy{% endblock %}
 
 {% block content %}
-<h1>Challenges</h1>
+<h1>{{ megachallenge.name }} Challenge Parts</h1>
 
 {% for challenge in challenges %}
 <h2>
-    <a href="challengeCover/{{ challenge.id }}">
-        {% if challenge.megaChallenge %}
-
-            {{ challenge.megaChallenge.name }}
-
-        {% else %}
-            {{ challenge.name }}
+    {% for learningExpo in learningExpos %}
+        {% if learningExpo.challenge == challenge %}
+            <a href="/learningExperience/{{ learningExpo.id }}">
         {% endif %}
+    {% endfor %}
+
+
+            {{ challenge.name }}
+
     </a>
     </h2>
     <ul class="challengeListObj">

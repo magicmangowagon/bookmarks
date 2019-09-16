@@ -1,4 +1,4 @@
-from .models import RubricLine, Competency, CompetencyProgress, LearningObjective, ChallengeAddendum
+from .models import RubricLine, Competency, CompetencyProgress, LearningObjective, ChallengeAddendum, Challenge, MegaChallenge
 
 
 # processes rubriclines from view, checks if ready conditions are met, records result, saves the
@@ -69,3 +69,9 @@ def assess_competency_done(rubricLines):
 
 def custom_rubric_producer(challengeAddendum):
     return challengeAddendum
+
+
+def mega_challenge_builder(challenge):
+
+
+    return challenge

@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from .models import LearningObjective, Rubric, Criterion, Competency, Challenge, UserSolution, RubricLine, CriteriaLine, \
-    CompetencyProgress, ChallengeAddendum, LearningExperience, LearningExpoResponses, Evaluated, SolutionInstance
+    CompetencyProgress, ChallengeAddendum, LearningExperience, LearningExpoResponses, Evaluated, SolutionInstance, MegaChallenge
 
 
 class CriteriaInline(admin.TabularInline):
@@ -24,6 +24,7 @@ class CompetencyInline(admin.TabularInline):
 @admin.register(UserSolution)
 class UserSolution(admin.ModelAdmin):
     list_display = ['pk', 'userOwner', 'challengeName', 'customized']
+
 
 @admin.register(Evaluated)
 class Evaluated(admin.ModelAdmin):
@@ -61,6 +62,12 @@ class CompetencyAdmin(admin.ModelAdmin):
 class ChallengeAdmin(admin.ModelAdmin):
     list_display = ['name']
     filter_horizontal = ('learningObjs', 'solutions')
+
+
+@admin.register(MegaChallenge)
+class MegaChallengeAdmin(admin.ModelAdmin):
+    list_display = ['name', 'overRide']
+    filter_horizontal = ['solutions', ]
 
 
 @admin.register(SolutionInstance)

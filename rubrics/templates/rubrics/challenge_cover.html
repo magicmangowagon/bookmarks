@@ -9,23 +9,40 @@
 <div class="coverSheet">
     <div class="coverSheetTitleContainer">
         <div class="coverSheetTitle">
-            <h1>{{ challengeCover.name }}</h1>
+            {% if challengeCover.0.megaChallenge %}
+                <h1>{{ challengeCover.0.megaChallenge.name }}</h1>
+            {% else %}
+                <h1>{{ challengeCover.name }}</h1>
+            {% endif %}
         </div>
         <div class="challengeGroup">
-            group
-            <h2>{{ challengeCover.challengeGroupChoices }}</h2>
+            <p>group</p>
+            {% if challengeCover.0.megaChallenge %}
+                <h2>{{ challengeCover.0.challengeGroupChoices }}</h2>
+            {% else %}
+                <h2>{{ challengeCover.challengeGroupChoices }}</h2>
+            {% endif %}
         </div>
     </div><!-- coverSheetTitleContainer -->
 
     <div class="pullQuote">
+        {% if challengeCover.0.megaChallenge %}
+            <h2>{{ challengeCover.0.pullQuote }}</h2>
+        {% else %}
             <h2>{{ challengeCover.pullQuote }}</h2>
+        {% endif %}
+
     </div> <!-- pullQuote -->
 
     <div class="course-content-container">
 
         <div class="course-content-box">
             <h3>Challenge Overview</h3>
-            <p>{{ challengeCover.description | safe }}</p>
+            {% if challengeCover.0.megaChallenge %}
+                <p>{{ challengeCover.0.description | safe }}</p>
+            {% else %}
+                <p>{{ challengeCover.description | safe }}</p>
+            {% endif %}
         </div>
 
         <div class="course-content-box">
@@ -42,21 +59,27 @@
             {% endfor %}
         </div>
 
-        <!-- <div class="course-content-box">
-            <h3>Standard Solution</h3>
-            <p>{{ challengeCover.standardSolution | safe }}</p>
-        </div> -->
+
 
     </div>
     <div class="course-content-box">
         <h3>Clinical Needs</h3>
+        {% if challengeCover.0.megaChallenge %}
+            <p>{{ challengeCover.0.clinicalNeeds | safe }}</p>
+        {% else %}
+            <p>{{ challengeCover.clinicalNeeds | safe }}</p>
+        {% endif %}
 
-        <p>{{ challengeCover.clinicalNeeds | safe }}</p>
     </div>
 
-
     <div>
-        <input type="button" onclick='window.location.href="/learningExperience/{{ next }}";' value="Next">
+        {% if challengeCover.0.megaChallenge %}
+            <input type="button" onclick='window.location.href="/subsolutions/{{ challengeCover.0.megaChallenge.id }}";' value="Next">
+        {% else %}
+            <input type="button" onclick='window.location.href="/learningExperience/{{ next }}";' value="Next">
+        {% endif %}
+
+
     </div>
 </div>
 

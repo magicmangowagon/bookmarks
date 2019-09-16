@@ -4,7 +4,7 @@ from django import forms
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion, CriteriaLine, \
     Competency, CompetencyProgress, ChallengeAddendum, LearningExperience, LearningExpoResponses, Evaluated, \
-    CoachReview, SolutionInstance
+    CoachReview, SolutionInstance, MegaChallenge
 from .forms import UserFileForm, UserFileFormset, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, \
     CriterionFormSet, CriteriaForm, CurrentStudentToView, RubricAddendumForm, RubricAddendumFormset, \
     LearningExperienceFormset, LearningExperienceForm, LearningExpoFeedbackForm, LearningExpoFeedbackFormset, \
@@ -15,7 +15,7 @@ from django.urls import reverse
 from django.forms import modelformset_factory
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
-from .functions import process_rubricLine, assess_competency_done, custom_rubric_producer
+from .functions import process_rubricLine, assess_competency_done, custom_rubric_producer, mega_challenge_builder
 
 
 class ChallengeCover(DetailView):
@@ -26,15 +26,25 @@ class ChallengeCover(DetailView):
         context = super(ChallengeCover, self).get_context_data(**kwargs)
 
         challengeCover = Challenge.objects.get(pk=self.kwargs['pk'])
-        context['challengeCover'] = challengeCover
 
-        learningObjectives = LearningObjective.objects.all().filter(challenge=self.kwargs['pk']).order_by('compGroup', 'compNumber', 'loNumber')
-        context['learningObjectives'] = learningObjectives
-        degree = [challengeCover.DESIGN, challengeCover.SIMULATE, challengeCover.IMPLEMENT]
+        if challengeCover.megaChallenge:
+            challenges = Challenge.objects.all().filter(megaChallenge=challengeCover.megaChallenge)
+            learningObjectives = []
+            for challenge in challenges:
+                lo_list = LearningObjective.objects.all().filter(challenge=challenge).order_by('compGroup', 'compNumber', 'loNumber')
+                for learningObjective in lo_list:
+                    learningObjectives.append(learningObjective)
 
-        context['degree'] = [(challengeCover.DESIGN, 'Design'), (challengeCover.SIMULATE, 'Simulate'), (challengeCover.IMPLEMENT, 'Implement')]
-        context['scale'] = [(challengeCover.ONEONONE, 'One on One'), (challengeCover.SMALLGROUP, 'Small Group'), (challengeCover.FULLCLASS, 'Full Class')]
-        context['type'] = [(challengeCover.REFLECTION, 'Reflection'), (challengeCover.CLASSROOMEVIDENCE, 'Classroom Evidence'), (challengeCover.OBSERVATION, 'Observation')]
+            context['learningObjectives'] = learningObjectives
+            context['challengeCover'] = Challenge.objects.all().filter(megaChallenge=challengeCover.megaChallenge)
+        else:
+            learningObjectives = LearningObjective.objects.all().filter(challenge=challengeCover).order_by('compGroup',
+                                                                                                           'compNumber',
+                                                                                                           'loNumber')
+            context['learningObjectives'] = learningObjectives
+            context['challengeCover'] = challengeCover
+
+
 
         theseComps = []
         competencies = Competency.objects.all()
@@ -228,6 +238,19 @@ class ChallengeListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['lo_list'] = LearningObjective.objects.all().order_by('compGroup', 'compNumber', 'loNumber')
+        return context
+
+
+class MegaSubPage(DetailView):
+    model = MegaChallenge
+    template_name = 'rubrics/sub_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(MegaSubPage, self).get_context_data()
+        challenges = Challenge.objects.all().filter(megaChallenge=self.kwargs['pk'])
+        context['challenges'] = challenges
+        learningExpos = LearningExperience.objects.all().filter(challenge__megaChallenge=self.kwargs['pk'])
+        context['learningExpos'] = learningExpos
         return context
 
 

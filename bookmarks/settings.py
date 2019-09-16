@@ -134,23 +134,25 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 TAGGIT_CASE_INSENSITIVE = True
 
-STATIC_URL = '/static/'
+AWS_ACCESS_KEY_ID = os.environ.get('awsKeyID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('secretKeyID')
+AWS_STORAGE_BUCKET_NAME = 'rubrics-bucket'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS = \
+    {'CacheControl': 'max-age=86400',
+                            }
+AWS_LOCATION = 'static'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
+    os.path.join(BASE_DIR, 'static'),
 ]
-# DO_ACCESS_KEY = os.environ('DO_ACCESS_KEY')
-# DO_SECRET_KEY = os.environ('DO_SECRET_KEY')
-DO_STORAGE_BUCKET_NAME = 'wwgstl'
-DO_ENDPOINT = 'sfo2.digitaloceanspaces.com'
-DO_LOCATION = 'platform'
-# STATIC_URL = 'https://%s/%s/' % (DO_ENDPOINT, DO_LOCATION)
+
+STATIC_URL = 'https://' + AWS_S3_CUSTOM_DOMAIN + AWS_LOCATION
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+STATIC_ROOT = os.path.join(PROJECT_ROOT, STATIC_URL)
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
 
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = 'login'
