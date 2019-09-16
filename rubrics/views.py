@@ -33,7 +33,8 @@ class ChallengeCover(DetailView):
             for challenge in challenges:
                 lo_list = LearningObjective.objects.all().filter(challenge=challenge).order_by('compGroup', 'compNumber', 'loNumber')
                 for learningObjective in lo_list:
-                    learningObjectives.append(learningObjective)
+                    if learningObjective not in learningObjectives:
+                        learningObjectives.append(learningObjective)
 
             context['learningObjectives'] = learningObjectives
             context['challengeCover'] = Challenge.objects.all().filter(megaChallenge=challengeCover.megaChallenge)
