@@ -102,7 +102,7 @@ class Challenge(models.Model):
     description = RichTextField('Challenge Overview', )
     clinicalNeeds = RichTextField('Clinical Needs', default='')
     standardSolution = RichTextField('Standard Solution', default='')
-    pullQuote = models.CharField('Pull Quote', max_length=500, default='')
+    pullQuote = models.CharField('Pull Quote', max_length=1000, default='')
     display = models.BooleanField('Show Challenge', default=True)
     megaChallenge = models.ForeignKey(MegaChallenge, null=True, on_delete=models.CASCADE, blank=True)
 
