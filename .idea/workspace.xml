@@ -2,64 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9d2353c-1e9e-47b8-8190-35e7ab7af957" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/rubrics/templates/rubrics/sub_list.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookmarks/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/bookmarks/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookmarks/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/bookmarks/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/functions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/templates/rubrics/challenge_cover.html" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/templates/rubrics/challenge_cover.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/templates/rubrics/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/templates/rubrics/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubrics/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rubrics/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/base.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/css/base.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/css/base.css.gz" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/css/base.css.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/css/fonts.cc6140298ba7.css" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/css/fonts.cc6140298ba7.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/css/forms.css" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/css/forms.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/css/forms.css.gz" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/css/forms.css.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/css/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/css/login.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/css/login.css.gz" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/css/login.css.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/css/responsive.css" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/css/responsive.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/css/responsive.css.gz" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/css/responsive.css.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/css/responsive_rtl.css" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/css/responsive_rtl.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/css/responsive_rtl.css.gz" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/css/responsive_rtl.css.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/css/rtl.css" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/css/rtl.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/css/rtl.css.gz" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/css/rtl.css.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/fonts/README.txt" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/fonts/README.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/fonts/Roboto-Bold-webfont.woff" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/fonts/Roboto-Bold-webfont.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/fonts/Roboto-Light-webfont.woff" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/fonts/Roboto-Light-webfont.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/fonts/Roboto-Regular-webfont.woff" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/fonts/Roboto-Regular-webfont.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/SelectBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/SelectBox.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/SelectBox.js.gz" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/SelectBox.js.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/SelectFilter2.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/SelectFilter2.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/SelectFilter2.js.gz" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/SelectFilter2.js.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/actions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/actions.js.gz" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/actions.js.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/admin/DateTimeShortcuts.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/admin/DateTimeShortcuts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/admin/DateTimeShortcuts.js.gz" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/admin/DateTimeShortcuts.js.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/cancel.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/cancel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/cancel.js.gz" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/cancel.js.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/collapse.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/collapse.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/collapse.js.gz" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/collapse.js.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/collapse.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/collapse.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/collapse.min.js.gz" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/collapse.min.js.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/core.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/core.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/core.js.gz" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/core.js.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/inlines.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/inlines.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/inlines.js.gz" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/inlines.js.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/urlify.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/urlify.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/urlify.js.gz" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/urlify.js.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/vendor/jquery/jquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/vendor/jquery/jquery.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/vendor/jquery/jquery.js.gz" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/vendor/jquery/jquery.js.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/vendor/jquery/jquery.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/vendor/jquery/jquery.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/vendor/jquery/jquery.min.js.gz" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/vendor/jquery/jquery.min.js.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/css/base.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/css/base.css.gz" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/css/base.css.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/staticfiles.json" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/staticfiles.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/base_site.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/base_site.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
     </list>
     <ignored path="bookmarks/settings.py" />
@@ -134,7 +78,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="156">
+            <state relative-caret-position="2106">
               <caret line="84" column="22" selection-start-line="84" selection-start-column="22" selection-end-line="84" selection-end-column="22" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
@@ -146,8 +90,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="250" column="42" lean-forward="true" selection-start-line="250" selection-start-column="42" selection-end-line="250" selection-end-column="42" />
+            <state relative-caret-position="416">
+              <caret line="253" column="36" lean-forward="true" selection-start-line="253" selection-start-column="36" selection-end-line="253" selection-end-column="36" />
               <folding>
                 <element signature="e#0#65#0" expanded="true" />
               </folding>
@@ -155,10 +99,28 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/base.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="208">
+              <caret line="38" column="52" selection-start-line="38" selection-start-column="52" selection-end-line="38" selection-end-column="52" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/list.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="182">
+              <caret line="19" column="9" lean-forward="true" selection-start-line="19" selection-start-column="9" selection-end-line="19" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
+            <state relative-caret-position="572">
               <caret line="27" column="22" selection-start-line="27" selection-start-column="22" selection-end-line="27" selection-end-column="22" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
@@ -179,17 +141,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/challenge_cover.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="75" column="47" lean-forward="true" selection-start-line="75" selection-start-column="47" selection-end-line="75" selection-end-column="47" />
+            <state relative-caret-position="1950">
+              <caret line="75" column="47" selection-start-line="75" selection-start-column="47" selection-end-line="75" selection-end-column="47" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/sub_list.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="156">
-              <caret line="6" column="44" selection-start-line="6" selection-start-column="44" selection-end-line="6" selection-end-column="44" />
+            <state relative-caret-position="286">
+              <caret line="11" column="52" lean-forward="true" selection-start-line="11" selection-start-column="52" selection-end-line="11" selection-end-column="52" />
             </state>
           </provider>
         </entry>
@@ -197,7 +159,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/functions.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="376">
+            <state relative-caret-position="1924">
               <caret line="74" selection-start-line="74" selection-end-line="74" />
             </state>
           </provider>
@@ -317,18 +279,18 @@
         <option value="$PROJECT_DIR$/bookmarks/urls.py" />
         <option value="$PROJECT_DIR$/bookmarks/settings.py" />
         <option value="$PROJECT_DIR$/templates/admin/base_site.html" />
-        <option value="$PROJECT_DIR$/templates/base.html" />
         <option value="$PROJECT_DIR$/rubrics/migrations/0082_megachallenge.py" />
         <option value="$PROJECT_DIR$/rubrics/migrations/0082_auto_20190913_1513.py" />
         <option value="$PROJECT_DIR$/rubrics/migrations/0083_auto_20190913_1523.py" />
         <option value="$PROJECT_DIR$/rubrics/admin.py" />
         <option value="$PROJECT_DIR$/rubrics/models.py" />
         <option value="$PROJECT_DIR$/rubrics/functions.py" />
-        <option value="$PROJECT_DIR$/rubrics/templates/rubrics/list.html" />
         <option value="$PROJECT_DIR$/rubrics/urls.py" />
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/challenge_cover.html" />
-        <option value="$PROJECT_DIR$/rubrics/views.py" />
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/sub_list.html" />
+        <option value="$PROJECT_DIR$/rubrics/templates/rubrics/list.html" />
+        <option value="$PROJECT_DIR$/rubrics/views.py" />
+        <option value="$PROJECT_DIR$/templates/base.html" />
       </list>
     </option>
   </component>
@@ -339,10 +301,10 @@
     <auto-save>true</auto-save>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
+    <option name="x" value="-1741" />
+    <option name="y" value="-19" />
     <option name="width" value="1936" />
-    <option name="height" value="1096" />
+    <option name="height" value="1048" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -352,6 +314,46 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Scope 'Changed Files'; set:Changed Files; ALL; class com.intellij.packageDependencies.ChangeListScope">
+          <expand>
+            <path>
+              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+            <path>
+              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name=".idea" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+            <path>
+              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="bookmarks" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="static" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="templates" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -409,46 +411,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope">
-        <subPane subId="Scope 'Changed Files'; set:Changed Files; ALL; class com.intellij.packageDependencies.ChangeListScope">
-          <expand>
-            <path>
-              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-            </path>
-            <path>
-              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name=".idea" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
-          <expand>
-            <path>
-              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
-            </path>
-            <path>
-              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="bookmarks" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="static" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="templates" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -459,7 +421,7 @@
     <property name="database.console.LAST_STATE" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/rubrics/templates/rubrics" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="web.server" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -609,21 +571,8 @@
       <workItem from="1567786035581" duration="1993000" />
       <workItem from="1568034119703" duration="15436000" />
       <workItem from="1568390131011" duration="11622000" />
-      <workItem from="1568595470863" duration="11263000" />
-    </task>
-    <task id="LOCAL-00191" summary="Added some context to the solution detail page, providing past examples of tc work related to a learning objective. Will expand on this to make it into a full pre-evaluation page.">
-      <created>1562779817278</created>
-      <option name="number" value="00191" />
-      <option name="presentableId" value="LOCAL-00191" />
-      <option name="project" value="LOCAL" />
-      <updated>1562779817279</updated>
-    </task>
-    <task id="LOCAL-00192" summary="Added some context to the solution detail page, providing past examples of tc work related to a learning objective. Will expand on this to make it into a full pre-evaluation page.">
-      <created>1562869245235</created>
-      <option name="number" value="00192" />
-      <option name="presentableId" value="LOCAL-00192" />
-      <option name="project" value="LOCAL" />
-      <updated>1562869245235</updated>
+      <workItem from="1568595470863" duration="14058000" />
+      <workItem from="1568733042009" duration="2826000" />
     </task>
     <task id="LOCAL-00193" summary="Need to fix rubricLine query, currently pulling all of them">
       <created>1562869526629</created>
@@ -954,11 +903,25 @@
       <option name="project" value="LOCAL" />
       <updated>1568049297348</updated>
     </task>
-    <option name="localTasksCounter" value="240" />
+    <task id="LOCAL-00240" summary="MegaChallenge in!">
+      <created>1568650734440</created>
+      <option name="number" value="00240" />
+      <option name="presentableId" value="LOCAL-00240" />
+      <option name="project" value="LOCAL" />
+      <updated>1568650734441</updated>
+    </task>
+    <task id="LOCAL-00241" summary="Remove dupes of LO's in the mega challenge list">
+      <created>1568652005972</created>
+      <option name="number" value="00241" />
+      <option name="presentableId" value="LOCAL-00241" />
+      <option name="project" value="LOCAL" />
+      <updated>1568652005972</updated>
+    </task>
+    <option name="localTasksCounter" value="242" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1172856000" />
+    <option name="totallyTimeSpent" value="1178477000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -970,12 +933,12 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-1928" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="1" sideWeight="0.5008026" side_tool="true" weight="0.1444563" />
-      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.49919742" visible="true" weight="0.14925373" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.49919742" visible="true" weight="0.15085287" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32887402" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32552955" />
@@ -1080,8 +1043,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Changed criteria dropdown on rubric form, now has a blank default. Stores a '0' if user forgets to check it." />
-    <MESSAGE value="Added a new model to track evaluators and access dates on userSolutions" />
     <MESSAGE value="New model is working, saves on post, which should be good because we want every instance of when an evaluator looked at a usersolution, not just the first time." />
     <MESSAGE value="added subject matter to profile field in preparation for refactoring &#10;the way challenges solutions are reported to evaluators and coaches" />
     <MESSAGE value="Added basic check on rubriclines to see if current user is the user who created the eval, it not loads a new form.&#10;Need to clean this up and make it more tailored to a coach." />
@@ -1105,7 +1066,9 @@
     <MESSAGE value="CSS tweaks" />
     <MESSAGE value="Added logo" />
     <MESSAGE value="Fixed DOM issue with next button" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed DOM issue with next button" />
+    <MESSAGE value="MegaChallenge in!" />
+    <MESSAGE value="Remove dupes of LO's in the mega challenge list" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove dupes of LO's in the mega challenge list" />
   </component>
   <component name="editorHistoryManager">
     <entry file="das://616a6a49-60f1-4903-b8d3-7d5c85c6a195/database/postgres/schema/public/table/rubrics_learningexperience">
@@ -1292,13 +1255,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
-          <caret line="25" column="48" lean-forward="true" selection-start-line="25" selection-start-column="48" selection-end-line="25" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/migrations/0083_megachallenge_name.py" />
     <entry file="das://616a6a49-60f1-4903-b8d3-7d5c85c6a195/database/postgres/schema/public/table/rubrics_megachallenge/index/rubrics_megachallenge_pkey">
       <provider selected="true" editor-type-id="text-editor">
@@ -1372,11 +1328,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
+        <state relative-caret-position="2106">
           <caret line="84" column="22" selection-start-line="84" selection-start-column="22" selection-end-line="84" selection-end-column="22" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="572">
+          <caret line="27" column="22" selection-start-line="27" selection-start-column="22" selection-end-line="27" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/challenge_cover.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1950">
+          <caret line="75" column="47" selection-start-line="75" selection-start-column="47" selection-end-line="75" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/functions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1924">
+          <caret line="74" selection-start-line="74" selection-end-line="74" />
         </state>
       </provider>
     </entry>
@@ -1390,34 +1370,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/functions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="376">
-          <caret line="74" selection-start-line="74" selection-end-line="74" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/challenge_cover.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="75" column="47" lean-forward="true" selection-start-line="75" selection-start-column="47" selection-end-line="75" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/list.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="17" column="19" lean-forward="true" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="27" column="22" selection-start-line="27" selection-start-column="22" selection-end-line="27" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="182">
+          <caret line="19" column="9" lean-forward="true" selection-start-line="19" selection-start-column="9" selection-end-line="19" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -1428,20 +1384,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/sub_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="11" column="52" lean-forward="true" selection-start-line="11" selection-start-column="52" selection-end-line="11" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="250" column="42" lean-forward="true" selection-start-line="250" selection-start-column="42" selection-end-line="250" selection-end-column="42" />
+        <state relative-caret-position="416">
+          <caret line="253" column="36" lean-forward="true" selection-start-line="253" selection-start-column="36" selection-end-line="253" selection-end-column="36" />
           <folding>
             <element signature="e#0#65#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/sub_list.html">
+    <entry file="file://$PROJECT_DIR$/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="6" column="44" selection-start-line="6" selection-start-column="44" selection-end-line="6" selection-end-column="44" />
+        <state relative-caret-position="208">
+          <caret line="38" column="52" selection-start-line="38" selection-start-column="52" selection-end-line="38" selection-end-column="52" />
         </state>
       </provider>
     </entry>

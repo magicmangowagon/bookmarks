@@ -250,7 +250,10 @@ class MegaSubPage(DetailView):
         context = super(MegaSubPage, self).get_context_data()
         challenges = Challenge.objects.all().filter(megaChallenge=self.kwargs['pk'])
         context['challenges'] = challenges
-        learningExpos = LearningExperience.objects.all().filter(challenge__megaChallenge=self.kwargs['pk'])
+        learningExpos = []
+        for challenge in challenges:
+            learningExpos.append(LearningExperience.objects.all().filter(challenge=challenge).first())
+        print(len(learningExpos))
         context['learningExpos'] = learningExpos
         return context
 
