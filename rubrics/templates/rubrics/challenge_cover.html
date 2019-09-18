@@ -53,14 +53,15 @@
                     {% for learningObjective in learningObjectives %}
                         {% if learningObjective.compGroup == competency.compGroup and learningObjective.compNumber == competency.compNumber %}
                             <div class="learningObj_list"><p><a onclick="hideShow()">{{ learningObjective.loNumber }}: {{ learningObjective.name }}</a></p></div>
-                            <ul id="critList">
+
+                            <!-- <ul id="critList">
                             {% for criterion in criterionList %}
 
                                     {% if learningObjective == criterion.learningObj %}
                                         <li>{{ criterion }}</li>
                                     {% endif %}
                                 {% endfor %}
-                            </ul>
+                            </ul> -->
                         {% endif %}
                     {% endfor %}
                 </div>

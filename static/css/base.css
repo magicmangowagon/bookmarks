@@ -678,7 +678,7 @@ img.user-detail {
     width: 100%;
     background-color: #003469;
     position: absolute;
-    bottom: 0px;
+    bottom: 0;
 }
 
 /* Challenge Cover sheet styling */
@@ -773,7 +773,7 @@ img.user-detail {
     padding: 0 6pt 12pt;
     border-radius: 1pt;
     border: solid 6pt #bdc2c9;
-    max-width: 40%;
+
     min-width: 300px;
 }
 
