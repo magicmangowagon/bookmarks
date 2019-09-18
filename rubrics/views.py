@@ -45,8 +45,7 @@ class ChallengeCover(DetailView):
             context['learningObjectives'] = learningObjectives
             context['challengeCover'] = challengeCover
 
-
-
+        context['criterionList'] = Criterion.objects.all().filter(learningObj__in=learningObjectives)
         theseComps = []
         competencies = Competency.objects.all()
         for learningObjective in learningObjectives:
@@ -118,7 +117,7 @@ class ChallengeDetail(FormView):
             UserFileFormset = modelformset_factory(UserSolution, extra=1, formset=UserFileForm, fields=('userOwner', 'challengeName', 'solution', 'solutionInstance',
             'goodTitle', 'workFit', 'proudDetail', 'hardDetail', 'objectiveWell', 'objectivePoor', 'personalLearningObjective', 'helpfulLearningExp',
             'notHelpfulLearningExp', 'changeLearningExp', 'notIncludedLearningExp'),
-                                       widgets={'userOwner': forms.HiddenInput, 'challengeName': forms.HiddenInput, })
+                                       widgets={'userOwner': forms.HiddenInput, 'challengeName': forms.HiddenInput, 'solutionInstance': forms.HiddenInput})
 
             formset = UserFileFormset(prefix='user', initial=[{'challengeName': thisChallenge, 'userOwner': self.request.user, 'solutionInstance': thisSolutionInstance}],
                                       queryset=UserSolution.objects.none())

@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9d2353c-1e9e-47b8-8190-35e7ab7af957" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rubrics/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rubrics/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rubrics/templates/rubrics/challenge_cover.html" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/templates/rubrics/challenge_cover.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rubrics/templates/rubrics/solution_sections.html" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/templates/rubrics/solution_sections.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rubrics/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/rubrics/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/base.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/base.css" afterDir="false" />
     </list>
     <ignored path="bookmarks/settings.py" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -73,11 +79,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="104" column="62" selection-start-line="104" selection-start-column="62" selection-end-line="104" selection-end-column="62" />
+            <state relative-caret-position="52">
+              <caret line="266" column="17" selection-start-line="266" selection-start-column="17" selection-end-line="266" selection-end-column="17" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -88,11 +94,41 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="254" column="120" selection-start-line="254" selection-start-column="120" selection-end-line="254" selection-end-column="120" />
+            <state relative-caret-position="425">
+              <caret line="115" lean-forward="true" selection-start-line="115" selection-end-line="115" />
               <folding>
                 <element signature="e#0#65#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/rubrics/forms.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="399">
+              <caret line="93" column="47" lean-forward="true" selection-start-line="93" selection-start-column="47" selection-end-line="93" selection-end-column="47" />
+              <folding>
+                <element signature="e#0#24#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/challenge_detail.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1950">
+              <caret line="96" column="33" lean-forward="true" selection-start-line="96" selection-start-column="33" selection-end-line="96" selection-end-column="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/solution_sections.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="208">
+              <caret line="80" column="66" selection-start-line="80" selection-start-column="66" selection-end-line="80" selection-end-column="66" />
             </state>
           </provider>
         </entry>
@@ -107,31 +143,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/list.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="182">
-              <caret line="19" column="9" lean-forward="true" selection-start-line="19" selection-start-column="9" selection-end-line="19" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rubrics/urls.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="572">
-              <caret line="27" column="22" selection-start-line="27" selection-start-column="22" selection-end-line="27" selection-end-column="22" />
-              <folding>
-                <element signature="e#0#28#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/learningExperience.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-130">
-              <caret line="7" column="29" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="29" />
+            <state relative-caret-position="324">
+              <caret line="46" column="94" lean-forward="true" selection-start-line="46" selection-start-column="4" selection-end-line="46" selection-end-column="94" />
             </state>
           </provider>
         </entry>
@@ -139,17 +154,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/challenge_cover.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="68" column="54" lean-forward="true" selection-start-line="68" selection-start-column="54" selection-end-line="68" selection-end-column="54" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/sub_list.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
-              <caret line="12" column="89" selection-start-line="12" selection-start-column="89" selection-end-line="12" selection-end-column="89" />
+            <state relative-caret-position="156">
+              <caret line="48" column="40" lean-forward="true" selection-start-line="48" selection-start-column="40" selection-end-line="48" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -268,12 +274,9 @@
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/eval_list.html" />
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/coachingreview.html" />
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/challenge_detail.html" />
-        <option value="$PROJECT_DIR$/rubrics/forms.py" />
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/rubric_form.html" />
         <option value="$PROJECT_DIR$/rubrics/templatetags/solution_filters.py" />
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/learningExperience.html" />
-        <option value="$PROJECT_DIR$/rubrics/templates/rubrics/solution_sections.html" />
-        <option value="$PROJECT_DIR$/static/css/base.css" />
         <option value="$PROJECT_DIR$/bookmarks/urls.py" />
         <option value="$PROJECT_DIR$/bookmarks/settings.py" />
         <option value="$PROJECT_DIR$/templates/admin/base_site.html" />
@@ -286,9 +289,12 @@
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/list.html" />
         <option value="$PROJECT_DIR$/templates/base.html" />
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/sub_list.html" />
-        <option value="$PROJECT_DIR$/rubrics/views.py" />
+        <option value="$PROJECT_DIR$/static/css/base.css" />
         <option value="$PROJECT_DIR$/rubrics/templates/rubrics/challenge_cover.html" />
+        <option value="$PROJECT_DIR$/rubrics/templates/rubrics/solution_sections.html" />
         <option value="$PROJECT_DIR$/rubrics/models.py" />
+        <option value="$PROJECT_DIR$/rubrics/views.py" />
+        <option value="$PROJECT_DIR$/rubrics/forms.py" />
       </list>
     </option>
   </component>
@@ -299,10 +305,10 @@
     <auto-save>true</auto-save>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-1741" />
-    <option name="y" value="-19" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
     <option name="width" value="1936" />
-    <option name="height" value="1048" />
+    <option name="height" value="1096" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -312,46 +318,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Scope 'Changed Files'; set:Changed Files; ALL; class com.intellij.packageDependencies.ChangeListScope">
-          <expand>
-            <path>
-              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-            </path>
-            <path>
-              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name=".idea" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
-          <expand>
-            <path>
-              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
-            </path>
-            <path>
-              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="bookmarks" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="static" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="templates" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -404,6 +370,46 @@
               <item name="bookmarks" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="admin" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Scope 'Changed Files'; set:Changed Files; ALL; class com.intellij.packageDependencies.ChangeListScope">
+          <expand>
+            <path>
+              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+            <path>
+              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name=".idea" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+            <path>
+              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="bookmarks" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="static" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="bookmarks" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="C:\Users\liamp\python_practice\django2examplesBook\bookmarks" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="templates" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
           </expand>
           <select />
@@ -570,28 +576,8 @@
       <workItem from="1568034119703" duration="15436000" />
       <workItem from="1568390131011" duration="11622000" />
       <workItem from="1568595470863" duration="14058000" />
-      <workItem from="1568733042009" duration="8028000" />
-    </task>
-    <task id="LOCAL-00196" summary="Added some basic group functionality.">
-      <created>1562944794698</created>
-      <option name="number" value="00196" />
-      <option name="presentableId" value="LOCAL-00196" />
-      <option name="project" value="LOCAL" />
-      <updated>1562944794698</updated>
-    </task>
-    <task id="LOCAL-00197" summary="Changed submit to next on first rubric form page">
-      <created>1562946028514</created>
-      <option name="number" value="00197" />
-      <option name="presentableId" value="LOCAL-00197" />
-      <option name="project" value="LOCAL" />
-      <updated>1562946028514</updated>
-    </task>
-    <task id="LOCAL-00198" summary="Added solution coversheet responses to solution/pre-evaluation detail view">
-      <created>1562970434324</created>
-      <option name="number" value="00198" />
-      <option name="presentableId" value="LOCAL-00198" />
-      <option name="project" value="LOCAL" />
-      <updated>1562970434324</updated>
+      <workItem from="1568733042009" duration="10492000" />
+      <workItem from="1568817836753" duration="2483000" />
     </task>
     <task id="LOCAL-00199" summary="Added solution coversheet responses to solution/pre-evaluation detail view">
       <created>1563030228454</created>
@@ -915,11 +901,32 @@
       <option name="project" value="LOCAL" />
       <updated>1568752668505</updated>
     </task>
-    <option name="localTasksCounter" value="245" />
+    <task id="LOCAL-00245" summary="Working on learningExpo issues in megaChallenge, fixed&#10;Added all clinical needs rather than just first challenge in list">
+      <created>1568752805480</created>
+      <option name="number" value="00245" />
+      <option name="presentableId" value="LOCAL-00245" />
+      <option name="project" value="LOCAL" />
+      <updated>1568752805480</updated>
+    </task>
+    <task id="LOCAL-00246" summary="Working on learningExpo issues in megaChallenge, fixed&#10;Added all clinical needs rather than just first challenge in list">
+      <created>1568752930563</created>
+      <option name="number" value="00246" />
+      <option name="presentableId" value="LOCAL-00246" />
+      <option name="project" value="LOCAL" />
+      <updated>1568752930563</updated>
+    </task>
+    <task id="LOCAL-00247" summary="Working on learningExpo issues in megaChallenge, fixed&#10;Added all clinical needs rather than just first challenge in list">
+      <created>1568753086925</created>
+      <option name="number" value="00247" />
+      <option name="presentableId" value="LOCAL-00247" />
+      <option name="project" value="LOCAL" />
+      <updated>1568753086925</updated>
+    </task>
+    <option name="localTasksCounter" value="248" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1183679000" />
+    <option name="totallyTimeSpent" value="1188626000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -931,12 +938,12 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1928" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="1" sideWeight="0.5008026" side_tool="true" weight="0.1444563" />
-      <window_info content_ui="combo" id="Project" order="2" sideWeight="0.49919742" visible="true" weight="0.15085287" />
+      <window_info active="true" content_ui="combo" id="Project" order="2" sideWeight="0.49919742" visible="true" weight="0.15245202" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32887402" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32552955" />
@@ -948,7 +955,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49848944" weight="0.32827735" />
       <window_info anchor="bottom" id="Database Changes" order="9" weight="0.32896176" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50852877" side_tool="true" weight="0.22643554" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.4914712" visible="true" weight="0.30546266" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.4914712" visible="true" weight="0.30546266" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.49924472" weight="0.32887402" />
       <window_info anchor="bottom" id="Database Console" order="13" sideWeight="0.49848944" weight="0.32954547" />
       <window_info anchor="bottom" id="SQL Generator" order="14" weight="0.32896176" />
@@ -1152,33 +1159,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/rubric_form.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="8" column="40" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/challenge_detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="96" column="33" lean-forward="true" selection-start-line="96" selection-start-column="33" selection-end-line="96" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="das://616a6a49-60f1-4903-b8d3-7d5c85c6a195/database/postgres/schema/public/table/rubrics_solutioninstance">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state projectRestartId="7ec39096-7b8a-41ff-bc1c-1debf4b53702">
           <filtering>
             <filter text="" />
           </filtering>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/solution_sections.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2262">
-          <caret line="87" selection-start-line="87" selection-end-line="87" />
         </state>
       </provider>
     </entry>
@@ -1202,34 +1188,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/solution_detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="8" column="45" selection-start-line="8" selection-start-column="45" selection-end-line="8" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1742">
-          <caret line="71" column="40" selection-start-line="71" selection-start-column="40" selection-end-line="71" selection-end-column="40" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/templatetags/solution_filters.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
           <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/css/base.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18044">
-          <caret line="694" selection-start-line="694" selection-end-line="694" />
         </state>
       </provider>
     </entry>
@@ -1334,6 +1296,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="19" column="9" selection-start-line="19" selection-start-column="9" selection-end-line="19" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/base.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17862">
+          <caret line="687" column="1" selection-start-line="687" selection-start-column="1" selection-end-line="687" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/sub_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/functions.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1924">
@@ -1351,10 +1334,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/list.html">
+    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/challenge_cover.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="19" column="9" lean-forward="true" selection-start-line="19" selection-start-column="9" selection-end-line="19" selection-end-column="9" />
+        <state relative-caret-position="156">
+          <caret line="48" column="40" lean-forward="true" selection-start-line="48" selection-start-column="40" selection-end-line="48" selection-end-column="40" />
         </state>
       </provider>
     </entry>
@@ -1365,43 +1348,67 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/learningExperience.html">
+    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/solution_detail.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-130">
-          <caret line="7" column="29" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="29" />
+        <state relative-caret-position="26">
+          <caret line="8" column="45" selection-start-line="8" selection-start-column="45" selection-end-line="8" selection-end-column="45" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/sub_list.html">
+    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/learningExperience.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="12" column="89" selection-start-line="12" selection-start-column="89" selection-end-line="12" selection-end-column="89" />
+        <state relative-caret-position="324">
+          <caret line="46" column="94" lean-forward="true" selection-start-line="46" selection-start-column="4" selection-end-line="46" selection-end-column="94" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/solution_sections.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="80" column="66" selection-start-line="80" selection-start-column="66" selection-end-line="80" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/rubric_form.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="8" column="40" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="52">
+          <caret line="266" column="17" selection-start-line="266" selection-start-column="17" selection-end-line="266" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/challenge_detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1950">
+          <caret line="96" column="33" lean-forward="true" selection-start-line="96" selection-start-column="33" selection-end-line="96" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/rubrics/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="254" column="120" selection-start-line="254" selection-start-column="120" selection-end-line="254" selection-end-column="120" />
+        <state relative-caret-position="425">
+          <caret line="115" lean-forward="true" selection-start-line="115" selection-end-line="115" />
           <folding>
             <element signature="e#0#65#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/templates/rubrics/challenge_cover.html">
+    <entry file="file://$PROJECT_DIR$/rubrics/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="68" column="54" lean-forward="true" selection-start-line="68" selection-start-column="54" selection-end-line="68" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rubrics/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="104" column="62" selection-start-line="104" selection-start-column="62" selection-end-line="104" selection-end-column="62" />
+        <state relative-caret-position="399">
+          <caret line="93" column="47" lean-forward="true" selection-start-line="93" selection-start-column="47" selection-end-line="93" selection-end-column="47" />
           <folding>
-            <element signature="e#0#28#0" expanded="true" />
+            <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>

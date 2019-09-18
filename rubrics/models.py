@@ -246,7 +246,7 @@ class UserSolution(models.Model):
     workFit = models.TextField('How does this piece of work fit into the story of your development as a teacher? (*required)', blank=False, default='')
     proudDetail = models.TextField('What’s a specific detail in this work that you are especially proud of? why? (*required)', blank=False, default='')
     hardDetail = models.TextField('Which detail shows what was especially hard for you?  how? (*required)', blank=False, default='')
-    objectiveWell = models.TextField('What’s one objective that you met really well? What’s your evidence?',blank=True, default='')
+    objectiveWell = models.TextField('What’s one objective that you met really well? What’s your evidence?', blank=True, default='')
     objectivePoor = models.TextField('What’s one objective that you still want to work on? What evidence leads you to think this is  an area of growth for you?', blank=True, default='')
     personalLearningObjective = models.TextField('Do you have any learning objectives of your own--in addition to those specified below--that you’d like the Observer to consider when they look at your work?  If so, add them at the top of the Observation Form.', blank=True, default='')
     helpfulLearningExp = models.TextField('Choose one of the above learning experiences that you found helpful. How did it help you? (*required)', blank=False, default='')
@@ -264,11 +264,13 @@ class UserSolution(models.Model):
 class LearningExpoResponses(models.Model):
     learningExperience = models.ForeignKey(LearningExperience, null=True, blank=True, on_delete=models.CASCADE)
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
+    NOANSWER = '4'
     NOTAPPLICABLE = '0'
     NEGATIVE = '1'
     NEUTRAL = '2'
     POSITIVE = '3'
     experienceChoices = [
+        (NOANSWER, '-'),
         (NOTAPPLICABLE, 'Not Applicable'),
         (NEGATIVE, 'Negative'),
         (NEUTRAL, 'Neutral'),

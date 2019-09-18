@@ -52,7 +52,15 @@
                     <p><strong>{{ competency.compGroup }} - {{ competency.compNumber }} {{ competency.name }}</strong></p>
                     {% for learningObjective in learningObjectives %}
                         {% if learningObjective.compGroup == competency.compGroup and learningObjective.compNumber == competency.compNumber %}
-                            <div class="learningObj_list"><p>{{ learningObjective.loNumber }}: {{ learningObjective.name }}</p></div>
+                            <div class="learningObj_list"><p><a onclick="hideShow()">{{ learningObjective.loNumber }}: {{ learningObjective.name }}</a></p></div>
+                            <ul id="critList">
+                            {% for criterion in criterionList %}
+
+                                    {% if learningObjective == criterion.learningObj %}
+                                        <li>{{ criterion }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
                         {% endif %}
                     {% endfor %}
                 </div>
@@ -87,5 +95,15 @@
 
     </div>
 </div>
+    <script>
+        function hideShow(id) {
+          var x = document.getElementById(id);
+          if (x.style.display === "none") {
+            x.style.display = "block";
+          } else {
+            x.style.display = "none";
+  }
+}
 
+    </script>
 {% endblock %}

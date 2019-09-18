@@ -683,6 +683,10 @@ img.user-detail {
 
 /* Challenge Cover sheet styling */
 
+.critList {
+    display: none;
+}
+
 .pullQuote {
     background-color: #f5dd5d;
     text-align: center;
