@@ -477,16 +477,26 @@ class CoachingReviewView(FormView):
         context['learningObjectives'] = lo_list
         context['rubricLines'] = rubricLines
 
-        RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=extras, fields=(
-            'ignore', 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions',
-            'completionLevel', 'student', 'needsLaterAttention',), widgets={'student': forms.HiddenInput, })
+        CoachReviewFormset = modelformset_factory(CoachReview, formset=CoachReviewForm, extra=extras, fields=(
+            'release', 'comment', 'rubricLine', 'evaluator'), widgets={'rubricLine': forms.HiddenInput,
+                                                                       'evaluator': forms.HiddenInput()})
 
-        formset = RubricLineFormset(prefix='rubriclines',
-                                    initial=[{'learningObjective': learningObjective.pk, 'student': thisUserSolution}
-                                             for learningObjective in lo_list], queryset=RubricLine.objects.none())
-        context['formset'] = formset
+        cFormset = CoachReviewFormset(initial=[{'rubricLine': rubricLine.pk, 'evaluator': self.request.user}
+                                               for rubricLine in rubricLines], queryset=CoachReview.objects.none())
+
+        context['formset'] = cFormset
 
         return context
+
+    def post(self, request, *args, **kwargs):
+        form = CoachReviewFormset(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/evals')
+        else:
+            messages.error(request, "Error")
+            return self.render_to_response(self.get_context_data(formset=form))
 
 
 class LearningExperienceView(DetailView):

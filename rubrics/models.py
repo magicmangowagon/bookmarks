@@ -324,6 +324,7 @@ class CoachReview(models.Model):
     rubricLine = models.ForeignKey(RubricLine, on_delete=models.CASCADE)
     release = models.BooleanField(default=False)
     comment = models.TextField(blank=True, default='', max_length=None)
+    evaluator = models.ForeignKey(User, on_delete=models.CASCADE, default='', blank=True)
 
 
 # _____________

@@ -2,7 +2,8 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from .models import LearningObjective, Rubric, Criterion, Competency, Challenge, UserSolution, RubricLine, CriteriaLine, \
-    CompetencyProgress, ChallengeAddendum, LearningExperience, LearningExpoResponses, Evaluated, SolutionInstance, MegaChallenge
+    CompetencyProgress, ChallengeAddendum, LearningExperience, LearningExpoResponses, Evaluated, SolutionInstance, \
+    MegaChallenge, CoachReview
 
 
 class CriteriaInline(admin.TabularInline):
@@ -105,3 +106,8 @@ class ChallengeAddendumAdmin(admin.ModelAdmin):
 @admin.register(LearningExpoResponses)
 class LearningExpoResponsesAdmin(admin.ModelAdmin):
     list_display = ['learningExperience', 'user']
+
+
+@admin.register(CoachReview)
+class CoachReviewAdmin(admin.ModelAdmin):
+    list_display = ['rubricLine', 'release', 'comment']
