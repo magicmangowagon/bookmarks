@@ -22,14 +22,22 @@ class CompetencyInline(admin.TabularInline):
     model = Competency
 
 
+class UserSolutionInline(admin.TabularInline):
+    model = UserSolution.evaluated.through
+
+
 @admin.register(UserSolution)
 class UserSolution(admin.ModelAdmin):
     list_display = ['pk', 'userOwner', 'challengeName', 'customized']
+    pass
 
 
 @admin.register(Evaluated)
 class Evaluated(admin.ModelAdmin):
     list_display = ['whoEvaluated', 'date']
+    inlines = [
+        UserSolutionInline,
+    ]
 
 
 @admin.register(RubricLine)

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User, Group
 from djrichtextfield.models import RichTextField
 from taggit.managers import TaggableManager
+from datetime import datetime
 
 
 # __________________
@@ -227,7 +228,7 @@ class Criterion(models.Model):
 
 class Evaluated(models.Model):
     whoEvaluated = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now_add=datetime.now, blank=True)
 
 
 # _____________
@@ -254,7 +255,11 @@ class UserSolution(models.Model):
     changeLearningExp = models.TextField('What is one learning experience that you would change? How would you change it?', blank=True, default='')
     notIncludedLearningExp = models.TextField('Did you engage in any helpful learning experiences that were not included in the challenge guide? Please let us know what they were so that we can think about adding them.', blank=True, default='')
     customized = models.BooleanField(default=False)
-    evaluated = models.ManyToManyField(Evaluated, blank=True)
+    evaluated = models.ManyToManyField(Evaluated, blank=True, related_name='evaluated')
+
+    def __str__(self):
+        name = self.userOwner.username.__str__() + self.challengeName.name.__str__()
+        return name
 
 
 # ___________
@@ -324,7 +329,7 @@ class CoachReview(models.Model):
     rubricLine = models.ForeignKey(RubricLine, on_delete=models.CASCADE)
     release = models.BooleanField(default=False)
     comment = models.TextField(blank=True, default='', max_length=None)
-    evaluator = models.ForeignKey(User, on_delete=models.CASCADE, default='', blank=True)
+    # evaluator = models.ForeignKey(Evaluated, on_delete=models.CASCADE, default='', related_name='evaluator')
 
 
 # _____________
