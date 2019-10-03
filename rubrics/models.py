@@ -46,7 +46,7 @@ class LearningObjective(models.Model):
         (7, "7"),
         (8, "8")
     ))
-    name = models.CharField(max_length=250)
+    name = models.TextField(blank=True, default='')
     tags = TaggableManager(blank=True)
 
     def __str__(self):
@@ -230,6 +230,9 @@ class Evaluated(models.Model):
     whoEvaluated = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=datetime.now, blank=True)
 
+    def __str__(self):
+        return self.whoEvaluated.username
+
 
 # _____________
 # USER SOLUTION
@@ -300,6 +303,7 @@ class RubricLine(models.Model):
     suggestions = models.TextField(blank=True, default='')
     completionLevel = models.IntegerField(default=0)
     student = models.ForeignKey(UserSolution, on_delete=models.CASCADE)
+    evaluated = models.ForeignKey(Evaluated, default='', on_delete=models.CASCADE)
     learningObjective = models.ForeignKey(LearningObjective, on_delete=models.CASCADE)
     A = 'A'
     B = 'B'
@@ -329,7 +333,7 @@ class CoachReview(models.Model):
     rubricLine = models.ForeignKey(RubricLine, on_delete=models.CASCADE)
     release = models.BooleanField(default=False)
     comment = models.TextField(blank=True, default='', max_length=None)
-    # evaluator = models.ForeignKey(Evaluated, on_delete=models.CASCADE, default='', related_name='evaluator')
+    evaluator = models.ForeignKey(Evaluated, on_delete=models.CASCADE, default='', related_name='evaluator')
 
 
 # _____________

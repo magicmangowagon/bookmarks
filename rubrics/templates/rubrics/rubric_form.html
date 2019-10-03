@@ -22,7 +22,7 @@ Evaluate a Challenge
                 <span style="display: none">{{ form.learningObjective }}</span>
                 <p>Ignore: {{ form.ignore }}</p>
                 <p>{{ form.student }}</p>
-
+                <p>{{ form.evaluated }}</p>
                 {% if form.ignore.value == True %}
                     <div id="ignore{{ form.learningObjective.value }}" style="display: none">
                 {% else %}

@@ -28,7 +28,7 @@ class RubricLineForm(BaseModelFormSet):
         super(RubricLineForm, self).__init__(*args, **kwargs)
 
     class Meta:
-        widgets = {'student': forms.HiddenInput()}
+        widgets = {'student': forms.HiddenInput(), 'evaluated': forms.HiddenInput()}
 
 
 class RubricAddendumForm(BaseModelFormSet):
@@ -83,7 +83,7 @@ class CoachReviewForm(BaseModelFormSet):
 
 CoachReviewFormset = modelformset_factory(CoachReview, formset=CoachReviewForm, fields=('rubricLine', 'comment',
                                                                                         'release'),
-                                          widgets={'rubricLine': forms.HiddenInput()})
+                                          )
 
 
 UserFileFormset = modelformset_factory(UserSolution, formset=UserFileForm, fields=('userOwner', 'challengeName', 'solutionInstance', 'solution',
@@ -98,7 +98,7 @@ CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, fiel
 
 RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, fields=('ignore', 'evidencePresent',
                  'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student', 'learningObjective',
-                                                                                     'needsLaterAttention', ))
+                                                                                     'needsLaterAttention', 'evaluated'))
 
 RubricAddendumFormset = modelformset_factory(ChallengeAddendum, formset=RubricAddendumForm, fields=('name', 'note',
                                                 'parentChallenge', 'learningObjs', 'tags', 'group', 'userSolution'))

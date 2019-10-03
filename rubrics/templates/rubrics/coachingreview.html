@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load solution_filters %}
 {% block title %}
 Evaluate Challenge {{ finalRubric.challenge.name }}
 {% endblock %}
@@ -13,66 +13,43 @@ Evaluate Challenge {{ finalRubric.challenge.name }}
     <p>{{ finalRubric.generalFeedback|safe }}</p>
         <form action=""  method="post" enctype="multipart/form-data">
 
+            <div class="rubricField">
+                {{ rFormset.management_form }}
 
-            {% for rubricLine in rubricLines %}
-                <div class="evalField">
-                    {{ formset.management_form }}
-                    <h3>{{ rubricLine.learningObjective }}</h3>
+                {% for form in rFormset %}
+                        <p>{{ form.errors }}</p>
+                        <h3 id="h3{{ form.learningObjective.auto_id }}"></h3>
+                        <span style="display: none">{{ form.learningObjective }}</span>
 
-                    {% for form in rFormset %}
-                        {% if form.learningObjective.value == rubricLine.learningObjective.pk %}
-                            {{ form.learningObjective }}{{ form.student }}{{ form.needsLaterAttention }}{{ form.completionLevel }}{{ form.ignore }}
-                            <div class="evalFieldFlexContainer">
+                            {{ form.student }}{{ form.needsLaterAttention }}{{ form.completionLevel }}{{ form.ignore }}{{ form.evaluated }}
+                            <li>
                                 <label>{{ form.evidencePresent.label }}</label>
                                 <p>{{ form.evidencePresent }}</p>
-                            </div>
-                            <div class="evalFieldFlexContainer">
+                            </li>
+                            <li>
                                 <label>{{ form.evidenceMissing.label }}</label>
                                 <p>{{ form.evidenceMissing }}</p>
-                            </div>
-                            <div class="evalFieldFlexContainer">
+                            </li>
+                            <li>
                                 <label>{{ form.feedback.label }}</label>
                                 <p>{{ form.feedback }}</p>
-                            </div>
-                            <div class="evalFieldFlexContainer">
+                            </li>
+                            <li>
                                 <label>{{ form.suggestions.label }}</label>
                                 <p>{{ form.suggestions }}</p>
-                            </div>
+                            </li>
                             {{ form.id }}
-                        {% endif %}
+
+
+                            <script>
+                                var options = document.getElementById("{{ form.learningObjective.auto_id }}");
+                                var selectedText = options.options[options.selectedIndex].text;
+
+                                document.getElementById("h3{{ form.learningObjective.auto_id }}").innerHTML = selectedText;
+                            </script>
 
                     {% endfor %}
-
-                    <!-- <div class="evalField">
-                        <h3>{{ rform.learningObjective.auto_id }}</h3>
-                        <div class="evalFieldFlexContainer">
-                            <div class="evalFieldFlexBox"><h4>Evidence Present
-                            </h4><p>{{  rform.evidencePresent }}</p></div>
-                            <div class="evalFieldFlexBox"><h4>Evidence Missing
-                            </h4><p>{{  rform.evidenceMissing }}</p></div>
-                            <div class="evalFieldFlexBox"><h4>Suggestions
-                            </h4>{{  rform.suggestions }}</div>
-                            <div class="evalFieldFlexBox"><h4>Feedback
-                            </h4><p>{{  rform.feedback }}</p></div>
-                        </div> -->
-                    {{ rFormset.management_form }}
-                    {% for rForm in formset %}
-                        {{ rForm.errors }}
-                        <div class="rubricField">
-                            {% if rForm.rubricLine.value == rubricLine.pk %}
-
-                                <uL>
-                                {{ rForm.rubricLine }}{{ rForm.evaluator }}
-                                    <li>{{ rForm.release.label }}{{ rForm.release }}</li>
-                                    <li>{{ rForm.comment.label }}{{ rForm.comment }}</li>
-                                </uL>
-                                {{ rForm.id }}
-                            {% endif %}
-                        </div>
-
-                    {% endfor %}
-                    </div>
-            {% endfor %}
+            </div>
 
         {% csrf_token %}
         <input type="submit" value="Submit">
