@@ -67,16 +67,17 @@ Evaluate a Challenge
 
                 </ul>
 
-                <p><label>Ready to move on</label>
-                    <span style="display: none">{{ form.completionLevel }}</span></p>
 
-                <div class="slidecontainer">
+                    <span style="display: none">{{ form.completionLevel }}</span>
+
+                <!-- <div class="slidecontainer">
+                <p><label>Ready to move on</label>
                     <input type="range" min="0" max="100" value="0" step="25" class="slider" id="slider{{ form.learningObjective.value }}">
                 <div class="readyTick"></div>
-                </div>
+                </div> -->
                 <p></p>
                 <ul>
-                    <li>Flag for later attention: {{ form.needsLaterAttention }}</li>
+                    <li>{{ form.needsLaterAttention }}</li>
                 </ul>
 
             </div>
