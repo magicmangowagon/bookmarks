@@ -347,30 +347,32 @@ class RubricFormView(FormView):
     def get_context_data(self, **kwargs):
         context = super(RubricFormView, self).get_context_data(**kwargs)
         usersolution = self.kwargs['pk']
-        challenge = UserSolution.objects.get(pk=usersolution).solutionInstance
-        context['lo_list'] = LearningObjective.objects.filter(solutioninstance=challenge)
-        lo_list = LearningObjective.objects.filter(solutioninstance=challenge).order_by('compGroup', 'compNumber', 'loNumber')
         thisUserSolution = UserSolution.objects.get(pk=usersolution)
+        if thisUserSolution.customized:
+            challenge = ChallengeAddendum.objects.get(userSolution=thisUserSolution)
+            lo_list = LearningObjective.objects.filter(challengeaddendum=challenge).order_by('compGroup', 'compNumber',
+                                                                                            'loNumber')
+        else:
+            challenge = UserSolution.objects.get(pk=usersolution).solutionInstance
+            lo_list = LearningObjective.objects.filter(solutioninstance=challenge).order_by('compGroup', 'compNumber',
+                                                                                            'loNumber')
+
+        context['lo_list'] = lo_list
         context['student'] = thisUserSolution
+
         try:
             context['challenge'] = challenge.challenge_that_owns_me.all().first
         except:
             context['challenge'] = challenge
 
         context['solutionInstance'] = challenge
-        loCount = LearningObjective.objects.filter(solutioninstance=challenge).count()
+        loCount = len(lo_list)
 
         context['userRole'] = self.request.user.profile.role
-        criteriaList = Criterion.objects.all()
 
         # The idea: Run through the list of learning objectives attached to this challenge and add criterion
         # to contextual list if they match one of the learning objectives.
-        neededCriteria = []
-        for criterion in criteriaList:
-            for learningObjective in lo_list:
-                if (criterion.learningObj.id == learningObjective.id and criterion.learningObj.id not in criteriaList):
-                    neededCriteria.append(criterion)
-
+        neededCriteria = Criterion.objects.filter(learningObj__in=lo_list)
         criteriaLength = len(neededCriteria)
 
         # edit view, checks for rubricLine objects from this challenge
@@ -399,11 +401,17 @@ class RubricFormView(FormView):
         # reroute it to this function to apply the corrected learning
         # objectives and return it to the view
         elif thisUserSolution.customized is True:
+            print('customized')
             evaluated = Evaluated.objects.create(whoEvaluated=self.request.user)
             challenge = ChallengeAddendum.objects.get(userSolution=thisUserSolution)
-            lo_list = LearningObjective.objects.filter(challengeaddendum=challenge).order_by('compGroup', 'compNumber', 'loNumber',)
-            loCount = lo_list.count()
-            RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=loCount, fields=(
+            lo_list = LearningObjective.objects.filter(challengeaddendum=challenge).order_by('compGroup', 'compNumber',
+                                                                                             'loNumber', )
+            neededCriteria = Criterion.objects.filter(learningObj__in=lo_list)
+            context['criteria'] = neededCriteria
+            print('lo_list ' + str(len(lo_list)))
+            print('needCriteria ' + str(len(neededCriteria)))
+
+            RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=len(lo_list), fields=(
                 'ignore', 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions',
                 'completionLevel', 'student', 'needsLaterAttention', 'evaluated'), widgets={'student': forms.HiddenInput, 'evaluated': forms.HiddenInput(),
                                                                          'completionLevel': forms.HiddenInput(), 'ignore': forms.HiddenInput(),
@@ -413,7 +421,7 @@ class RubricFormView(FormView):
                                         initial=[{'learningObjective': learningObjective.pk, 'student': thisUserSolution,
                                                   'evaluated': evaluated} for learningObjective in lo_list], queryset=RubricLine.objects.none())
 
-            CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, extra=criteriaLength, fields=(
+            CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, extra=len(neededCriteria), fields=(
                 'achievement', 'criteria', 'userSolution',), widgets={'criteria': forms.HiddenInput,
                                                                    'userSolution': forms.HiddenInput})
 

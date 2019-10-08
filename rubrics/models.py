@@ -215,7 +215,7 @@ class Competency(models.Model):
 
 class Criterion(models.Model):
     name = models.CharField(max_length=250)
-    learningObj = models.ForeignKey(LearningObjective, on_delete=models.CASCADE)
+    learningObj = models.ForeignKey(LearningObjective, on_delete=models.CASCADE, related_name='learningObj_that_owns_me')
     tags = TaggableManager(blank=True)
 
     def __str__(self):
@@ -242,7 +242,7 @@ class Evaluated(models.Model):
 
 class UserSolution(models.Model):
     file = models.FileField(upload_to='uploads/', blank=True)
-    solution = models.TextField(blank=False, default='')
+    solution = RichTextField()
     userOwner = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     challengeName = models.ForeignKey(Challenge, blank=True, null=True, on_delete=models.CASCADE)
     solutionInstance = models.ForeignKey(SolutionInstance, null=True, on_delete=models.CASCADE)
