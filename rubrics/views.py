@@ -672,14 +672,14 @@ class EvalListView(ListView):
     def get_queryset(self, **kwargs):
         profile = self.request.user.profile
         if profile.role == 4:
-            queryset = UserSolution.objects.all()
+            queryset = UserSolution.objects.filter().filter(evaluated__isnull=False).distinct()
             return queryset
 
         if profile.role == 3:
 
             group = self.request.user.groups.all()
             print(group)
-            queryset = UserSolution.objects.filter(userOwner__groups__in=group)
+            queryset = UserSolution.objects.filter(userOwner__groups__in=group).filter(evaluated__isnull=False).distinct()
             return queryset
 
         else:
