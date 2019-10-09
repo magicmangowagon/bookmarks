@@ -26,8 +26,22 @@ Evaluate Challenge {{ finalRubric.challenge.name }}
                 {% else %}
                     <div id="ignore{{ form.learningObjective.value }}">
                 {% endif %}
-
-                            {{ form.student }}{{ form.evaluated }}
+                    {{ form.student }}{{ form.evaluated }}
+                    {{ critFormset.management_form }}
+                    <ul>
+                        {% for criteria in criteria %}
+                            {% if criteria.learningObj_id == form.learningObjective.value %}
+                                <li>{{ criteria }}:
+                                    {% for CriteriaForm in critFormset %}
+                                        {% if CriteriaForm.criteria.value == criteria.id %}
+                                            {{ criteria.id }}{{ CriteriaForm.criteria.value }}
+                                            {{ CriteriaForm.achievement }}{{ CriteriaForm.criteria }}{{ CriteriaForm.userSolution }}</li><br>
+                                            {{ CriteriaForm.id }}
+                                        {% endif %}
+                                    {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
                             <li>
                                 <label>{{ form.evidencePresent.label }}</label>
                                 <p>{{ form.evidencePresent }}</p>

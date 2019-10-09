@@ -47,7 +47,7 @@ class RubricLine(admin.ModelAdmin):
 
 @admin.register(CriteriaLine)
 class CriteriaLine(admin.ModelAdmin):
-    list_display = ['achievement', ]
+    list_display = ['achievement', 'pk', 'userSolution']
 
 
 @admin.register(LearningObjective)
