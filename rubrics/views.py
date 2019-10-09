@@ -492,13 +492,14 @@ class CoachingReviewView(FormView):
         thisUserSolution = UserSolution.objects.get(pk=userSolution)
         challenge = UserSolution.objects.get(pk=userSolution).solutionInstance
         lo_list = LearningObjective.objects.filter(solutioninstance=challenge).order_by('compGroup', 'compNumber', 'loNumber')
-        criteria = Criterion.objects.filter(learningObj__in=lo_list).order_by('learningObj__compGroup', 'learningObj__compNumber', "learningObj__loNumber")
+        criteria = Criterion.objects.filter(learningObj__in=lo_list).order_by('learningObj__compGroup', 'learningObj__compNumber', 'learningObj__loNumber')
 
         if RubricLine.objects.all().filter(evaluated__whoEvaluated=self.request.user, student=thisUserSolution).exists():
             rubricLines = RubricLine.objects.all().filter(evaluated__whoEvaluated=self.request.user, student=thisUserSolution)
 
         else:
-            rubricLines = RubricLine.objects.filter(student=thisUserSolution)
+            rubricLines = RubricLine.objects.filter(student=thisUserSolution).order_by('learningObjective__compGroup',
+                                                                                       'learningObjective__compNumber', 'learningObjective__loNumber')
 
         context['finalRubric'] = Rubric.objects.get(userSolution=thisUserSolution)
         context['learningObjectives'] = lo_list
@@ -542,7 +543,7 @@ class CoachingReviewView(FormView):
                                                     widgets={'criteria': forms.HiddenInput,
                                                              'userSolution': forms.HiddenInput})
 
-            critFormset = CriterionFormSet(prefix='criteria', queryset=CriteriaLine.objects.none())
+            critFormset = CriterionFormSet(prefix='criteria', queryset=CriteriaLine.objects.filter(userSolution=thisUserSolution, userSolution__evaluated__whoEvaluated=self.request.user))
 
         else:
             print('no rubricLines detected')
@@ -584,11 +585,12 @@ class CoachingReviewView(FormView):
     def post(self, request, *args, **kwargs):
         # form = CoachReviewFormset(request.POST, prefix='cFormset')
         rForm = RubricLineFormset(request.POST, prefix='rFormset')
-        if rForm.is_valid():
+        critForm = CriterionFormSet(request.POST, prefix='criteria')
+        if rForm.is_valid() and critForm.is_valid():
             # userSolution.save()
             # form.save()
             rForm.save()
-
+            critForm.save()
             return HttpResponseRedirect('/evals')
         else:
             messages.error(request, "Error")
