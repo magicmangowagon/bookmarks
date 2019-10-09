@@ -34,7 +34,7 @@ Evaluate Challenge {{ finalRubric.challenge.name }}
                                 <li>{{ criteria }}:
                                     {% for CriteriaForm in critFormset %}
                                         {% if CriteriaForm.criteria.value == criteria.id %}
-                                            {{ criteria.id }}{{ CriteriaForm.criteria.value }}
+
                                             {{ CriteriaForm.achievement }}{{ CriteriaForm.criteria }}{{ CriteriaForm.userSolution }}</li><br>
                                             {{ CriteriaForm.id }}
                                         {% endif %}
