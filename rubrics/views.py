@@ -543,7 +543,8 @@ class CoachingReviewView(FormView):
                                                     widgets={'criteria': forms.HiddenInput,
                                                              'userSolution': forms.HiddenInput})
 
-            critFormset = CriterionFormSet(prefix='criteria', queryset=CriteriaLine.objects.filter(userSolution=thisUserSolution, userSolution__evaluated__whoEvaluated=self.request.user))
+            critFormset = CriterionFormSet(prefix='criteria', queryset=CriteriaLine.objects.filter(userSolution=thisUserSolution,
+                                                                                                   userSolution__evaluated__whoEvaluated=self.request.user))
 
         else:
             print('no rubricLines detected')
