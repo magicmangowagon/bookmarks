@@ -345,6 +345,7 @@ class CriteriaLine(models.Model):
     criteria = models.ForeignKey(Criterion, on_delete=models.CASCADE)
     # rubricLine = models.ForeignKey(RubricLine, on_delete=models.CASCADE)
     userSolution = models.ForeignKey(UserSolution, on_delete=models.CASCADE)
+    evaluator = models.ForeignKey(Evaluated, on_delete=models.CASCADE, null='', default='', related_name='criteriaLine_evaluator')
     A = 'A'
     B = 'B'
     C = 'C'

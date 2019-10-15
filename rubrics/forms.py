@@ -93,7 +93,7 @@ UserFileFormset = modelformset_factory(UserSolution, formset=UserFileForm, field
 
 
 CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, fields=('achievement', 'criteria',
-                                                                                    'userSolution'), widgets={'criteria': forms.HiddenInput})
+                                                                                    'userSolution', 'evaluator'), widgets={'criteria': forms.HiddenInput})
 
 
 RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, fields=('ignore', 'evidencePresent',
