@@ -490,8 +490,14 @@ class CoachingReviewView(FormView):
         context = super(CoachingReviewView, self).get_context_data()
         userSolution = self.kwargs['pk']
         thisUserSolution = UserSolution.objects.get(pk=userSolution)
-        challenge = UserSolution.objects.get(pk=userSolution).solutionInstance
-        lo_list = LearningObjective.objects.filter(solutioninstance=challenge).order_by('compGroup', 'compNumber', 'loNumber')
+        if thisUserSolution.customized:
+            challenge = ChallengeAddendum.objects.get(userSolution=thisUserSolution)
+            lo_list = LearningObjective.objects.filter(challengeaddendum=challenge).order_by('compGroup', 'compNumber',
+                                                                                            'loNumber')
+        else:
+            challenge = UserSolution.objects.get(pk=userSolution).solutionInstance
+            lo_list = LearningObjective.objects.filter(solutioninstance=challenge).order_by('compGroup', 'compNumber',
+                                                                                            'loNumber')
         criteria = Criterion.objects.filter(learningObj__in=lo_list).order_by('learningObj__compGroup', 'learningObj__compNumber', 'learningObj__loNumber')
 
         if RubricLine.objects.all().filter(evaluated__whoEvaluated=self.request.user, student=thisUserSolution).exists():
@@ -508,21 +514,6 @@ class CoachingReviewView(FormView):
 
         criteriaLines = CriteriaLine.objects.all().filter(userSolution=thisUserSolution).order_by('criteria__learningObj')
         print(len(criteriaLines))
-        '''
-        if CoachReview.objects.filter(evaluator__whoEvaluated=self.request.user).filter(rubricLine__in=rubricLines).exists():
-            CoachReviewFormset = modelformset_factory(CoachReview, formset=CoachReviewForm, extra=0, fields=(
-                'release', 'comment', 'rubricLine', 'evaluator'), widgets={'rubricLine': forms.HiddenInput()})
-
-            cFormset = CoachReviewFormset(prefix='cFormset', queryset=CoachReview.objects.filter(
-                evaluator__whoEvaluated=self.request.user, rubricLine__in=rubricLines))
-        else:
-            evaluated = Evaluated.objects.create(whoEvaluated=self.request.user)
-            CoachReviewFormset = modelformset_factory(CoachReview, formset=CoachReviewForm, extra=extras, fields=(
-                'release', 'comment', 'rubricLine', 'evaluator'), widgets={'rubricLine': forms.HiddenInput()})
-
-            cFormset = CoachReviewFormset(prefix='cFormset', initial=[{'rubricLine': rubricLine.pk, 'evaluator': evaluated}
-                                                   for rubricLine in rubricLines], queryset=CoachReview.objects.none())
-        '''
 
         if RubricLine.objects.filter(evaluated__whoEvaluated=self.request.user, student=thisUserSolution).exists():
             print('Existence detected')
