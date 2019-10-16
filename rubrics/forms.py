@@ -93,12 +93,12 @@ UserFileFormset = modelformset_factory(UserSolution, formset=UserFileForm, field
 
 
 CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, fields=('achievement', 'criteria',
-                                                                                    'userSolution', 'evaluator'), widgets={'criteria': forms.HiddenInput})
+                                                                                    'userSolution'), widgets={'criteria': forms.HiddenInput})
 
 
 RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, fields=('ignore', 'evidencePresent',
                  'evidenceMissing', 'feedback', 'suggestions', 'completionLevel', 'student', 'learningObjective',
-                                                                                     'needsLaterAttention', 'evaluated'))
+                                                                                     'needsLaterAttention', ))
 
 RubricAddendumFormset = modelformset_factory(ChallengeAddendum, formset=RubricAddendumForm, fields=('name', 'note',
                                                 'parentChallenge', 'learningObjs', 'tags', 'group', 'userSolution'))
