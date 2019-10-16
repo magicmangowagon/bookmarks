@@ -19,6 +19,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='rubricline',
             name='evaluated',
-            field=models.ForeignKey(default='', on_delete=django.db.models.deletion.CASCADE, to='rubrics.Evaluated'),
+            field=models.ForeignKey(default='', null=True, on_delete=django.db.models.deletion.CASCADE, to='rubrics.Evaluated'),
         ),
     ]
