@@ -438,7 +438,7 @@ class RubricFormView(FormView):
             evaluated = Evaluated(whoEvaluated=self.request.user)
             RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=loCount, fields=(
                 'ignore', 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel',
-                'student', 'needsLaterAttention', 'evaluated_whoEvaluated'), widgets={'student': forms.HiddenInput, 'evaluated': forms.HiddenInput(),
+                'student', 'needsLaterAttention', ), widgets={'student': forms.HiddenInput, 'evaluated': forms.HiddenInput(),
                                                                          'completionLevel': forms.HiddenInput(), 'ignore': forms.HiddenInput(),
                                                                          'needsLaterAttention': forms.HiddenInput()})
 
