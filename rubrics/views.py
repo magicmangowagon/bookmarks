@@ -267,7 +267,7 @@ class SolutionListView(ListView):
             queryset = UserSolution.objects.all()
             return queryset
 
-        if profile.role == 3:
+        if profile.role == 3 or profile.role == 2:
 
             group = self.request.user.groups.all()
             print(group)
