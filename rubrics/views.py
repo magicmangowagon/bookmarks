@@ -447,7 +447,7 @@ class RubricFormView(FormView):
                          lo_list], queryset=RubricLine.objects.none())
 
             CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, extra=criteriaLength, fields=(
-                'achievement', 'criteria', 'userSolution', 'evaluator'), widgets={'criteria': forms.HiddenInput, 'userSolution': forms.HiddenInput})
+                'achievement', 'criteria', 'userSolution', ), widgets={'criteria': forms.HiddenInput, 'userSolution': forms.HiddenInput})
 
             critFormset = CriterionFormSet(prefix='criteria',
                                            initial=[{'userSolution': thisUserSolution, 'criteria': criterion} for criterion in neededCriteria],
