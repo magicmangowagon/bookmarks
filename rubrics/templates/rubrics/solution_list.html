@@ -16,7 +16,7 @@
             <tr>
                 <td>{{ usersolution.userOwner }}</td>
                 <td></td>
-                <td>{{ usersolution.challengeName }}</td>
+                <td>{{ usersolution.challengeName }} - {{ usersolution.solutionInstance.name }}</td>
                 <td><a href="solutions/{{ usersolution.id }}">Details</a></td>
             </tr>
         {% endif %}
@@ -30,7 +30,7 @@
                 <tr>
                     <td>{{ usersolution.userOwner }}</td>
                     <td></td>
-                    <td>{{ usersolution.challengeName }}</td>
+                    <td>{{ usersolution.challengeName }} - {{ usersolution.solutionInstance.name }}</td>
                     <td><a href="solutions/{{ usersolution.id }}">Details</a></td>
                 </tr>
         {% endif %}
