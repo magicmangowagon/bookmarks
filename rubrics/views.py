@@ -365,7 +365,7 @@ class RubricFormView(FormView):
         except:
             context['challenge'] = challenge
 
-        context['solutionInstance'] = challenge
+        context['solutionInstance'] = thisUserSolution.solutionInstance
         loCount = len(lo_list)
 
         context['userRole'] = self.request.user.profile.role

@@ -1,5 +1,31 @@
 @import url(https://fonts.googleapis.com/css?family=Dosis|Oswald);
 
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #FFFFFF;
+}
+
+.sticky h1 {
+    font-size: 18pt;
+}
+
+.infoBar {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+
+.infoBarSub {
+    margin: 2pt 16pt 2pt 0;
+}
+
+.infoBarSub h1 {
+    margin: 0;
+    border-bottom: none;
+}
+
 .learningObj_list {
     padding: 0 0 0 10pt;
 }
