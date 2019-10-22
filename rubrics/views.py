@@ -16,6 +16,7 @@ from django.forms import modelformset_factory
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
 from .functions import process_rubricLine, assess_competency_done, custom_rubric_producer, mega_challenge_builder
+from django.core.mail import send_mail
 
 
 class ChallengeCover(DetailView):
@@ -144,6 +145,8 @@ class ChallengeDetail(FormView):
             if form.is_valid() and expoForm.is_valid():
                 form.save()
                 expoForm.save()
+                send_mail('New TC submission', str(self.request.user) + ' has submitted a challenge solution',
+                          'noreply@wwgradschool.org', ['castle@woodrowacademy.org', ], fail_silently=False)
                 return redirect('success', self.kwargs['pk'])
             else:
                 print(form.errors)
