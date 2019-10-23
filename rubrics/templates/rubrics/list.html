@@ -19,10 +19,19 @@
     </a>
     </h2>
     <ul class="challengeListObj">
+    {% if challenge.megaChallenge %}
+        {% for challenge in challenge.megaChallenge.challenge_set.all %}
+            {% for learningObjective in challenge.learningObjs.all %}
+                <li class="challengeListObj">{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}.
+                    {{ learningObjective.loNumber }}</li>
+            {% endfor %}
+        {% endfor %}
+    {% else %}
         {% for learningObjective in challenge.learningObjs.all %}
             <li class="challengeListObj">{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}.
                 {{ learningObjective.loNumber }}</li>
         {% endfor %}
+    {% endif %}
     </ul>
 
 {% endfor %}
