@@ -10,8 +10,9 @@
     <div class="infoBarSub"> <h1>{{ usersolution.challengeName }} - <em>{{ usersolution.solutionInstance }}</em></h1>
     <p>Submitted by {{ usersolution.userOwner.first_name }} {{ usersolution.userOwner.last_name }}</p></div>
     <div class="infoBarSub"><h1>|</h1></div>
-    <div class="infoBarSub"><h2><a href="/solutionEval/{{ usersolution.id }}">Evaluate</a></h2></div>
-
+    {% if request.user.profile.role is not 1 %}
+        <div class="infoBarSub"><h2><a href="/solutionEval/{{ usersolution.id }}">Evaluate</a></h2></div>
+    {% endif %}
  </div>
 </div>
    <p>{{ usersolution.solution|safe }} </p>

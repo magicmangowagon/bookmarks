@@ -740,7 +740,7 @@ class EvalDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(EvalDetailView, self).get_context_data(**kwargs)
         rubric = self.kwargs['pk']
-        context['evaluation'] = RubricLine.objects.all().filter(student=rubric)
+        context['evaluation'] = RubricLine.objects.all().filter(student=rubric, evaluated__whoEvaluated__profile__role=3)
         context['userRole'] = self.request.user.profile.role
         try:
             context['evalFinalForm'] = Rubric.objects.get(userSolution=rubric)

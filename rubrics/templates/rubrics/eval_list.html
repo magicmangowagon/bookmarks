@@ -11,7 +11,9 @@
     <tr>
         <td>
             <a href="evals/{{ userSolution.id }}">Evaluation</a><br>
-            <a href="coachingreview/{{ userSolution.id }}">Coaching Review</a>
+            {% if request.user.profile.role >= 3 %}
+                <a href="coachingreview/{{ userSolution.id }}">Coaching Review</a>
+            {% endif %}
         </td>
         <td>
             {{ userSolution.challengeName }} - {{ userSolution.solutionInstance.name }}
