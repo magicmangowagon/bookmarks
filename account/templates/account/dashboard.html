@@ -1,10 +1,12 @@
 {% extends "base.html" %}
+{% load static %}
+
 
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
 
-    <h1>Dashboard</h1>
+    <img src="{{ request.user.profile.photo.url }}"><h1>Dashboard</h1>
     <p>Welcome to your dashboard, {{ request.user.first_name }}</p>
 
     {% if request.user.profile.role == 1 %}
