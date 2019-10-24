@@ -3,6 +3,7 @@
 {% load static %}
 {% load staticfiles %}
 {% load solution_filters %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,7 +15,7 @@
 <body>
     <div id="header">
     <div class="headerBottom">
-        <span class="logo"><img height="100px" alt="Woodrow Wilson Graduate School of Teaching and Learning" src="https://rubrics-bucket.s3.amazonaws.com/ww-grad-logo-CMYK-teal-teal.png"></span>
+        <span class="logo"><img height="100px" alt="Woodrow Wilson Graduate School of Teaching and Learning" src="{% static "media/ww-grad-logo-CMYK-teal-teal.png" %}"></span>
         {% if request.user.is_authenticated %}
         <ul class="menu">
             <li {% if section == "dashboard" %}class="selected"{% endif %}>

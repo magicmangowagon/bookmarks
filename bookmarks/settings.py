@@ -151,7 +151,8 @@ STATIC_URL = 'https://' + AWS_S3_CUSTOM_DOMAIN + AWS_LOCATION
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 STATIC_ROOT = os.path.join(PROJECT_ROOT, STATIC_URL)
-
+MEDIA_ROOT = os.path.join(STATIC_URL, '/media')
+DEFAULT_FILE_STORAGE = STATICFILES_STORAGE
 
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = 'login'
