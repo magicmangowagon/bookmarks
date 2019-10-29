@@ -21,12 +21,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'e7+_=2dkn(4n64id2m_8v&fqvbw61f5u06mgp#io2ilwz$$drg'
-# SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = os.environ['SECRET_KEY']
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -134,8 +133,8 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 TAGGIT_CASE_INSENSITIVE = True
 
-AWS_ACCESS_KEY_ID = 'AKIAVOUEBQYJ7R7KXUND'# os.environ.get('awsKeyID')
-AWS_SECRET_ACCESS_KEY = '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' # os.environ.get('secretKeyID')
+AWS_ACCESS_KEY_ID = os.environ.get('awsKeyID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('secretKeyID')
 AWS_STORAGE_BUCKET_NAME = 'rubrics-bucket'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_S3_OBJECT_PARAMETERS = \
