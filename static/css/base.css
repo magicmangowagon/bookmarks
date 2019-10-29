@@ -1,5 +1,19 @@
 @import url(https://fonts.googleapis.com/css?family=Dosis|Oswald);
 
+.challengeListEntry {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.challengeSubEntry {
+    padding: 2pt;
+}
+
+.challengeSubEntry img {
+    padding-right: 12pt;
+}
+
 .sticky {
     position: fixed;
     top: 0;
@@ -183,10 +197,15 @@
     min-height: calc(100vh - 10vh);
 }
 
+.challengeListObj {
+    padding: 0;
+}
+
 .challengeListObj ul {
-    padding-left: 0px;
+
     border-bottom: 1px solid #003469;
     width: 85%;
+    padding: 0;
 }
 
 .challengeListObj li {
@@ -198,7 +217,6 @@
     font-size: 10pt;
     color: #003469;
     margin: 1pt;
-
 }
 
 .compFlexContainer {

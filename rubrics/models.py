@@ -106,7 +106,8 @@ class Challenge(models.Model):
     pullQuote = models.CharField('Pull Quote', max_length=1000, default='')
     display = models.BooleanField('Show Challenge', default=True)
     megaChallenge = models.ForeignKey(MegaChallenge, null=True, on_delete=models.CASCADE, blank=True)
-
+    picture = models.ImageField(upload_to='uploads/challenges/', blank=True, height_field='height', default='')
+    height = models.IntegerField(default=0)
     A = 'A'
     B = 'B'
     C = 'C'
