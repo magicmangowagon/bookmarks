@@ -82,6 +82,7 @@ class MegaChallengeAdmin(admin.ModelAdmin):
 @admin.register(SolutionInstance)
 class SolutionInstanceAdmin(admin.ModelAdmin):
     list_display = ['name', 'pk']
+    filter_horizontal = ['learningObjectives']
 
 
 @admin.register(LearningExperience)
