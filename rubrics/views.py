@@ -145,8 +145,11 @@ class ChallengeDetail(FormView):
             if form.is_valid() and expoForm.is_valid():
                 form.save()
                 expoForm.save()
-                send_mail('New TC submission', str(self.request.user) + ' has submitted a challenge solution',
-                          'noreply@wwgradschool.org', ['castle@woodrowacademy.org', ], fail_silently=False)
+                try:
+                    send_mail('New TC submission', str(self.request.user) + ' has submitted a challenge solution',
+                              'noreply@wwgradschool.org', ['castle@woodrowacademy.org', ], fail_silently=False)
+                except:
+                    pass
                 return redirect('success', self.kwargs['pk'])
             else:
                 print(form.errors)
@@ -303,7 +306,7 @@ class RubricFinalFormView(FormView):
         userSolution = UserSolution.objects.get(id=rubric)
         challenge = userSolution.challengeName
 
-        if Rubric.objects.all().filter(userSolution=userSolution).exists():
+        if Rubric.objects.all().filter(userSolution=userSolution).filter(evaluator=self.request.user).exists():
             RubricFormSet = modelformset_factory(Rubric, extra=0, formset=RubricForm, fields=(
             'userSolution', 'challenge', 'evaluator', 'generalFeedback', 'challengeCompletionLevel',),
              widgets={'userSolution': forms.HiddenInput, 'challenge': forms.HiddenInput, 'evaluator': forms.HiddenInput,
@@ -351,6 +354,7 @@ class RubricFormView(FormView):
         context = super(RubricFormView, self).get_context_data(**kwargs)
         usersolution = self.kwargs['pk']
         thisUserSolution = UserSolution.objects.get(pk=usersolution)
+
         if thisUserSolution.customized:
             challenge = ChallengeAddendum.objects.get(userSolution=thisUserSolution)
             lo_list = LearningObjective.objects.filter(challengeaddendum=challenge).order_by('compGroup', 'compNumber',
@@ -384,7 +388,7 @@ class RubricFormView(FormView):
         context['count'] = criteriaLength
 
         if RubricLine.objects.filter(student=thisUserSolution).filter(evaluated__whoEvaluated=self.request.user).exists():
-
+            print('You previously evaluated this' + str(lo_list))
             RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=0, fields=(
                 'ignore', 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel',
                 'student', 'needsLaterAttention', 'evaluated'), widgets={'student': forms.HiddenInput, 'evaluated': forms.HiddenInput(),
@@ -611,7 +615,8 @@ class CoachingReviewView(FormView):
             # form.save()
             rForm.save()
             critForm.save()
-            return HttpResponseRedirect('/evals')
+            return redirect('solution-end-eval', self.kwargs['pk'])
+            # return HttpResponseRedirect('/evals')
         else:
             messages.error(request, "Error")
             print(rForm.errors)
@@ -674,7 +679,8 @@ class CoachingReviewSession(FormView):
         if rForm.is_valid() and critForm.is_valid():
             rForm.save()
             critForm.save()
-            return HttpResponseRedirect('/evals')
+            return redirect('solution-end-eval', self.kwargs['pk'])
+            # return HttpResponseRedirect('/evals')
         else:
             messages.error(request, "Error")
             print(rForm.errors)
