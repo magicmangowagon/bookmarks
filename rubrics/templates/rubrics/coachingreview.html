@@ -7,8 +7,9 @@ Evaluate Challenge {{ finalRubric.challenge.name }}
 {% block content %}
 
 <h1>Coaching Review - {{ finalRubric.challenge.name }}</h1>
+    <p>Solution submission: <a href="/solutions/{{ usersolution.pk }}">{{ user }}</a></p>
     <h2>Evaluator: {{ finalRubric.evaluator.first_name }} {{ finalRubric.evaluator.last_name }}</h2>
-    <p>Submitted: {{ finalRubric.evaluator }}</p>
+
     <h3>General Feedback</h3>
     <p>{{ finalRubric.generalFeedback|safe }}</p>
         <form action=""  method="post" enctype="multipart/form-data">
