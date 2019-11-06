@@ -7,7 +7,8 @@ Evaluate Challenge {{ finalRubric.challenge.name }}
 {% block content %}
 
 <h1>Coaching Review - {{ finalRubric.challenge.name }}</h1>
-    <p>Solution submission: <a href="/solutions/{{ usersolution.pk }}">{{ user }}</a></p>
+    <p>Solution submission: <a href="/solutions/{{ usersolution.pk }}">{{ usersolution.userOwner.first_name }}
+     {{ usersolution.userOwner.last_name }}</a></p>
     <h2>Evaluator: {{ finalRubric.evaluator.first_name }} {{ finalRubric.evaluator.last_name }}</h2>
 
     <h3>General Feedback</h3>
@@ -27,7 +28,7 @@ Evaluate Challenge {{ finalRubric.challenge.name }}
                 {% else %}
                     <div id="ignore{{ form.learningObjective.value }}">
                 {% endif %}
-                    {{ form.student }}{{ form.evaluated }}
+                    {{ form.student }}
                     {{ critFormset.management_form }}
                     <ul>
                         {% for criteria in criteria %}
@@ -35,7 +36,7 @@ Evaluate Challenge {{ finalRubric.challenge.name }}
                                 <li>{{ criteria }}:
                                     {% for CriteriaForm in critFormset %}
                                         {% if CriteriaForm.criteria.value == criteria.id %}
-                                            {{ CriteriaForm.evaluator }}
+
                                             {{ CriteriaForm.achievement }}{{ CriteriaForm.criteria }}{{ CriteriaForm.userSolution }}</li><br>
                                             {{ CriteriaForm.id }}
                                         {% endif %}

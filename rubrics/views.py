@@ -312,7 +312,7 @@ class RubricFinalFormView(FormView):
              widgets={'userSolution': forms.HiddenInput, 'challenge': forms.HiddenInput, 'evaluator': forms.HiddenInput,
                       'challengeCompletionLevel': forms.HiddenInput})
 
-            formset = RubricFormSet(queryset=Rubric.objects.all().filter(userSolution=userSolution))
+            formset = RubricFormSet(queryset=Rubric.objects.all().filter(userSolution=userSolution).filter(evaluator=self.request.user).distinct())
 
         else:
             RubricFormSet = modelformset_factory(Rubric, extra=1, formset=RubricForm, fields=(
@@ -392,7 +392,7 @@ class RubricFormView(FormView):
             print('You previously evaluated this' + str(lo_list))
             RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=0, fields=(
                 'ignore', 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel',
-                'student', 'needsLaterAttention', 'evaluated'), widgets={'student': forms.HiddenInput, 'evaluated': forms.HiddenInput(),
+                'student', 'needsLaterAttention'), widgets={'student': forms.HiddenInput,
                                                                          'completionLevel': forms.HiddenInput(), 'ignore': forms.HiddenInput(),
                                                                          'needsLaterAttention': forms.HiddenInput()})
 
@@ -401,7 +401,7 @@ class RubricFormView(FormView):
                 'learningObjective__compGroup', 'learningObjective__compNumber', 'learningObjective__loNumber'))
 
             CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, extra=0, fields=(
-                'achievement', 'criteria', 'userSolution', 'evaluator'), widgets={'criteria': forms.HiddenInput,
+                'achievement', 'criteria', 'userSolution'), widgets={'criteria': forms.HiddenInput,
                                                                                   'userSolution': forms.HiddenInput,
                                                                                   'evaluator': forms.HiddenInput})
 
@@ -446,7 +446,7 @@ class RubricFormView(FormView):
             # evaluated = Evaluated(whoEvaluated=self.request.user)
             RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=loCount, fields=(
                 'ignore', 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel',
-                'student', 'needsLaterAttention'), widgets={'student': forms.HiddenInput, 'evaluated': forms.HiddenInput(),
+                'student', 'needsLaterAttention'), widgets={'student': forms.HiddenInput,
                                                                          'completionLevel': forms.HiddenInput(), 'ignore': forms.HiddenInput(),
                                                                          'needsLaterAttention': forms.HiddenInput()})
 
@@ -514,7 +514,7 @@ class CoachingReviewView(FormView):
         if thisUserSolution.customized:
             challenge = ChallengeAddendum.objects.get(userSolution=thisUserSolution)
             lo_list = LearningObjective.objects.filter(challengeaddendum=challenge).order_by('compGroup', 'compNumber',
-                                                                                            'loNumber')
+                                                                                            'loNumber').distinct().distinct()
         else:
             challenge = UserSolution.objects.get(pk=userSolution).solutionInstance
             lo_list = LearningObjective.objects.filter(solutioninstance=challenge).order_by('compGroup', 'compNumber',
@@ -524,11 +524,13 @@ class CoachingReviewView(FormView):
                                                                               'learningObj__loNumber')
         # set rubricLines based on whether this is a new evaluation or not
         if RubricLine.objects.all().filter(evaluated__whoEvaluated=self.request.user, student=thisUserSolution).exists():
-            rubricLines = RubricLine.objects.all().filter(evaluated__whoEvaluated=self.request.user, student=thisUserSolution)
+            rubricLines = RubricLine.objects.all().filter(evaluated__whoEvaluated=self.request.user, student=thisUserSolution).distinct()
+            finalRubric = Rubric.objects.all().filter(userSolution=thisUserSolution).filter(evaluator=self.request.user).distinct()
         else:
             rubricLines = RubricLine.objects.filter(student=thisUserSolution).order_by('learningObjective__compGroup',
                                                                                        'learningObjective__compNumber',
                                                                                        'learningObjective__loNumber')
+            finalRubric = Rubric.objects.all().filter(userSolution=thisUserSolution)
 
         # set criteriaLines based on whether this is a new evaluation or not
         if CriteriaLine.objects.filter(evaluator__whoEvaluated=self.request.user, userSolution=thisUserSolution).exists():
@@ -538,7 +540,7 @@ class CoachingReviewView(FormView):
             criteriaLines = CriteriaLine.objects.all().filter(userSolution=thisUserSolution).distinct().order_by(
                 'criteria__learningObj')
 
-        context['finalRubric'] = Rubric.objects.get(userSolution=thisUserSolution)
+        context['finalRubric'] = finalRubric
         context['learningObjectives'] = lo_list
         context['rubricLines'] = rubricLines
         context['criteria'] = criteria
@@ -549,8 +551,7 @@ class CoachingReviewView(FormView):
 
             RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=0, fields=(
                 'ignore', 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions',
-                'completionLevel', 'student', 'needsLaterAttention', 'evaluated'), widgets={'student': forms.HiddenInput,
-                                                              'evaluated': forms.HiddenInput()})
+                'completionLevel', 'student', 'needsLaterAttention', 'evaluated'), widgets={'student': forms.HiddenInput})
 
             rFormset = RubricLineFormset(prefix='rFormset', queryset=RubricLine.objects.filter(
                                                           evaluated__whoEvaluated=self.request.user, student=thisUserSolution).order_by(
@@ -564,7 +565,7 @@ class CoachingReviewView(FormView):
                                                      fields=('ignore', 'learningObjective', 'evidencePresent',
                                                          'evidenceMissing', 'feedback', 'suggestions',
                                                          'completionLevel', 'student', 'needsLaterAttention'),
-                                                     widgets={'student': forms.HiddenInput, 'evaluated': forms.HiddenInput()})
+                                                     widgets={'student': forms.HiddenInput})
 
             rFormset = RubricLineFormset(prefix='rFormset', initial=[{'learningObjective': rubricLine.learningObjective,
                                                                       'evidencePresent': rubricLine.evidencePresent,
@@ -584,7 +585,7 @@ class CoachingReviewView(FormView):
             CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, extra=0,
                                                     fields=('achievement', 'criteria', 'userSolution', 'evaluator'),
                                                     widgets={'criteria': forms.HiddenInput,
-                                                             'userSolution': forms.HiddenInput, 'evaluator': forms.HiddenInput()})
+                                                             'userSolution': forms.HiddenInput})
 
             critFormset = CriterionFormSet(prefix='criteria',
                                            queryset=CriteriaLine.objects.filter(userSolution=thisUserSolution,
@@ -593,7 +594,7 @@ class CoachingReviewView(FormView):
             # evaluated = Evaluated.objects.create(whoEvaluated=self.request.user)
             CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, extra=len(criteriaLines), fields=(
                 'achievement', 'criteria', 'userSolution'), widgets={'criteria': forms.HiddenInput,
-                                                                      'userSolution': forms.HiddenInput, 'evaluator': forms.HiddenInput()})
+                                                                      'userSolution': forms.HiddenInput})
 
             critFormset = CriterionFormSet(prefix='criteria',
                                            initial=[{'userSolution': thisUserSolution, 'criteria': criteriaLine.criteria,
@@ -659,7 +660,7 @@ class CoachingReviewSession(FormView):
         RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=0, fields=(
             'ignore', 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions',
             'completionLevel', 'student', 'needsLaterAttention', 'evaluated'), widgets={'student': forms.HiddenInput,
-                                                                                        'evaluated': forms.HiddenInput(), 'completionLevel': forms.HiddenInput()})
+                                                                                        'completionLevel': forms.HiddenInput()})
 
         rFormset = RubricLineFormset(prefix='rFormset', queryset=RubricLine.objects.filter(
             evaluated__whoEvaluated=self.request.user, student=thisUserSolution).order_by(
@@ -669,8 +670,7 @@ class CoachingReviewSession(FormView):
         CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, extra=0,
                                                 fields=('achievement', 'criteria', 'userSolution', 'evaluator'),
                                                 widgets={'criteria': forms.HiddenInput,
-                                                         'userSolution': forms.HiddenInput,
-                                                         'evaluator': forms.HiddenInput()})
+                                                         'userSolution': forms.HiddenInput})
 
         critFormset = CriterionFormSet(prefix='criteria',
                                        queryset=CriteriaLine.objects.filter(userSolution=thisUserSolution,

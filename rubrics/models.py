@@ -228,7 +228,7 @@ class Criterion(models.Model):
 # Many to many model to hold user solution, who evaluated it, and when
 
 class Evaluated(models.Model):
-    whoEvaluated = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
+    whoEvaluated = models.ForeignKey(User, blank=True, on_delete=models.CASCADE, default=1)
     date = models.DateTimeField(auto_now_add=datetime.now, blank=True)
 
     def __str__(self):
