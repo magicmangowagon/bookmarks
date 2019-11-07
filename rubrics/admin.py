@@ -43,6 +43,7 @@ class Evaluated(admin.ModelAdmin):
 @admin.register(RubricLine)
 class RubricLine(admin.ModelAdmin):
     list_display = ['pk', 'student', 'learningObjective']
+    list_filter = ['student', 'learningObjective']
 
 
 @admin.register(CriteriaLine)
