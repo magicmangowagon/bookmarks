@@ -827,8 +827,12 @@ class EvalDetailView(DetailView):
         else:
             context['notReady'] = True
 
-        context['evaluation'] = RubricLine.objects.all().filter(student=rubric, evaluated__whoEvaluated__profile__role=3)
+        if self.request.user.profile.role is not 1:
+            context['evaluation'] = RubricLine.objects.all().filter(student=rubric)
+        else:
+            context['evaluation'] = RubricLine.objects.all().filter(student=rubric, evaluated__whoEvaluated__profile__role=3)
         context['userRole'] = self.request.user.profile.role
+
         try:
             context['evalFinalForm'] = Rubric.objects.all().filter(userSolution=rubric, evaluator__profile__role=3)
         except Exception:
