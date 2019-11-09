@@ -8,10 +8,13 @@
 
     <h1>{{ usersolution.challengeName }}</h1>
 <p>Submitted by {{ usersolution.userOwner }}</p>
-    {{ userRole }}
     {% if userRole is not 1 %}
         <a href="/solutionEval/{{ usersolution.id }}">Edit</a>
     {% endif %}
+    {% if notReady %}
+        <p>Awaiting Coach Review</p>
+
+    {% else %}
     {% for rubricLine in evaluation %}
 
         <div class="evalField">
@@ -49,7 +52,7 @@
         {% endif %}
     </p> -->
 
-
+    {% endif %}
 
 <p><a href="/media/{{ usersolution.file }}">{{ usersolution.file }}</a> </p>
 

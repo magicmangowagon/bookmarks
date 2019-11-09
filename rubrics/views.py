@@ -821,10 +821,16 @@ class EvalDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(EvalDetailView, self).get_context_data(**kwargs)
         rubric = self.kwargs['pk']
+        if Rubric.objects.all().filter(userSolution=rubric, evaluator__profile__role=3).exists() and \
+                RubricLine.objects.all().filter(student=rubric, evaluated__whoEvaluated__profile__role=3).exists():
+            context['notReady'] = False
+        else:
+            context['notReady'] = True
+
         context['evaluation'] = RubricLine.objects.all().filter(student=rubric, evaluated__whoEvaluated__profile__role=3)
         context['userRole'] = self.request.user.profile.role
         try:
-            context['evalFinalForm'] = Rubric.objects.get(userSolution=rubric)
+            context['evalFinalForm'] = Rubric.objects.all().filter(userSolution=rubric, evaluator__profile__role=3)
         except Exception:
             context['evalFinalForm'] = 'There was an error'
 
