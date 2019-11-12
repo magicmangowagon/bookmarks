@@ -524,10 +524,10 @@ class CoachingReviewView(FormView):
                                                                               'learningObj__loNumber')
         # set rubricLines based on whether this is a new evaluation or not
         if RubricLine.objects.all().filter(evaluated__whoEvaluated=self.request.user, student=thisUserSolution).exists():
-            rubricLines = RubricLine.objects.all().filter(evaluated__whoEvaluated=self.request.user, student=thisUserSolution).distinct()
+            rubricLines = RubricLine.objects.all().filter(evaluated__whoEvaluated=self.request.user, student=thisUserSolution).exclude(evaluated__isnull=True).distinct()
             finalRubric = Rubric.objects.all().filter(userSolution=thisUserSolution).filter(evaluator=self.request.user).distinct()
         else:
-            rubricLines = RubricLine.objects.filter(student=thisUserSolution).order_by('learningObjective__compGroup',
+            rubricLines = RubricLine.objects.filter(student=thisUserSolution).exclude(evaluated__isnull=True).order_by('learningObjective__compGroup',
                                                                                        'learningObjective__compNumber',
                                                                                        'learningObjective__loNumber')
             finalRubric = Rubric.objects.all().filter(userSolution=thisUserSolution)
@@ -537,7 +537,7 @@ class CoachingReviewView(FormView):
             criteriaLines = CriteriaLine.objects.filter(userSolution=thisUserSolution, evaluator__whoEvaluated=self.request.user).distinct().order_by(
                 'criteria__learningObj')
         else:
-            criteriaLines = CriteriaLine.objects.all().filter(userSolution=thisUserSolution).distinct().order_by(
+            criteriaLines = CriteriaLine.objects.all().filter(userSolution=thisUserSolution, ).exclude(evaluator__isnull=True).distinct().order_by(
                 'criteria__learningObj')
 
         context['finalRubric'] = finalRubric
