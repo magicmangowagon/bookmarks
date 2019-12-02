@@ -6,14 +6,14 @@ Evaluate Challenge {{ finalRubric.challenge.name }}
 
 {% block content %}
 
-<h1>Coaching Review - {{ finalRubric.challenge.name }}</h1>
+<h1>Coaching Review - {{ usersolution.challengeName }}<br> {{ usersolution.solutionInstance.name }}</h1>
     <p>Solution submission: <a href="/solutions/{{ usersolution.pk }}">{{ usersolution.userOwner.first_name }}
      {{ usersolution.userOwner.last_name }}</a></p>
-    <h2>Evaluator: {{ finalRubric.evaluator.first_name }} {{ finalRubric.evaluator.last_name }}</h2>
+    <h2>Evaluator: {{ finalRubric.0.evaluator.first_name }} {{ finalRubric.0.evaluator.last_name }}</h2>
 
     <h3>General Feedback</h3>
     <p>{{ finalRubric.generalFeedback|safe }}</p>
-        <form action=""  method="post" enctype="multipart/form-data">
+        <form action=""  method="POST" enctype="multipart/form-data" id="post_form">
 
             <div class="rubricField">
                 {{ rFormset.management_form }}

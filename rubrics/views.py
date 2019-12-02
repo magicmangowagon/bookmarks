@@ -312,7 +312,7 @@ class RubricFinalFormView(FormView):
              widgets={'userSolution': forms.HiddenInput, 'challenge': forms.HiddenInput, 'evaluator': forms.HiddenInput,
                       'challengeCompletionLevel': forms.HiddenInput})
 
-            formset = RubricFormSet(queryset=Rubric.objects.all().filter(userSolution=userSolution).filter(evaluator=self.request.user).distinct())
+            formset = RubricFormSet(prefix='rFormset', queryset=Rubric.objects.all().filter(userSolution=userSolution).filter(evaluator=self.request.user).distinct())
 
         else:
             RubricFormSet = modelformset_factory(Rubric, extra=1, formset=RubricForm, fields=(
@@ -320,18 +320,33 @@ class RubricFinalFormView(FormView):
              widgets={'userSolution': forms.HiddenInput, 'challenge': forms.HiddenInput, 'evaluator': forms.HiddenInput,
                       'challengeCompletionLevel': forms.HiddenInput})
 
-            formset = RubricFormSet(initial=[{'userSolution': userSolution, 'challenge': challenge,
+            formset = RubricFormSet(prefix='rFormset', initial=[{'userSolution': userSolution, 'challenge': challenge,
              'evaluator': self.request.user, 'challengeCompletionLevel': incrementor}], queryset=Rubric.objects.none())
+
+        if CoachReview.objects.filter(userSolution=userSolution).exists():
+            CoachReviewFormset = modelformset_factory(CoachReview, formset=CoachReviewForm, extra=0, fields=(
+                'release', 'userSolution', 'comment'), widgets={'userSolution': forms.HiddenInput, 'comment': forms.HiddenInput})
+            coachRevFormset = CoachReviewFormset(prefix='coachRevFormset', queryset=CoachReview.objects.filter(userSolution=userSolution))
+
+        else:
+            CoachReviewFormset = modelformset_factory(CoachReview, formset=CoachReviewForm, extra=1, fields=(
+                'release', 'userSolution', 'comment'), widgets={'userSolution': forms.HiddenInput, 'comment': forms.HiddenInput})
+            coachRevFormset = CoachReviewFormset(prefix='coachRevFormset',
+                                                 initial=[{'userSolution': userSolution}], queryset=CoachReview.objects.none())
+        # context['formset'] = cFormset
+        context['coachRevFormset'] = coachRevFormset
 
         context['form'] = formset
         return context
 
     def post(self, request, *args, **kwargs):
-        form = RubricFormSet(request.POST)
+        form = RubricFormSet(request.POST, prefix='rFormset')
+        coachForm = CoachReviewFormset(request.POST, prefix='coachRevFormset')
         completionLevelObj = RubricLine.objects.all().filter(student=self.kwargs['pk'])
 
-        if form.is_valid():
+        if form.is_valid() and coachForm.is_valid():
             form.save()
+            coachForm.save()
             process_rubricLine(completionLevelObj)
             assess_competency_done(completionLevelObj)
             return HttpResponseRedirect('/evals')
@@ -601,7 +616,6 @@ class CoachingReviewView(FormView):
                                                      'achievement': criteriaLine.achievement} for
                                                     criteriaLine in criteriaLines], queryset=CriteriaLine.objects.none())
 
-        # context['formset'] = cFormset
         context['rFormset'] = rFormset
         context['critFormset'] = critFormset
         context['reviewSession'] = False

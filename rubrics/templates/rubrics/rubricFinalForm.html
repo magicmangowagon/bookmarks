@@ -28,10 +28,13 @@
         <!-- <div class="completionLevel">Completion Level &nbsp;<span class="scoreBubble">{{ rubricLine.completionLevel }}</span></div> -->
         </div>
     {% endfor %}
-    <form action=""  method="post">
+     <form action=""  method="POST" enctype="multipart/form-data" id="post_form">
     {{ formset.management_form }}
     {{ form }}
-
+    {% if request.user.profile.role >= 3 %}
+         {{ coachRevFormset.management_form }}
+            <p>{{ coachRevFormset }}</p>
+     {% endif %}
     {% csrf_token %}
         <p><input type="submit" value="Submit evaluation"></p>
     </form>

@@ -81,7 +81,7 @@ class CoachReviewForm(BaseModelFormSet):
         super(CoachReviewForm, self).__init__(*args, **kwargs)
 
 
-CoachReviewFormset = modelformset_factory(CoachReview, formset=CoachReviewForm, fields=('rubricLine', 'comment',
+CoachReviewFormset = modelformset_factory(CoachReview, formset=CoachReviewForm, fields=('userSolution', 'comment',
                                                                                         'release'),
                                           )
 

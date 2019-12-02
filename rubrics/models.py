@@ -325,18 +325,6 @@ class RubricLine(models.Model):
         return name
 
 
-# ____________
-# COACH REVIEW
-# Coach reviews submitted rublines from evaluator, releases them for review with TC and
-# adds comments as needed
-
-class CoachReview(models.Model):
-    rubricLine = models.ForeignKey(RubricLine, on_delete=models.CASCADE)
-    release = models.BooleanField(default=False)
-    comment = models.TextField(blank=True, default='', max_length=None)
-    evaluator = models.ForeignKey(Evaluated, on_delete=models.CASCADE, default='', related_name='evaluator')
-
-
 # _____________
 # CRITERIA LINE
 # An attempt to model a sub-learningObjective for each learningObjective on the rubricLine relationship
@@ -371,6 +359,18 @@ class Rubric(models.Model):
     evaluator = models.ForeignKey(User, on_delete=models.CASCADE)
     userSolution = models.ForeignKey(UserSolution, on_delete=models.CASCADE, default='0')
     challengeCompletionLevel = models.IntegerField(default=0)
+
+
+# ____________
+# COACH REVIEW
+# Coach reviews submitted rublines from evaluator, releases them for review with TC and
+# adds comments as needed
+
+class CoachReview(models.Model):
+    userSolution = models.ForeignKey(UserSolution, on_delete=models.CASCADE, default='')
+    release = models.BooleanField(default=False)
+    comment = models.TextField(blank=True, default='', max_length=None)
+    # evaluator = models.ForeignKey(Evaluated, on_delete=models.CASCADE, default='', related_name='evaluator')
 
 
 # __________

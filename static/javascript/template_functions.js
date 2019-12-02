@@ -1,6 +1,7 @@
 // When the user scrolls the page, execute myFunction
 window.onscroll = function() {stickyOffset()};
 
+$("textarea, select, input").change(autoSave);
 // Get the header
 var header = document.getElementById("stuckDiv");
 // notch.
@@ -16,3 +17,31 @@ function stickyOffset() {
         header.classList.remove("sticky");
     }
 }
+
+function autoSave() {
+    alert("Change Detected");
+
+    $.ajax({
+        headers: { "X-CSRFToken": getCookie("csrftoken") },
+        data: $("#post_form").serialize(),
+        type: "POST",
+        url: $(this).attr('action'),
+    })
+}
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+

@@ -120,4 +120,5 @@ class LearningExpoResponsesAdmin(admin.ModelAdmin):
 
 @admin.register(CoachReview)
 class CoachReviewAdmin(admin.ModelAdmin):
-    list_display = ['rubricLine', 'release', 'comment']
+    list_display = ['release', 'comment', 'userSolution']
+
