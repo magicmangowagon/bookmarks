@@ -93,6 +93,11 @@ class MegaChallenge(models.Model):
     solutions = models.ManyToManyField(SolutionInstance, blank=True, related_name="mega_challenge_that_owns_me")
     overRide = models.BooleanField(default=False)
 
+    my_order = models.PositiveIntegerField(default=0, blank=False, null=False)
+
+    class Meta(object):
+        ordering = ['my_order', ]
+
     def __str__(self):
         return self.name
 
@@ -145,6 +150,10 @@ class Challenge(models.Model):
     solutions = models.ManyToManyField(SolutionInstance, blank=True, related_name="challenge_that_owns_me")
     learningObjs = models.ManyToManyField(LearningObjective, blank=True, related_name="challenge")
     tags = TaggableManager(blank=True)
+    my_order = models.PositiveIntegerField(default=0, blank=False, null=False)
+
+    class Meta(object):
+        ordering = ['my_order', ]
 
     def __str__(self):
         return self.name
@@ -162,7 +171,7 @@ class LearningExperience(models.Model):
     tags = TaggableManager(blank=True)
 
     class Meta:
-        ordering = ['challenge', ]
+        ordering = ['index', ]
 
     def __str__(self):
         return self.name

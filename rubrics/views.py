@@ -8,7 +8,7 @@ from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjecti
 from .forms import UserFileForm, UserFileFormset, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, \
     CriterionFormSet, CriteriaForm, CurrentStudentToView, RubricAddendumForm, RubricAddendumFormset, \
     LearningExperienceFormset, LearningExperienceForm, LearningExpoFeedbackForm, LearningExpoFeedbackFormset, \
-    CoachReviewForm, CoachReviewFormset
+    CoachReviewForm, CoachReviewFormset, UserSolutionToView
 from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
@@ -253,7 +253,7 @@ class MegaSubPage(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(MegaSubPage, self).get_context_data()
-        challenges = Challenge.objects.all().filter(megaChallenge=self.kwargs['pk'])
+        challenges = Challenge.objects.all().filter(megaChallenge=self.kwargs['pk']).order_by('my_order')
         context['challenges'] = challenges
         learningExpos = []
         for challenge in challenges:
@@ -810,11 +810,10 @@ class EvalListView(ListView):
     def get_queryset(self, **kwargs):
         profile = self.request.user.profile
         if profile.role == 4:
-            queryset = UserSolution.objects.filter().filter(evaluated__isnull=False).distinct()
+            queryset = UserSolution.objects.all().filter(evaluated__isnull=False).distinct()
             return queryset
 
         if profile.role == 3:
-
             group = self.request.user.groups.all()
             print(group)
             queryset = UserSolution.objects.filter(userOwner__groups__in=group).filter(evaluated__isnull=False).distinct()
@@ -823,6 +822,25 @@ class EvalListView(ListView):
         else:
             queryset = UserSolution.objects.filter(userOwner=self.request.user)
             return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(EvalListView, self).get_context_data(**kwargs)
+
+        if self.request.user.profile.role != 1:
+            form = UserSolutionToView(self.request.GET)
+            if form.is_valid():
+                userSolutions = UserSolution.objects.filter(userOwner=form.cleaned_data['chooseUser']).filter(
+                        evaluated__isnull=False).distinct()
+            else:
+                userSolutions = UserSolution.objects.all().filter(evaluated__isnull=False).distinct()
+            context['form'] = form
+
+        else:
+            userSolutions = UserSolution.objects.all().filter(userOwner=self.request.user)
+
+        context['userSolutions'] = userSolutions
+
+        return context
 
     context_object_name = 'evals'
     template_name = "rubrics/eval_list.html"

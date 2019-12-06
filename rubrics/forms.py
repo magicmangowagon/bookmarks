@@ -12,7 +12,13 @@ class ChallengeForm(forms.ModelForm):
 
 
 class CurrentStudentToView(forms.Form):
-    chooseUser = forms.ModelChoiceField(queryset=User.objects.all().filter(profile__role=1), initial=0, label='Choose User')
+    chooseUser = forms.ModelChoiceField(queryset=User.objects.all().filter(profile__role=1), initial=0,
+                                        required=False, label='Choose User')
+
+
+class UserSolutionToView(forms.Form):
+    chooseUser = forms.ModelChoiceField(queryset=User.objects.all().filter(profile__role=1), empty_label='All',
+                                        required=False, label='Choose User')
 
 
 class FramingFeedbackForm(BaseModelFormSet):

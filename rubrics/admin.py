@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
+from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 from .models import LearningObjective, Rubric, Criterion, Competency, Challenge, UserSolution, RubricLine, CriteriaLine, \
     CompetencyProgress, ChallengeAddendum, LearningExperience, LearningExpoResponses, Evaluated, SolutionInstance, \
     MegaChallenge, CoachReview
@@ -24,6 +25,20 @@ class CompetencyInline(admin.TabularInline):
 
 class UserSolutionInline(admin.TabularInline):
     model = UserSolution.evaluated.through
+
+
+class ChallengeInline(SortableInlineAdminMixin, admin.TabularInline):
+    model = Challenge
+    exclude = ['description', 'clinicalNeeds', 'standardSolution', 'pullQuote', 'picture', 'challengeGroupChoices',
+               'solutions', 'DESIGN', 'SIMULATE', 'IMPLEMENT', 'ONEONONE', 'SMALLGROUP', 'FULLCLASS', 'REFLECTION',
+               'CLASSROOMEVIDENCE', 'OBSERVATION', 'learningObjs', 'height', 'tags', ]
+    extra = 0
+
+
+class LearningExpoInline(SortableInlineAdminMixin, admin.TabularInline):
+    model = LearningExperience
+    exclude = ['learningObjectives', 'description', 'tags']
+    extra = 0
 
 
 @admin.register(UserSolution)
@@ -72,12 +87,19 @@ class CompetencyAdmin(admin.ModelAdmin):
 class ChallengeAdmin(admin.ModelAdmin):
     list_display = ['name']
     filter_horizontal = ('learningObjs', 'solutions')
+    inlines = [
+        LearningExpoInline
+    ]
 
 
 @admin.register(MegaChallenge)
 class MegaChallengeAdmin(admin.ModelAdmin):
     list_display = ['name', 'overRide']
+    exclude = ['my_order']
     filter_horizontal = ['solutions', ]
+    inlines = [
+        ChallengeInline,
+    ]
 
 
 @admin.register(SolutionInstance)

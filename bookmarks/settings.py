@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'djrichtextfield',
     'ckeditor',
     "taggit",
-    'storages'
+    'storages',
+    'adminsortable2'
 ]
 
 MIDDLEWARE = [
@@ -148,6 +149,7 @@ STATICFILES_DIRS = [
 ]
 
 if DEBUG is True:
+    STATIC_ROOT = '/static/'
     STATIC_URL = '/static/'
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 else:

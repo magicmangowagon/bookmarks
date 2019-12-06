@@ -7,7 +7,14 @@
 <h1>Evaluations</h1>
 
 <table cellpadding="10px" border="1px">
-{% for userSolution in object_list %}
+{% if request.user.profile.role == 4 %}
+        <form action=""  method="get">
+            {{ form }}
+
+            <input type="submit" value="change student">
+        </form>
+    {% endif %}
+{% for userSolution in userSolutions %}
     <tr>
         <td>
             <a href="evals/{{ userSolution.id }}">Evaluation</a><br>
