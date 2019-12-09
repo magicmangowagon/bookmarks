@@ -5,11 +5,12 @@
 
 {% block content %}
 <h1>{{ challenge.name }} - Solutions</h1>
+    <div class="expoWrapper">
 <div class="sub-container">
 {% for solution in solutions %}
 
     <div class="solution-content-box">
-        <h2>
+        <h2 id="{{ solution.id }}">
             <a href="/challenge/{{ solution.id }}">
                 {{ solution.name }}
             </a>
@@ -83,10 +84,21 @@
 
 
 {% endfor %}
+
+
+</div>
+
+<div class="solutionNav">
+<h3>Jump to Section</h3>
+<ul>
+    {% for solution in solutions %}
+
+            <li><a href="#{{ solution.id }}"> {{ solution.name }}</a></li>
+
+    {% endfor %}
+</ul>
 </div>
 
 
-
-
-
+</div>
 {% endblock content %}

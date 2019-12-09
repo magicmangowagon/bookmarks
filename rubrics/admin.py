@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 from .models import LearningObjective, Rubric, Criterion, Competency, Challenge, UserSolution, RubricLine, CriteriaLine, \
     CompetencyProgress, ChallengeAddendum, LearningExperience, LearningExpoResponses, Evaluated, SolutionInstance, \
-    MegaChallenge, CoachReview
+    MegaChallenge, CoachReview, ChallengeSolutionJunction
 
 
 class CriteriaInline(admin.TabularInline):
@@ -39,6 +39,12 @@ class LearningExpoInline(SortableInlineAdminMixin, admin.TabularInline):
     model = LearningExperience
     exclude = ['learningObjectives', 'description', 'tags']
     extra = 0
+
+
+class SolutionInstanceInline(SortableInlineAdminMixin, admin.TabularInline):
+    model = SolutionInstance
+    extra = 0
+    exclude = ['']
 
 
 @admin.register(UserSolution)
@@ -88,7 +94,7 @@ class ChallengeAdmin(admin.ModelAdmin):
     list_display = ['name']
     filter_horizontal = ('learningObjs', 'solutions')
     inlines = [
-        LearningExpoInline
+        LearningExpoInline,
     ]
 
 

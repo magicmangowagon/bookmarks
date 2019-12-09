@@ -25,6 +25,39 @@
     font-size: 18pt;
 }
 
+.solutionNav {
+    position: sticky;
+    top: 0;
+    text-align: left;
+    height: fit-content;
+    width: fit-content;
+    border-left: 2pt solid lightgray;
+    margin: 1em .25rem;
+    padding: 0 6pt 2pt;
+}
+
+.solutionNav ul {
+    list-style: none;
+    margin: 0;
+    padding: 2pt 0;
+}
+
+.solutionNav li {
+    margin: 10pt 0;
+}
+
+.solutionNav li:first-child {
+    margin: 0 0 6pt;
+}
+
+.solutionNav li:last-child {
+    margin: 6pt 0 0;
+}
+
+.solutionNav h3 {
+    margin-top: 0;
+}
+
 .infoBar {
     display: flex;
     flex-direction: row;

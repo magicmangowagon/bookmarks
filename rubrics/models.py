@@ -80,7 +80,7 @@ class SolutionInstance(models.Model):
     REFLECTION = models.BooleanField(verbose_name='Reflection', default=False)
     CLASSROOMEVIDENCE = models.BooleanField(verbose_name='Classroom Evidence', default=False)
     OBSERVATION = models.BooleanField(verbose_name='Observation', default=False)
-
+    order = models.PositiveIntegerField(default=0, blank=True)
     typeImplementation = [REFLECTION, CLASSROOMEVIDENCE, OBSERVATION]
 
     def __str__(self):
@@ -147,16 +147,29 @@ class Challenge(models.Model):
 
     typeImplementation = [REFLECTION, CLASSROOMEVIDENCE, OBSERVATION]
 
-    solutions = models.ManyToManyField(SolutionInstance, blank=True, related_name="challenge_that_owns_me")
+    solutions = models.ManyToManyField(SolutionInstance, blank=True, related_name="challenge_that_owns_me", )
     learningObjs = models.ManyToManyField(LearningObjective, blank=True, related_name="challenge")
     tags = TaggableManager(blank=True)
     my_order = models.PositiveIntegerField(default=0, blank=False, null=False)
 
-    class Meta(object):
+    class Meta:
         ordering = ['my_order', ]
 
     def __str__(self):
         return self.name
+
+
+# __________
+# CHALLENGE/SOLUTION INSTANCE JUNCTION MODEL
+# Allows sorting of solution instance order in admin
+
+class ChallengeSolutionJunction(models.Model):
+    challenge = models.ForeignKey(Challenge, blank=True, on_delete=models.CASCADE)
+    solutionInstance = models.ForeignKey(SolutionInstance, blank=True, on_delete=models.CASCADE)
+    order = models.PositiveIntegerField(default=0, blank=False, null=False)
+
+    class Meta:
+        ordering = ('order',)
 
 
 # __________

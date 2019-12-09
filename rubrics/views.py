@@ -179,7 +179,7 @@ class SolutionSectionView(DetailView):
         challenge = Challenge.objects.get(id=self.kwargs['pk'])
         context['challenge'] = challenge
         context['lo_list'] = LearningObjective.objects.all().filter(challenge=challenge).order_by('compGroup', 'compNumber', 'loNumber')
-        solutions = SolutionInstance.objects.all().filter(challenge_that_owns_me=challenge)
+        solutions = SolutionInstance.objects.all().filter(challenge_that_owns_me=challenge).order_by('order')
 
         # field_value = getattr(obj, field_name)
         for solution in solutions:
