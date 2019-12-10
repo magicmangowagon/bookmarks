@@ -48,6 +48,7 @@ class LearningObjective(models.Model):
     ))
     name = models.TextField(blank=True, default='')
     tags = TaggableManager(blank=True)
+    pass
 
     def __str__(self):
         fullname = str(self.compGroup) + "-" + str(self.compNumber) + "." + str(self.loNumber) + " " + str(self.name)

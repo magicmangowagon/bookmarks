@@ -243,7 +243,9 @@ class ChallengeListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context['lo_list'] = LearningObjective.objects.all().order_by('compGroup', 'compNumber', 'loNumber')
+        context['mega_lo'] = LearningObjective.objects.all().filter(challenge__megaChallenge__isnull=False).distinct().order_by('compGroup', 'compNumber', 'loNumber')
+
+        context['lo_list'] = LearningObjective.objects.all().order_by('compGroup', 'compNumber', 'loNumber').distinct()
         return context
 
 
@@ -853,10 +855,10 @@ class EvalDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(EvalDetailView, self).get_context_data(**kwargs)
         rubric = self.kwargs['pk']
-        if Rubric.objects.all().filter(userSolution=rubric, evaluator__profile__role=3).exists() and \
-                RubricLine.objects.all().filter(student=rubric, evaluated__whoEvaluated__profile__role=3).exists():
-            context['notReady'] = False
-        else:
+        try:
+            if CoachReview.objects.get(userSolution=rubric).release:
+                context['notReady'] = False
+        except:
             context['notReady'] = True
 
         if self.request.user.profile.role is not 1:

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load solution_filters %}
 
 {% block title %}Woodrow Wilson Academy{% endblock %}
 
@@ -18,13 +18,16 @@
                     {{ challenge.name }}
                 {% endif %}
             </a>
+
         </h2>
         <ul class="challengeListObj">
         {% if challenge.megaChallenge %}
+        {% for learningObjective in mega_lo %}
             {% for challenge in challenge.megaChallenge.challenge_set.all %}
-                {% for learningObjective in challenge.learningObjs.all %}
-                    <li class="challengeListObj">{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}.
-                        {{ learningObjective.loNumber }}</li>
+                    {% if challenge in learningObjective.challenge.all %}
+                        {% ifchanged %}<li class="challengeListObj">{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}.
+                            {{ learningObjective.loNumber }}</li>{% endifchanged %}
+                    {% endif %}
                 {% endfor %}
             {% endfor %}
         {% else %}
