@@ -20,6 +20,8 @@ class UserSolutionToView(forms.Form):
     chooseUser = forms.ModelChoiceField(queryset=User.objects.all().filter(profile__role=1), initial=0,
                                         required=True, label='Choose User', )
 
+    # chooseStage = forms.ModelChoiceField(queryset=UserSolution.objects.all().filter(evaluated__whoEvaluated__profile__role=3), initial=0, label='Stage')
+
 
 class FramingFeedbackForm(BaseModelFormSet):
     def __init__(self, *args, **kwargs):
