@@ -36,6 +36,14 @@
     padding: 0 6pt 2pt;
 }
 
+.savedBanner {
+    position: sticky;
+    top: 0;
+    background-color: #f5dd5d;
+    color: #FFFFFF;
+    text-align: center;
+}
+
 .solutionNav ul {
     list-style: none;
     margin: 0;

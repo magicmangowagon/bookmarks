@@ -108,6 +108,8 @@ Evaluate Challenge {{ finalRubric.challenge.name }}
                                     showOrHide(ignoreValue{{ form.learningObjective.value }}, ignoreDiv{{ form.learningObjective.value }});
                                     grayOut(ignoreValue{{ form.learningObjective.value }}, document.getElementById("h3{{ form.learningObjective.auto_id }}"));
                                 };
+
+
                             </script>
                         {{ form.id }}
                     {% endfor %}
@@ -142,5 +144,10 @@ Evaluate Challenge {{ finalRubric.challenge.name }}
                 headerToGrayOut.style.backgroundColor = "#00a497";
             }
         }
+
+
     </script>
+
+
+
 {% endblock %}

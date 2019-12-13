@@ -1,7 +1,7 @@
 // When the user scrolls the page, execute myFunction
 window.onscroll = function() {stickyOffset()};
 
-$("textarea, select, input").change(autoSave);
+//$("textarea, select, input").change(autoSave);
 // Get the header
 var header = document.getElementById("stuckDiv");
 // notch.
@@ -19,14 +19,23 @@ function stickyOffset() {
 }
 
 function autoSave() {
-    alert("Change Detected");
-
     $.ajax({
         headers: { "X-CSRFToken": getCookie("csrftoken") },
         data: $("#post_form").serialize(),
         type: "POST",
         url: $(this).attr('action'),
-    })
+    });
+
+    bannerDisplay();
+}
+
+function bannerDisplay() {
+    $('#content').before(($('<div class="savedBanner"> Saved </div>')));
+    bannerRemove();
+}
+
+function bannerRemove() {
+    $(self).delay(800).remove();
 }
 
 function getCookie(name) {
