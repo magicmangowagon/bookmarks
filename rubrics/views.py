@@ -325,30 +325,35 @@ class RubricFinalFormView(FormView):
             formset = RubricFormSet(prefix='rFormset', initial=[{'userSolution': userSolution, 'challenge': challenge,
              'evaluator': self.request.user, 'challengeCompletionLevel': incrementor}], queryset=Rubric.objects.none())
 
-        if CoachReview.objects.filter(userSolution=userSolution).exists():
-            CoachReviewFormset = modelformset_factory(CoachReview, formset=CoachReviewForm, extra=0, fields=(
-                'release', 'userSolution', 'comment'), widgets={'userSolution': forms.HiddenInput, 'comment': forms.HiddenInput})
-            coachRevFormset = CoachReviewFormset(prefix='coachRevFormset', queryset=CoachReview.objects.filter(userSolution=userSolution))
+        if self.request.user.profile.role is 3:
+            if CoachReview.objects.filter(userSolution=userSolution).exists():
+                CoachReviewFormset = modelformset_factory(CoachReview, formset=CoachReviewForm, extra=0, fields=(
+                    'release', 'userSolution', 'comment'), widgets={'userSolution': forms.HiddenInput, 'comment': forms.HiddenInput})
+                coachRevFormset = CoachReviewFormset(prefix='coachRevFormset', queryset=CoachReview.objects.filter(userSolution=userSolution))
 
-        else:
-            CoachReviewFormset = modelformset_factory(CoachReview, formset=CoachReviewForm, extra=1, fields=(
-                'release', 'userSolution', 'comment'), widgets={'userSolution': forms.HiddenInput, 'comment': forms.HiddenInput})
-            coachRevFormset = CoachReviewFormset(prefix='coachRevFormset',
-                                                 initial=[{'userSolution': userSolution}], queryset=CoachReview.objects.none())
-        # context['formset'] = cFormset
-        context['coachRevFormset'] = coachRevFormset
+            else:
+                CoachReviewFormset = modelformset_factory(CoachReview, formset=CoachReviewForm, extra=1, fields=(
+                    'release', 'userSolution', 'comment'), widgets={'userSolution': forms.HiddenInput, 'comment': forms.HiddenInput})
+                coachRevFormset = CoachReviewFormset(prefix='coachRevFormset',
+                                                     initial=[{'userSolution': userSolution}], queryset=CoachReview.objects.none())
+            # context['formset'] = cFormset
+            context['coachRevFormset'] = coachRevFormset
 
         context['form'] = formset
         return context
 
     def post(self, request, *args, **kwargs):
         form = RubricFormSet(request.POST, prefix='rFormset')
-        coachForm = CoachReviewFormset(request.POST, prefix='coachRevFormset')
         completionLevelObj = RubricLine.objects.all().filter(student=self.kwargs['pk'])
 
-        if form.is_valid() and coachForm.is_valid():
+        if self.request.user.profile.role is 3:
+            coachForm = CoachReviewFormset(request.POST, prefix='coachRevFormset')
+
+        if form.is_valid():
             form.save()
-            coachForm.save()
+            if self.request.user.profile.role is 3:
+                if coachForm.is_valid():
+                    coachForm.save()
             process_rubricLine(completionLevelObj)
             assess_competency_done(completionLevelObj)
             return HttpResponseRedirect('/evals')
@@ -815,7 +820,7 @@ class EvalListView(ListView):
             queryset = UserSolution.objects.all().filter(evaluated__isnull=False).distinct()
             return queryset
 
-        if profile.role == 3:
+        if profile.role == 3 or profile.role == 2:
             group = self.request.user.groups.all()
             print(group)
             queryset = UserSolution.objects.filter(userOwner__groups__in=group).filter(evaluated__isnull=False).distinct()
@@ -828,7 +833,7 @@ class EvalListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(EvalListView, self).get_context_data(**kwargs)
 
-        if self.request.user.profile.role != 1:
+        if self.request.user.profile.role == 4:
             form = UserSolutionToView(self.request.GET)
             if form.is_valid():
                 userSolutions = UserSolution.objects.filter(userOwner=form.cleaned_data['chooseUser']).filter(
@@ -836,7 +841,11 @@ class EvalListView(ListView):
             else:
                 userSolutions = UserSolution.objects.all().filter(evaluated__isnull=False).distinct()
             context['form'] = form
-
+        elif self.request.user.profile.role == 2 or self.request.user.profile.role == 3:
+                group = self.request.user.groups.all()
+                print(group)
+                userSolutions = UserSolution.objects.filter(userOwner__groups__in=group).filter(
+                    evaluated__isnull=False).distinct()
         else:
             userSolutions = UserSolution.objects.all().filter(userOwner=self.request.user)
 
