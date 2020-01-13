@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'e7+_=2dkn(4n64id2m_8v&fqvbw61f5u06mgp#io2ilwz$$drg'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -35,6 +35,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'rubrics.apps.RubricsConfig',
     'account.apps.AccountConfig',
+    'growthTracker.apps.GrowthtrackerConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,7 +47,9 @@ INSTALLED_APPS = [
     'ckeditor',
     "taggit",
     'storages',
-    'adminsortable2'
+    'adminsortable2',
+    'rest_framework',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -59,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'bookmarks.urls'
@@ -206,6 +210,8 @@ DJRICHTEXTFIELD_CONFIG = {
     }
 }
 
+# CORS Shit
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Configure Django App for Heroku.
 django_heroku.settings(locals(), staticfiles=False)

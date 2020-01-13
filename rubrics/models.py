@@ -3,6 +3,7 @@ from django.contrib.auth.models import User, Group
 from djrichtextfield.models import RichTextField
 from taggit.managers import TaggableManager
 from datetime import datetime
+from zipfile import ZipFile
 
 
 # __________________
@@ -158,6 +159,16 @@ class Challenge(models.Model):
 
     def __str__(self):
         return self.name
+
+
+# __________
+# CHALLENGE RESOURCES
+# holds zip file of challenge resources
+
+
+class ChallengeResources(models.Model):
+    zipFile = models.FileField(upload_to='resources')
+    challenge = models.ForeignKey(Challenge, blank=True, on_delete=models.CASCADE)
 
 
 # __________

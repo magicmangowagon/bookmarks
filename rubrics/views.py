@@ -732,15 +732,18 @@ class LearningExperienceView(DetailView):
         list(relatedLearningExperiences.order_by('index'))
         context['expoList'] = relatedLearningExperiences
         context['learningExpo'] = learningExpo
+        print(str(learningExpo.index) + ' of ' + str(relatedLearningExperiences.count()))
         if learningExpo != relatedLearningExperiences.last():
-            context['nextLearningExpo'] = relatedLearningExperiences[learningExpo.index + 1]
+            print(relatedLearningExperiences[learningExpo.index].index)
+
+            context['nextLearningExpo'] = LearningExperience.objects.get(challenge=learningExpo.challenge, index=learningExpo.index + 1).pk
             context['last'] = False
         else:
             context['nextLearningExpo'] = learningExpo.challenge
             context['last'] = True
 
         if learningExpo != relatedLearningExperiences.first():
-            context['previous'] = relatedLearningExperiences[learningExpo.index - 1]
+            context['previous'] = LearningExperience.objects.get(challenge=learningExpo.challenge, index=learningExpo.index - 1).pk
             context['first'] = False
         else:
             context['previous'] = learningExpo.challenge
@@ -864,11 +867,17 @@ class EvalDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(EvalDetailView, self).get_context_data(**kwargs)
         rubric = self.kwargs['pk']
-        try:
-            if CoachReview.objects.get(userSolution=rubric).release:
-                context['notReady'] = False
-        except:
+
+        if UserSolution.objects.filter(evaluated__whoEvaluated__profile__role=3).exists():
+            context['notReady'] = False
+        else:
             context['notReady'] = True
+
+        # try:
+        #    if CoachReview.objects.get(userSolution=rubric).release:
+        #        context['notReady'] = False
+        # except:
+        #    context['notReady'] = True
 
         if self.request.user.profile.role is not 1:
             context['evaluation'] = RubricLine.objects.all().filter(student=rubric)

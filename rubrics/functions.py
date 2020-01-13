@@ -1,4 +1,5 @@
 from .models import RubricLine, Competency, CompetencyProgress, LearningObjective, ChallengeAddendum, Challenge, MegaChallenge
+from zipfile import ZipFile
 
 
 # processes rubriclines from view, checks if ready conditions are met, records result, saves the
@@ -73,5 +74,9 @@ def custom_rubric_producer(challengeAddendum):
 
 def mega_challenge_builder(challenge):
 
-
     return challenge
+
+
+def get_filenames(path_to_zip):
+    with ZipFile(path_to_zip, 'r') as zip:
+        return zip.namelist()

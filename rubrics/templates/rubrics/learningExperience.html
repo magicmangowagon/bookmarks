@@ -38,13 +38,13 @@
 {% if last == True %}
     <input type="button" onclick='window.location.href="/solutionsection/{{ learningExpo.challenge.pk }}";' value="Next">
     {% else %}
-        <input type="button" onclick='window.location.href="{{ nextLearningExpo.pk }}";' value="Next">
+        <input type="button" onclick='window.location.href="{{ nextLearningExpo }}";' value="Next">
 {% endif %}
 
 {% if first == True %}
     <input type="button" onclick='window.location.href="/challengeCover/{{ learningExpo.challenge.pk }}";' value="Previous">
     {% else %}
-    <input type="button" onclick='window.location.href="{{ previous.pk }}";' value="Previous">
+    <input type="button" onclick='window.location.href="{{ previous }}";' value="Previous">
 {% endif %}
 
 {% endblock %}
