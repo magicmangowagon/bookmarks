@@ -262,7 +262,7 @@ class Criterion(models.Model):
 # Many to many model to hold user solution, who evaluated it, and when
 
 class Evaluated(models.Model):
-    whoEvaluated = models.ForeignKey(User, blank=True, on_delete=models.CASCADE, default=1)
+    whoEvaluated = models.ForeignKey(User, blank=True, on_delete=models.CASCADE, default=1,)
     date = models.DateTimeField(auto_now_add=datetime.now, blank=True)
 
     def __str__(self):
@@ -401,7 +401,7 @@ class Rubric(models.Model):
 # adds comments as needed
 
 class CoachReview(models.Model):
-    userSolution = models.ForeignKey(UserSolution, on_delete=models.CASCADE, default='')
+    userSolution = models.ForeignKey(UserSolution, on_delete=models.CASCADE, default='', related_name='coachReview')
     release = models.BooleanField(default=False)
     comment = models.TextField(blank=True, default='', max_length=None)
     # evaluator = models.ForeignKey(Evaluated, on_delete=models.CASCADE, default='', related_name='evaluator')

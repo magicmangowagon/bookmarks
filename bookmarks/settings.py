@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'storages',
     'adminsortable2',
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    'django_filters'
 ]
 
 MIDDLEWARE = [
@@ -146,7 +147,7 @@ AWS_S3_OBJECT_PARAMETERS = \
     {'CacheControl': 'max-age=86400',
                             }
 AWS_LOCATION = 'static'
-AWS_DEFAULT_ACL = None
+AWS_DEFAULT_ACL = 'authenticated-read'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),

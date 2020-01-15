@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 from .views import ChallengeDetail, ChallengeListView, SolutionDetailView, SolutionListView, RubricFormView, \
     EvalDetailView, EvalListView, RubricFinalFormView, CompetencyView, RubricAddendum, PreEvaluationUpdate, \
-    LearningExperienceCreator, LearningExperienceView, ChallengeCover, CoachingReviewView, SolutionSectionView, MegaSubPage, CoachingReviewSession
+    LearningExperienceCreator, LearningExperienceView, ChallengeCover, CoachingReviewView, SolutionSectionView, MegaSubPage, CoachingReviewSession, searchSubmissions
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
@@ -27,5 +27,6 @@ urlpatterns = [
     path('coachingsession/<int:pk>', login_required(CoachingReviewSession.as_view()), name='coachingSession'),
     path('solutionsection/<int:pk>', login_required(SolutionSectionView.as_view()), name='solutionSections'),
     path('subsolutions/<int:pk>', login_required(MegaSubPage.as_view()), name='megasolution'),
+    path('solutionSearch', login_required(views.searchSubmissions), name='solutionSearch')
     # path('edit/', views.edit, name='edit'),
 ]

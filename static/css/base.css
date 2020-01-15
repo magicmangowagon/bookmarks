@@ -332,6 +332,11 @@
 .headerBottom {
 }
 
+.searchForm{
+    display: flex;
+    flex-direction: row;
+}
+
 body {
     margin:0;
     padding:0;

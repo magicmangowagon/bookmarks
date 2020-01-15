@@ -17,6 +17,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User, Group
 from .functions import process_rubricLine, assess_competency_done, custom_rubric_producer, mega_challenge_builder
 from django.core.mail import send_mail
+from .filters import EvalFilter
 
 
 class ChallengeCover(DetailView):
@@ -948,4 +949,9 @@ class CompetencyView(ListView, FormMixin):
     context_object_name = 'comps'
 
 
+def searchSubmissions(request):
+    solutions = UserSolution.objects.all()
+    coachReviews = CoachReview.objects.all()
+    solution_filter = EvalFilter(request.GET, queryset=solutions)
+    return render(request, 'rubrics/solutions.html', {'filter': solution_filter, 'coachReview': coachReviews})
 
