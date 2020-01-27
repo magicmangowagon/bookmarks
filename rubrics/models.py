@@ -3,6 +3,7 @@ from django.contrib.auth.models import User, Group
 from djrichtextfield.models import RichTextField
 from taggit.managers import TaggableManager
 from datetime import datetime
+from django.core.files.base import ContentFile
 from zipfile import ZipFile
 
 
@@ -49,6 +50,7 @@ class LearningObjective(models.Model):
     ))
     name = models.TextField(blank=True, default='')
     tags = TaggableManager(blank=True)
+    archive = models.BooleanField('Archive (hides LO)', default=False)
     pass
 
     def __str__(self):
@@ -163,12 +165,22 @@ class Challenge(models.Model):
 
 # __________
 # CHALLENGE RESOURCES
-# holds zip file of challenge resources
+# holds zip file of challenge resources, separate file class handles each individual file
 
 
 class ChallengeResources(models.Model):
-    zipFile = models.FileField(upload_to='resources')
     challenge = models.ForeignKey(Challenge, blank=True, on_delete=models.CASCADE)
+    fileContainer = models.FileField(upload_to='resources/', default='')
+
+    def save(self, delete_zipFile=True, *args, **kwargs):
+        super(ChallengeResources, self).save(*args, **kwargs)
+        zipFile = ZipFile(self.fileContainer, mode='r')
+        zipFile.extractall(path='resources/')
+
+
+class ChallengeResourcesFile(models.Model):
+    challengeResources = models.ForeignKey(ChallengeResources, related_name='resource_file', on_delete=models.CASCADE, default='')
+    file = models.FileField(upload_to='resources/')
 
 
 # __________

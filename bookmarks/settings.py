@@ -160,15 +160,14 @@ if DEBUG is True:
 else:
     STATIC_URL = 'https://' + AWS_S3_CUSTOM_DOMAIN + AWS_LOCATION + '/'
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
+    DEFAULT_FILE_STORAGE = STATICFILES_STORAGE
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-
     SECURE_SSL_REDIRECT = True
 
 # STATIC_ROOT = '/static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_URL)
-DEFAULT_FILE_STORAGE = STATICFILES_STORAGE
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = 'login'

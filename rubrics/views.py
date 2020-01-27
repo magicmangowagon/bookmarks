@@ -909,7 +909,7 @@ class CompetencyView(ListView, FormMixin):
 
     def get_context_data(self, **kwargs):
         context = super(CompetencyView, self).get_context_data(**kwargs)
-        learningObjs = LearningObjective.objects.all().order_by('compGroup', 'compNumber', 'loNumber')
+        learningObjs = LearningObjective.objects.all().filter(archive=False).order_by('compGroup', 'compNumber', 'loNumber')
         context['learningObjs'] = learningObjs
 
         if self.request.user.profile.role == 4:
