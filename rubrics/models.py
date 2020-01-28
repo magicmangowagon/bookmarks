@@ -5,6 +5,8 @@ from taggit.managers import TaggableManager
 from datetime import datetime
 from django.core.files.base import ContentFile
 from zipfile import ZipFile
+import os
+from django.conf import settings
 
 
 # __________________
@@ -173,14 +175,22 @@ class ChallengeResources(models.Model):
     fileContainer = models.FileField(upload_to='resources/', default='')
 
     def save(self, delete_zipFile=True, *args, **kwargs):
-        super(ChallengeResources, self).save(*args, **kwargs)
+
         zipFile = ZipFile(self.fileContainer, mode='r')
-        zipFile.extractall(path='resources/')
+        zipList = zipFile.namelist()
+
+        for name in zipList:
+
+            current_file = zipFile.extract(name, path=os.path.join(settings.MEDIA_ROOT, 'resources/', zipFile.filename))
+            ChallengeResourcesFile.objects.create(challengeResources=self, file=current_file)
+
+        # zipFile.extractall(path='resources/')
+        super(ChallengeResources, self).save(*args, **kwargs)
 
 
 class ChallengeResourcesFile(models.Model):
     challengeResources = models.ForeignKey(ChallengeResources, related_name='resource_file', on_delete=models.CASCADE, default='')
-    file = models.FileField(upload_to='resources/')
+    file = models.FileField(max_length=200)
 
 
 # __________
