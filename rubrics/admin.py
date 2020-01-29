@@ -47,6 +47,11 @@ class SolutionInstanceInline(SortableInlineAdminMixin, admin.TabularInline):
     exclude = ['']
 
 
+class ChallengeResourceFileInline(SortableInlineAdminMixin, admin.TabularInline):
+    model = ChallengeResourcesFile
+    extra = 0
+
+
 @admin.register(UserSolution)
 class UserSolution(admin.ModelAdmin):
     list_display = ['pk', 'userOwner', 'challengeName', 'customized']
@@ -153,7 +158,8 @@ class CoachReviewAdmin(admin.ModelAdmin):
 
 @admin.register(ChallengeResources)
 class ChallengeResourcesAdmin(admin.ModelAdmin):
-    list_display = ('challenge', )
+    list_display = ('challenge',)
+    inlines = [ChallengeResourceFileInline,]
 
 
 @admin.register(ChallengeResourcesFile)

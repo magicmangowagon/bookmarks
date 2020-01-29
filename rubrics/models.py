@@ -180,19 +180,25 @@ class ChallengeResources(models.Model):
         zipList = zipFile.namelist()
 
         for name in zipList:
-
+            super(ChallengeResources, self).save(*args, **kwargs)
             current_file = zipFile.extract(name, path=os.path.join(settings.MEDIA_ROOT, 'resources/', zipFile.filename))
             ChallengeResourcesFile.objects.create(challengeResources=self, file=current_file)
 
         # zipFile.extractall(path='resources/')
-        super(ChallengeResources, self).save(*args, **kwargs)
+    def __str__(self):
+        return self.challenge.name + ' Resources'
 
 
 class ChallengeResourcesFile(models.Model):
     challengeResources = models.ForeignKey(ChallengeResources, related_name='resource_file', on_delete=models.CASCADE, default='')
     file = models.FileField(max_length=200)
+    order = models.PositiveIntegerField(default=0, blank=False, null=True)
 
+    def __str__(self):
+        return self.challengeResources.challenge.name + ' ' + self.file.name
 
+    class Meta:
+        ordering = ['order', ]
 # __________
 # CHALLENGE/SOLUTION INSTANCE JUNCTION MODEL
 # Allows sorting of solution instance order in admin
