@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ challengeResources.challenge }} Resources
+{% endblock %}
+
+{% block content %}
+    <h1>{{ challengeResources.challenge }} Resources</h1>
+    <div class="expoWrapper">
+
+
+        <div class="learningExpoDesc">
+        <ul>
+            {% for file in files %}
+               <li> <a href="{{ file.file.url }}">{{ file.file.name }}</a></li>
+                <br>
+            {% endfor %}
+        </ul>
+
+        </div>
+
+    </div>
+
+
+
+{% endblock %}

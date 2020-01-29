@@ -175,7 +175,6 @@ class ChallengeResources(models.Model):
     fileContainer = models.FileField(upload_to='resources/', default='')
 
     def save(self, delete_zipFile=True, *args, **kwargs):
-
         zipFile = ZipFile(self.fileContainer, mode='r')
         zipList = zipFile.namelist()
 
@@ -184,14 +183,13 @@ class ChallengeResources(models.Model):
             current_file = zipFile.extract(name, path=os.path.join(settings.MEDIA_ROOT, 'resources/', zipFile.filename))
             ChallengeResourcesFile.objects.create(challengeResources=self, file=current_file)
 
-        # zipFile.extractall(path='resources/')
     def __str__(self):
         return self.challenge.name + ' Resources'
 
 
 class ChallengeResourcesFile(models.Model):
     challengeResources = models.ForeignKey(ChallengeResources, related_name='resource_file', on_delete=models.CASCADE, default='')
-    file = models.FileField(max_length=200)
+    file = models.FileField(max_length=200, )
     order = models.PositiveIntegerField(default=0, blank=False, null=True)
 
     def __str__(self):

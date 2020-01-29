@@ -4,7 +4,7 @@ from django import forms
 from django.http import HttpResponseRedirect, HttpResponseForbidden, JsonResponse
 from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion, CriteriaLine, \
     Competency, CompetencyProgress, ChallengeAddendum, LearningExperience, LearningExpoResponses, Evaluated, \
-    CoachReview, SolutionInstance, MegaChallenge
+    CoachReview, SolutionInstance, MegaChallenge, ChallengeResources, ChallengeResourcesFile
 from .forms import UserFileForm, UserFileFormset, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, \
     CriterionFormSet, CriteriaForm, CurrentStudentToView, RubricAddendumForm, RubricAddendumFormset, \
     LearningExperienceFormset, LearningExperienceForm, LearningExpoFeedbackForm, LearningExpoFeedbackFormset, \
@@ -733,6 +733,7 @@ class LearningExperienceView(DetailView):
         list(relatedLearningExperiences.order_by('index'))
         context['expoList'] = relatedLearningExperiences
         context['learningExpo'] = learningExpo
+        context['resources'] = ChallengeResources.objects.get(challenge=learningExpo.challenge)
         print(str(learningExpo.index) + ' of ' + str(relatedLearningExperiences.count()))
         if learningExpo != relatedLearningExperiences.last():
             print(relatedLearningExperiences[learningExpo.index].index)
@@ -749,6 +750,20 @@ class LearningExperienceView(DetailView):
         else:
             context['previous'] = learningExpo.challenge
             context['first'] = True
+
+        return context
+
+
+class ChallengeResourcesView(DetailView):
+    model = ChallengeResources
+    template_name = 'rubrics/challengeResources.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ChallengeResourcesView, self).get_context_data()
+        challengeResources = ChallengeResources.objects.get(pk=self.kwargs['pk'])
+        files = ChallengeResourcesFile.objects.all().filter(challengeResources=challengeResources)
+        context['files'] = files
+        context['challengeResources'] = challengeResources
 
         return context
 
