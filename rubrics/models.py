@@ -166,38 +166,6 @@ class Challenge(models.Model):
 
 
 # __________
-# CHALLENGE RESOURCES
-# holds zip file of challenge resources, separate file class handles each individual file
-
-
-class ChallengeResources(models.Model):
-    challenge = models.ForeignKey(Challenge, blank=True, on_delete=models.CASCADE)
-    fileContainer = models.FileField(upload_to='resources/', default='')
-
-    def save(self, delete_zipFile=True, *args, **kwargs):
-        zipFile = ZipFile(self.fileContainer, mode='r')
-        zipList = zipFile.namelist()
-
-        for name in zipList:
-            super(ChallengeResources, self).save(*args, **kwargs)
-            current_file = zipFile.extract(name, path=os.path.join(settings.MEDIA_ROOT, 'resources/', zipFile.filename))
-            ChallengeResourcesFile.objects.create(challengeResources=self, file=current_file)
-
-    def __str__(self):
-        return self.challenge.name + ' Resources'
-
-
-class ChallengeResourcesFile(models.Model):
-    challengeResources = models.ForeignKey(ChallengeResources, related_name='resource_file', on_delete=models.CASCADE, default='')
-    file = models.FileField(max_length=200, )
-    order = models.PositiveIntegerField(default=0, blank=False, null=True)
-
-    def __str__(self):
-        return self.challengeResources.challenge.name + ' ' + self.file.name
-
-    class Meta:
-        ordering = ['order', ]
-# __________
 # CHALLENGE/SOLUTION INSTANCE JUNCTION MODEL
 # Allows sorting of solution instance order in admin
 
@@ -226,6 +194,44 @@ class LearningExperience(models.Model):
 
     def __str__(self):
         return self.name
+
+
+# __________
+# CHALLENGE RESOURCES
+# holds zip file of challenge resources, separate file class handles each individual file
+
+class ChallengeResources(models.Model):
+    challenge = models.ForeignKey(Challenge, blank=True, null=True, on_delete=models.SET_NULL)
+    megaChallenge = models.ForeignKey(MegaChallenge, blank=True, null=True, on_delete=models.SET_NULL)
+    learningExperience = models.ManyToManyField(LearningExperience, blank=True, null=True)
+    fileContainer = models.FileField(upload_to='resources/', default='')
+
+    def save(self, delete_zipFile=True, *args, **kwargs):
+        zipFile = ZipFile(self.fileContainer, mode='r')
+        zipList = zipFile.namelist()
+
+        for name in zipList:
+            super(ChallengeResources, self).save(*args, **kwargs)
+            current_file = zipFile.extract(name, path=os.path.join(settings.MEDIA_ROOT, 'resources/', zipFile.filename))
+            ChallengeResourcesFile.objects.create(challengeResources=self, file=current_file)
+
+    def __str__(self):
+        return self.challenge.name + ' Resources'
+
+
+class ChallengeResourcesFile(models.Model):
+    challengeResources = models.ForeignKey(ChallengeResources, related_name='resource_file', on_delete=models.CASCADE, default='')
+    file = models.FileField(max_length=200, )
+    order = models.PositiveIntegerField(default=0, blank=False, null=True)
+
+    def __str__(self):
+        return self.challengeResources.challenge.name + ' ' + self.file.name
+
+    class Meta:
+        ordering = ['order', ]
+
+    def filename(self):
+        return os.path.basename(self.file.name)
 
 
 # __________
