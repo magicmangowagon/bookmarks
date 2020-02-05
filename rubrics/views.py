@@ -246,7 +246,7 @@ class ChallengeListView(ListView):
         context = super().get_context_data(**kwargs)
         context['mega_lo'] = LearningObjective.objects.all().filter(challenge__megaChallenge__isnull=False).distinct().order_by('compGroup', 'compNumber', 'loNumber')
 
-        context['lo_list'] = LearningObjective.objects.all().order_by('compGroup', 'compNumber', 'loNumber').distinct()
+        # context['lo_list'] = LearningObjective.objects.all().order_by('compGroup', 'compNumber', 'loNumber').distinct()
         return context
 
 
@@ -729,12 +729,21 @@ class LearningExperienceView(DetailView):
         context = super(LearningExperienceView, self).get_context_data(**kwargs)
         learningExpo = LearningExperience.objects.get(pk=self.kwargs['pk'])
         relatedLearningExperiences = LearningExperience.objects.all().filter(challenge=learningExpo.challenge).order_by('index')
+        if learningExpo.challenge.megaChallenge:
+            relatedChallenges = MegaChallenge.objects.get(challenge=learningExpo.challenge).challenge_set.all().order_by('my_order')
+            for challenge in relatedChallenges:
+                print(challenge.learningexperience_set.all())
+            # relatedChallenges = megaChallenge.challenge_set
+            context['relatedChallenges'] = relatedChallenges
+
         context['learningObjectives'] = LearningObjective.objects.all().filter(learningExpo=learningExpo)
         list(relatedLearningExperiences.order_by('index'))
         context['expoList'] = relatedLearningExperiences
         context['learningExpo'] = learningExpo
-        context['resources'] = ChallengeResources.objects.get(challenge=learningExpo.challenge)
+        if ChallengeResources.objects.filter(challenge=learningExpo.challenge).exists():
+            context['resources'] = ChallengeResources.objects.get(challenge=learningExpo.challenge)
         print(str(learningExpo.index) + ' of ' + str(relatedLearningExperiences.count()))
+
         if learningExpo != relatedLearningExperiences.last():
             print(relatedLearningExperiences[learningExpo.index].index)
 

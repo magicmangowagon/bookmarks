@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block title %}
 {{ learningExpo.name }}
 {% endblock %}
@@ -23,17 +23,43 @@
         </div>
 
     </div>
-    <div class="learningExpoList">
+    <div class="multiChallengeNav">
+        {% if relatedChallenges %}
+
+            {% for relatedChallenge in relatedChallenges %}
+
+                <div class="learningExpoList" onload="">
+
+                    <h3><a onclick="challengeNavShow({{ relatedChallenge.pk }})">{{ relatedChallenge.name }} </a></h3>
+                        <div id="{{ relatedChallenge.pk }}" class="challengeSubNav">
+                            {% for object in relatedChallenge.learningexperience_set.all %}
+                                <li id="active{{ object.pk }}"><a href="{{ object.pk }}">{{ object.name }}</a> </li>
+                            {% endfor %}
+                                <li><a href="/solutionsection/{{ relatedChallenge.pk }}">Solution Upload </a> </li>
+                            {% if resources %}
+                                <li><a href="/challengeResources/{{ resources.pk }}">Challenge Resources</a> </li>
+                            {% endif %}
+                        </div>
+                </div>
+            {% endfor %}
+            </div>
+            {% else %}
+            <div class="learningExpoList">
             <h3><a href="/challengeCover/{{ learningExpo.challenge.pk }}">{{ learningExpo.challenge.name }}</a></h3>
             <ul>
 
                 {% for expoList in expoList %}
-                    <li><a href="{{ expoList.pk }}">{{ expoList.name }}</a> </li>
+                    <li id="active{{ expoList.pk }}"><a href="{{ expoList.pk }}">{{ expoList.name }}</a> </li>
                 {% endfor %}
                     <li><a href="/solutionsection/{{ learningExpo.challenge.pk }}">Solution Upload </a> </li>
-                <li><a href="/challengeResources/{{ resources.pk }}">Challenge Resources</a> </li>
+                {% if resources %}
+                    <li><a href="/challengeResources/{{ resources.pk }}">Challenge Resources</a> </li>
+                {% endif %}
+
             </ul>
-        </div>
+
+        {% endif %}
+     </div>
     </div>
 {% if last == True %}
     <input type="button" onclick='window.location.href="/solutionsection/{{ learningExpo.challenge.pk }}";' value="Next">
@@ -46,5 +72,19 @@
     {% else %}
     <input type="button" onclick='window.location.href="{{ previous }}";' value="Previous">
 {% endif %}
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+<script>
+function challengeNavShow (challenge) {
+    let elementID = document.getElementById(challenge);
+    $(elementID).toggle(150);
+}
+
+function activeExpo (expo) {
+    let activeExpo = document.getElementById("active"+ expo);
+    $(activeExpo).addClass("activeLearningExpo");
+}
+window.onLoad = challengeNavShow({{ learningExpo.challenge.pk }}), activeExpo({{ learningExpo.pk }});
+</script>
+<script type="text/javascript" src="{% static "/javascript/challengeNav.js"%}"></script>
 {% endblock %}
