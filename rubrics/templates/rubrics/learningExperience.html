@@ -25,43 +25,44 @@
     </div>
     <div class="multiChallengeNav">
         {% if relatedChallenges %}
-
             {% for relatedChallenge in relatedChallenges %}
-
-                <div class="learningExpoList" onload="">
-
+                <div class="learningExpoList">
                     <h3><a onclick="challengeNavShow({{ relatedChallenge.pk }})">{{ relatedChallenge.name }} </a></h3>
+
                         <div id="{{ relatedChallenge.pk }}" class="challengeSubNav">
+                        <hr>
                             {% for object in relatedChallenge.learningexperience_set.all %}
                                 <li id="active{{ object.pk }}"><a href="{{ object.pk }}">{{ object.name }}</a> </li>
                             {% endfor %}
-                                <li><a href="/solutionsection/{{ relatedChallenge.pk }}">Solution Upload </a> </li>
+                                <li class="solutionUpload"><a href="/solutionsection/{{ relatedChallenge.pk }}">Solution Upload </a> </li>
                             {% if resources %}
                                 <li><a href="/challengeResources/{{ resources.pk }}">Challenge Resources</a> </li>
                             {% endif %}
                         </div>
                 </div>
             {% endfor %}
-            </div>
-            {% else %}
-            <div class="learningExpoList">
-            <h3><a href="/challengeCover/{{ learningExpo.challenge.pk }}">{{ learningExpo.challenge.name }}</a></h3>
-            <ul>
 
-                {% for expoList in expoList %}
-                    <li id="active{{ expoList.pk }}"><a href="{{ expoList.pk }}">{{ expoList.name }}</a> </li>
-                {% endfor %}
-                    <li><a href="/solutionsection/{{ learningExpo.challenge.pk }}">Solution Upload </a> </li>
-                {% if resources %}
-                    <li><a href="/challengeResources/{{ resources.pk }}">Challenge Resources</a> </li>
-                {% endif %}
+        {% else %}
+        <div class="learningExpoList">
+        <h3><a href="/challengeCover/{{ learningExpo.challenge.pk }}">{{ learningExpo.challenge.name }}</a></h3>
+        <hr>
+        <ul>
 
-            </ul>
+            {% for expoList in expoList %}
+                <li id="active{{ expoList.pk }}"><a href="{{ expoList.pk }}">{{ expoList.name }}</a> </li>
+            {% endfor %}
+                <li class="solutionUpload"><a href="/solutionsection/{{ learningExpo.challenge.pk }}">Solution Upload </a> </li>
+            {% if resources %}
+                <li><a href="/challengeResources/{{ resources.pk }}">Challenge Resources</a> </li>
+            {% endif %}
 
-        {% endif %}
-     </div>
+        </ul>
+        </div>
+    {% endif %}
     </div>
-{% if last == True %}
+     </div>
+
+    {% if last == True %}
     <input type="button" onclick='window.location.href="/solutionsection/{{ learningExpo.challenge.pk }}";' value="Next">
     {% else %}
         <input type="button" onclick='window.location.href="{{ nextLearningExpo }}";' value="Next">
