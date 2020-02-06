@@ -1,22 +1,21 @@
 from django.shortcuts import render
 from rubrics.models import Rubric, RubricLine, CoachReview
 from collections import namedtuple
-from rest_framework import generics, viewsets
+from rest_framework import generics, viewsets, permissions
 from rest_framework.response import Response
 from .serializers import RubricSerializer, RubricLineSerializer, CoachReviewSerializer, CompletedFeedbackSerializer
-
-
-
 
 
 class RubricList(generics.ListCreateAPIView):
     queryset = Rubric.objects.all()
     serializer_class = RubricSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class RubricDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Rubric.objects.all()
     serializer_class = RubricSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class CompletedFeedback(viewsets.ViewSet):
@@ -31,3 +30,4 @@ class CompletedFeedback(viewsets.ViewSet):
         )
         serializer = CompletedFeedbackSerializer(completedFeedback)
         return Response(serializer.data)
+    permission_classes = [permissions.IsAuthenticated]
