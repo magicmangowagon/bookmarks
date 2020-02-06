@@ -218,18 +218,51 @@
 }
 
 .learningExpoList {
-    position: sticky;
-    top: 0;
     background-color: #efefef;
-    padding: 12px;
-    text-align: center;
     min-width: 200px;
-    width: fit-content;
     height: fit-content;
+}
+
+.multiChallengeNav .learningExpoList {
+    margin-bottom: 1em;
+}
+
+.challengeSubNav {
+    display: none;
+}
+
+.learningExpoList li {
+    list-style: none;
+    margin: 6pt 0;
+    padding: 0 1.5rem;
+}
+
+.learningExpoList h3 {
+    text-align: center;
+}
+
+.solutionUpload {
+    background-color: #f5dd5d;
+
+    font-weight: 600;
+}
+
+.solutionUpload a {
+    color: #000;
 }
 
 .learningExpoList ul {
     padding: 0;
+}
+
+.activeLearningExpo {
+    background-color: #003469;
+    color: #000;
+}
+
+.activeLearningExpo a {
+    color: #FFFFFF;
+    font-weight: 600;
 }
 
 .learningExpoDesc {
@@ -747,15 +780,20 @@ img.user-detail {
 {
     font-weight: bolder;
     color: #00a497;
-    margin-top: 0px;
+    margin-top: 0;
+}
+
+.multiChallengeNav {
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: fit-content;
 }
 
 
 
-.learningExpoList li {
-    list-style: none;
-    margin: 6pt 0;
-}
+
 
 #progressContainer {
     height: 100px;
