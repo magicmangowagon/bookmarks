@@ -52,9 +52,7 @@
                 <li id="active{{ expoList.pk }}"><a href="{{ expoList.pk }}">{{ expoList.name }}</a> </li>
             {% endfor %}
                 <li class="solutionUpload"><a href="/solutionsection/{{ learningExpo.challenge.pk }}">Solution Upload </a> </li>
-            {% if resources %}
-                <li><a href="/challengeResources/{{ resources.pk }}">Challenge Resources</a> </li>
-            {% endif %}
+
 
         </ul>
         </div>
@@ -73,7 +71,6 @@
     {% else %}
     <input type="button" onclick='window.location.href="{{ previous }}";' value="Previous">
 {% endif %}
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <script>
 function challengeNavShow (challenge) {
@@ -87,5 +84,5 @@ function activeExpo (expo) {
 }
 window.onLoad = challengeNavShow({{ learningExpo.challenge.pk }}), activeExpo({{ learningExpo.pk }});
 </script>
-<script type="text/javascript" src="{% static "/javascript/challengeNav.js"%}"></script>
+
 {% endblock %}
