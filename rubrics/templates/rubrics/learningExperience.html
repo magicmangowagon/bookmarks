@@ -52,7 +52,9 @@
                 <li id="active{{ expoList.pk }}"><a href="{{ expoList.pk }}">{{ expoList.name }}</a> </li>
             {% endfor %}
                 <li class="solutionUpload"><a href="/solutionsection/{{ learningExpo.challenge.pk }}">Solution Upload </a> </li>
-
+            {% if resources %}
+                <li><a href="/challengeResources/{{ resources.pk }}">Challenge Resources</a> </li>
+            {% endif %}
 
         </ul>
         </div>

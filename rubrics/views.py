@@ -740,7 +740,8 @@ class LearningExperienceView(DetailView):
         list(relatedLearningExperiences.order_by('index'))
         context['expoList'] = relatedLearningExperiences
         context['learningExpo'] = learningExpo
-
+        if ChallengeResources.objects.filter(challenge=learningExpo.challenge).exists():
+            context['resources'] = ChallengeResources.objects.get(challenge=learningExpo.challenge)
         print(str(learningExpo.index) + ' of ' + str(relatedLearningExperiences.count()))
 
         if learningExpo != relatedLearningExperiences.last():
