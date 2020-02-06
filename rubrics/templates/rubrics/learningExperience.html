@@ -73,6 +73,7 @@
     {% else %}
     <input type="button" onclick='window.location.href="{{ previous }}";' value="Previous">
 {% endif %}
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <script>
 function challengeNavShow (challenge) {
@@ -86,5 +87,4 @@ function activeExpo (expo) {
 }
 window.onLoad = challengeNavShow({{ learningExpo.challenge.pk }}), activeExpo({{ learningExpo.pk }});
 </script>
-
 {% endblock %}
