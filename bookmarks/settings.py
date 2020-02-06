@@ -25,7 +25,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECRET_KEY = 'e7+_=2dkn(4n64id2m_8v&fqvbw61f5u06mgp#io2ilwz$$drg'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -161,8 +161,8 @@ else:
     STATIC_URL = 'https://' + AWS_S3_CUSTOM_DOMAIN + AWS_LOCATION + '/'
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     DEFAULT_FILE_STORAGE = STATICFILES_STORAGE
-    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-    SECURE_SSL_REDIRECT = True
+    # SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    # SECURE_SSL_REDIRECT = True
 
 # STATIC_ROOT = '/static/'
 MEDIA_URL = '/media/'
