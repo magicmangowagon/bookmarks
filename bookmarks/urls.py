@@ -25,6 +25,7 @@ urlpatterns = [
     path('', include('rubrics.urls')),
     path('', include('account.urls')),
     path('', include('growthTracker.urls')),
+    path('', include('info.urls')),
     path('djrichtextfield/', include('djrichtextfield.urls')),
 ]
 

@@ -246,7 +246,6 @@ class ChallengeListView(ListView):
         context = super().get_context_data(**kwargs)
         context['mega_lo'] = LearningObjective.objects.all().filter(challenge__megaChallenge__isnull=False).distinct().order_by('compGroup', 'compNumber', 'loNumber')
 
-        # context['lo_list'] = LearningObjective.objects.all().order_by('compGroup', 'compNumber', 'loNumber').distinct()
         return context
 
 
@@ -911,9 +910,11 @@ class EvalDetailView(DetailView):
         context['userRole'] = self.request.user.profile.role
 
         try:
-            context['evalFinalForm'] = Rubric.objects.all().filter(userSolution=rubric, evaluator__profile__role=3)
-        except Exception:
+            context['evalFinalForm'] = Rubric.objects.get(userSolution=rubric, evaluator__profile__role=3)
+            # print(Rubric.objects.get(userSolution=rubric, evaluator__profile__role=3).generalFeedback)
+        except:
             context['evalFinalForm'] = 'There was an error'
+            print('There was nothing found')
 
         return context
 
