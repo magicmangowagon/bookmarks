@@ -160,6 +160,7 @@ class CoachReviewAdmin(admin.ModelAdmin):
 class ChallengeResourcesAdmin(admin.ModelAdmin):
     list_display = ('challenge',)
     inlines = [ChallengeResourceFileInline,]
+    filter_horizontal = ['learningExperience',]
 
 
 @admin.register(ChallengeResourcesFile)

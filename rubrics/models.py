@@ -205,6 +205,7 @@ class ChallengeResources(models.Model):
     megaChallenge = models.ForeignKey(MegaChallenge, blank=True, null=True, on_delete=models.SET_NULL)
     learningExperience = models.ManyToManyField(LearningExperience, blank=True, null=True)
     fileContainer = models.FileField(upload_to='resources/', default='')
+    name = models.CharField(max_length=500, null=True)
 
     def save(self, delete_zipFile=True, *args, **kwargs):
         zipFile = ZipFile(self.fileContainer, mode='r')
@@ -215,17 +216,11 @@ class ChallengeResources(models.Model):
             current_file = zipFile.extract(name, path=os.path.join(settings.MEDIA_ROOT, 'resources/', zipFile.filename))
             ChallengeResourcesFile.objects.create(challengeResources=self, file=current_file)
 
-    def __str__(self):
-        return self.challenge.name + ' Resources'
-
 
 class ChallengeResourcesFile(models.Model):
     challengeResources = models.ForeignKey(ChallengeResources, related_name='resource_file', on_delete=models.CASCADE, default='')
     file = models.FileField(max_length=200, )
     order = models.PositiveIntegerField(default=0, blank=False, null=True)
-
-    def __str__(self):
-        return self.challengeResources.challenge.name + ' ' + self.file.name
 
     class Meta:
         ordering = ['order', ]

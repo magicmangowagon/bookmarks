@@ -8,6 +8,11 @@
     <div class="expoWrapper">
         <div class="expoVertWrapper">
         <h1>{{ learningExpo.name }}</h1>
+        {% if expoResources %}
+            {% for object in expoResources %}
+                <a class="expoResources" href="/challengeResources/{{ object.pk }}">{{ object.name }}</a>
+            {% endfor %}
+        {% endif %}
         <div class="challengeListObj">
             <ul>
                 {% for learningObjective in learningObjectives %}

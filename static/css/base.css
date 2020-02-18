@@ -255,6 +255,10 @@
     padding: 0;
 }
 
+.expoResources {
+    font-weight: 600;
+}
+
 .activeLearningExpo {
     background-color: #003469;
     color: #000;

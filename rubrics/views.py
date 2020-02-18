@@ -238,15 +238,23 @@ class PreEvaluationUpdate(ListView):
 
 class ChallengeListView(ListView):
     model = Challenge
-    queryset = Challenge.objects.all().filter(display=True)
+    # queryset = Challenge.objects.all().filter(display=True).order_by('challengeGroupChoices')
     context_object_name = 'challenges'
     template_name = 'rubrics/list.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['mega_lo'] = LearningObjective.objects.all().filter(challenge__megaChallenge__isnull=False).distinct().order_by('compGroup', 'compNumber', 'loNumber')
-
+        context['megaChallenges'] = MegaChallenge.objects.all()
         return context
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            queryset = Challenge.objects.all().order_by('challengeGroupChoices')
+            return queryset
+        else:
+            queryset = Challenge.objects.all().filter(display=True).order_by('challengeGroupChoices')
+            return queryset
 
 
 class MegaSubPage(DetailView):
@@ -741,6 +749,8 @@ class LearningExperienceView(DetailView):
         context['learningExpo'] = learningExpo
         if ChallengeResources.objects.filter(challenge=learningExpo.challenge).exists():
             context['resources'] = ChallengeResources.objects.get(challenge=learningExpo.challenge)
+        if ChallengeResources.objects.filter(learningExperience=self.kwargs['pk']).exists():
+            context['expoResources'] = ChallengeResources.objects.filter(learningExperience=self.kwargs['pk'])
         print(str(learningExpo.index) + ' of ' + str(relatedLearningExperiences.count()))
 
         if learningExpo != relatedLearningExperiences.last():
