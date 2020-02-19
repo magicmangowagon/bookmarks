@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'adminsortable2',
     'rest_framework',
     'corsheaders',
-    'django_filters'
+    'django_filters',
+    'bookmarks.custom_storage'
 ]
 
 MIDDLEWARE = [
@@ -153,9 +154,9 @@ STATICFILES_DIRS = [
 ]
 
 if DEBUG is True:
-    STATIC_ROOT = '/static/'
-    STATIC_URL = '/static/'
-    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+    STATIC_URL = 'https://' + AWS_S3_CUSTOM_DOMAIN + AWS_LOCATION + '/'
+    STATICFILES_STORAGE = 'bookmarks.custom_storage.CustomS3Boto3Storage'
+    DEFAULT_FILE_STORAGE = STATICFILES_STORAGE
 
 else:
     STATIC_URL = 'https://' + AWS_S3_CUSTOM_DOMAIN + AWS_LOCATION + '/'

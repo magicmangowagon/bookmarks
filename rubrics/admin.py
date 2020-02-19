@@ -158,9 +158,9 @@ class CoachReviewAdmin(admin.ModelAdmin):
 
 @admin.register(ChallengeResources)
 class ChallengeResourcesAdmin(admin.ModelAdmin):
-    list_display = ('challenge',)
-    inlines = [ChallengeResourceFileInline,]
-    filter_horizontal = ['learningExperience',]
+    list_display = ('name', 'challenge', 'megaChallenge',)
+    inlines = [ChallengeResourceFileInline, ]
+    filter_horizontal = ['learningExperience']
 
 
 @admin.register(ChallengeResourcesFile)

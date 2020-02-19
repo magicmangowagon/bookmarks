@@ -205,21 +205,22 @@ class ChallengeResources(models.Model):
     megaChallenge = models.ForeignKey(MegaChallenge, blank=True, null=True, on_delete=models.SET_NULL)
     learningExperience = models.ManyToManyField(LearningExperience, blank=True, null=True)
     fileContainer = models.FileField(upload_to='resources/', default='')
-    name = models.CharField(max_length=500, null=True)
+    name = models.CharField(max_length=500, null=True, blank=True)
 
-    def save(self, delete_zipFile=True, *args, **kwargs):
-        zipFile = ZipFile(self.fileContainer, mode='r')
-        zipList = zipFile.namelist()
+    def save(self, delete_zipFile=False, *args, **kwargs):
+        # zipFile = ZipFile(self.fileContainer, mode='r')
+        # zipList = zipFile.namelist()
+        super(ChallengeResources, self).save(*args, **kwargs)
 
-        for name in zipList:
-            super(ChallengeResources, self).save(*args, **kwargs)
-            current_file = zipFile.extract(name, path=os.path.join(settings.MEDIA_ROOT, 'resources/', zipFile.filename))
-            ChallengeResourcesFile.objects.create(challengeResources=self, file=current_file)
+        with ZipFile(self.fileContainer, 'r') as resource:
+            for name in resource.namelist():
+                current_file = resource.extract(name, path='resources/')
+                ChallengeResourcesFile.objects.create(challengeResources=self, file=current_file)
 
 
 class ChallengeResourcesFile(models.Model):
     challengeResources = models.ForeignKey(ChallengeResources, related_name='resource_file', on_delete=models.CASCADE, default='')
-    file = models.FileField(max_length=200, )
+    file = models.FileField(max_length=200,)
     order = models.PositiveIntegerField(default=0, blank=False, null=True)
 
     class Meta:
