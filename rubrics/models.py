@@ -3,9 +3,10 @@ from django.contrib.auth.models import User, Group
 from djrichtextfield.models import RichTextField
 from taggit.managers import TaggableManager
 from datetime import datetime
-from django.core.files.base import ContentFile
+from django.core.files.base import ContentFile, File
 from zipfile import ZipFile
 import boto3
+from io import BytesIO
 import os
 from django.conf import settings
 
@@ -216,10 +217,15 @@ class ChallengeResources(models.Model):
         s3 = boto3.client('s3')
         with ZipFile(self.fileContainer, 'r') as resource:
             for name in resource.namelist():
-                current_file = resource.extract(name)
-                s3.upload_file(current_file, 'rubrics-bucket', 'static/resources/' + current_file)
+                current_file = resource.open(name)
+                # file = ContentFile(current_file.name, current_file.read())
+                f = ChallengeResourcesFile(challengeResources=self)
+                f.file.save(current_file.name, ContentFile(current_file.read()))
 
-                ChallengeResourcesFile.objects.create(challengeResources=self, file=current_file)
+                # remotePath = s3.get_object(Bucket='rubrics-bucket', Key='static/resources/' + resource.filename)
+
+                # s3.upload_file(current_file, 'rubrics-bucket',  remotePath + current_file)
+
 
 
 class ChallengeResourcesFile(models.Model):

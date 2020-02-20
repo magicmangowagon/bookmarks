@@ -27,6 +27,10 @@ class UserSolutionInline(admin.TabularInline):
     model = UserSolution.evaluated.through
 
 
+class RubricLineInline(admin.TabularInline):
+    model = RubricLine
+
+
 class ChallengeInline(SortableInlineAdminMixin, admin.TabularInline):
     model = Challenge
     exclude = ['description', 'clinicalNeeds', 'standardSolution', 'pullQuote', 'picture', 'challengeGroupChoices',
@@ -62,7 +66,7 @@ class UserSolution(admin.ModelAdmin):
 class Evaluated(admin.ModelAdmin):
     list_display = ['whoEvaluated', 'date']
     inlines = [
-        UserSolutionInline,
+        UserSolutionInline, RubricLineInline
     ]
 
 
