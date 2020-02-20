@@ -250,7 +250,7 @@ class ChallengeListView(ListView):
 
     def get_queryset(self):
         if self.request.user.is_staff:
-            queryset = Challenge.objects.all().order_by('challengeGroupChoices')
+            queryset = Challenge.objects.all().filter(display=True).order_by('challengeGroupChoices')
             return queryset
         else:
             queryset = Challenge.objects.all().filter(display=True).order_by('challengeGroupChoices')

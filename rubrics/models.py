@@ -3,12 +3,12 @@ from django.contrib.auth.models import User, Group
 from djrichtextfield.models import RichTextField
 from taggit.managers import TaggableManager
 from datetime import datetime
-from django.core.files.base import ContentFile, File
+from django.core.files.base import ContentFile
 from zipfile import ZipFile
-import boto3
-from io import BytesIO
-import os
-from django.conf import settings
+# import boto3
+# from io import BytesIO
+# import os
+# from django.conf import settings
 
 
 # __________________
@@ -205,31 +205,22 @@ class LearningExperience(models.Model):
 class ChallengeResources(models.Model):
     challenge = models.ForeignKey(Challenge, blank=True, null=True, on_delete=models.SET_NULL)
     megaChallenge = models.ForeignKey(MegaChallenge, blank=True, null=True, on_delete=models.SET_NULL)
-    learningExperience = models.ManyToManyField(LearningExperience, blank=True, null=True)
-    fileContainer = models.FileField(upload_to='resources/', default='')
+    learningExperience = models.ManyToManyField(LearningExperience, blank=True)
+    fileContainer = models.FileField(upload_to='resources/', default='', blank=True)
     name = models.CharField(max_length=500, null=True, blank=True)
-    description = RichTextField(null=True)
+    description = RichTextField(blank=True, default='')
 
     def save(self, delete_zipFile=False, *args, **kwargs):
-        # zipFile = ZipFile(self.fileContainer, mode='r')
-        # zipList = zipFile.namelist()
         super(ChallengeResources, self).save(*args, **kwargs)
-        s3 = boto3.client('s3')
         with ZipFile(self.fileContainer, 'r') as resource:
             for name in resource.namelist():
                 current_file = resource.open(name)
-                # file = ContentFile(current_file.name, current_file.read())
                 f = ChallengeResourcesFile(challengeResources=self)
                 f.file.save(current_file.name, ContentFile(current_file.read()))
 
-                # remotePath = s3.get_object(Bucket='rubrics-bucket', Key='static/resources/' + resource.filename)
-
-                # s3.upload_file(current_file, 'rubrics-bucket',  remotePath + current_file)
-
-
 
 class ChallengeResourcesFile(models.Model):
-    challengeResources = models.ForeignKey(ChallengeResources, related_name='resource_file', on_delete=models.CASCADE, default='')
+    challengeResources = models.ForeignKey(ChallengeResources, related_name='resource_file', on_delete=models.CASCADE, default='', blank=True)
     file = models.FileField(max_length=200, upload_to='resources/')
     order = models.PositiveIntegerField(default=0, blank=False, null=True)
 
