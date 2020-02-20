@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ usersolution.userowner }}
+{% endblock %}
+
+{% block content %}
+<div id="stuckDiv">
+<div class="infoBar">
+    <div class="infoBarSub"> <h1>{{ usersolution.challengeName }} - <em>{{ usersolution.solutionInstance }}</em></h1>
+    <p>Submitted by {{ usersolution.userOwner.first_name }} {{ usersolution.userOwner.last_name }}</p></div>
+    <div class="infoBarSub"><h1>|</h1></div>
+    {% if request.user.profile.role is not 1 %}
+        <div class="infoBarSub"><h2><a href="/solutionEval/{{ usersolution.id }}">Evaluate</a></h2></div>
+    {% endif %}
+ </div>
+</div>
+   <p>{{ usersolution.solution|safe }} </p>
+
+
+    <h3>Framing the Feedback - Cover Sheet</h3>
+    <div class="evalFieldFlexContainer">
+
+        <div class="evalFieldFlexBox">
+            <p>What's a good title for your work</p>
+            {{ usersolution.goodTitle }}
+        </div>
+
+        <div class="evalFieldFlexBox">
+            <p>How does this piece of work fit into the story of your development as a teacher?</p>
+            {{ usersolution.workFit }}
+        </div>
+
+        <div class="evalFieldFlexBox">
+            <p>What’s a specific detail in this work that you are especially proud of? why?</p>
+            {{ usersolution.proudDetail }}
+        </div>
+
+        <div class="evalFieldFlexBox">
+            <p>Which detail shows what was especially hard for you? how?</p>
+            {{ usersolution.hardDetail }}
+        </div>
+
+        <div class="evalFieldFlexBox">
+            <p>What’s one objective that you met really well? What’s your evidence?</p>
+            {{ usersolution.objectiveWell }}
+        </div>
+
+        <div class="evalFieldFlexBox">
+            <p>What’s one objective that you still want to work on? What evidence leads you to think this is an area of growth for you?</p>
+            {{ usersolution.objectivePoor }}
+        </div>
+
+        <div class="evalFieldFlexBox">
+            <p>Do you have any learning objectives of your own--in addition to those specified below--that you’d like the Observer to consider when they look at your work? If so, add them at the top of the Observation Form</p>
+            {{ usersolution.personalLearningObjective }}
+        </div>
+
+        <div class="evalFieldFlexBox">
+            <p>Do you have any learning objectives of your own--in addition to those specified below--that you’d like the Observer to consider when they look at your work? If so, add them at the top of the Observation Form</p>
+            {{ usersolution.personalLearningObjective }}
+        </div>
+        <h3>Challenge Feedback</h3>
+        <div class="learningExpoResponseFlex">
+            {% for theseLearningExpos in theseLearningExpos  %}
+                <div class="learningExpoResponseBox">
+                    <p>{{ theseLearningExpos.learningExperience.name }}</p>
+                    <p>{{ theseLearningExpos.get_learningExperienceResponse_display }}</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="evalFieldFlexBox">
+            <p>Choose one of the above learning experiences that you found helpful. How did it help you?</p>
+            {{ usersolution.helpfulLearningExp }}
+        </div>
+
+        <div class="evalFieldFlexBox">
+            <p>Choose one of the above learning experiences that was less helpful. Why wasn't it helpful?</p>
+            {{ usersolution.notHelpfulLearningExp }}
+        </div>
+
+        <div class="evalFieldFlexBox">
+            <p>What is one learning experience that you would change? How would you change it?</p>
+            {{ usersolution.changeLearningExp }}
+        </div>
+
+        <div class="evalFieldFlexBox">
+            <p>Did you engage in any helpful learning experiences that were not included in the challenge guide? Please let us know what they were so that we can think about adding them.</p>
+            {{ usersolution.notIncludedLearningExp }}
+        </div>
+    </div>
+    <h3>Previous examples of student work on related learning objectives:</h3>
+    <ul class="previousExamples">
+        {% for rubricLine in otherInstances %}
+            <li class="previousExamplesEntry">
+                <h4>{{ rubricLine.learningObjective.compGroup }} - {{ rubricLine.learningObjective.compNumber }}.{{ rubricLine.learningObjective.loNumber }}
+                    {{ rubricLine.learningObjective.name }} - <strong>{{ rubricLine.student.challengeName }}</strong></h4>
+                <p>Feedback:<br>
+                {{ rubricLine.feedback }}</p>
+                <p><strong>
+                    {% if rubricLine.ready == True %}
+                        Complete
+                    {% else %}
+                        Incomplete
+                    {% endif %}
+                </strong></p>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

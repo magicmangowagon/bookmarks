@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load solution_filters %}
+
+{% block title %}Woodrow Wilson Academy{% endblock %}
+
+{% block content %}
+<h1>Challenges</h1>
+
+{% for challenge in challenges %}
+
+<div class="challengeListEntry">
+    <div class="challengeSubEntry">{% if challenge.picture %}<img src="{{ challenge.picture.url }}" height="60px">{% endif %}</div>
+    <div class="challengeSubEntry">
+        <h2>
+            <a href="challengeCover/{{ challenge.id }}">
+                {% if challenge.megaChallenge %}
+                    {{ challenge.megaChallenge.name }}
+                {% else %}
+                    {{ challenge.name }}
+                {% endif %}
+            </a>
+
+        </h2>
+        <ul class="challengeListObj">
+        {% if challenge.megaChallenge %}
+        {% for learningObjective in mega_lo %}
+            {% for challenge in challenge.megaChallenge.challenge_set.all %}
+                    {% if challenge in learningObjective.challenge.all %}
+                        {% ifchanged %}<li class="challengeListObj">{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}.
+                            {{ learningObjective.loNumber }}</li>{% endifchanged %}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        {% else %}
+            {% for learningObjective in challenge.learningObjs.all %}
+                <li class="challengeListObj">{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}.
+                    {{ learningObjective.loNumber }}</li>
+            {% endfor %}
+        {% endif %}
+        </ul>
+    </div>
+</div>
+
+{% endfor %}
+
+{% endblock content %}

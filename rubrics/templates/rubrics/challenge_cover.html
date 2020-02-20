@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load solution_filters %}
+
+{% block title %}
+{{ challengeCover.0.name }}
+{% endblock %}
+
+{% block content %}
+<div class="coverSheet">
+    <div class="coverSheetTitleContainer">
+        <div class="coverSheetTitle">
+            {% if challengeCover.0.megaChallenge %}
+                <h1>{{ challengeCover.0.megaChallenge.name }}</h1>
+            {% else %}
+                <h1>{{ challengeCover.name }}</h1>
+            {% endif %}
+        </div>
+        <div class="challengeGroup">
+            <p>group</p>
+            {% if challengeCover.0.megaChallenge %}
+                <h2>{{ challengeCover.0.challengeGroupChoices }}</h2>
+            {% else %}
+                <h2>{{ challengeCover.challengeGroupChoices }}</h2>
+            {% endif %}
+        </div>
+    </div><!-- coverSheetTitleContainer -->
+
+    <div class="pullQuote">
+        {% if challengeCover.0.megaChallenge %}
+            <h2>{{ challengeCover.0.pullQuote }}</h2>
+        {% else %}
+            <h2>{{ challengeCover.pullQuote }}</h2>
+        {% endif %}
+
+    </div> <!-- pullQuote -->
+
+    <div class="course-content-container">
+
+        <div class="course-content-box">
+            <h3>Challenge Overview</h3>
+            {% if challengeCover.0.megaChallenge %}
+                <p>{{ challengeCover.0.description | safe }}</p>
+            {% else %}
+                <p>{{ challengeCover.description | safe }}</p>
+            {% endif %}
+        </div>
+
+        <div class="course-content-box">
+            <h3>Learning Objectives</h3>
+            {% for competency in competencies %}
+                <div class="competencies">
+                    <p><strong>{{ competency.compGroup }} - {{ competency.compNumber }} {{ competency.name }}</strong></p>
+                    {% for learningObjective in learningObjectives %}
+                        {% if learningObjective.compGroup == competency.compGroup and learningObjective.compNumber == competency.compNumber %}
+                            <div class="learningObj_list"><p><a onclick="hideShow()">{{ learningObjective.loNumber }}: {{ learningObjective.name }}</a></p></div>
+
+                            <!-- <ul id="critList">
+                            {% for criterion in criterionList %}
+
+                                    {% if learningObjective == criterion.learningObj %}
+                                        <li>{{ criterion }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul> -->
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+
+
+
+    </div>
+    <div class="course-content-box">
+        <h3>Clinical Needs</h3>
+        {% if challengeCover.0.megaChallenge %}
+
+            {% for challengeCover in challengeCover %}
+                <h4>{{ challengeCover.name }}</h4>
+                <hr>
+                <p>{{ challengeCover.clinicalNeeds | safe }}</p>
+            {% endfor %}
+        {% else %}
+            <p>{{ challengeCover.clinicalNeeds | safe }}</p>
+        {% endif %}
+
+    </div>
+
+    <div>
+        {% if challengeCover.0.megaChallenge %}
+            <input type="button" onclick='window.location.href="/subsolutions/{{ challengeCover.0.megaChallenge.id }}";' value="Next">
+        {% else %}
+            <input type="button" onclick='window.location.href="/learningExperience/{{ next }}";' value="Next">
+        {% endif %}
+
+
+    </div>
+</div>
+    <script>
+        function hideShow(id) {
+          var x = document.getElementById(id);
+          if (x.style.display === "none") {
+            x.style.display = "block";
+          } else {
+            x.style.display = "none";
+  }
+}
+
+    </script>
+{% endblock %}

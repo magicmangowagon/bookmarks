@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Evaluate a Challenge
+{% endblock %}
+
+{% block content %}
+
+<h1>{{ challenge }}: {{ solutionInstance }} - {{ student.userOwner.first_name }} {{ student.userOwner.last_name }}</h1>
+
+    <a href="/solutions/{{ usersolution.pk }}"> <h2>Evaluate {{ student.userOwner.first_name }}'s solution</h2></a>
+    <a href="/customRubric/{{ student.id }}">Modify Challenge Instance</a>
+
+
+    <form action=""  method="post" enctype="multipart/form-data">
+
+        <div class="rubricField">
+        {{ formset.management_form }}
+
+        {% for form in formset %}
+                <h3 id="h3{{ form.learningObjective.auto_id }}"> </h3>
+                <span style="display: none">{{ form.learningObjective }}</span>
+                <p>{{ form.ignore }}</p>
+                <p>{{ form.student }}</p>
+                <p>{{ form.evaluated }}</p>
+                {% if form.ignore.value == True %}
+                    <div id="ignore{{ form.learningObjective.value }}" style="display: none">
+                {% else %}
+                    <div id="ignore{{ form.learningObjective.value }}">
+                {% endif %}
+
+                {{ critFormset.management_form }}
+                <h2>Criteria</h2>
+                <ul>
+                    {% for criteria in criteria %}
+                        {% if criteria.learningObj_id == form.learningObjective.value %}
+                            <li>{{ criteria }}:
+                                {% for CriteriaForm in critFormset %}
+                                    {% if CriteriaForm.criteria.value == criteria.id %}
+                                        {{ CriteriaForm.evaluator }}
+                                        {{ CriteriaForm.achievement }}{{ CriteriaForm.criteria }}{{ CriteriaForm.userSolution }}</li><br>
+                                        {{ CriteriaForm.id }}
+                                    {% endif %}
+                                {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+
+                <ul>
+                    {% if userRole == 4 or 2 %}
+                        <li><label>{{ form.evidenceMissing.label }}</label>
+                            {{ form.evidenceMissing }}</li>
+
+                        <li><label>{{ form.evidencePresent.label }}</label>
+                            {{ form.evidencePresent }}</li>
+                    {% endif %}
+
+                    <li><label>{{ form.feedback.label }}</label>
+                        {{ form.feedback }}</li>
+
+                    <li><label>{{ form.suggestions.label }}</label>
+                        {{ form.suggestions }}</li>
+
+                </ul>
+
+
+                <ul>
+
+                </ul>
+
+
+                    <span style="display: none">{{ form.completionLevel }}</span>
+
+                <!-- <div class="slidecontainer">
+                <p><label>Ready to move on</label>
+                    <input type="range" min="0" max="100" value="0" step="25" class="slider" id="slider{{ form.learningObjective.value }}">
+                <div class="readyTick"></div>
+                </div> -->
+                <p></p>
+                <ul>
+                    <li>{{ form.needsLaterAttention }}</li>
+                </ul>
+
+            </div>
+            <script>
+                var ignoreDiv{{ form.learningObjective.value }} = document.getElementById("ignore{{ form.learningObjective.value }}");
+                var ignoreValue{{ form.learningObjective.value }} = document.getElementById("{{ form.ignore.auto_id }}");
+                var slider{{ form.learningObjective.value }} = document.getElementById("slider{{ form.learningObjective.value }}");
+                var output{{ form.learningObjective.value }} = document.getElementById("{{ form.completionLevel.auto_id }}");
+                var options = document.getElementById("{{ form.learningObjective.auto_id }}");
+                var selectedText = options.options[options.selectedIndex].text;
+
+                document.getElementById("h3{{ form.learningObjective.auto_id }}").innerHTML = selectedText;
+                slider{{ form.learningObjective.value }}.value = output{{ form.learningObjective.value }}.value;
+
+
+                slider{{ form.learningObjective.value }}.oninput = function()
+                {
+                    output{{ form.learningObjective.value }}.value = this.value;
+                    updateChallengeTotal();
+                };
+
+                slider{{ form.learningObjective.value }}.onchange = function()
+                {
+                    updateChallengeTotal();
+                };
+
+                ignoreValue{{ form.learningObjective.value }}.onchange = function ()
+                {
+                    showOrHide(ignoreValue{{ form.learningObjective.value }}, ignoreDiv{{ form.learningObjective.value }});
+                    grayOut(ignoreValue{{ form.learningObjective.value }}, document.getElementById("h3{{ form.learningObjective.auto_id }}"));
+                };
+
+            </script>
+        {{ form.id }}
+
+
+        {% endfor %}
+
+        </div>
+
+        {% csrf_token %}
+
+
+        <p><input type="submit" value="Next"></p>
+    </form>
+
+    <div class="vertSliderContainer">
+    <h3>Ready?</h3>
+        <div id="progressContainer">
+            <div id="progressBar">
+            </div>
+        </div>
+
+    <script>
+        var sliderFields = document.getElementsByClassName("slider");
+        var progressBar = document.getElementById("progressBar");
+        var progressContainer = document.getElementById("progressContainer");
+
+        var sliderTotals = 0;
+        var sliderMax = 0;
+
+        updateScreenHeight();
+
+        for(var i = 0; i < sliderFields.length; i++)
+        {
+            sliderMax += parseInt(sliderFields[i].max);
+            sliderTotals += parseInt(sliderFields[i].value);
+        }
+        progressBar.style.height = (sliderTotals/sliderFields.length) + '%';
+
+        function updateChallengeTotal()
+        {
+            sliderTotals = 0;
+            for(var i = 0; i < sliderFields.length; i++)
+            {
+                sliderTotals += parseInt(sliderFields[i].value);
+            }
+            progressBar.style.height = (sliderTotals/sliderFields.length) + '%';
+        }
+
+        function updateScreenHeight()
+        {
+            var screenHeight = window.innerHeight;
+            progressContainer.style.height = (screenHeight - (screenHeight * .35)) + 'px';
+        }
+
+
+        function showOrHide(changeSomething, thingToChange)
+        {
+            if (changeSomething[changeSomething.selectedIndex].value === "True")
+            {
+                thingToChange.style.display = "none";
+            }
+            else
+            {
+                thingToChange.style.display = "";
+            }
+        }
+
+        function grayOut(changeSomething, headerToGrayOut)
+        {
+            if(changeSomething[changeSomething.selectedIndex].value === "True")
+            {
+                headerToGrayOut.style.backgroundColor = "gray";
+            }
+            else
+            {
+                headerToGrayOut.style.backgroundColor = "#00a497";
+            }
+        }
+
+
+    </script>
+
+
+    </div>
+
+{% endblock %}

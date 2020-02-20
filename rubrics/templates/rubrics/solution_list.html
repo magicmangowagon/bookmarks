@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load solution_filters %}
+
+{% block title %}Woodrow Wilson Academy: Solutions{% endblock %}
+
+{% block content %}
+<h1>Solutions</h1>
+
+<p>User Role - {{ user.profile.role }}</p>
+
+
+<h3>New Submissions</h3>
+<table cellpadding="6px" border="1px">
+    {% for usersolution in object_list %}
+        {% if usersolution|check_evaluated:request.user is False %}
+            <tr>
+                <td>{{ usersolution.userOwner }}</td>
+                <td></td>
+                <td>{{ usersolution.challengeName }} - {{ usersolution.solutionInstance.name }}</td>
+                <td><a href="solutions/{{ usersolution.id }}">Details</a></td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+</table>
+
+<h3>Previously Evaluated</h3>
+ <table cellpadding="6px" border="1px">
+    {% for usersolution in object_list %}
+        {% if usersolution|check_evaluated:request.user %}
+                <tr>
+                    <td>{{ usersolution.userOwner }}</td>
+                    <td></td>
+                    <td>{{ usersolution.challengeName }} - {{ usersolution.solutionInstance.name }}</td>
+                    <td><a href="solutions/{{ usersolution.id }}">Details</a></td>
+                </tr>
+        {% endif %}
+    {% endfor %}
+ </table>
+{% endblock content %}

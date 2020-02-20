@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+    <h1>Dashboard</h1>
+    <p>Welcome to your dashboard, {{ request.user.first_name }}.</p>
+    {% if request.user.profile.role == 4 %}
+        <h3><a href="solutionSearch" >God View</a></h3>
+    {% endif %}
+    {% if request.user.profile.role == 1 %}
+    <p>View your submitted solutions here: <br>
+    <a href="solutions">User Solutions</a></p>
+    {% endif %}
+
+    {% if request.user.profile.role != 1 %}
+    <p>Teaching Candidates submissions<br>
+    <a href="solutions">Submitted Solutions</a></p>
+    {% endif %}
+
+    <p>View your evaluated solutions here: <br>
+    <a href="evals">Evaluated Solutions</a></p>
+    <br>
+    <p>View the entire course catalog:<br>
+    <a href="https://rubrics-bucket.s3.amazonaws.com/pdf/WWGSTL+Challenge+Catalog+2019-2020.pdf" target="_blank">Course Catalog</a></p>
+
+{% endblock %}

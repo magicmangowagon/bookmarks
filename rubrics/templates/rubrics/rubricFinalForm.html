@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ usersolution.userowner }}
+{% endblock %}
+
+{% block content %}
+
+    <h1>{{ usersolution.challengeName }}</h1>
+<p>Submitted by {{ usersolution.userOwner.first_name }} {{ usersolution.userOwner.last_name }}</p>
+
+    {% if userRole == 4 or 3 %}
+    <a href="/solutionEval/{{ usersolution.id }}">Edit</a>
+    {% endif %}
+    {% for rubricLine in evaluation %}
+        <div class="evalField">
+        <h3>{{ rubricLine.learningObjective }}</h3>
+        <ul style="width: 100%">
+            <li style="width: 30%"><p>Evidence Present
+            </p>{{  rubricLine.evidencePresent }}</li>
+            <li style="width: 30%"><p>Evidence Missing
+            </p>{{  rubricLine.evidenceMissing }}</li>
+            <li style="width: 20%"><p>Suggestions
+            </p>{{  rubricLine.suggestions }}</li>
+            <li style="width: 19%"><p>Feedback
+            </p>{{  rubricLine.feedback }}</li>
+        </ul>
+        <!-- <div class="completionLevel">Completion Level &nbsp;<span class="scoreBubble">{{ rubricLine.completionLevel }}</span></div> -->
+        </div>
+    {% endfor %}
+     <form action=""  method="POST" enctype="multipart/form-data" id="post_form">
+    {{ formset.management_form }}
+    {{ form }}
+    {% if request.user.profile.role == 3 %}
+         {{ coachRevFormset.management_form }}
+            <p>{{ coachRevFormset }}</p>
+     {% endif %}
+    {% csrf_token %}
+        <p><input type="submit" value="Submit evaluation"></p>
+    </form>
+
+{% endblock %}

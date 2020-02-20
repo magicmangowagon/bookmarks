@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load solution_filters %}
+{% block title %}
+Evaluate Challenge {{ finalRubric.challenge.name }}
+{% endblock %}
+
+{% block content %}
+
+<h1>Coaching Review - {{ usersolution.challengeName }}<br> {{ usersolution.solutionInstance.name }}</h1>
+    <p>Solution submission: <a href="/solutions/{{ usersolution.pk }}">{{ usersolution.userOwner.first_name }}
+     {{ usersolution.userOwner.last_name }}</a></p>
+    <h2>Evaluator: {{ finalRubric.0.evaluator.first_name }} {{ finalRubric.0.evaluator.last_name }}</h2>
+
+    <h3>General Feedback</h3>
+    <p>{{ finalRubric.generalFeedback|safe }}</p>
+        <form action=""  method="POST" enctype="multipart/form-data" id="post_form">
+
+            <div class="rubricField">
+                {{ rFormset.management_form }}
+
+                {% for form in rFormset %}
+                        <p>{{ form.errors }}</p>
+                        <h3 id="h3{{ form.learningObjective.auto_id }}"></h3>
+                    <p>Ignore: {{ form.ignore }}</p>
+                        <span style="display: none">{{ form.learningObjective }}</span>
+                {% if form.ignore.value == True %}
+                    <div id="ignore{{ form.learningObjective.value }}" style="display: none">
+                {% else %}
+                    <div id="ignore{{ form.learningObjective.value }}">
+                {% endif %}
+                    {{ form.student }}
+                    {{ critFormset.management_form }}
+                    <ul>
+                        {% for criteria in criteria %}
+                            {% if criteria.learningObj_id == form.learningObjective.value %}
+                                <li>{{ criteria }}:
+                                    {% for CriteriaForm in critFormset %}
+                                        {% if CriteriaForm.criteria.value == criteria.id %}
+
+                                            {{ CriteriaForm.achievement }}{{ CriteriaForm.criteria }}{{ CriteriaForm.userSolution }}</li><br>
+                                            {{ CriteriaForm.id }}
+                                        {% endif %}
+                                    {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                            <li>
+                                <label>{{ form.evidencePresent.label }}</label>
+                                <p>{{ form.evidencePresent }}</p>
+                            </li>
+                            <li>
+                                <label>{{ form.evidenceMissing.label }}</label>
+                                <p>{{ form.evidenceMissing }}</p>
+                            </li>
+                            <li>
+                                <label>{{ form.feedback.label }}</label>
+                                <p>{{ form.feedback }}</p>
+                            </li>
+                            <li>
+                                <label>{{ form.suggestions.label }}</label>
+                                <p>{{ form.suggestions }}</p>
+                            </li>
+
+                            <span style="display: none">{{ form.completionLevel }}</span>
+                            <p>Review Session: {{ reviewSession }}</p>
+                            {% if reviewSession is False %}
+
+                                <div class="slidecontainer">
+                                   <label>Ready to move on</label>
+                                        <input type="range" min="0" max="100" value="0" step="25" class="slider" id="slider{{ form.learningObjective.value }}">
+                                    <div class="readyTick"></div>
+                                </div>
+                            {% endif %}
+                            <p></p>
+                            <ul>
+                                <li>Needs Later Attention: {{ form.needsLaterAttention }}</li>
+                            </ul>
+                    </div>
+                            <script>
+                                var options = document.getElementById("{{ form.learningObjective.auto_id }}");
+                                var selectedText = options.options[options.selectedIndex].text;
+
+                                document.getElementById("h3{{ form.learningObjective.auto_id }}").innerHTML = selectedText;
+
+                                var ignoreDiv{{ form.learningObjective.value }} = document.getElementById("ignore{{ form.learningObjective.value }}");
+                                var ignoreValue{{ form.learningObjective.value }} = document.getElementById("{{ form.ignore.auto_id }}");
+                                var slider{{ form.learningObjective.value }} = document.getElementById("slider{{ form.learningObjective.value }}");
+                                var output{{ form.learningObjective.value }} = document.getElementById("{{ form.completionLevel.auto_id }}");
+
+
+                                document.getElementById("h3{{ form.learningObjective.auto_id }}").innerHTML = selectedText;
+                                slider{{ form.learningObjective.value }}.value = output{{ form.learningObjective.value }}.value;
+
+
+                                slider{{ form.learningObjective.value }}.oninput = function()
+                                {
+                                    output{{ form.learningObjective.value }}.value = this.value;
+                                    updateChallengeTotal();
+                                };
+
+                                slider{{ form.learningObjective.value }}.onchange = function()
+                                {
+                                    updateChallengeTotal();
+                                };
+
+                                ignoreValue{{ form.learningObjective.value }}.onchange = function ()
+                                {
+                                    showOrHide(ignoreValue{{ form.learningObjective.value }}, ignoreDiv{{ form.learningObjective.value }});
+                                    grayOut(ignoreValue{{ form.learningObjective.value }}, document.getElementById("h3{{ form.learningObjective.auto_id }}"));
+                                };
+
+
+                            </script>
+                        {{ form.id }}
+                    {% endfor %}
+            </div>
+
+        {% csrf_token %}
+        <input type="submit" value="Submit">
+
+    </form>
+
+    <script>
+    function showOrHide(changeSomething, thingToChange)
+        {
+            if (changeSomething[changeSomething.selectedIndex].value === "True")
+            {
+                thingToChange.style.display = "none";
+            }
+            else
+            {
+                thingToChange.style.display = "";
+            }
+        }
+
+        function grayOut(changeSomething, headerToGrayOut)
+        {
+            if(changeSomething[changeSomething.selectedIndex].value === "True")
+            {
+                headerToGrayOut.style.backgroundColor = "gray";
+            }
+            else
+            {
+                headerToGrayOut.style.backgroundColor = "#00a497";
+            }
+        }
+
+
+    </script>
+
+
+
+{% endblock %}
