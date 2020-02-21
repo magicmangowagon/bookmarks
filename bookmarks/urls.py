@@ -27,7 +27,9 @@ urlpatterns = [
     path('', include('growthTracker.urls')),
     path('', include('info.urls')),
     path('djrichtextfield/', include('djrichtextfield.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
+
 
 if settings.DEBUG:
     urlpatterns += [

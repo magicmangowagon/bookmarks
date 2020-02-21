@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User, Group
 from djrichtextfield.models import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 from taggit.managers import TaggableManager
 from datetime import datetime
 from django.core.files.base import ContentFile
@@ -113,7 +114,7 @@ class MegaChallenge(models.Model):
 class Challenge(models.Model):
 
     name = models.CharField(max_length=250)
-    description = RichTextField('Challenge Overview', )
+    description = RichTextUploadingField('Challenge Overview', )
     clinicalNeeds = RichTextField('Clinical Needs', default='')
     standardSolution = RichTextField('Standard Solution', default='')
     pullQuote = models.CharField('Pull Quote', max_length=1000, default='')
