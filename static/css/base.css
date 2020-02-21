@@ -258,6 +258,7 @@
 .expoResources {
     font-weight: 600;
     padding: 10px;
+    flex-wrap: wrap;
 }
 
 .resourcesWrapper {
