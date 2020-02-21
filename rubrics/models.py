@@ -7,7 +7,7 @@ from django.core.files.base import ContentFile
 from zipfile import ZipFile
 # import boto3
 # from io import BytesIO
-# import os
+import os
 # from django.conf import settings
 
 
@@ -226,6 +226,10 @@ class ChallengeResourcesFile(models.Model):
 
     class Meta:
         ordering = ['order', ]
+
+    @property
+    def filename(self):
+        return os.path.basename(self.file.name)
 
 
 # __________
