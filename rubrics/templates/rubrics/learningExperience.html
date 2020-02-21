@@ -24,9 +24,13 @@
 
             {% if expoResources %}
                 <h4>Resources</h4>
-            {% for object in expoResources %}
-                <a class="expoResources" href="/challengeResources/{{ object.pk }}">{{ object.name }}</a>
-            {% endfor %}
+                <div class="resourcesWrapper">
+
+                    {% for object in expoResources %}
+                        <a class="expoResources" href="/challengeResources/{{ object.pk }}">{{ object.name }} </a>
+                        {% if not forloop.last %}<span class="expoResources"> - </span>{% endif %}
+                    {% endfor %}
+                </div>
         {% endif %}
         </div>
 

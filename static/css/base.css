@@ -257,6 +257,13 @@
 
 .expoResources {
     font-weight: 600;
+    padding: 10px;
+}
+
+.resourcesWrapper {
+    display: flex;
+    flex-direction: row;
+    margin: 2pt;
 }
 
 .activeLearningExpo {
