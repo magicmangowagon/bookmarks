@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponseForbidden, JsonRespons
 from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion, CriteriaLine, \
     Competency, CompetencyProgress, ChallengeAddendum, LearningExperience, LearningExpoResponses, Evaluated, \
     CoachReview, SolutionInstance, MegaChallenge, ChallengeResources, ChallengeResourcesFile
+from centralDispatch.models import ChallengeListSort
 from .forms import UserFileForm, UserFileFormset, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, \
     CriterionFormSet, CriteriaForm, CurrentStudentToView, RubricAddendumForm, RubricAddendumFormset, \
     LearningExperienceFormset, LearningExperienceForm, LearningExpoFeedbackForm, LearningExpoFeedbackFormset, \
@@ -241,20 +242,14 @@ class ChallengeListView(ListView):
     # queryset = Challenge.objects.all().filter(display=True).order_by('challengeGroupChoices')
     context_object_name = 'challenges'
     template_name = 'rubrics/list.html'
+    print(ChallengeListSort.objects.first().replaceChallengesMega)
+    queryset = Challenge.objects.all().filter(display=True).order_by('challengeGroupChoices')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['mega_lo'] = LearningObjective.objects.all().filter(challenge__megaChallenge__isnull=False).distinct().order_by('compGroup', 'compNumber', 'loNumber')
         context['megaChallenges'] = MegaChallenge.objects.all()
         return context
-
-    def get_queryset(self):
-        if self.request.user.is_staff:
-            queryset = Challenge.objects.all().filter(display=True).order_by('challengeGroupChoices')
-            return queryset
-        else:
-            queryset = Challenge.objects.all().filter(display=True).order_by('challengeGroupChoices')
-            return queryset
 
 
 class MegaSubPage(DetailView):

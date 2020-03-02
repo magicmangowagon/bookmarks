@@ -99,9 +99,31 @@ class SolutionInstance(models.Model):
 # MEGACHALLENGE - Ties multiple challenges into one
 class MegaChallenge(models.Model):
     name = models.CharField(default='', max_length=500)
+    display = models.BooleanField('Show Challenge', default=True)
     solutions = models.ManyToManyField(SolutionInstance, blank=True, related_name="mega_challenge_that_owns_me")
     overRide = models.BooleanField(default=False)
-
+    description = RichTextUploadingField('Challenge Overview', default='', blank=True)
+    clinicalNeeds = RichTextField('Clinical Needs', default='', blank=True)
+    standardSolution = RichTextField('Standard Solution', default='', blank=True)
+    pullQuote = models.CharField('Pull Quote', max_length=1000, default='', blank=True)
+    picture = models.ImageField(upload_to='uploads/challenges/', blank=True, height_field='height', default='')
+    height = models.IntegerField(default=0, blank=True)
+    A = 'A'
+    B = 'B'
+    C = 'C'
+    D = 'D'
+    group = [
+        (A, 'A'),
+        (B, 'B'),
+        (C, 'C'),
+        (D, 'D')
+    ]
+    challengeGroupChoices = models.CharField(
+        'Challenge Group',
+        max_length=2,
+        choices=group,
+        default=''
+    )
     my_order = models.PositiveIntegerField(default=0, blank=False, null=False)
 
     class Meta(object):
@@ -112,13 +134,13 @@ class MegaChallenge(models.Model):
 
 
 class Challenge(models.Model):
-
     name = models.CharField(max_length=250)
+    display = models.BooleanField('Show Challenge', default=True)
     description = RichTextUploadingField('Challenge Overview', )
     clinicalNeeds = RichTextField('Clinical Needs', default='')
     standardSolution = RichTextField('Standard Solution', default='')
     pullQuote = models.CharField('Pull Quote', max_length=1000, default='')
-    display = models.BooleanField('Show Challenge', default=True)
+
     megaChallenge = models.ForeignKey(MegaChallenge, null=True, on_delete=models.CASCADE, blank=True)
     picture = models.ImageField(upload_to='uploads/challenges/', blank=True, height_field='height', default='')
     height = models.IntegerField(default=0)
@@ -138,23 +160,6 @@ class Challenge(models.Model):
         choices=group,
         default=''
     )
-    DESIGN = models.BooleanField(verbose_name='Design', default=False)
-    SIMULATE = models.BooleanField(verbose_name='Simulate', default=False)
-    IMPLEMENT = models.BooleanField(verbose_name='Implement', default=False)
-
-    degreeImplementation = [DESIGN, SIMULATE, IMPLEMENT]
-
-    ONEONONE = models.BooleanField(verbose_name='One on One', default=False)
-    SMALLGROUP = models.BooleanField(verbose_name='Small Group', default=False)
-    FULLCLASS = models.BooleanField(verbose_name='Full Class', default=False)
-
-    scaleImplementation = [ONEONONE, SMALLGROUP, FULLCLASS]
-
-    REFLECTION = models.BooleanField(verbose_name='Reflection', default=False)
-    CLASSROOMEVIDENCE = models.BooleanField(verbose_name='Classroom Evidence', default=False)
-    OBSERVATION = models.BooleanField(verbose_name='Observation', default=False)
-
-    typeImplementation = [REFLECTION, CLASSROOMEVIDENCE, OBSERVATION]
 
     solutions = models.ManyToManyField(SolutionInstance, blank=True, related_name="challenge_that_owns_me", )
     learningObjs = models.ManyToManyField(LearningObjective, blank=True, related_name="challenge")
@@ -189,7 +194,7 @@ class LearningExperience(models.Model):
     challenge = models.ForeignKey(Challenge, blank=True, on_delete=models.CASCADE)
     learningObjectives = models.ManyToManyField(LearningObjective, blank=True, related_name="learningExpo")
     index = models.IntegerField('Index', default=0)
-    description = RichTextField()
+    description = RichTextUploadingField(default='')
     tags = TaggableManager(blank=True)
 
     class Meta:

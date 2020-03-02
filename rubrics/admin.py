@@ -31,17 +31,22 @@ class RubricLineInline(admin.TabularInline):
     model = RubricLine
 
 
-class ChallengeInline(SortableInlineAdminMixin, admin.TabularInline):
+class ChallengeOrderSort(SortableInlineAdminMixin, admin.TabularInline):
     model = Challenge
-    exclude = ['description', 'clinicalNeeds', 'standardSolution', 'pullQuote', 'picture', 'challengeGroupChoices',
-               'solutions', 'DESIGN', 'SIMULATE', 'IMPLEMENT', 'ONEONONE', 'SMALLGROUP', 'FULLCLASS', 'REFLECTION',
-               'CLASSROOMEVIDENCE', 'OBSERVATION', 'learningObjs', 'height', 'tags', ]
+    fields = ('name', )
     extra = 0
 
 
 class LearningExpoInline(SortableInlineAdminMixin, admin.TabularInline):
     model = LearningExperience
     exclude = ['learningObjectives', 'description', 'tags']
+    extra = 0
+
+
+class ChallengeInline(SortableInlineAdminMixin, admin.TabularInline):
+    model = Challenge
+    # exclude = ['description']
+    fields = ['name']
     extra = 0
 
 
@@ -109,7 +114,7 @@ class ChallengeAdmin(admin.ModelAdmin):
 
 @admin.register(MegaChallenge)
 class MegaChallengeAdmin(admin.ModelAdmin):
-    list_display = ['name', 'overRide']
+    list_display = ['name', 'overRide', ]
     exclude = ['my_order']
     filter_horizontal = ['solutions', ]
     inlines = [
