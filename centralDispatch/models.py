@@ -1,5 +1,5 @@
 from django.db import models
-from rubrics.models import Challenge, MegaChallenge
+from rubrics.models import Challenge, MegaChallenge, UserSolution, RubricLine, Rubric
 from django.core.exceptions import ValidationError
 
 

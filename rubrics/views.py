@@ -323,8 +323,17 @@ class RubricFinalFormView(FormView):
              widgets={'userSolution': forms.HiddenInput, 'challenge': forms.HiddenInput, 'evaluator': forms.HiddenInput,
                       'challengeCompletionLevel': forms.HiddenInput})
 
-            formset = RubricFormSet(prefix='rFormset', initial=[{'userSolution': userSolution, 'challenge': challenge,
-             'evaluator': self.request.user, 'challengeCompletionLevel': incrementor}], queryset=Rubric.objects.none())
+            if self.request.user.profile.role >= 3:
+                previousFeedback = Rubric.objects.all().filter(userSolution=userSolution).last()
+                formset = RubricFormSet(prefix='rFormset',
+                                        initial=[{'userSolution': userSolution, 'challenge': challenge,
+                                                  'evaluator': self.request.user,
+                                                  'generalFeedback': previousFeedback.generalFeedback,
+                                                  'challengeCompletionLevel': incrementor}],
+                                        queryset=Rubric.objects.none())
+            else:
+                formset = RubricFormSet(prefix='rFormset', initial=[{'userSolution': userSolution, 'challenge': challenge,
+                 'evaluator': self.request.user, 'challengeCompletionLevel': incrementor}], queryset=Rubric.objects.none())
 
         if self.request.user.profile.role is 3:
             if CoachReview.objects.filter(userSolution=userSolution).exists():
@@ -913,7 +922,7 @@ class EvalDetailView(DetailView):
         context['userRole'] = self.request.user.profile.role
 
         try:
-            context['evalFinalForm'] = Rubric.objects.get(userSolution=rubric, evaluator__profile__role=3)
+            context['evalFinalForm'] = Rubric.objects.all().filter(userSolution=rubric, evaluator__profile__role=3).last()
             # print(Rubric.objects.get(userSolution=rubric, evaluator__profile__role=3).generalFeedback)
         except:
             context['evalFinalForm'] = 'There was an error'
