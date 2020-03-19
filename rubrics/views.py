@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, render_to_response
 from datetime import date, datetime
 from django import forms
 from django.http import HttpResponseRedirect, HttpResponseForbidden, JsonResponse
+from centralDispatch.models import SolutionRouter
 from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion, CriteriaLine, \
     Competency, CompetencyProgress, ChallengeAddendum, LearningExperience, LearningExpoResponses, Evaluated, \
     CoachReview, SolutionInstance, MegaChallenge, ChallengeResources, ChallengeResourcesFile
@@ -18,6 +19,7 @@ from django.contrib.auth.models import User, Group
 from .functions import process_rubricLine, assess_competency_done, custom_rubric_producer, mega_challenge_builder
 from django.core.mail import send_mail
 from .filters import EvalFilter
+from centralDispatch.functions import submissionAlert
 
 
 class ChallengeCover(DetailView):
@@ -94,9 +96,9 @@ class ChallengeDetail(FormView):
         thisSolutionInstance = SolutionInstance.objects.get(pk=self.kwargs['pk'])
 
         relatedLearningExperiences = LearningExperience.objects.all().filter(challenge=thisChallenge).order_by('index')
-        print(relatedLearningExperiences.count())
+
         context['previous'] = relatedLearningExperiences.last().pk
-        print(self.kwargs['pk'])
+
 
         if existingSolutions.filter(solutionInstance=thisSolutionInstance).exists():
             thisSolution = existingSolutions.get(solutionInstance=self.kwargs['pk'])
@@ -146,11 +148,9 @@ class ChallengeDetail(FormView):
             if form.is_valid() and expoForm.is_valid():
                 form.save()
                 expoForm.save()
-                try:
-                    send_mail('New TC submission', str(self.request.user) + ' has submitted a challenge solution',
-                              'noreply@wwgradschool.org', ['castle@woodrowacademy.org', ], fail_silently=False)
-                except:
-                    pass
+                thisChallenge = SolutionInstance.objects.get(pk=self.kwargs['pk']).challenge_that_owns_me.first()
+                print(thisChallenge)
+                submissionAlert(thisChallenge, self.request.user)
                 return redirect('success', self.kwargs['pk'])
             else:
                 print(form.errors)
@@ -280,7 +280,15 @@ class SolutionListView(ListView):
 
             group = self.request.user.groups.all()
             print(group)
-            queryset = UserSolution.objects.filter(userOwner__groups__in=group)
+            challengeCoachAssigned = UserSolution.objects.all().filter(
+                challengeName__solutionrouter__profile=profile).filter(evaluated__isnull=False).distinct()
+            solutionByTopic = UserSolution.objects.all().filter(
+                userOwner__profile__subjectMatter=profile.subjectMatter).distinct()
+            specificallyAssigned = UserSolution.objects.filter(userOwner__groups__in=group).filter(
+                evaluated__isnull=False).distinct()
+
+            userSolutions = challengeCoachAssigned | solutionByTopic | specificallyAssigned
+            queryset = userSolutions
             return queryset
 
         else:
@@ -324,11 +332,14 @@ class RubricFinalFormView(FormView):
                       'challengeCompletionLevel': forms.HiddenInput})
 
             if self.request.user.profile.role >= 3:
-                previousFeedback = Rubric.objects.all().filter(userSolution=userSolution).last()
+                if Rubric.objects.filter(userSolution=userSolution).exists():
+                    previousFeedback = Rubric.objects.all().filter(userSolution=userSolution).last().generalFeedback
+                else:
+                    previousFeedback = ''
                 formset = RubricFormSet(prefix='rFormset',
                                         initial=[{'userSolution': userSolution, 'challenge': challenge,
                                                   'evaluator': self.request.user,
-                                                  'generalFeedback': previousFeedback.generalFeedback,
+                                                  'generalFeedback': previousFeedback,
                                                   'challengeCompletionLevel': incrementor}],
                                         queryset=Rubric.objects.none())
             else:
@@ -855,9 +866,6 @@ class EvalListView(ListView):
 
     def get_queryset(self, **kwargs):
         profile = self.request.user.profile
-        if profile.role == 4:
-            queryset = UserSolution.objects.all().filter(evaluated__isnull=False).distinct()
-            return queryset
 
         if profile.role == 3 or profile.role == 2:
             group = self.request.user.groups.all()
@@ -880,11 +888,16 @@ class EvalListView(ListView):
             else:
                 userSolutions = UserSolution.objects.all().filter(evaluated__isnull=False).distinct()
             context['form'] = form
-        elif self.request.user.profile.role == 2 or self.request.user.profile.role == 3:
+        elif self.request.user.profile.role == 3 or self.request.user.profile.role == 3:
                 group = self.request.user.groups.all()
+                you = self.request.user.profile
                 print(group)
-                userSolutions = UserSolution.objects.filter(userOwner__groups__in=group).filter(
-                    evaluated__isnull=False).distinct()
+
+                challengeCoachAssigned = UserSolution.objects.all().filter(challengeName__solutionrouter__profile=you).filter(evaluated__isnull=False).distinct()
+                solutionByTopic = UserSolution.objects.all().filter(userOwner__profile__subjectMatter=you.subjectMatter).filter(evaluated__isnull=False).distinct()
+                specificallyAssigned = UserSolution.objects.filter(userOwner__groups__in=group).filter(evaluated__isnull=False).distinct()
+
+                userSolutions = challengeCoachAssigned | solutionByTopic | specificallyAssigned
         else:
             userSolutions = UserSolution.objects.all().filter(userOwner=self.request.user)
 

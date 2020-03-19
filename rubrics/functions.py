@@ -80,3 +80,5 @@ def mega_challenge_builder(challenge):
 def get_filenames(path_to_zip):
     with ZipFile(path_to_zip, 'r') as zip:
         return zip.namelist()
+
+

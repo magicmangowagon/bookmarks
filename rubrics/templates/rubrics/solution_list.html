@@ -11,7 +11,7 @@
 
 <h3>New Submissions</h3>
 <table cellpadding="6px" border="1px">
-    {% for usersolution in object_list %}
+    {% for usersolution in solutions %}
         {% if usersolution|check_evaluated:request.user is False %}
             <tr>
                 <td>{{ usersolution.userOwner }}</td>
