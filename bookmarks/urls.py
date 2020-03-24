@@ -26,6 +26,7 @@ urlpatterns = [
     path('', include('account.urls')),
     path('', include('growthTracker.urls')),
     path('', include('info.urls')),
+    path('', include('centralDispatch.urls')),
     path('djrichtextfield/', include('djrichtextfield.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ]

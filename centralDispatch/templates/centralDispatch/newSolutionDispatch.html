@@ -1,0 +1,16 @@
+
+{% extends "base.html" %}
+{% block title %}Woodrow Wilson Academy{% endblock %}
+
+{% block content %}
+    <ul>
+    {% for challenge in challenges %}
+        <h2>{{ challenge.name }}</h2>
+        {% for newSolution in newSolutions %}
+            {% if newSolution.challengeName == challenge %}
+                <li>{{ newSolution.userOwner.last_name }} - {{ newSolution.solutionInstance }}</li>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+    </ul>
+{% endblock content %}

@@ -14,4 +14,5 @@ def validate_only_one_instance(obj):
 class SolutionRouter(models.Model):
     profile = models.ForeignKey(Profile, blank=True, default='', on_delete=models.CASCADE)
     challenge = models.ManyToManyField(Challenge, blank=True, default='')
+    automate = models.BooleanField(default=False)
 
