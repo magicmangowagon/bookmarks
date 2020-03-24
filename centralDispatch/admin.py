@@ -4,4 +4,4 @@ from .models import SolutionRouter
 
 @admin.register(SolutionRouter)
 class SolutionRouterAdmin(admin.ModelAdmin):
-    fields = ['challenge', 'profile', ]
+    fields = ['challenge', 'profile', 'name',]

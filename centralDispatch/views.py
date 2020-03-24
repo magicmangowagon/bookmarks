@@ -13,6 +13,6 @@ class NewSolutionDispatch(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(NewSolutionDispatch, self).get_context_data()
-        challenges = Challenge.objects.all().filter(display=True).order_by()
+        challenges = Challenge.objects.all().filter(display=True).order_by('challengeGroupChoices')
         context['challenges'] = challenges
         return context
