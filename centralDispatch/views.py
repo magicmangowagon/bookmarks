@@ -19,14 +19,14 @@ class NewSolutionDispatch(ListView):
         challenges = Challenge.objects.all().filter(display=True).order_by('challengeGroupChoices')
         solutionInstances = SolutionInstance.objects.all().filter(challenge_that_owns_me__in=challenges)
 
-        SolutionRouterFormset = modelformset_factory(SolutionRouter, extra=solutionInstances.count(),
+        SolutionRouterFormset = modelformset_factory(SolutionRouter, extra=0,
                                                      formset=SolutionRouterForm, fields=('profile',
                                                                                          'challenge',
                                                                                          'solutionInstance',
                                                                                          'automate',
                                                                                          'routerChoices'), )
         solutionRouterFormset = SolutionRouterFormset(prefix='routerFormset', queryset=SolutionRouter.objects.all().filter(
-            solutionInstance__challenge_that_owns_me__in=challenges))
+            solutionInstance__challenge_that_owns_me__in=challenges).order_by('challenge__challengeGroupChoices'))
 
         context['formset'] = solutionRouterFormset
         context['challenges'] = challenges
