@@ -3,14 +3,30 @@
 {% block title %}Woodrow Wilson Academy{% endblock %}
 
 {% block content %}
-    <ul>
+    <table>
+            {{ formset.management_form }}
+            {{ formset }}
+            {% csrf_token %}
+        </table>
+
+    <div>
+
+    </div>
     {% for challenge in challenges %}
         <h2>{{ challenge.name }}</h2>
-        {% for newSolution in newSolutions %}
-            {% if newSolution.challengeName == challenge %}
-                <li>{{ newSolution.userOwner.last_name }} - {{ newSolution.solutionInstance }}</li>
+        {% for solutionInstance in solutionInstances %}
+            {% if challenge in solutionInstance.challenge_that_owns_me.all %}
+                <h3>{{ solutionInstance.name }}</h3>
+                    <ul>
+                    {% for newSolution in newSolutions %}
+                        {% if newSolution.solutionInstance == solutionInstance %}
+                            <li>{{ newSolution.userOwner.last_name }} - {{ newSolution.solutionInstance }}</li>
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
             {% endif %}
         {% endfor %}
+
     {% endfor %}
-    </ul>
+
 {% endblock content %}

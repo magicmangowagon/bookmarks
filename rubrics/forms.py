@@ -90,8 +90,7 @@ class CoachReviewForm(BaseModelFormSet):
 
 
 CoachReviewFormset = modelformset_factory(CoachReview, formset=CoachReviewForm, fields=('userSolution', 'comment',
-                                                                                        'release'),
-                                          )
+                                                                                        'release'),)
 
 
 UserFileFormset = modelformset_factory(UserSolution, formset=UserFileForm, fields=('userOwner', 'challengeName', 'solutionInstance', 'solution',

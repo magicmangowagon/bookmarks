@@ -7,3 +7,10 @@ from django.contrib.auth.models import User
 
 # create form for router, then a form for manual assignment. Going to have to dig into AJAX to make this work
 # smoothly for Hannah.
+
+
+class SolutionRouterForm(BaseModelFormSet):
+    def __init__(self, *args, **kwargs):
+        super(SolutionRouterForm, self).__init__(*args, **kwargs)
+
+
