@@ -4,32 +4,12 @@
 
 {% block content %}
 
-            {{ solutionRouterFormset.management_form }}
-        <div class="centralDispatch">
 
-            {% for megaChallenge in challenges %}
-                <h1>{{ megaChallenge.name }}</h1>
-                {% for challenge in megaChallenge.challenge_set.all %}
-                    <h2>{{ challenge.name }}</h2>
-                    {% for form in solutionRouterFormset %}
-                        {% if form.instance.solutionInstance in challenge.solutions.all %}
-                            <div class="dispatchBox">
-                                <h3>{{ form.instance.solutionInstance }}</h3>
-                                <p>{{ form.automate.label }} {{ form.automate }}</p>
-                                <p>Method of Solution Distribution: {{ form.routerChoices }}</p>
-                            </div>
-                            {{ newSubmissionsFormset.management_form }}
-                            {% for newSubmissionForm in newSubmissionsFormset %}
-                                {% if newSubmissionForm.userSolution.solutionInstance is form.instance.solutionInstance %}
-                                    <div>{{ newSubmissionForm.coach }} - {{ newSubmissionForm.instance.userSolution.student }}</div>
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-                    {% endfor %}
-                {% endfor %}
-                <hr>
-                <br>
-            {% endfor %}
+        <div class="centralDispatch">
+            <ul>
+                {{ newSubmissionsFormset.as_ul }}
+            </ul>
+
                 {% csrf_token %}
         </div>
 

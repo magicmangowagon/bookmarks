@@ -1,7 +1,7 @@
 // When the user scrolls the page, execute myFunction
 window.onscroll = function() {stickyOffset()};
 
-//$("textarea, select, input").change(autoSave);
+$("textarea, select, input").change(autoSave);
 // Get the header
 var header = document.getElementById("stuckDiv");
 // notch.

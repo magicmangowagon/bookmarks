@@ -1,0 +1,40 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Woodrow Wilson Academy{% endblock %}
+
+{% block content %}
+        <script type="text/javascript" src="{% static "javascript/template_functions.js" %}">$("textarea, select, input").change(autoSave());</script>
+
+        <form action=""  method="post" enctype="multipart/form-data">
+            {{ solutionRouterFormset.management_form }}
+        <div class="centralDispatch">
+
+            {% for megaChallenge in challenges %}
+                <h1>{{ megaChallenge.name }}</h1>
+                {% for challenge in megaChallenge.challenge_set.all %}
+                    <h2>{{ challenge.name }}</h2>
+                    {% for form in solutionRouterFormset %}
+                        {% if form.instance.solutionInstance in challenge.solutions.all %}
+                            <div class="dispatchBox">
+                                <h3>{{ form.instance.solutionInstance }}</h3>
+                                <p>{{ form.automate.label }} {{ form.automate }}</p>
+                                <p>Method of Solution Distribution: {{ form.routerChoices }}</p>
+                            </div>
+                            {{ form.id }}
+
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+                <hr>
+                <br>
+
+            {% endfor %}
+                {% csrf_token %}
+        </div>
+
+    </form>
+
+
+
+{% endblock content %}

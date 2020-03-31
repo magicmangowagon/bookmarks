@@ -15,7 +15,7 @@ def validate_only_one_instance(obj):
 
 class SolutionRouter(models.Model):
     name = models.CharField(blank=True, max_length=500)
-    profile = models.ForeignKey(Profile, blank=True, default='', on_delete=models.CASCADE, null=True)
+    coach = models.ForeignKey(Profile, blank=True, default='', on_delete=models.CASCADE, null=True)
     challenge = models.ManyToManyField(Challenge, blank=True, default='')
     solutionInstance = models.ForeignKey(SolutionInstance, blank=True, default='', on_delete=models.CASCADE)
     automate = models.BooleanField(default=False)
@@ -41,13 +41,13 @@ def create_solution_router(sender, **kwargs):
 
 
 # Perhaps I need to generate this on coach creation based on role?
-class ManualAssignmentKeeper(models.Model):
-    evaluator = models.ForeignKey(Profile, blank=True, default='', on_delete=models.PROTECT)
-    coach = models.ForeignKey(Profile, blank=True, default='', on_delete=models.PROTECT)
+class AssignmentKeeper(models.Model):
+    evaluator = models.ForeignKey(Profile, null=True, on_delete=models.PROTECT, related_name='evaluator')
+    coach = models.ForeignKey(Profile, null=True, on_delete=models.PROTECT, related_name='coach')
     userSolution = models.ForeignKey(UserSolution, blank=True, default='', on_delete=models.PROTECT)
 
 
 @receiver(post_save, sender=UserSolution, dispatch_uid=str(UserSolution))
 def create_assignment_keeper(sender, **kwargs):
     if kwargs.get('created', False):
-        ManualAssignmentKeeper.objects.create(userSolution=['instance'])
+        AssignmentKeeper.objects.create(userSolution=kwargs['instance'], )
