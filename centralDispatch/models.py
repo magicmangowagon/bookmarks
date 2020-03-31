@@ -40,6 +40,7 @@ def create_solution_router(sender, **kwargs):
         # i.save()
 
 
+# Perhaps I need to generate this on profile creation based on role?
 class ManualAssignmentKeeper(models.Model):
     profile = models.ForeignKey(Profile, blank=True, default='', on_delete=models.PROTECT)
     userSolution = models.ManyToManyField(UserSolution, blank=True, default='')

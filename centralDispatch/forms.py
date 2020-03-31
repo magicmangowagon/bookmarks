@@ -14,3 +14,6 @@ class SolutionRouterForm(BaseModelFormSet):
         super(SolutionRouterForm, self).__init__(*args, **kwargs)
 
 
+class ManualAssignmentKeeperForm(BaseModelFormSet):
+    def __init__(self, *args, **kwargs):
+        super(ManualAssignmentKeeperForm, self).__init__(*args, **kwargs)

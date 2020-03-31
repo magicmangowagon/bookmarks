@@ -4,19 +4,31 @@
 
 {% block content %}
 
-            {{ formset.management_form }}
+            {{ solutionRouterFormset.management_form }}
         <div class="centralDispatch">
-            {% for challenge in challenges %}
-                <h2>{{ challenge.name }}</h2>
-                {% for form in formset %}
-                    {% if form.instance.solutionInstance in challenge.solutions.all %}
-                        <div class="dispatchBox">
-                            <h3>{{ form.instance.solutionInstance }}</h3>
-                            <p>{{ form.automate.label }} {{ form.automate }}</p>
-                            <p>Method of Solution Distribution: {{ form.routerChoices }}</p>
-                        </div>
-                    {% endif %}
+
+            {% for megaChallenge in challenges %}
+                <h1>{{ megaChallenge.name }}</h1>
+                {% for challenge in megaChallenge.challenge_set.all %}
+                    <h2>{{ challenge.name }}</h2>
+                    {% for form in solutionRouterFormset %}
+                        {% if form.instance.solutionInstance in challenge.solutions.all %}
+                            <div class="dispatchBox">
+                                <h3>{{ form.instance.solutionInstance }}</h3>
+                                <p>{{ form.automate.label }} {{ form.automate }}</p>
+                                <p>Method of Solution Distribution: {{ form.routerChoices }}</p>
+                            </div>
+                            {{ newSubmissionsFormset.management_form }}
+                            {% for newSubmissionForm in newSubmissionsFormset %}
+                                {% if newSubmissionForm.userSolution.solutionInstance is form.instance.solutionInstance %}
+                                    <div>{{ newSubmissionForm.profile }} - {{ newSubmissionForm.instance.userSolution.student }}</div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
                 {% endfor %}
+                <hr>
+                <br>
             {% endfor %}
                 {% csrf_token %}
         </div>

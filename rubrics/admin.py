@@ -105,7 +105,7 @@ class CompetencyAdmin(admin.ModelAdmin):
 
 @admin.register(Challenge)
 class ChallengeAdmin(admin.ModelAdmin):
-    list_display = ['name']
+    list_display = ['name', 'display']
     filter_horizontal = ('learningObjs', 'solutions')
     inlines = [
         LearningExpoInline,
