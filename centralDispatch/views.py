@@ -20,7 +20,7 @@ class NewSolutionDispatch(ListView):
         solutionInstances = SolutionInstance.objects.all().filter(challenge_that_owns_me__megaChallenge__in=challenges)
 
         SolutionRouterFormset = modelformset_factory(SolutionRouter, extra=0,
-                                                     formset=SolutionRouterForm, fields=('profile',
+                                                     formset=SolutionRouterForm, fields=('coach',
                                                                                          'challenge',
                                                                                          'solutionInstance',
                                                                                          'automate',
@@ -30,7 +30,8 @@ class NewSolutionDispatch(ListView):
 
         newSubmissions = UserSolution.objects.all().filter(evaluated__isnull=True)
         NewSubmissionFormset = modelformset_factory(ManualAssignmentKeeper, extra=newSubmissions.count(),
-                                                    formset=ManualAssignmentKeeperForm, fields=('profile', 'userSolution'))
+                                                    formset=ManualAssignmentKeeperForm, fields=(
+            'coach', 'userSolution'))
         newSubmissionFormset = NewSubmissionFormset(prefix='newSolutions', initial=[{'userSolution': newSubmission.pk}
                                                                                     for newSubmission in newSubmissions],
                                                     queryset=ManualAssignmentKeeper.objects.none())

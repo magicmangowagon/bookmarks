@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('challenge', models.ManyToManyField(blank=True, default='', to='rubrics.Challenge')),
-                ('profile', models.ForeignKey(blank=True, default='', on_delete=django.db.models.deletion.CASCADE, to='account.Profile')),
+                ('coach', models.ForeignKey(blank=True, default='', on_delete=django.db.models.deletion.CASCADE, to='account.Profile')),
             ],
         ),
     ]

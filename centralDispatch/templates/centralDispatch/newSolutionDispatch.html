@@ -21,7 +21,7 @@
                             {{ newSubmissionsFormset.management_form }}
                             {% for newSubmissionForm in newSubmissionsFormset %}
                                 {% if newSubmissionForm.userSolution.solutionInstance is form.instance.solutionInstance %}
-                                    <div>{{ newSubmissionForm.profile }} - {{ newSubmissionForm.instance.userSolution.student }}</div>
+                                    <div>{{ newSubmissionForm.coach }} - {{ newSubmissionForm.instance.userSolution.student }}</div>
                                 {% endif %}
                             {% endfor %}
                         {% endif %}

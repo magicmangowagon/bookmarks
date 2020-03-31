@@ -40,7 +40,14 @@ def create_solution_router(sender, **kwargs):
         # i.save()
 
 
-# Perhaps I need to generate this on profile creation based on role?
+# Perhaps I need to generate this on coach creation based on role?
 class ManualAssignmentKeeper(models.Model):
-    profile = models.ForeignKey(Profile, blank=True, default='', on_delete=models.PROTECT)
-    userSolution = models.ManyToManyField(UserSolution, blank=True, default='')
+    evaluator = models.ForeignKey(Profile, blank=True, default='', on_delete=models.PROTECT)
+    coach = models.ForeignKey(Profile, blank=True, default='', on_delete=models.PROTECT)
+    userSolution = models.ForeignKey(UserSolution, blank=True, default='', on_delete=models.PROTECT)
+
+
+@receiver(post_save, sender=UserSolution, dispatch_uid=str(UserSolution))
+def create_assignment_keeper(sender, **kwargs):
+    if kwargs.get('created', False):
+        ManualAssignmentKeeper.objects.create(userSolution=['instance'])
