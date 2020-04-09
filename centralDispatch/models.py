@@ -42,8 +42,8 @@ def create_solution_router(sender, **kwargs):
 
 # Perhaps I need to generate this on coach creation based on role?
 class AssignmentKeeper(models.Model):
-    evaluator = models.ForeignKey(Profile, null=True, on_delete=models.PROTECT, related_name='evaluator', blank=True)
-    coach = models.ForeignKey(Profile, null=True, on_delete=models.PROTECT, related_name='coach', blank=True)
+    evaluator = models.ForeignKey(Profile, null=True, on_delete=models.PROTECT, related_name='evaluator', blank=True, limit_choices_to={'role': 2})
+    coach = models.ForeignKey(Profile, null=True, on_delete=models.PROTECT, related_name='coach', blank=True, limit_choices_to={'role': 3})
     userSolution = models.ForeignKey(UserSolution, blank=True, default='', on_delete=models.PROTECT)
 
 

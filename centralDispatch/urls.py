@@ -8,5 +8,5 @@ urlpatterns = [
     # path('rubrics', views.update_challenge, name='challenge-form'),
     path('centraldispatch', SolutionDispatch.as_view(), name='central-dispatch'),
     path('centraldispatch/newsolutions', NewSolutionDispatch.as_view(), name='central-dispatch-new-solutions'),
-    path('centraldispatch/assignedsolutions', AssignedSolutions.as_view(), name='assigned-solutions')
+    path('assignedsolutions', AssignedSolutions.as_view(), name='assigned-solutions')
 ]

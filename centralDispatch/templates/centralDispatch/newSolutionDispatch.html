@@ -12,11 +12,11 @@
             <div class="flexList">
 
                 {% for newSubmissionForm in newSubmissionsFormset %}
-
+                    {% ifchanged newSubmissionForm.instance.userSolution.solutionInstance%}<h3>{{ newSubmissionForm.instance.userSolution.solutionInstance.name }}</h3>{% endifchanged %}
                     <div class="flexListMember">
-                        <div class="flexListSubMember"><label>{{ newSubmissionForm.userSolution.label }}</label>: {{ newSubmissionForm.instance.userSolution }}</div>
-                        <div class="flexListSubMember"><label>{{ newSubmissionForm.evaluator.label }}</label>: {{ newSubmissionForm.evaluator }}</div>
-                        <div class="flexListSubMember"><label>{{ newSubmissionForm.coach.label }}</label>: {{ newSubmissionForm.coach }}</div>
+                        <div class="flexListSubMember"><label class="flexListSubMember">{{ newSubmissionForm.instance.userSolution.userOwner }}</label> </div>
+                        <div class="flexListSubMember"><label class="flexListSubMember">{{ newSubmissionForm.evaluator.label }}</label>: {{ newSubmissionForm.evaluator }}</div>
+                        <div class="flexListSubMember"><label class="flexListSubMember">{{ newSubmissionForm.coach.label }}</label>: {{ newSubmissionForm.coach }}</div>
                     </div>
                     {{ newSubmissionForm.id }}
 

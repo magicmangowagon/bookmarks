@@ -7,7 +7,7 @@
 
         <ul>
         {% for solution in solutionQueryset %}
-            <li>{{ solution.userOwner.first_name }} {{ solution.userOwner.last_name }} - {{ solution.solutionInstance.name }}</li>
+            <li>{{ solution.userOwner.first_name }} {{ solution.userOwner.last_name }} - <a href="/solutions/{{ solution.id }}">{{ solution.solutionInstance.name }}</a></li>
         {% endfor %}
         </ul>
 

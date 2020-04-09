@@ -34,13 +34,32 @@
     flex-direction: column;
 }
 
+.flexList h3::before {
+    margin-top: 12pt;
+}
+
+.flexList h3 {
+    margin: 10pt;
+    background-color: #00ad9c;
+    color: #ffffffff;
+}
+
+.flexList:nth-child(odd) {
+    background-color: #00ad9c;
+}
+
 .flexListMember {
     display: flex;
     flex-direction: row;
 }
 
-.flexListSubMember {
 
+
+.flexListSubMember label{
+    border-radius: unset;
+    background-color: unset;
+    color: unset;
+    font-weight: 600;
 }
 
 .challengeSubEntry {

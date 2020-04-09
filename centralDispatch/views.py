@@ -70,7 +70,7 @@ class NewSolutionDispatch(FormView):
                                                     fields=('evaluator', 'coach', 'userSolution'))
         newSubmissionFormset = NewSubmissionFormset(prefix='newSolutions',
                                                     queryset=AssignmentKeeper.objects.filter(
-                                                        userSolution__in=newSubmissions).order_by('userSolution__challengeName__challengeGroupChoices'))
+                                                        userSolution__in=newSubmissions).order_by('userSolution__solutionInstance'))
 
         context['newSubmissionsFormset'] = newSubmissionFormset
         context['solutionInstances'] = solutionInstances
@@ -92,22 +92,33 @@ class NewSolutionDispatch(FormView):
 
 
 class AssignedSolutions(ListView):
-    template_name = 'centralDispatch/assignedsolutions.html'
+    template_name = 'rubrics/eval_list.html'
     queryset = UserSolution.objects.all()
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(AssignedSolutions, self).get_context_data()
         if self.request.user.profile.role == 1:
             tc = UserSolution.objects.all().filter(userOwner=self.request.user)
-            context['solutionQueryset'] = tc
+            context['userSolutions'] = tc
+
         elif self.request.user.profile.role == 2:
             evaluator = UserSolution.objects.all().filter(assignmentkeeper__evaluator=self.request.user.profile)
-            context['solutionQueryset'] = evaluator
+            if UserSolution.objects.all().filter(evaluated__whoEvaluated=self.request.user).exists():
+                pastEvals = UserSolution.objects.all().filter(evaluated__whoEvaluated=self.request.user)
+                context['userSolutions'] = evaluator | pastEvals
+            else:
+                context['userSolutions'] = evaluator
+
         elif self.request.user.profile.role == 3:
             coach = UserSolution.objects.all().filter(assignmentkeeper__coach=self.request.user.profile)
-            context['solutionQueryset'] = coach
+            if UserSolution.objects.all().filter(evaluated__whoEvaluated=self.request.user).exists():
+                pastEvals = UserSolution.objects.all().filter(evaluated__whoEvaluated=self.request.user)
+                context['userSolutions'] = coach | pastEvals
+            else:
+                context['userSolutions'] = coach
+
         elif self.request.user.profile.role == 4:
             everyone = UserSolution.objects.all()
-            context['solutionQueryset'] = everyone
+            context['userSolutions'] = everyone
 
         return context

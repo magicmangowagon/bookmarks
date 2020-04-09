@@ -332,7 +332,7 @@ class UserSolution(models.Model):
     evaluated = models.ManyToManyField(Evaluated, blank=True, related_name='evaluated')
 
     def __str__(self):
-        name = self.userOwner.username.__str__() + self.challengeName.name.__str__()
+        name = self.userOwner.username.__str__() + ' ' + self.challengeName.name.__str__()
         return name
 
 
