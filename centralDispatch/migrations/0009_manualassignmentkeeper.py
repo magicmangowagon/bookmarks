@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             name='ManualAssignmentKeeper',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('coach', models.ForeignKey(blank=True, default='', on_delete=django.db.models.deletion.PROTECT, to='account.Profile')),
+                ('profile', models.ForeignKey(blank=True, default='', on_delete=django.db.models.deletion.PROTECT, to='account.Profile')),
                 ('userSolution', models.ManyToManyField(blank=True, default='', to='rubrics.UserSolution')),
             ],
         ),

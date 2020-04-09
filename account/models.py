@@ -35,6 +35,9 @@ class Profile(models.Model):
     role = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, null=True, blank=True, default=1)
     subjectMatter = models.PositiveIntegerField(choices=SUBJECT_MATTER_CHOICES, null=True, blank=True, default=0)
 
+    def __str__(self):
+        return str(self.user)
+
 
 @receiver(post_save, sender=User, dispatch_uid="something_here")
 def create_profile(sender, **kwargs):

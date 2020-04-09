@@ -17,14 +17,14 @@ class SolutionRouter(models.Model):
     name = models.CharField(blank=True, max_length=500)
     coach = models.ForeignKey(Profile, blank=True, default='', on_delete=models.CASCADE, null=True)
     challenge = models.ManyToManyField(Challenge, blank=True, default='')
-    solutionInstance = models.ForeignKey(SolutionInstance, blank=True, default='', on_delete=models.CASCADE)
+    solutionInstance = models.ForeignKey(SolutionInstance, blank=True, default='', on_delete=models.CASCADE, null=True)
     automate = models.BooleanField(default=False)
     routerChoices = models.IntegerField(choices=(
                                         (1, "Subject Matter"),
                                         (2, "Challenge Specific"),
                                         (3, "Manually Assign"),
                                         (4, "Legacy Challenge"),
-                                        ), null=True)
+                                        ), null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -42,8 +42,8 @@ def create_solution_router(sender, **kwargs):
 
 # Perhaps I need to generate this on coach creation based on role?
 class AssignmentKeeper(models.Model):
-    evaluator = models.ForeignKey(Profile, null=True, on_delete=models.PROTECT, related_name='evaluator')
-    coach = models.ForeignKey(Profile, null=True, on_delete=models.PROTECT, related_name='coach')
+    evaluator = models.ForeignKey(Profile, null=True, on_delete=models.PROTECT, related_name='evaluator', blank=True)
+    coach = models.ForeignKey(Profile, null=True, on_delete=models.PROTECT, related_name='coach', blank=True)
     userSolution = models.ForeignKey(UserSolution, blank=True, default='', on_delete=models.PROTECT)
 
 

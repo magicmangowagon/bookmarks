@@ -1,0 +1,16 @@
+
+{% extends "base.html" %}
+{% block title %}Woodrow Wilson Academy{% endblock %}
+
+{% block content %}
+
+
+        <ul>
+        {% for solution in solutionQueryset %}
+            <li>{{ solution.userOwner.first_name }} {{ solution.userOwner.last_name }} - {{ solution.solutionInstance.name }}</li>
+        {% endfor %}
+        </ul>
+
+
+
+{% endblock content %}

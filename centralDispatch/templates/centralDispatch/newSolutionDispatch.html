@@ -6,11 +6,26 @@
 
 
         <div class="centralDispatch">
-            <ul>
-                {{ newSubmissionsFormset.as_ul }}
-            </ul>
+        <form action=""  method="post" enctype="multipart/form-data">
+            {{ newSubmissionsFormset.management_form }}
+            <input type="submit">
+            <div class="flexList">
 
-                {% csrf_token %}
+                {% for newSubmissionForm in newSubmissionsFormset %}
+
+                    <div class="flexListMember">
+                        <div class="flexListSubMember"><label>{{ newSubmissionForm.userSolution.label }}</label>: {{ newSubmissionForm.instance.userSolution }}</div>
+                        <div class="flexListSubMember"><label>{{ newSubmissionForm.evaluator.label }}</label>: {{ newSubmissionForm.evaluator }}</div>
+                        <div class="flexListSubMember"><label>{{ newSubmissionForm.coach.label }}</label>: {{ newSubmissionForm.coach }}</div>
+                    </div>
+                    {{ newSubmissionForm.id }}
+
+                {% endfor %}
+
+            </div>
+
+           {% csrf_token %}
+        </form>
         </div>
 
 

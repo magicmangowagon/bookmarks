@@ -6,6 +6,43 @@
     align-items: center;
 }
 
+.megaChallengerWrapper {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.challengeWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    padding-right: 10pt;
+}
+
+.dispatchBox {
+
+}
+
+.dispatchBox h3 input {
+    float: none;
+    clear: none;
+    margin-left: 5pt;
+}
+
+.flexList {
+    display: flex;
+    flex-direction: column;
+}
+
+.flexListMember {
+    display: flex;
+    flex-direction: row;
+}
+
+.flexListSubMember {
+
+}
+
 .challengeSubEntry {
     padding: 2pt;
 }

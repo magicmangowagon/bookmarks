@@ -280,15 +280,12 @@ class SolutionListView(ListView):
 
             group = self.request.user.groups.all()
             print(group)
-            challengeCoachAssigned = UserSolution.objects.all().filter(
-                challengeName__solutionrouter__profile=profile).filter(evaluated__isnull=False).distinct()
-            solutionByTopic = UserSolution.objects.all().filter(
-                userOwner__profile__subjectMatter=profile.subjectMatter).distinct()
-            specificallyAssigned = UserSolution.objects.filter(userOwner__groups__in=group).filter(
-                evaluated__isnull=False).distinct()
+            # challengeCoachAssigned = UserSolution.objects.all().filter(challengeName__solutionrouter__profile=profile).filter(evaluated__isnull=False).distinct()
+            # solutionByTopic = UserSolution.objects.all().filter(userOwner__profile__subjectMatter=profile.subjectMatter).distinct()
+            # specificallyAssigned = UserSolution.objects.filter(userOwner__groups__in=group).filter(evaluated__isnull=False).distinct()
 
-            userSolutions = challengeCoachAssigned | solutionByTopic | specificallyAssigned
-            queryset = userSolutions
+            # userSolutions = challengeCoachAssigned | solutionByTopic | specificallyAssigned
+            queryset = UserSolution.objects.filter(userOwner__groups__in=group)
             return queryset
 
         else:
@@ -893,11 +890,11 @@ class EvalListView(ListView):
                 you = self.request.user.profile
                 print(group)
 
-                challengeCoachAssigned = UserSolution.objects.all().filter(challengeName__solutionrouter__profile=you).filter(evaluated__isnull=False).distinct()
-                solutionByTopic = UserSolution.objects.all().filter(userOwner__profile__subjectMatter=you.subjectMatter).filter(evaluated__isnull=False).distinct()
-                specificallyAssigned = UserSolution.objects.filter(userOwner__groups__in=group).filter(evaluated__isnull=False).distinct()
+                # challengeCoachAssigned = UserSolution.objects.all().filter(challengeName__solutionrouter__profile=you).filter(evaluated__isnull=False).distinct()
+                # solutionByTopic = UserSolution.objects.all().filter(userOwner__profile__subjectMatter=you.subjectMatter).filter(evaluated__isnull=False).distinct()
+                # specificallyAssigned = UserSolution.objects.filter(userOwner__groups__in=group).filter(evaluated__isnull=False).distinct()
 
-                userSolutions = challengeCoachAssigned | solutionByTopic | specificallyAssigned
+                userSolutions = UserSolution.objects.filter(userOwner__groups__in=group)
         else:
             userSolutions = UserSolution.objects.all().filter(userOwner=self.request.user)
 

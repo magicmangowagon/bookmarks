@@ -6,26 +6,30 @@
 {% block content %}
         <script type="text/javascript" src="{% static "javascript/template_functions.js" %}">$("textarea, select, input").change(autoSave());</script>
 
-        <form action=""  method="post" enctype="multipart/form-data">
-            {{ solutionRouterFormset.management_form }}
-        <div class="centralDispatch">
 
+            {{ solutionRouterFormset.management_form }}
+        <p>{{ solutionRouterFormset.errors }}</p>
+        <div class="centralDispatch">
+            <input type="submit">
             {% for megaChallenge in challenges %}
                 <h1>{{ megaChallenge.name }}</h1>
-                {% for challenge in megaChallenge.challenge_set.all %}
-                    <h2>{{ challenge.name }}</h2>
-                    {% for form in solutionRouterFormset %}
-                        {% if form.instance.solutionInstance in challenge.solutions.all %}
-                            <div class="dispatchBox">
-                                <h3>{{ form.instance.solutionInstance }}</h3>
-                                <p>{{ form.automate.label }} {{ form.automate }}</p>
-                                <p>Method of Solution Distribution: {{ form.routerChoices }}</p>
-                            </div>
-                            {{ form.id }}
+                <div class="megaChallengerWrapper">
+                    {% for challenge in megaChallenge.challenge_set.all %}
+                        <div class="challengeWrapper">
+                            <h2>{{ challenge.name }}</h2>
+                                {% for form in solutionRouterFormset %}
+                                    {% if form.instance.solutionInstance in challenge.solutions.all %}
+                                        <div class="dispatchBox">
+                                        {{ form.errors }}{{ form.non_field_errors }}
+                                            <h3>{{ form.instance.solutionInstance }} {{ form.automate }}</h3>
 
-                        {% endif %}
+                                            <p>Method of Solution Distribution: {{ form.routerChoices }}</p>
+                                        </div>
+                                        {{ form.id }}{{ form.name }}
+                                    {% endif %}
+                                {% endfor %}</div>
                     {% endfor %}
-                {% endfor %}
+                </div>
                 <hr>
                 <br>
 
@@ -34,7 +38,18 @@
         </div>
 
     </form>
+    <script>
+        function challengeNavShow (challenge) {
+            let elementID = document.getElementById(challenge);
+            $(elementID).toggle(150);
+        }
 
+        function activeExpo (expo) {
+            let activeExpo = document.getElementById("active"+ expo);
+            $(activeExpo).addClass("activeLearningExpo");
+        }
+        window.onLoad = challengeNavShow({{ learningExpo.challenge.pk }}), activeExpo({{ learningExpo.pk }});
+</script>
 
 
 {% endblock content %}
