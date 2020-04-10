@@ -4,6 +4,7 @@ from rubrics.models import Challenge, MegaChallenge, UserSolution, RubricLine, R
 from django.core.exceptions import ValidationError
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.db.models import Q
 
 
 def validate_only_one_instance(obj):
@@ -33,17 +34,16 @@ class SolutionRouter(models.Model):
 @receiver(post_save, sender=SolutionInstance, dispatch_uid=str(SolutionInstance))
 def create_solution_router(sender, **kwargs):
     if kwargs.get('created', False):
-        # challenge = sender.challenge_that_owns_me
-        SolutionRouter.objects.create(solutionInstance=kwargs['instance'], name=(str(kwargs['instance'].name + ' router')))
-
-        # i.challenge.set(challenge)
-        # i.save()
+        SolutionRouter.objects.create(solutionInstance=kwargs['instance'],
+                                      name=(str(kwargs['instance'].name + ' router')))
 
 
-# Perhaps I need to generate this on coach creation based on role?
+# Generated on Solution submission. Reviews are manually assigned by admin at the moment
 class AssignmentKeeper(models.Model):
-    evaluator = models.ForeignKey(Profile, null=True, on_delete=models.PROTECT, related_name='evaluator', blank=True, limit_choices_to={'role': 2})
-    coach = models.ForeignKey(Profile, null=True, on_delete=models.PROTECT, related_name='coach', blank=True, limit_choices_to={'role': 3})
+    evaluator = models.ForeignKey(Profile, null=True, on_delete=models.PROTECT, related_name='evaluator', blank=True,
+                                  limit_choices_to=Q(role=2) | Q(role=3))
+    coach = models.ForeignKey(Profile, null=True, on_delete=models.PROTECT, related_name='coach', blank=True,
+                              limit_choices_to=Q(role=2) | Q(role=3))
     userSolution = models.ForeignKey(UserSolution, blank=True, default='', on_delete=models.PROTECT)
 
 

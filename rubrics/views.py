@@ -19,7 +19,7 @@ from django.contrib.auth.models import User, Group
 from .functions import process_rubricLine, assess_competency_done, custom_rubric_producer, mega_challenge_builder
 from django.core.mail import send_mail
 from .filters import EvalFilter
-from centralDispatch.functions import submissionAlert
+from centralDispatch.functions import submissionAlert, evaluationCompleted
 
 
 class ChallengeCover(DetailView):
@@ -363,7 +363,7 @@ class RubricFinalFormView(FormView):
     def post(self, request, *args, **kwargs):
         form = RubricFormSet(request.POST, prefix='rFormset')
         completionLevelObj = RubricLine.objects.all().filter(student=self.kwargs['pk'])
-
+        userSolution = UserSolution.objects.get(id=self.kwargs['pk'])
         if self.request.user.profile.role is 3:
             coachForm = CoachReviewFormset(request.POST, prefix='coachRevFormset')
 
@@ -374,6 +374,7 @@ class RubricFinalFormView(FormView):
                     coachForm.save()
             process_rubricLine(completionLevelObj)
             assess_competency_done(completionLevelObj)
+            evaluationCompleted(userSolution, self.request.user)
             return HttpResponseRedirect('/evals')
         else:
             messages.error(request, "Error")
