@@ -63,7 +63,7 @@ class ChallengeResourceFileInline(SortableInlineAdminMixin, admin.TabularInline)
 
 @admin.register(UserSolution)
 class UserSolution(admin.ModelAdmin):
-    list_display = ['pk', 'userOwner', 'challengeName', 'customized']
+    list_display = ['pk', 'userOwner', 'challengeName', 'solutionInstance', 'customized']
     pass
 
 

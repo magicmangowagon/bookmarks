@@ -46,6 +46,9 @@ class AssignmentKeeper(models.Model):
                               limit_choices_to=Q(role=2) | Q(role=3))
     userSolution = models.ForeignKey(UserSolution, blank=True, default='', on_delete=models.PROTECT)
 
+    def __str__(self):
+        return self.userSolution.__str__()
+
 
 @receiver(post_save, sender=UserSolution, dispatch_uid=str(UserSolution))
 def create_assignment_keeper(sender, **kwargs):
