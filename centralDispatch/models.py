@@ -1,10 +1,16 @@
 from django.db import models
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.auth.models import User
+from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.postgres.fields import ArrayField
 from account.models import Profile
 from rubrics.models import Challenge, MegaChallenge, UserSolution, RubricLine, Rubric, SolutionInstance
 from django.core.exceptions import ValidationError
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.db.models import Q
+from datetime import datetime
 
 
 def validate_only_one_instance(obj):
@@ -44,7 +50,7 @@ class AssignmentKeeper(models.Model):
                                   limit_choices_to=Q(role=2) | Q(role=3))
     coach = models.ForeignKey(Profile, null=True, on_delete=models.PROTECT, related_name='coach', blank=True,
                               limit_choices_to=Q(role=2) | Q(role=3))
-    userSolution = models.ForeignKey(UserSolution, blank=True, default='', on_delete=models.PROTECT)
+    userSolution = models.ForeignKey(UserSolution, blank=True, default='', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.userSolution.__str__()
@@ -54,3 +60,41 @@ class AssignmentKeeper(models.Model):
 def create_assignment_keeper(sender, **kwargs):
     if kwargs.get('created', False):
         AssignmentKeeper.objects.create(userSolution=kwargs['instance'], )
+
+
+class SomethingHappened(models.Model):
+    time = ArrayField(models.DateTimeField(), default=list)
+    userSolution = models.ForeignKey(UserSolution, on_delete=models.SET_NULL, null=True, default='')
+    archivedName = models.CharField(max_length=1000, default='')
+
+    def __str__(self):
+        return self.userSolution.__str__()
+
+
+@receiver(post_save, sender=UserSolution, dispatch_uid=str(UserSolution) + str(datetime.now()))
+def create_something_happened(sender, **kwargs):
+    if kwargs.get('created', False):
+        sh = SomethingHappened.objects.create(
+            userSolution=kwargs['instance'],
+            archivedName=str(kwargs['instance'],)
+        )
+        sh.time.append(datetime.now())
+        sh.save()
+
+
+@receiver(post_save, sender=UserSolution, dispatch_uid=str(UserSolution) + str(datetime.now()) + 'update')
+def update_something_happened(sender, **kwargs):
+    if kwargs.get('created', True):
+        if SomethingHappened.objects.filter(userSolution=kwargs['instance']).exists():
+            sh = SomethingHappened.objects.get(userSolution=kwargs['instance'])
+            sh.time.append(datetime.now())
+            sh.save()
+        else:
+            sh = SomethingHappened.objects.create(
+                userSolution=kwargs['instance'],
+                archivedName=str(kwargs['instance'], )
+            )
+            sh.time.append(datetime.now())
+            sh.save()
+
+

@@ -148,7 +148,7 @@ class ChallengeDetail(FormView):
             if form.is_valid() and expoForm.is_valid():
                 form.save()
                 expoForm.save()
-                thisChallenge = SolutionInstance.objects.get(pk=self.kwargs['pk']).challenge_that_owns_me.first()
+                thisChallenge = SolutionInstance.objects.get(pk=self.kwargs['pk'])
                 print(thisChallenge)
                 submissionAlert(thisChallenge, self.request.user)
                 return redirect('success', self.kwargs['pk'])
@@ -364,6 +364,7 @@ class RubricFinalFormView(FormView):
         form = RubricFormSet(request.POST, prefix='rFormset')
         completionLevelObj = RubricLine.objects.all().filter(student=self.kwargs['pk'])
         userSolution = UserSolution.objects.get(id=self.kwargs['pk'])
+
         if self.request.user.profile.role is 3:
             coachForm = CoachReviewFormset(request.POST, prefix='coachRevFormset')
 

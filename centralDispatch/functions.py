@@ -27,8 +27,19 @@ def evaluatorAssigned(assignmentKeeper):
     return
 
 
-def evaluationCompleted(assignmentKeeper, user):
-    email_recipient = assignmentKeeper.coach.user.email
-    send_mail('The Orchard: New evaluator submission', user.first_name +
-              ' has submitted an evaluation for ' + assignmentKeeper.userSolution,
-              'noreply@wwgradschool.org', [email_recipient, ], fail_silently=False)
+def evaluationCompleted(userSolution, user):
+    try:
+        email_recipient = AssignmentKeeper.objects.get(userSolution=userSolution).coach.user.email
+        send_mail('The Orchard: New evaluator submission', user.first_name +
+                  ' has submitted an evaluation for ' + str(userSolution),
+                  'noreply@wwgradschool.org', [email_recipient, ], fail_silently=False)
+    except:
+        users = User.objects.all().filter(profile__role=4)
+        email_recipients = []
+        for user in users:
+            email_recipients.append(user.email)
+        email_recipient = email_recipients
+        send_mail('The Orchard: New evaluator submission', user.first_name +
+                  ' has submitted an evaluation for ' + str(userSolution),
+                  'noreply@wwgradschool.org', email_recipient, fail_silently=False)
+
