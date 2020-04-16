@@ -6,14 +6,14 @@ from account.models import Profile
 from django.core.mail import send_mail
 
 
-def submissionAlert(challenge, user):
+def submissionAlert(challenge, tc):
     print('submission alert called')
     # if SolutionRouter.objects.all().filter(solutionInstance=challenge).exists():
     users = User.objects.all().filter(profile__role=4)
     email_recipients = []
     for user in users:
         email_recipients.append(user.email)
-    send_mail('The Orchard: New TC submission', user.first_name + ' has submitted a solution for ' + challenge.name,
+    send_mail('The Orchard: New TC submission', tc.first_name + ' has submitted a solution for ' + challenge.name,
               'noreply@wwgradschool.org', email_recipients, fail_silently=False)
     return
 

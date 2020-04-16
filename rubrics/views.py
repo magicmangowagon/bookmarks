@@ -150,6 +150,7 @@ class ChallengeDetail(FormView):
                 expoForm.save()
                 thisChallenge = SolutionInstance.objects.get(pk=self.kwargs['pk'])
                 print(thisChallenge)
+                print(self.request.user.first_name)
                 submissionAlert(thisChallenge, self.request.user)
                 return redirect('success', self.kwargs['pk'])
             else:
