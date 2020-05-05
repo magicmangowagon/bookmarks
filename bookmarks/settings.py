@@ -144,7 +144,8 @@ TAGGIT_CASE_INSENSITIVE = True
 AWS_ACCESS_KEY_ID = os.environ.get('awsKeyID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('secretKeyID')
 AWS_STORAGE_BUCKET_NAME = 'rubrics-bucket'
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+# 'https://' + 'da301vtjp36z8.cloudfront.net' + '/'
+AWS_S3_CUSTOM_DOMAIN = 'da301vtjp36z8.cloudfront.net'
 AWS_S3_OBJECT_PARAMETERS = \
     {'CacheControl': 'max-age=86400',
                             }
@@ -156,6 +157,7 @@ STATICFILES_DIRS = [
 ]
 
 if DEBUG is True:
+    # STATIC_URL = 'shit/'
     # STATIC_URL = 'https://' + AWS_S3_CUSTOM_DOMAIN + AWS_LOCATION + '/'
     # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     # DEFAULT_FILE_STORAGE = STATICFILES_STORAGE
