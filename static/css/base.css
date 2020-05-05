@@ -1,5 +1,15 @@
 @import url(https://fonts.googleapis.com/css?family=Dosis|Oswald);
 
+@font-face {
+    font-family: "Dosis";
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Oswald";
+    font-display: swap;
+}
+
 .challengeListEntry {
     display: flex;
     flex-direction: row;
@@ -458,7 +468,10 @@ a:hover {
     color:#12c064;
 }
 
-h1, h2, h3, h4, h5 , h6 { font-family: 'Oswald', sans-serif; font-weight:normal; }
+h1, h2, h3, h4, h5 , h6 {
+    font-family: 'Oswald', sans-serif; font-weight:normal;
+
+}
 
 h1 {
     border-bottom:1px solid #bbb;
