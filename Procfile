@@ -1,2 +1,2 @@
 
-web: gunicorn bookmarks.wsgi --log-file -
+web: gunicorn bookmarks.wsgi --log-file - --preload
