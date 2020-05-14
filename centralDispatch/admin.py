@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import SolutionRouter, AssignmentKeeper, SomethingHappened
+from .models import SolutionRouter, AssignmentKeeper, SomethingHappened, SolutionStatus, ChallengeStatus
 
 
 @admin.register(SolutionRouter)
@@ -15,4 +15,15 @@ class AssignmentKeepAdmin(admin.ModelAdmin):
 @admin.register(SomethingHappened)
 class SomethingHappenedAdmin(admin.ModelAdmin):
     fields = ['userSolution', 'archivedName', 'time']
+
+
+@admin.register(ChallengeStatus)
+class ChallengeStatusAdmin(admin.ModelAdmin):
+    list_display = ['challenge', 'user', 'challengeAccepted']
+    filter_horizontal = ['solutionStatusByInstance']
+
+
+@admin.register(SolutionStatus)
+class SolutionStatusAdmin(admin.ModelAdmin):
+    fields = ['solutionSubmitted', 'solutionEvaluated', 'solutionCoachReviewed', 'solutionRejected', 'solutionCompleted']
 

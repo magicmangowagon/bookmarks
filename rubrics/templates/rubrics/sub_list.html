@@ -18,7 +18,15 @@
             {{ challenge.name }}
 
     </a>
-    </h2>
+    </h2> <div>
+
+        <!-- {% for form in challengeStatusForm %}
+
+            {% if form.challenge.value == challenge.id %}
+                <form>{{ form.challengeAccepted }}</form>
+            {% endif %}
+        {% endfor %}</div> -->
+
     <ul class="challengeListObj">
         {% for learningObjective in challenge.learningObjs.all %}
             <li class="challengeListObj">{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}.

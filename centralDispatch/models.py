@@ -56,12 +56,7 @@ class AssignmentKeeper(models.Model):
         return self.userSolution.__str__()
 
 
-@receiver(post_save, sender=UserSolution, dispatch_uid=str(UserSolution))
-def create_assignment_keeper(sender, **kwargs):
-    if kwargs.get('created', False):
-        AssignmentKeeper.objects.create(userSolution=kwargs['instance'], )
-
-
+# tracks submission and subsequent updates to user solutions by TC
 class SomethingHappened(models.Model):
     time = ArrayField(models.DateTimeField(), default=list)
     userSolution = models.ForeignKey(UserSolution, on_delete=models.SET_NULL, null=True, default='')
@@ -69,6 +64,47 @@ class SomethingHappened(models.Model):
 
     def __str__(self):
         return self.userSolution.__str__()
+
+
+class SolutionStatus(models.Model):
+    solutionSubmitted = models.BooleanField(default=False)
+    solutionEvaluated = models.BooleanField(default=False)
+    solutionCoachReviewed = models.BooleanField(default=False)
+    solutionRejected = models.BooleanField(default=False)
+    solutionCompleted = models.BooleanField(default=False)
+    userSolution = models.ForeignKey(UserSolution, blank=True, default='', on_delete=models.CASCADE)
+
+    returnTo = models.IntegerField(choices=(
+        (1, "Evaluator"),
+        (2, "Coach"),
+    ), null=True, blank=True)
+
+    def __str__(self):
+        return self.userSolution.__str__() + ' status'
+
+
+class ChallengeStatus(models.Model):
+    challengeAccepted = models.BooleanField(default=False)
+    challenge = models.ForeignKey(Challenge, default='', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, default='', on_delete=models.CASCADE)
+    solutionStatusByInstance = models.ManyToManyField(SolutionStatus, blank=True, default='')
+
+    def __str__(self):
+        return self.challenge.name + ' ' + self.user.__str__()
+
+
+@receiver(post_save, sender=UserSolution, dispatch_uid=str(UserSolution))
+def create_assignment_tracking_models(sender, **kwargs):
+    if kwargs.get('created', False):
+        AssignmentKeeper.objects.create(userSolution=kwargs['instance'], )
+        try:
+            challengeStatus = ChallengeStatus.objects.get(challenge=kwargs['instance'].challengeName, user=kwargs['instance'].userOwner)
+        except:
+            challengeStatus = ChallengeStatus.objects.create(challenge=kwargs['instance'].challengeName, user=kwargs['instance'].userOwner)
+
+        s = SolutionStatus.objects.create(userSolution=kwargs['instance'], solutionSubmitted=True, )
+        challengeStatus.solutionStatusByInstance.add(s)
+        challengeStatus.save()
 
 
 @receiver(post_save, sender=UserSolution, dispatch_uid=str(UserSolution) + str(datetime.now()))

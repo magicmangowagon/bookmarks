@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load solution_filters %}
+
+{% block title %}Woodrow Wilson Academy: Solutions{% endblock %}
+
+{% block content %}
+<h1>TFJ - Solutions</h1>
+
+<table cellpadding="6px" border="1px">
+    {% for usersolution in solutions %}
+            <tr>
+                <td>{{ usersolution.userOwner }}</td>
+                <td></td>
+                <td>{{ usersolution.challengeName }} - {{ usersolution.solutionInstance.name }}</td>
+                <td><a href="solutions/{{ usersolution.id }}">Details</a></td>
+            </tr>
+    {% endfor %}
+</table>
+
+{% endblock content %}

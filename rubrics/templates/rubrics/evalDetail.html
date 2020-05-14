@@ -21,7 +21,7 @@
     {% for rubricLine in evaluation %}
 
         <div class="evalField">
-        <h3>{{ rubricLine.learningObjective }}</h3>
+        <h3>{{ rubricLine.learningObjective }} - Evaluator: {{ rubricLine.evaluated.whoEvaluated }} - {{ rubricLine.evaluated.date }}</h3>
         <div class="evalFieldFlexContainer">
             <div class="evalFieldFlexBox"><h4>Evidence Present
             </h4><p>{{  rubricLine.evidencePresent }}</p></div>

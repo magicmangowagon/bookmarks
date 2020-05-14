@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -159,7 +159,7 @@ STATICFILES_DIRS = [
 ]
 
 if DEBUG is True:
-    STATIC_URL = 'shit/'
+    # STATIC_URL = 'shit/'
     STATIC_URL = 'https://' + AWS_S3_CUSTOM_DOMAIN + AWS_LOCATION + '/'
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     # DEFAULT_FILE_STORAGE = STATICFILES_STORAGE

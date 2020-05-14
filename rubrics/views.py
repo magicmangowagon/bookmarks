@@ -19,7 +19,9 @@ from django.contrib.auth.models import User, Group
 from .functions import process_rubricLine, assess_competency_done, custom_rubric_producer, mega_challenge_builder
 from django.core.mail import send_mail
 from .filters import EvalFilter
+from centralDispatch.models import ChallengeStatus
 from centralDispatch.functions import submissionAlert, evaluationCompleted
+from centralDispatch.forms import ChallengeStatusForm, ChallengeStatusFormset
 
 
 class ChallengeCover(DetailView):
@@ -262,8 +264,18 @@ class MegaSubPage(DetailView):
         learningExpos = []
         for challenge in challenges:
             learningExpos.append(LearningExperience.objects.all().filter(challenge=challenge).order_by('index').first())
-        print(len(learningExpos))
+
         context['learningExpos'] = learningExpos
+        if ChallengeStatus.objects.filter(user=self.request.user, challenge__in=challenges).exists():
+            print('status object found')
+            ChallengeStatusFormset = modelformset_factory(ChallengeStatus, extra=0, fields=('user', 'challenge', 'challengeAccepted'))
+            challengeStatusForm = ChallengeStatusFormset(queryset=ChallengeStatus.objects.filter(user=self.request.user, challenge__in=challenges))
+        else:
+            print('creating status object')
+            ChallengeStatusFormset = modelformset_factory(ChallengeStatus, extra=challenges.count(), fields=('user', 'challenge', 'challengeAccepted'))
+            challengeStatusForm = ChallengeStatusFormset(initial=[{'user': self.request.user, 'challenge': challenge.pk} for challenge in challenges],
+                                                         queryset=ChallengeStatus.objects.none())
+        context['challengeStatusForm'] = challengeStatusForm
         return context
 
 
@@ -386,6 +398,19 @@ class RubricFinalFormView(FormView):
         # holds general feedback, and challenge completion level.
         # show slider on formset view for challenge completion level but store in permanently
         # on this page.
+
+
+class TFJHotFixView(ListView):
+    # queryset = UserSolution.objects.all().filter(solutionInstance__name__icontains='Tfj')
+    template_name = 'rubrics/tfj_list.html'
+    context_object_name = 'solutions'
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            queryset = UserSolution.objects.all().filter(solutionInstance__name__icontains='Tfj')
+        else:
+            queryset = None
+        return queryset
 
 
 class RubricFormView(FormView):
