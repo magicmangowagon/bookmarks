@@ -47,7 +47,7 @@ def create_solution_router(sender, **kwargs):
 # Generated on Solution submission. Reviews are manually assigned by admin at the moment
 class AssignmentKeeper(models.Model):
     evaluator = models.ForeignKey(Profile, null=True, on_delete=models.PROTECT, related_name='evaluator', blank=True,
-                                  limit_choices_to=Q(role=2) | Q(role=3))
+                                  limit_choices_to=Q(role=2) | Q(role=3) | Q(role=4))
     coach = models.ForeignKey(Profile, null=True, on_delete=models.PROTECT, related_name='coach', blank=True,
                               limit_choices_to=Q(role=2) | Q(role=3))
     userSolution = models.ForeignKey(UserSolution, blank=True, default='', on_delete=models.CASCADE)
