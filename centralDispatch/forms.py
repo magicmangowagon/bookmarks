@@ -34,7 +34,7 @@ class ChallengeStatusForm(forms.ModelForm):
         fields = ['challengeAccepted', 'user', 'challenge']
 
 
-ChallengeStatusFormset = modelformset_factory(ChallengeStatus, extra=0, fields=('user', 'challenge'))
+ChallengeStatusFormset = modelformset_factory(ChallengeStatus, extra=0, fields=('user', 'challenge', 'challengeAccepted'))
 
 
 SolutionRouterFormset = modelformset_factory(SolutionRouter, extra=0, formset=SolutionRouterForm,

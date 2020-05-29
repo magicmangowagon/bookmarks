@@ -68,17 +68,9 @@ def assess_competency_done(rubricLines):
     return compProgs
 
 
-def custom_rubric_producer(challengeAddendum):
-    return challengeAddendum
-
-
-def mega_challenge_builder(challenge):
-
-    return challenge
-
-
 def get_filenames(path_to_zip):
     with ZipFile(path_to_zip, 'r') as zip:
         return zip.namelist()
 
 
+# def evaluation_initializer():

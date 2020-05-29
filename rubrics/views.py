@@ -16,7 +16,7 @@ from django.urls import reverse
 from django.forms import modelformset_factory
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
-from .functions import process_rubricLine, assess_competency_done, custom_rubric_producer, mega_challenge_builder
+from .functions import process_rubricLine, assess_competency_done
 from django.core.mail import send_mail
 from .filters import EvalFilter
 from centralDispatch.models import ChallengeStatus
@@ -253,30 +253,49 @@ class ChallengeListView(ListView):
         return context
 
 
-class MegaSubPage(DetailView):
+class MegaSubPage(FormView):
     model = MegaChallenge
     template_name = 'rubrics/sub_list.html'
+    form_class = ChallengeStatusFormset
 
     def get_context_data(self, **kwargs):
-        context = super(MegaSubPage, self).get_context_data()
+        context = super(MegaSubPage, self).get_context_data(**kwargs)
         challenges = Challenge.objects.all().filter(megaChallenge=self.kwargs['pk']).order_by('my_order')
         context['challenges'] = challenges
         learningExpos = []
         for challenge in challenges:
             learningExpos.append(LearningExperience.objects.all().filter(challenge=challenge).order_by('index').first())
+            ChallengeStatus.objects.update_or_create(user=self.request.user, challenge=challenge)
 
         context['learningExpos'] = learningExpos
-        if ChallengeStatus.objects.filter(user=self.request.user, challenge__in=challenges).exists():
-            print('status object found')
-            ChallengeStatusFormset = modelformset_factory(ChallengeStatus, extra=0, fields=('user', 'challenge', 'challengeAccepted'))
-            challengeStatusForm = ChallengeStatusFormset(queryset=ChallengeStatus.objects.filter(user=self.request.user, challenge__in=challenges))
-        else:
-            print('creating status object')
-            ChallengeStatusFormset = modelformset_factory(ChallengeStatus, extra=challenges.count(), fields=('user', 'challenge', 'challengeAccepted'))
-            challengeStatusForm = ChallengeStatusFormset(initial=[{'user': self.request.user, 'challenge': challenge.pk} for challenge in challenges],
-                                                         queryset=ChallengeStatus.objects.none())
+        print('status object found')
+        ChallengeStatusFormset = modelformset_factory(ChallengeStatus, extra=0,
+                                                      fields=('user', 'challenge', 'challengeAccepted'),
+                                                      widgets={'user': forms.HiddenInput, 'challenge': forms.HiddenInput})
+        challengeStatusForm = ChallengeStatusFormset(queryset=ChallengeStatus.objects.filter(user=self.request.user, challenge__in=challenges) )
+
         context['challengeStatusForm'] = challengeStatusForm
         return context
+
+    def post(self, request, *args, **kwargs):
+        challenges = Challenge.objects.all().filter(megaChallenge=self.kwargs['pk']).order_by('my_order')
+        learningExpos = []
+        for challenge in challenges:
+            learningExpos.append(LearningExperience.objects.all().filter(challenge=challenge).order_by('index').first())
+
+        if request.method == 'POST':
+            form = ChallengeStatusFormset(request.POST)
+
+            if form.is_valid():
+                form.save()
+
+            else:
+                print(form.errors)
+        else:
+            form = ChallengeStatusFormset()
+
+        context = {'form': form, 'challenges': challenges, 'learningExpos': learningExpos}
+        return render(request, self.get_template_names(), context)
 
 
 class SolutionListView(ListView):

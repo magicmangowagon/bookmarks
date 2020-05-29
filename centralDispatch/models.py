@@ -92,6 +92,9 @@ class ChallengeStatus(models.Model):
     def __str__(self):
         return self.challenge.name + ' ' + self.user.__str__()
 
+   # class Meta:
+       # constraints = (models.UniqueConstraint(fields=['user', 'challenge'], name='unique_challenge_status'),)
+
 
 @receiver(post_save, sender=UserSolution, dispatch_uid=str(UserSolution))
 def create_assignment_tracking_models(sender, **kwargs):
