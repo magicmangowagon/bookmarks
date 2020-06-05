@@ -375,7 +375,7 @@ class RubricFinalFormView(FormView):
                 formset = RubricFormSet(prefix='rFormset', initial=[{'userSolution': userSolution, 'challenge': challenge,
                  'evaluator': self.request.user, 'challengeCompletionLevel': incrementor}], queryset=Rubric.objects.none())
 
-        if self.request.user.profile.role is 3:
+        if self.request.user.profile.role >= 3:
             if CoachReview.objects.filter(userSolution=userSolution).exists():
                 CoachReviewFormset = modelformset_factory(CoachReview, formset=CoachReviewForm, extra=0, fields=(
                     'release', 'userSolution', 'comment'), widgets={'userSolution': forms.HiddenInput, 'comment': forms.HiddenInput})
@@ -397,12 +397,12 @@ class RubricFinalFormView(FormView):
         completionLevelObj = RubricLine.objects.all().filter(student=self.kwargs['pk'])
         userSolution = UserSolution.objects.get(id=self.kwargs['pk'])
 
-        if self.request.user.profile.role is 3:
+        if self.request.user.profile.role >= 3:
             coachForm = CoachReviewFormset(request.POST, prefix='coachRevFormset')
 
         if form.is_valid():
             form.save()
-            if self.request.user.profile.role is 3:
+            if self.request.user.profile.role >= 3:
                 if coachForm.is_valid():
                     coachForm.save()
             process_rubricLine(completionLevelObj)

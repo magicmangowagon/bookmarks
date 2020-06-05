@@ -25,6 +25,7 @@
          {% for form in challengeStatusForm %}
 
             {% if form.challenge.value == challenge.id %}
+                <p>Ready to start?</p>
                 {{ form.challengeAccepted }}
                 {{ form.user }}{{ form.challenge }}
                 {{ form.id }}
