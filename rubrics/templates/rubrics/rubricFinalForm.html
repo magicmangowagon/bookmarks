@@ -33,10 +33,11 @@
     {{ form }}
     {% if request.user.profile.role >= 3 %}
          {{ coachRevFormset.management_form }}
-            <p>{{ coachRevFormset }}</p>
+        <label for="{{ coachRevFormset.release }}" class="bigCheckBox">Release evaluation to the TC? <input type="checkbox" value="{{ coachRevFormset.release }}"> </label>
      {% endif %}
     {% csrf_token %}
-        <p><input type="submit" value="Submit evaluation"></p>
+
+        <p><br><input type="submit" value="Submit evaluation"></p>
     </form>
 
 {% endblock %}

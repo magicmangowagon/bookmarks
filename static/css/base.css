@@ -251,6 +251,27 @@
     padding: 6px;
 }
 
+.bigCheckBox {
+    background-color: unset;
+    color: #000000;
+    font-weight: 800;
+    font-size: 16pt;
+}
+
+.bigCheckBox input {
+    float: unset;
+    margin: 10px;
+    padding: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    vertical-align: middle;
+}
+
+.bigCheckBox input:checked ~ .checkmark {
+    background-color: #00a497;
+}
+
 .rubricField li {
     display: inline-block;
 }

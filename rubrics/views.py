@@ -263,6 +263,8 @@ class MegaSubPage(FormView):
         challenges = Challenge.objects.all().filter(megaChallenge=self.kwargs['pk']).order_by('my_order')
         context['challenges'] = challenges
         learningExpos = []
+
+        # Determine best way to stop non-tc's from generating these models, leave as is for now
         for challenge in challenges:
             learningExpos.append(LearningExperience.objects.all().filter(challenge=challenge).order_by('index').first())
             ChallengeStatus.objects.update_or_create(user=self.request.user, challenge=challenge)
@@ -961,7 +963,7 @@ class EvalDetailView(DetailView):
         context = super(EvalDetailView, self).get_context_data(**kwargs)
         rubric = self.kwargs['pk']
 
-        if UserSolution.objects.filter(evaluated__whoEvaluated__profile__role=3).exists():
+        if UserSolution.objects.filter(coachReview__release=True):
             context['notReady'] = False
         else:
             context['notReady'] = True
@@ -975,11 +977,11 @@ class EvalDetailView(DetailView):
         if self.request.user.profile.role is not 1:
             context['evaluation'] = RubricLine.objects.all().filter(student=rubric)
         else:
-            context['evaluation'] = RubricLine.objects.all().filter(student=rubric, evaluated__whoEvaluated__profile__role=3)
+            context['evaluation'] = RubricLine.objects.all().filter(student=rubric, student__coachReview__release=True)
         context['userRole'] = self.request.user.profile.role
 
         try:
-            context['evalFinalForm'] = Rubric.objects.all().filter(userSolution=rubric, evaluator__profile__role=3).last()
+            context['evalFinalForm'] = Rubric.objects.all().filter(userSolution=rubric, userSolution__coachReview__release=True).last()
             # print(Rubric.objects.get(userSolution=rubric, evaluator__profile__role=3).generalFeedback)
         except:
             context['evalFinalForm'] = 'There was an error'

@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from rubrics.models import UserSolution, Challenge, Evaluated, SolutionInstance, MegaChallenge
 from account.models import Profile
 from django.contrib.auth.models import User
-from .models import SolutionRouter, AssignmentKeeper
+from .models import SolutionRouter, AssignmentKeeper, ChallengeStatus, SolutionStatus
 from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.edit import FormMixin, UpdateView
 from .forms import SolutionRouterForm, AssignmentKeeperForm, SolutionRouterFormset, SolutionRouterFormB, NewSolutionFormset
@@ -11,6 +11,8 @@ from django.forms import BaseModelFormSet, modelformset_factory
 from django import forms
 from django.http import HttpResponseRedirect
 from .functions import submissionAlert, evaluatorAssigned
+from django_tables2 import SingleTableView
+from .tables import SolutionTable
 
 
 # Create your views here.
@@ -93,7 +95,7 @@ class NewSolutionDispatch(FormView):
 
 class AssignedSolutions(ListView):
     template_name = 'rubrics/eval_list.html'
-    queryset = UserSolution.objects.all()
+    queryset = UserSolution.objects.none()
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(AssignedSolutions, self).get_context_data()
@@ -109,16 +111,29 @@ class AssignedSolutions(ListView):
             else:
                 context['userSolutions'] = evaluator
 
-        elif self.request.user.profile.role == 3:
+        elif self.request.user.profile.role >= 3:
             coach = UserSolution.objects.all().filter(assignmentkeeper__coach=self.request.user.profile)
+            topic = UserSolution.objects.all().filter(userOwner__profile__subjectMatter=self.request.user.profile.subjectMatter)
             if UserSolution.objects.all().filter(evaluated__whoEvaluated=self.request.user).exists():
                 pastEvals = UserSolution.objects.all().filter(evaluated__whoEvaluated=self.request.user)
-                context['userSolutions'] = coach | pastEvals
+                context['userSolutions'] = coach | pastEvals | topic
             else:
-                context['userSolutions'] = coach
+                context['userSolutions'] = coach | topic
 
-        elif self.request.user.profile.role == 4:
-            everyone = UserSolution.objects.all()
-            context['userSolutions'] = everyone
+        #elif self.request.user.profile.role == 4:
+        #    everyone = UserSolution.objects.all()
+        #    context['userSolutions'] = everyone
 
+        return context
+
+
+class SolutionTracker(SingleTableView):
+    template_name = 'centralDispatch/solutiontracker.html'
+    model = SolutionStatus
+    table_class = SolutionTable
+    # table_data = ChallengeStatus.objects.all()
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(SolutionTracker, self).get_context_data(**kwargs)
+        context['solutionInstances'] = SolutionInstance.objects.all().order_by('challenge_that_owns_me')
         return context

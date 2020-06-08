@@ -7,7 +7,7 @@
 {% if request.user.profile.role >= 3 %}
 <h1>Evaluations</h1>
 {% endif %}
-
+<p>{{ request.user.profile.subjectMatter }}</p>
     {% if request.user.profile.role == 2 %}
 <h1>Solutions</h1>
 {% endif %}

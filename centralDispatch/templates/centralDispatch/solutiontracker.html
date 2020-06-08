@@ -1,0 +1,49 @@
+
+{% extends "base.html" %}
+{% load django_tables2 %}
+{% block title %}Woodrow Wilson Academy{% endblock %}
+
+{% block content %}
+
+        {% render_table table %}
+        <!--
+        <table border="1px">
+        <tr>
+            <th colspan="3">
+                Challenge Started
+            </th>
+            <th>Solution</th>
+            <th>Submitted</th>
+            <th>Evaluated</th>
+            <th>Coach Reviewed</th>
+            <th>Returned to TC</th>
+            <th>Completed</th>
+        </tr>
+        {% for challengeStatus in object_list %}
+
+            <tr>
+
+                <td>{{ challengeStatus.user.last_name }}, {{ challengeStatus.user.first_name }}</td>
+                <td>{{ challengeStatus.challenge }}</td>
+                <td>{{ challengeStatus.challengeAccepted }}</td>
+
+                {% for solutionStatus in challengeStatus.solutionStatusByInstance.all %}
+
+                        <td>{{ solutionStatus.userSolution.solutionInstance }}</td>
+                        <td>{{ solutionStatus.solutionSubmitted }}
+                        <td>{{ solutionStatus.solutionEvaluated }}</td>
+                        <td>{{ solutionStatus.solutionCoachReviewed }}</td>
+                        <td>{{ solutionStatus.solutionRejected }}</td>
+                        <td>{{ solutionStatus.solutionCompleted }}</td>
+
+                {% endfor %}
+            </tr>
+
+
+
+        {% endfor %}
+         </table>
+
+    -->
+
+{% endblock content %}
