@@ -111,7 +111,7 @@ class AssignedSolutions(ListView):
             else:
                 context['userSolutions'] = evaluator
 
-        elif self.request.user.profile.role >= 3:
+        elif self.request.user.profile.role == 3:
             coach = UserSolution.objects.all().filter(assignmentkeeper__coach=self.request.user.profile)
             topic = UserSolution.objects.all().filter(userOwner__profile__subjectMatter=self.request.user.profile.subjectMatter)
             if UserSolution.objects.all().filter(evaluated__whoEvaluated=self.request.user).exists():
@@ -120,9 +120,9 @@ class AssignedSolutions(ListView):
             else:
                 context['userSolutions'] = coach | topic
 
-        #elif self.request.user.profile.role == 4:
-        #    everyone = UserSolution.objects.all()
-        #    context['userSolutions'] = everyone
+        elif self.request.user.profile.role == 4:
+            everyone = UserSolution.objects.all()
+            context['userSolutions'] = everyone
 
         return context
 
