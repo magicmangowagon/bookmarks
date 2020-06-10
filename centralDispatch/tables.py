@@ -3,10 +3,7 @@ from .models import SolutionStatus
 
 
 class SolutionTable(tables.Table):
-    cs = tables.Column(empty_values=())
-
-    def render_cs(self):
-        challengeStatus = self.con
+    # cs = tables.Column(empty_values=())
 
     class Meta:
         model = SolutionStatus
