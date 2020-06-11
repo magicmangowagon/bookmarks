@@ -441,7 +441,7 @@ class Rubric(models.Model):
 
 class CoachReview(models.Model):
     userSolution = models.ForeignKey(UserSolution, on_delete=models.CASCADE, default='', related_name='coachReview')
-    release = models.BooleanField(default=False)
+    release = models.BooleanField(default=False, verbose_name='Release to TC?')
     comment = models.TextField(blank=True, default='', max_length=None)
     # evaluator = models.ForeignKey(Evaluated, on_delete=models.CASCADE, default='', related_name='evaluator')
 

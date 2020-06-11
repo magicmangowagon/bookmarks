@@ -251,7 +251,7 @@
     padding: 6px;
 }
 
-.bigCheckBox {
+.bigCheckBox label{
     background-color: unset;
     color: #000000;
     font-weight: 800;

@@ -407,6 +407,7 @@ class RubricFinalFormView(FormView):
             if self.request.user.profile.role >= 3:
                 if coachForm.is_valid():
                     coachForm.save()
+                    print('coachReview saved')
             process_rubricLine(completionLevelObj)
             assess_competency_done(completionLevelObj)
             evaluationCompleted(userSolution, self.request.user)
@@ -977,7 +978,7 @@ class EvalDetailView(DetailView):
         if self.request.user.profile.role is not 1:
             context['evaluation'] = RubricLine.objects.all().filter(student=rubric)
         else:
-            context['evaluation'] = RubricLine.objects.all().filter(student=rubric, student__coachReview__release=True)
+            context['evaluation'] = RubricLine.objects.all().filter(student=rubric, evaluated__whoEvaluated__profile__role__gte=3).filter(student__coachReview__release=True)
         context['userRole'] = self.request.user.profile.role
 
         try:
