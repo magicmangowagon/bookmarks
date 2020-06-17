@@ -12,7 +12,7 @@ from django import forms
 from django.http import HttpResponseRedirect
 from .functions import submissionAlert, evaluatorAssigned
 from django_tables2 import SingleTableView
-from .tables import SolutionTable
+from .tables import SolutionTable, ChallengeTable
 
 
 # Create your views here.
@@ -136,4 +136,18 @@ class SolutionTracker(SingleTableView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(SolutionTracker, self).get_context_data(**kwargs)
         context['solutionInstances'] = SolutionInstance.objects.all().order_by('challenge_that_owns_me')
+        # thing = SolutionStatus.objects.filter(challengestatus__solutionStatusByInstance__challengestatus=)
+        return context
+
+
+class ChallengeTracker(SingleTableView):
+    template_name = 'centralDispatch/solutiontracker.html'
+    model = ChallengeStatus
+    table_class = ChallengeTable
+    # table_data = ChallengeStatus.objects.all()
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(ChallengeTracker, self).get_context_data(**kwargs)
+        context['solutionInstances'] = SolutionInstance.objects.all().order_by('challenge_that_owns_me')
+        # thing = SolutionStatus.objects.filter(challengestatus__solutionStatusByInstance__challengestatus=)
         return context

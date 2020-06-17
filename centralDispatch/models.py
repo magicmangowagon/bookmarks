@@ -72,8 +72,8 @@ class SolutionStatus(models.Model):
     solutionCoachReviewed = models.BooleanField(default=False)
     solutionRejected = models.BooleanField(default=False)
     solutionCompleted = models.BooleanField(default=False)
-    userSolution = models.ForeignKey(UserSolution, blank=True, default='', on_delete=models.CASCADE)
-
+    userSolution = models.ForeignKey(UserSolution, null=True, default='', on_delete=models.CASCADE)
+    solutionInstance = models.ForeignKey(SolutionInstance, default='', on_delete=models.PROTECT, null=True)
     returnTo = models.IntegerField(choices=(
         (1, "Evaluator"),
         (2, "Coach"),
@@ -108,6 +108,22 @@ def create_assignment_tracking_models(sender, **kwargs):
         s = SolutionStatus.objects.create(userSolution=kwargs['instance'], solutionSubmitted=True, )
         challengeStatus.solutionStatusByInstance.add(s)
         challengeStatus.save()
+
+
+@receiver(post_save, sender=ChallengeStatus, dispatch_uid=str(ChallengeStatus.challenge) + str(ChallengeStatus.user))
+def create_complete_assignment_tracking_stack(sender, **kwargs):
+    if kwargs.get('created', False):
+
+        for solutionInstance in kwargs['instance'].challenge.solutions.all():
+            print('inside receiver for challenge status')
+            print(SolutionStatus.objects.all().filter(userSolution__solutionInstance=solutionInstance))
+            # No idea what I'm doing here. Just want to check if a solution exists for this instance before
+            # generating a solution status 06/17/2020, highly distracted by non work things...
+            if SolutionStatus.objects.filter(challengestatus__solutionStatusByInstance__in=kwargs['instance']) is False:
+                print('inside existence check')
+                s = SolutionStatus.objects.create(solutionInstance=solutionInstance)
+                kwargs['instance'].solutionStatusByInstance.add(s)
+        kwargs['instance'].save()
 
 
 @receiver(post_save, sender=UserSolution, dispatch_uid=str(UserSolution) + str(datetime.now()))
