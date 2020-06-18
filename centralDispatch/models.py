@@ -80,7 +80,13 @@ class SolutionStatus(models.Model):
     ), null=True, blank=True)
 
     def __str__(self):
-        return self.userSolution.__str__() + ' status'
+        if self.solutionInstance:
+            try:
+                return self.challengestatus_set.first().user.__str__() + ' ' + self.solutionInstance.__str__() + ' status'
+            except:
+                return ' status'
+        else:
+            return self.userSolution.__str__() + ' status'
 
 
 class ChallengeStatus(models.Model):
@@ -101,13 +107,22 @@ def create_assignment_tracking_models(sender, **kwargs):
     if kwargs.get('created', False):
         AssignmentKeeper.objects.create(userSolution=kwargs['instance'], )
         try:
+            print('got challenge status')
             challengeStatus = ChallengeStatus.objects.get(challenge=kwargs['instance'].challengeName, user=kwargs['instance'].userOwner)
         except:
+            print('created challenge status')
             challengeStatus = ChallengeStatus.objects.create(challenge=kwargs['instance'].challengeName, user=kwargs['instance'].userOwner)
 
-        s = SolutionStatus.objects.create(userSolution=kwargs['instance'], solutionSubmitted=True, )
-        challengeStatus.solutionStatusByInstance.add(s)
-        challengeStatus.save()
+        if SolutionStatus.objects.filter(solutionInstance=kwargs['instance'].solutionInstance,
+                                         challengestatus__solutionStatusByInstance__challengestatus__user=kwargs['instance'].userOwner).exists():
+            print('found solution status object' + str(kwargs['instance'].solutionInstance))
+            s = SolutionStatus.objects.get(solutionInstance=kwargs['instance'].solutionInstance,
+                                         challengestatus__solutionStatusByInstance__challengestatus__user=kwargs['instance'].userOwner)
+            s.objects.update(solutionSubmitted=True, userSolution=kwargs['instance'])
+        else:
+            s = SolutionStatus.objects.create(userSolution=kwargs['instance'], solutionSubmitted=True, )
+            challengeStatus.solutionStatusByInstance.add(s)
+            challengeStatus.save()
 
 
 @receiver(post_save, sender=ChallengeStatus, dispatch_uid=str(ChallengeStatus.challenge) + str(ChallengeStatus.user))
@@ -115,11 +130,10 @@ def create_complete_assignment_tracking_stack(sender, **kwargs):
     if kwargs.get('created', False):
 
         for solutionInstance in kwargs['instance'].challenge.solutions.all():
-            print('inside receiver for challenge status')
-            print(SolutionStatus.objects.all().filter(userSolution__solutionInstance=solutionInstance))
+
             # No idea what I'm doing here. Just want to check if a solution exists for this instance before
-            # generating a solution status 06/17/2020, highly distracted by non work things...
-            if SolutionStatus.objects.filter(challengestatus__solutionStatusByInstance__in=kwargs['instance']) is False:
+            # generating a solution status, 06/17/2020, highly distracted by non work things...
+            if SolutionStatus.objects.filter(solutionInstance__usersolution__userOwner=kwargs['instance'].user).exists() is False:
                 print('inside existence check')
                 s = SolutionStatus.objects.create(solutionInstance=solutionInstance)
                 kwargs['instance'].solutionStatusByInstance.add(s)

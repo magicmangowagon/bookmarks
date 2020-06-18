@@ -25,5 +25,6 @@ class ChallengeStatusAdmin(admin.ModelAdmin):
 
 @admin.register(SolutionStatus)
 class SolutionStatusAdmin(admin.ModelAdmin):
-    fields = ['solutionSubmitted', 'solutionEvaluated', 'solutionCoachReviewed', 'solutionRejected', 'solutionCompleted']
+    fields = ['solutionInstance', 'userSolution', 'solutionSubmitted', 'solutionEvaluated', 'solutionCoachReviewed',
+              'solutionRejected', 'returnTo','solutionCompleted']
 
