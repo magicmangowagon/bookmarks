@@ -101,7 +101,6 @@ class ChallengeDetail(FormView):
 
         context['previous'] = relatedLearningExperiences.last().pk
 
-
         if existingSolutions.filter(solutionInstance=thisSolutionInstance).exists():
             thisSolution = existingSolutions.get(solutionInstance=self.kwargs['pk'])
 
