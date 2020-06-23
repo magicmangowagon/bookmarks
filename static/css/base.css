@@ -272,6 +272,30 @@
     background-color: #00a497;
 }
 
+.solutionStatusTable {
+    border-collapse: collapse;
+
+}
+
+.solutionStatusTable tr td {
+    border: 2px solid #00a497;
+    border-radius: 12px;
+    vertical-align: middle;
+    font-weight: 700;
+}
+
+.solutionStatusTable th {
+    background-color: #00a497;
+    padding: 4pt;
+    border: .5px solid white;
+}
+
+.solutionStatusTable th a {
+    color: white;
+    font-size: 14pt;
+}
+
+
 .rubricField li {
     display: inline-block;
 }

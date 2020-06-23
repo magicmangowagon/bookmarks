@@ -8,12 +8,13 @@ class SolutionTable(tables.Table):
     class Meta:
         model = SolutionStatus
 
-        fields = {'userSolution__userOwner__last_name', 'userSolution__userOwner__first_name',  'challengestatus__solutionStatusByInstance__challengestatus__challengeAccepted',
+        fields = {'userSolution__userOwner__last_name', 'userSolution__userOwner__first_name',  'challengestatus__solutionStatusByInstance__challengestatus__challenge', 'challengestatus__solutionStatusByInstance__challengestatus__challengeAccepted',
                   'userSolution__solutionInstance', 'solutionSubmitted', 'solutionEvaluated',
                   'solutionCoachReviewed', 'solutionRejected', 'returnedTo', 'solutionCompleted'}
-        sequence = ('userSolution__userOwner__last_name', 'userSolution__userOwner__first_name',  'challengestatus__solutionStatusByInstance__challengestatus__challengeAccepted',
+        sequence = ('userSolution__userOwner__last_name', 'userSolution__userOwner__first_name', 'challengestatus__solutionStatusByInstance__challengestatus__challenge', 'challengestatus__solutionStatusByInstance__challengestatus__challengeAccepted',
                   'userSolution__solutionInstance', 'solutionSubmitted', 'solutionEvaluated',
                   'solutionCoachReviewed', 'solutionRejected', 'returnedTo', 'solutionCompleted')
+        attrs = {"class": "solutionStatusTable"}
         # solutions = tables.ManyToManyColumn(transform='challengestatus__solutionStatusByInstance__challengestatus')
         # fields = ('user', 'challenge', 'solutions', 'cs')
 

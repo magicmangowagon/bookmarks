@@ -69,7 +69,7 @@ def generateStatus():
                     solutionStatus.solutionEvaluated = True
                 if rubric.evaluator.profile.role >= 3:
                     solutionStatus.solutionCoachReviewed = True
-            rubricLines = RubricLine.objects.filter(userSolution=userSolution, evaluated__whoEvaluated__profile_role=3)
+            rubricLines = RubricLine.objects.filter(student=userSolution, evaluated__whoEvaluated__profile__role=3)
             for rubricLine in rubricLines:
                 if rubricLine.completionLevel < 50:
                     solutionStatus.solutionCompleted = False

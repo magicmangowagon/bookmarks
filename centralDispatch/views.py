@@ -11,7 +11,7 @@ from django.forms import BaseModelFormSet, modelformset_factory
 from django import forms
 from django.http import HttpResponseRedirect
 from .functions import submissionAlert, evaluatorAssigned
-from django_tables2 import SingleTableView
+from django_tables2 import SingleTableView, LazyPaginator
 from .tables import SolutionTable, ChallengeTable
 
 
@@ -131,12 +131,11 @@ class SolutionTracker(SingleTableView):
     template_name = 'centralDispatch/solutiontracker.html'
     model = SolutionStatus
     table_class = SolutionTable
-    # table_data = ChallengeStatus.objects.all()
+    table_pagination = {'per_page': 100}
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(SolutionTracker, self).get_context_data(**kwargs)
         context['solutionInstances'] = SolutionInstance.objects.all().order_by('challenge_that_owns_me')
-        # thing = SolutionStatus.objects.filter(challengestatus__solutionStatusByInstance__challengestatus=)
         return context
 
 
