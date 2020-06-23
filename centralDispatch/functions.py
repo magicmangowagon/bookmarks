@@ -1,5 +1,5 @@
-from rubrics.models import Challenge, UserSolution, SolutionInstance
-from centralDispatch.models import SolutionRouter, AssignmentKeeper
+from rubrics.models import Challenge, UserSolution, SolutionInstance, Rubric, RubricLine
+from centralDispatch.models import SolutionRouter, AssignmentKeeper, SolutionStatus, ChallengeStatus
 from account.models import Profile
 from django.contrib.auth.models import User
 from account.models import Profile
@@ -43,3 +43,37 @@ def evaluationCompleted(userSolution, user):
                   ' has submitted an evaluation for ' + str(userSolution),
                   'noreply@wwgradschool.org', email_recipient, fail_silently=False)
 
+
+# script to call when tracking stack goes live to update old
+# solutions and correctly mark status
+def generateStatus():
+    userSolutions = UserSolution.objects.all()
+
+    for userSolution in userSolutions:
+        if SolutionStatus.objects.filter(userSolution=userSolution).exists():
+
+            solutionStatus = SolutionStatus.objects.get(userSolution=userSolution)
+            if solutionStatus.solutionSubmitted is False:
+                solutionStatus.solutionSubmitted = True
+
+        else:
+            solutionStatus = SolutionStatus.objects.create(userSolution=userSolution,
+                                                           solutionInstance=userSolution.solutionInstance,
+                                                           solutionSubmitted=True)
+
+        if Rubric.objects.filter(userSolution=userSolution):
+            print('found Rubric')
+            rubrics = Rubric.objects.filter(userSolution=userSolution)
+            for rubric in rubrics:
+                if rubric.evaluator.profile.role == 2:
+                    solutionStatus.solutionEvaluated = True
+                if rubric.evaluator.profile.role >= 3:
+                    solutionStatus.solutionCoachReviewed = True
+            rubricLines = RubricLine.objects.filter(userSolution=userSolution, evaluated__whoEvaluated__profile_role=3)
+            for rubricLine in rubricLines:
+                if rubricLine.completionLevel < 50:
+                    solutionStatus.solutionCompleted = False
+                    break
+                else:
+                    solutionStatus.solutionCompleted = True
+        solutionStatus.save()

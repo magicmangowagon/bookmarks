@@ -168,3 +168,20 @@ def update_something_happened(sender, **kwargs):
             sh.save()
 
 
+@receiver(post_save, sender=Rubric, dispatch_uid=str(Rubric) + str(datetime.now()))
+def update_solution_status(sender, **kwargs):
+    if kwargs.get('created', False):
+        try:
+            solutionStatus = SolutionStatus.objects.get(userSolution=kwargs['instance'].userSolution)
+        except SolutionStatus.DoesNotExist:
+            solutionStatus = SolutionStatus.objects.create(userSolution=kwargs['instance'].userSolution,
+                                                           solutionInstance=kwargs['instance'].userSolution.solutionInstance)
+            challengeStatus = ChallengeStatus.objects.get(challenge=kwargs['instance'].challenge, user=kwargs['instance'].userSolution.userOwner)
+            challengeStatus.solutionStatusByInstance.add(solutionStatus)
+            challengeStatus.save()
+        if kwargs['instance'].evaluator.profile.role == 2:
+            solutionStatus.solutionEvaluated = True
+            solutionStatus.save()
+        if kwargs['instance'].evaluator.profile.role == 3:
+            solutionStatus.solutionCoachReviewed = True
+            solutionStatus.save()
