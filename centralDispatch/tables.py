@@ -1,18 +1,23 @@
 import django_tables2 as tables
 from .models import SolutionStatus, ChallengeStatus
 from django.utils.html import mark_safe
+from rubrics.views import SolutionDetailView
 
 
 class SolutionTable(tables.Table):
+    userSolution = tables.Column(linkify={"viewname": "solution-detail", "args": [tables.A("userSolution__pk")]},)
+
+    def render_userSolution(self, value):
+        return value.solutionInstance
 
     class Meta:
         model = SolutionStatus
 
         fields = {'userSolution__userOwner__last_name', 'userSolution__userOwner__first_name',  'challengestatus__solutionStatusByInstance__challengestatus__challenge', 'challengestatus__solutionStatusByInstance__challengestatus__challengeAccepted',
-                  'userSolution__solutionInstance', 'solutionSubmitted', 'solutionEvaluated',
+                  'userSolution', 'solutionSubmitted', 'solutionEvaluated',
                   'solutionCoachReviewed', 'solutionRejected', 'returnedTo', 'solutionCompleted'}
         sequence = ('userSolution__userOwner__last_name', 'userSolution__userOwner__first_name', 'challengestatus__solutionStatusByInstance__challengestatus__challenge', 'challengestatus__solutionStatusByInstance__challengestatus__challengeAccepted',
-                  'userSolution__solutionInstance', 'solutionSubmitted', 'solutionEvaluated',
+                  'userSolution', 'solutionSubmitted', 'solutionEvaluated',
                   'solutionCoachReviewed', 'solutionRejected', 'returnedTo', 'solutionCompleted')
         attrs = {"class": "solutionStatusTable"}
         # solutions = tables.ManyToManyColumn(transform='challengestatus__solutionStatusByInstance__challengestatus')

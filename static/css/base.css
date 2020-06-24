@@ -295,6 +295,57 @@
     font-size: 14pt;
 }
 
+.solutionFilter {
+    display: flex;
+    flex-direction: column;
+    vertical-align: middle;
+}
+
+.trackerFilter {
+    display: flex;
+    flex-direction: column;
+    width: 12%;
+    padding: 0 1pt;
+    border: 1px solid #003469;
+    border-radius: 2pt;
+    height: fit-content;
+    position: sticky;
+    top: 1pt;
+    animation: ease-in-out;
+}
+
+.trackerFilter button {
+    background-color: #003469;
+    color: white;
+    border-radius: 2pt;
+    border: none;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    margin: 2pt 0;
+}
+
+.trackerFilter h3 {
+    margin: 1pt auto;
+    color: #003469;
+}
+
+.trackerFilter label {
+    background-color: unset;
+    color: unset;
+    margin: auto;
+    font-weight: 500;
+    font-family: 'Oswald', sans-serif;
+}
+
+select {
+    font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+}
+
+.trackerFilter .form-group {
+    display: flex;
+    flex-direction: column;
+    vertical-align: middle;
+}
 
 .rubricField li {
     display: inline-block;

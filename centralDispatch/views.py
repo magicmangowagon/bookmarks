@@ -11,8 +11,10 @@ from django.forms import BaseModelFormSet, modelformset_factory
 from django import forms
 from django.http import HttpResponseRedirect
 from .functions import submissionAlert, evaluatorAssigned
-from django_tables2 import SingleTableView, LazyPaginator
+from django_tables2 import SingleTableView, LazyPaginator, SingleTableMixin
 from .tables import SolutionTable, ChallengeTable
+from django_filters.views import FilterView
+from .filters import SolutionTrackerFilter
 
 
 # Create your views here.
@@ -127,14 +129,17 @@ class AssignedSolutions(ListView):
         return context
 
 
-class SolutionTracker(SingleTableView):
+class SolutionTracker(SingleTableMixin, FilterView):
     template_name = 'centralDispatch/solutiontracker.html'
     model = SolutionStatus
     table_class = SolutionTable
     table_pagination = {'per_page': 100}
 
+    filterset_class = SolutionTrackerFilter
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(SolutionTracker, self).get_context_data(**kwargs)
+        context['filter'] = SolutionTrackerFilter
         context['solutionInstances'] = SolutionInstance.objects.all().order_by('challenge_that_owns_me')
         return context
 

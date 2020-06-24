@@ -2,6 +2,9 @@
 window.onscroll = function() {stickyOffset()};
 
 //$("textarea, select, input").change(autoSave);
+//$(document).on("change", ".form-control", function () {
+//  autoGet();
+//});
 // Get the header
 var header = document.getElementById("stuckDiv");
 // notch.
@@ -18,7 +21,19 @@ function stickyOffset() {
     }
 }
 
-function autoSave() {
+function autoGet() {
+
+        $.get(window.location.href, function(data){
+            // Display the returned data in browser
+            $("#result").html(data);
+
+
+    });
+
+
+}
+
+function autoSave(bannerDisplayOn) {
     $.ajax({
         headers: { "X-CSRFToken": getCookie("csrftoken") },
         data: $("form").serialize(),
@@ -26,7 +41,7 @@ function autoSave() {
         url: $(this).attr('action'),
     });
 
-    bannerDisplay();
+
 }
 
 function bannerDisplay() {

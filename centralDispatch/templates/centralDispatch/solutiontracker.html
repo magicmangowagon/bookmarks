@@ -1,49 +1,29 @@
 
 {% extends "base.html" %}
 {% load django_tables2 %}
+{% load render_table from django_tables2 %}
+{% load bootstrap4 %}
+
+
+
 {% block title %}Woodrow Wilson Academy{% endblock %}
 
 {% block content %}
+    <div class="expoWrapper">
 
-        {% render_table table %}
-        <!--
-        <table border="1px">
-        <tr>
-            <th colspan="3">
-                Challenge Started
-            </th>
-            <th>Solution</th>
-            <th>Submitted</th>
-            <th>Evaluated</th>
-            <th>Coach Reviewed</th>
-            <th>Returned to TC</th>
-            <th>Completed</th>
-        </tr>
-        {% for challengeStatus in object_list %}
+    <div class="expoVertWrapper">
+        {% render_table table 'django_tables2/bootstrap.html' %}
+    </div>
 
-            <tr>
+    <div class="trackerFilter">
+    <h3>Filter</h3>
+    {% if filter %}
+        <form action="" method="get" class="solutionFilter">
+            {% bootstrap_form filter.form  %}
+            {% bootstrap_button 'Filter'  %}
+        </form>
+    {% endif %}
 
-                <td>{{ challengeStatus.user.last_name }}, {{ challengeStatus.user.first_name }}</td>
-                <td>{{ challengeStatus.challenge }}</td>
-                <td>{{ challengeStatus.challengeAccepted }}</td>
-
-                {% for solutionStatus in challengeStatus.solutionStatusByInstance.all %}
-
-                        <td>{{ solutionStatus.userSolution.solutionInstance }}</td>
-                        <td>{{ solutionStatus.solutionSubmitted }}
-                        <td>{{ solutionStatus.solutionEvaluated }}</td>
-                        <td>{{ solutionStatus.solutionCoachReviewed }}</td>
-                        <td>{{ solutionStatus.solutionRejected }}</td>
-                        <td>{{ solutionStatus.solutionCompleted }}</td>
-
-                {% endfor %}
-            </tr>
-
-
-
-        {% endfor %}
-         </table>
-
-    -->
-
+</div>
+</div>
 {% endblock content %}

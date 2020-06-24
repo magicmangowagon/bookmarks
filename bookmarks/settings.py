@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_filters',
     'bookmarks.custom_storage',
-    'django_tables2'
+    'django_tables2',
+    'bootstrap4'
 ]
 
 MIDDLEWARE = [
