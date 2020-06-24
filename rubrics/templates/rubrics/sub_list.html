@@ -19,6 +19,7 @@
 
     </a>
     </h2> <div>
+    <!--
     <form action="" method="post" enctype="multipart/form-data">
     {{ challengeStatusForm.management_form }}
 
@@ -32,7 +33,7 @@
             {% endif %}
         {% endfor %}
     {% csrf_token %}
-    </form>
+    </form> -->
     <ul class="challengeListObj">
         {% for learningObjective in challenge.learningObjs.all %}
             <li class="challengeListObj">{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}.
