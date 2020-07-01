@@ -47,7 +47,7 @@ def evaluationCompleted(userSolution, user):
 # script to call when tracking stack goes live to update old
 # solutions and correctly mark status
 def generateStatus():
-    userSolutions = UserSolution.objects.all()
+    userSolutions = UserSolution.objects.all().filter(archived=False)
 
     for userSolution in userSolutions:
         if SolutionStatus.objects.filter(userSolution=userSolution).exists():
@@ -80,6 +80,13 @@ def generateStatus():
 
 
 def GenerateChallengeStatus():
-    solutionStatuses = SolutionStatus.objects.all()
+    tcs = User.objects.all().filter(profile__role=1)
+    challenges = Challenge.objects.all().filter(display=True, solutions__isnull=False)
+    userSolutions = UserSolution.objects.all().filter(archived=False)
+    for userSolution in userSolutions:
+        if ChallengeStatus.objects.filter(user=userSolution.userOwner, challenge=userSolution.challengeName).exists():
+            print('Challenge Status Already Exists')
+        else:
+            ChallengeStatus.objects.create(user=userSolution.userOwner, challenge=userSolution.challengeName)
 
 

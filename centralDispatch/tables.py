@@ -6,21 +6,57 @@ from rubrics.views import SolutionDetailView
 
 class SolutionTable(tables.Table):
     userSolution = tables.Column(linkify={"viewname": "solution-detail", "args": [tables.A("userSolution__pk")]},)
+    tc = tables.Column(accessor='challengestatus', verbose_name='Last Name')
+    challenge = tables.Column(accessor='challengestatus', verbose_name='Challenge')
+    challengeAccepted = tables.BooleanColumn(accessor='challengestatus', verbose_name='Challenge Accepted')
+
+    def render_challengeAccepted(self, value):
+        try:
+            ca = value.all().first().challengeAccepted
+        except:
+            ca = 'Not Found'
+        return ca
+
+    def render_challenge(self, value):
+        try:
+            mc = value.all().first().challenge.megaChallenge.name
+            return mc
+        except:
+            try:
+                mc = self.userSolution.challenge
+            except:
+                mc = 'Not Found'
+            return mc
 
     def render_userSolution(self, value):
-        return value.solutionInstance
+        try:
+            return value.solutionInstance
+        except:
+            return 'Not Found'
+
+    # Pick back up here tomorrow: Need to extend this to find the user/challenge name when there isn't a
+    # challengeStatus
+    def render_tc(self, value):
+        if value.all().first().exists():
+            challenge = value.all().first().user.last_name
+        elif value.all().first():
+            challenge = value.all().first().userSolution.userOwner.last_name
+
+        return challenge
 
     class Meta:
         model = SolutionStatus
 
-        fields = {'userSolution__userOwner__last_name', 'userSolution__userOwner__first_name',
-                  'challengestatus__solutionStatusByInstance__challengestatus__challenge',
-                  'challengestatus__solutionStatusByInstance__challengestatus__challengeAccepted',
+        fields = {'tc',
+                  'userSolution__userOwner__first_name',
+                  'challenge',
+                  'challengeAccepted',
                   'userSolution', 'solutionSubmitted', 'solutionEvaluated',
                   'solutionCoachReviewed', 'solutionRejected', 'returnedTo', 'solutionCompleted'}
-        sequence = ('userSolution__userOwner__last_name', 'userSolution__userOwner__first_name',
-                    'challengestatus__solutionStatusByInstance__challengestatus__challenge',
-                    'challengestatus__solutionStatusByInstance__challengestatus__challengeAccepted',
+        sequence = ('tc',
+                    'userSolution__userOwner__first_name',
+                    'challenge',
+                    'challengeAccepted',
                   'userSolution', 'solutionSubmitted', 'solutionEvaluated',
                   'solutionCoachReviewed', 'solutionRejected', 'returnedTo', 'solutionCompleted')
         attrs = {"class": "solutionStatusTable"}

@@ -314,6 +314,7 @@ class Evaluated(models.Model):
 class UserSolution(models.Model):
     file = models.FileField(upload_to='uploads/', blank=True)
     solution = RichTextField()
+    archived = models.BooleanField(default=False)
     userOwner = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     challengeName = models.ForeignKey(Challenge, blank=True, null=True, on_delete=models.CASCADE)
     solutionInstance = models.ForeignKey(SolutionInstance, null=True, on_delete=models.CASCADE)

@@ -82,7 +82,7 @@ class SolutionStatus(models.Model):
     def __str__(self):
         if self.solutionInstance:
             try:
-                return self.challengestatus_set.first().user.__str__() + ' ' + self.solutionInstance.__str__() + ' status'
+                return self.challengestatus.first().user.__str__() + ' ' + self.solutionInstance.__str__() + ' status'
             except:
                 return ' status'
         else:
@@ -93,7 +93,7 @@ class ChallengeStatus(models.Model):
     challengeAccepted = models.BooleanField(default=False)
     challenge = models.ForeignKey(Challenge, default='', on_delete=models.CASCADE)
     user = models.ForeignKey(User, default='', on_delete=models.CASCADE)
-    solutionStatusByInstance = models.ManyToManyField(SolutionStatus, blank=True, default='')
+    solutionStatusByInstance = models.ManyToManyField(SolutionStatus, blank=True, default='', related_name='challengestatus')
 
     def __str__(self):
         return self.challenge.name + ' ' + self.user.__str__()
@@ -109,7 +109,7 @@ def create_assignment_tracking_models(sender, **kwargs):
         try:
             print('got challenge status')
             challengeStatus = ChallengeStatus.objects.get(challenge=kwargs['instance'].challengeName, user=kwargs['instance'].userOwner)
-        except:
+        except ChallengeStatus.DoesNotExist:
             print('created challenge status')
             challengeStatus = ChallengeStatus.objects.create(challenge=kwargs['instance'].challengeName, user=kwargs['instance'].userOwner)
 
@@ -131,15 +131,16 @@ def create_complete_assignment_tracking_stack(sender, **kwargs):
     if kwargs.get('created', False):
 
         for solutionInstance in kwargs['instance'].challenge.solutions.all():
-            print(kwargs['instance'].challenge.solutions.all())
+
             # No idea what I'm doing here. Just want to check if a solution exists for this instance before
             # generating a solution status, 06/17/2020, highly distracted by non work things...
-            if not kwargs['instance'].solutionStatusByInstance.filter(solutionInstance=solutionInstance).exists():
-            # if not SolutionStatus.objects.filter(solutionInstance__solutionstatus__in=kwargs['instance'].solutionStatusByInstance.all()):
+            if kwargs['instance'].solutionStatusByInstance.filter(solutionInstance=solutionInstance).exists():
+                print('solution status already exists')
+            else:
                 print('inside existence check')
                 s = SolutionStatus.objects.create(solutionInstance=solutionInstance)
                 kwargs['instance'].solutionStatusByInstance.add(s)
-        kwargs['instance'].save()
+                kwargs['instance'].save()
 
 
 @receiver(post_save, sender=UserSolution, dispatch_uid=str(UserSolution) + str(datetime.now()))
