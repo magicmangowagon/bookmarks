@@ -13,10 +13,14 @@ class SolutionTable(tables.Table):
     class Meta:
         model = SolutionStatus
 
-        fields = {'userSolution__userOwner__last_name', 'userSolution__userOwner__first_name',  'challengestatus__solutionStatusByInstance__challengestatus__challenge', 'challengestatus__solutionStatusByInstance__challengestatus__challengeAccepted',
+        fields = {'userSolution__userOwner__last_name', 'userSolution__userOwner__first_name',
+                  'challengestatus__solutionStatusByInstance__challengestatus__challenge',
+                  'challengestatus__solutionStatusByInstance__challengestatus__challengeAccepted',
                   'userSolution', 'solutionSubmitted', 'solutionEvaluated',
                   'solutionCoachReviewed', 'solutionRejected', 'returnedTo', 'solutionCompleted'}
-        sequence = ('userSolution__userOwner__last_name', 'userSolution__userOwner__first_name', 'challengestatus__solutionStatusByInstance__challengestatus__challenge', 'challengestatus__solutionStatusByInstance__challengestatus__challengeAccepted',
+        sequence = ('userSolution__userOwner__last_name', 'userSolution__userOwner__first_name',
+                    'challengestatus__solutionStatusByInstance__challengestatus__challenge',
+                    'challengestatus__solutionStatusByInstance__challengestatus__challengeAccepted',
                   'userSolution', 'solutionSubmitted', 'solutionEvaluated',
                   'solutionCoachReviewed', 'solutionRejected', 'returnedTo', 'solutionCompleted')
         attrs = {"class": "solutionStatusTable"}

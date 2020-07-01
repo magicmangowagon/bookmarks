@@ -266,10 +266,15 @@ class MegaSubPage(FormView):
         # Determine best way to stop non-tc's from generating these models, leave as is for now
         for challenge in challenges:
             learningExpos.append(LearningExperience.objects.all().filter(challenge=challenge).order_by('index').first())
-            ChallengeStatus.objects.update_or_create(user=self.request.user, challenge=challenge)
+            if ChallengeStatus.objects.filter(user=self.request.user, challenge=challenge).exists():
+                print('fart')
+                cs = ChallengeStatus.objects.get(user=self.request.user, challenge=challenge)
+                cs.save()
+            else:
+                ChallengeStatus.objects.create(user=self.request.user, challenge=challenge)
+                print('ChallengeStatus object created')
 
         context['learningExpos'] = learningExpos
-        print('status object found')
         ChallengeStatusFormset = modelformset_factory(ChallengeStatus, extra=0,
                                                       fields=('user', 'challenge', 'challengeAccepted'),
                                                       widgets={'user': forms.HiddenInput, 'challenge': forms.HiddenInput})

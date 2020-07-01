@@ -77,3 +77,9 @@ def generateStatus():
                 else:
                     solutionStatus.solutionCompleted = True
         solutionStatus.save()
+
+
+def GenerateChallengeStatus():
+    solutionStatuses = SolutionStatus.objects.all()
+
+

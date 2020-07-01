@@ -131,10 +131,11 @@ def create_complete_assignment_tracking_stack(sender, **kwargs):
     if kwargs.get('created', False):
 
         for solutionInstance in kwargs['instance'].challenge.solutions.all():
-
+            print(kwargs['instance'].challenge.solutions.all())
             # No idea what I'm doing here. Just want to check if a solution exists for this instance before
             # generating a solution status, 06/17/2020, highly distracted by non work things...
-            if SolutionStatus.objects.filter(solutionInstance__usersolution__userOwner=kwargs['instance'].user).exists() is False:
+            if not kwargs['instance'].solutionStatusByInstance.filter(solutionInstance=solutionInstance).exists():
+            # if not SolutionStatus.objects.filter(solutionInstance__solutionstatus__in=kwargs['instance'].solutionStatusByInstance.all()):
                 print('inside existence check')
                 s = SolutionStatus.objects.create(solutionInstance=solutionInstance)
                 kwargs['instance'].solutionStatusByInstance.add(s)
