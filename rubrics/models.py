@@ -12,6 +12,7 @@ import os
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
+
 # __________________
 # LEARNING OBJECTIVE
 # they are the source of everything. TCs are assessed on mastery of competency that is comprised of Learning Objectives.
@@ -77,6 +78,7 @@ class SolutionInstance(models.Model):
     DESIGN = models.BooleanField(verbose_name='Design', default=False)
     SIMULATE = models.BooleanField(verbose_name='Simulate', default=False)
     IMPLEMENT = models.BooleanField(verbose_name='Implement', default=False)
+    specialized = models.CharField(default='', max_length=20, blank=True)
 
     degreeImplementation = [DESIGN, SIMULATE, IMPLEMENT]
 
@@ -338,6 +340,17 @@ class UserSolution(models.Model):
         else:
             name = self.userOwner.username.__str__() + ' ' + self.challengeName.name.__str__()
         return name
+
+
+# __________
+# TFJ Solution Instance
+# modified solution for Teaching for Justice curriculum
+
+class TfJSolution(models.Model):
+    learningObjectives = models.ManyToManyField(LearningObjective, blank=True)
+    solution = RichTextUploadingField()
+    solutionInstance = models.ForeignKey(SolutionInstance, default='', null=False, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, default='', null=False, on_delete=models.CASCADE)
 
 
 # ___________
