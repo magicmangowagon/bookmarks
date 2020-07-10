@@ -36,13 +36,13 @@ class SolutionTable(tables.Table):
 
     # Pick back up here tomorrow: Need to extend this to find the user/challenge name when there isn't a
     # challengeStatus
-    def render_tc(self, value):
-        if value.all().first().exists():
-            challenge = value.all().first().user.last_name
-        elif value.all().first():
-            challenge = value.all().first().userSolution.userOwner.last_name
+    # def render_tc(self, value):
+    #    if value.all().first().exists():
+    #        challenge = value.all().first().user.last_name
+    #    elif value.all().first():
+    #        challenge = value.all().first().userSolution.userOwner.last_name
 
-        return challenge
+    #    return challenge
 
     class Meta:
         model = SolutionStatus

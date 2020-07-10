@@ -3,7 +3,7 @@ from . import views
 from .views import ChallengeDetail, ChallengeListView, SolutionDetailView, SolutionListView, RubricFormView, \
     EvalDetailView, EvalListView, RubricFinalFormView, CompetencyView, RubricAddendum, PreEvaluationUpdate, \
     LearningExperienceCreator, LearningExperienceView, ChallengeCover, CoachingReviewView, SolutionSectionView, \
-    MegaSubPage, CoachingReviewSession, searchSubmissions, ChallengeResourcesView, TFJHotFixView
+    MegaSubPage, CoachingReviewSession, searchSubmissions, ChallengeResourcesView, TFJHotFixView, SolutionEvaluationView
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
@@ -19,6 +19,7 @@ urlpatterns = [
     path('customRubric/<int:pk>', login_required(RubricAddendum.as_view()), name='custom-eval'),
     path('evals', login_required(EvalListView.as_view()), name='eval-list'),
     path('evals/<int:pk>', login_required(EvalDetailView.as_view()), name='eval-detail'),
+    path('evaluation/<int:pk>', login_required(SolutionEvaluationView.as_view()), name='evaluation-detail'),
     path('solutionEval/end/<int:pk>', login_required(RubricFinalFormView.as_view()), name='solution-end-eval'),
     path('competency', login_required(CompetencyView.as_view()), name='competency-list'),
     path('preevaluation/<int:pk>', login_required(PreEvaluationUpdate.as_view()), name='pre-evaluation'),

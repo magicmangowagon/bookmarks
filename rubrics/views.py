@@ -9,7 +9,7 @@ from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjecti
 from .forms import UserFileForm, UserFileFormset, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, \
     CriterionFormSet, CriteriaForm, CurrentStudentToView, RubricAddendumForm, RubricAddendumFormset, \
     LearningExperienceFormset, LearningExperienceForm, LearningExpoFeedbackForm, LearningExpoFeedbackFormset, \
-    CoachReviewForm, CoachReviewFormset, UserSolutionToView
+    CoachReviewForm, CoachReviewFormset, UserSolutionToView, TfJSolutionSubmissionFormset
 from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
@@ -19,7 +19,7 @@ from django.contrib.auth.models import User, Group
 from .functions import process_rubricLine, assess_competency_done
 from django.core.mail import send_mail
 from .filters import EvalFilter
-from centralDispatch.models import ChallengeStatus
+from centralDispatch.models import ChallengeStatus, SolutionStatus
 from centralDispatch.functions import submissionAlert, evaluationCompleted
 from centralDispatch.forms import ChallengeStatusForm, ChallengeStatusFormset
 
@@ -118,7 +118,6 @@ class ChallengeDetail(FormView):
                 user=self.request.user, learningExperience__challenge=thisChallenge))
 
         else:
-
             UserFileFormset = modelformset_factory(UserSolution, extra=1, formset=UserFileForm, fields=('userOwner', 'challengeName', 'solution', 'solutionInstance',
             'goodTitle', 'workFit', 'proudDetail', 'hardDetail', 'objectiveWell', 'objectivePoor', 'personalLearningObjective', 'helpfulLearningExp',
             'notHelpfulLearningExp', 'changeLearningExp', 'notIncludedLearningExp'),
@@ -166,6 +165,11 @@ class ChallengeDetail(FormView):
         return render(request, self.get_template_names(), context)
 
 
+class TfJSolutionSubmissionView(FormView):
+    form_class = TfJSolutionSubmissionFormset
+    template_name = ''
+
+
 class SolutionSectionView(DetailView):
     template_name = 'rubrics/solution_sections.html'
     model = Challenge
@@ -186,7 +190,7 @@ class SolutionSectionView(DetailView):
 
         # field_value = getattr(obj, field_name)
         for solution in solutions:
-            print(getattr(solution, 'DESIGN'))
+
             context['degree'] = [(solution.DESIGN, 'Design', solution.name),
                                  (solution.SIMULATE, 'Simulate', solution.name),
                                  (solution.IMPLEMENT, 'Implement', solution.name)]
@@ -219,7 +223,8 @@ class SolutionDetailView(DetailView):
 
         otherLOinstances = []
         theseLearningObjectives = LearningObjective.objects.all().filter(challenge=thisChallenge)
-        usersRubricLines = RubricLine.objects.all().filter(student__userOwner=thisSolution.userOwner)
+        usersRubricLines = RubricLine.objects.all().filter(student__userOwner=thisSolution.userOwner).filter(
+            evaluated__whoEvaluated__profile__role__gte=3)
 
         for learningObjective in theseLearningObjectives:
             for rubricLine in usersRubricLines:
@@ -483,7 +488,7 @@ class RubricFormView(FormView):
         context['count'] = criteriaLength
 
         if RubricLine.objects.filter(student=thisUserSolution).filter(evaluated__whoEvaluated=self.request.user).exists():
-            print('You previously evaluated this' + str(lo_list))
+
             RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=0, fields=(
                 'ignore', 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel',
                 'student', 'needsLaterAttention'), widgets={'student': forms.HiddenInput,
@@ -565,7 +570,7 @@ class RubricFormView(FormView):
 
         userSolution = UserSolution.objects.get(pk=self.kwargs['pk'])
 
-        print(critFormset.errors)
+        # print(critFormset.errors)
         if formset.is_valid() and critFormset.is_valid():
             evaluated = Evaluated.objects.create(whoEvaluated=self.request.user)
             userSolution.evaluated.add(evaluated)
@@ -589,6 +594,237 @@ class RubricFormView(FormView):
             challenge = UserSolution.objects.get(pk=self.kwargs['pk']).challengeName
             student = userSolution.userOwner
             content = {'formset': formset, 'critFormset': critFormset, 'challenge': challenge, 'student': student}
+            return render(request, 'rubrics/rubric_form.html', content)
+            # return self.render_to_response(self.get_context_data(formset=formset))
+
+
+# ________
+# Updated Evaluation Page
+# Need to test with SolutionStatus set to return to
+# Check that updated rubricLines from self are shown, but only the latest
+class SolutionEvaluationView(FormView):
+    template_name = 'rubrics/rubric_form.html'
+    model = UserSolution
+    form_class = RubricLineFormset
+
+    def get_context_data(self, **kwargs):
+        context = super(SolutionEvaluationView, self).get_context_data()
+
+        userSolution = UserSolution.objects.get(pk=self.kwargs['pk'])
+
+        if userSolution.customized:
+            challenge = ChallengeAddendum.objects.get(userSolution=userSolution)
+            lo_list = LearningObjective.objects.filter(challengeaddendum=challenge).order_by('compGroup', 'compNumber',
+                                                                                             'loNumber')
+        else:
+            challenge = userSolution.solutionInstance
+            lo_list = LearningObjective.objects.filter(solutioninstance=challenge).order_by('compGroup', 'compNumber',
+                                                                                            'loNumber')
+        context['lo_list'] = lo_list
+        context['student'] = userSolution
+        context['usersolution'] = userSolution
+
+        try:
+            context['challenge'] = challenge.challenge_that_owns_me.all().first
+        except:
+            context['challenge'] = challenge
+
+        context['solutionInstance'] = userSolution.solutionInstance
+        loCount = len(lo_list)
+
+        context['userRole'] = self.request.user.profile.role
+
+        # The idea: Run through the list of learning objectives attached to this challenge and add criterion
+        # to contextual list if they match one of the learning objectives.
+        neededCriteria = Criterion.objects.filter(learningObj__in=lo_list)
+        criteriaLength = len(neededCriteria)
+
+        # edit view, checks for rubricLine objects from this challenge
+        # and sets the formset query to that instance
+        context['criteria'] = neededCriteria
+        context['count'] = criteriaLength
+
+        RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=loCount, fields=(
+            'ignore', 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions',
+            'completionLevel',
+            'student', 'needsLaterAttention'), widgets={'student': forms.HiddenInput,
+                                                        'completionLevel': forms.HiddenInput(),
+                                                        'ignore': forms.HiddenInput(),
+                                                        'needsLaterAttention': forms.HiddenInput()})
+
+        CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, extra=criteriaLength, fields=(
+            'achievement', 'criteria', 'userSolution'), widgets={'criteria': forms.HiddenInput,
+                                                                 'userSolution': forms.HiddenInput,
+                                                                 'evaluator': forms.HiddenInput})
+
+        RubricFormSet = modelformset_factory(Rubric, extra=1, formset=RubricForm, fields=(
+            'userSolution', 'challenge', 'evaluator', 'generalFeedback', 'challengeCompletionLevel',),
+                                             widgets={'userSolution': forms.HiddenInput, 'challenge': forms.HiddenInput,
+                                                      'evaluator': forms.HiddenInput,
+                                                      'challengeCompletionLevel': forms.HiddenInput})
+
+        if RubricLine.objects.filter(student=userSolution).filter(
+                evaluated__whoEvaluated=self.request.user).exists():
+            print('found old eval')
+            if SolutionStatus.objects.filter(userSolution=userSolution):
+                print('status object found')
+                solutionStatus = SolutionStatus.objects.get(userSolution=userSolution)
+                if solutionStatus.returnTo == self.request.user:
+                    print('returned to evaluator')
+                    rubricLines = RubricLine.objects.filter(userSolution=userSolution).latest().distinct()
+                    criteriaLines = CriteriaLine.objects.all().filter(userSolution=userSolution).latest().distinct()
+                    rubric = Rubric.objects.filter(userSolution=userSolution).latest()
+                    formset = RubricLineFormset(prefix='rubriclines',
+                                                initial=[{'learningObjective': rubricLine.learningObjective,
+                                                          'student': rubricLine.student,
+                                                          'evidencePresent': rubricLine.evidencePresent,
+                                                          'evidenceMissing': rubricLine.evidenceMissing,
+                                                          'feedback': rubricLine.feedback,
+                                                          'suggestions': rubricLine.suggestions,
+                                                          'completionLevel': rubricLine.completionLevel,
+                                                          'needsLaterAttention': rubricLine.needsLaterAttention,
+                                                          'ignore': rubricLine.ignore
+                                                          } for rubricLine in rubricLines],
+                                                queryset=RubricLine.objects.none())
+
+                    critFormset = CriterionFormSet(prefix='criteria',
+                                                   initial=[{'userSolution': criteriaLine.userSolution,
+                                                             'criteria': criteriaLine.criteria,
+                                                             'achievement': criteriaLine.achievement} for
+                                                            criteriaLine in criteriaLines],
+                                                   queryset=CriteriaLine.objects.none())
+
+                    rubricFormset = RubricFormSet(prefix='rFormset',
+                                                  queryset=Rubric.objects.none(), initial={'userSolution': rubric.userSolution,
+                                                                                           'challenge': rubric.challenge,
+                                                                                           'evaluator': self.request.user,
+                                                                                           'generalFeedback': rubric.generalFeedback,
+                                                                                           'challengeCompletionLevel': rubric.challengeCompletionLevel})
+
+            else:
+                print('Eval unchanged')
+                rubricLines = RubricLine.objects.all().filter(userSolution=userSolution,
+                                                              evaluated__whoEvaluated=self.request.user).latest().distinct()
+                criteriaLines = CriteriaLine.objects.all().filter(userSolution=userSolution,
+                                                                  evaluated__whoEvaluated=self.request.user).latest().distinct()
+                rubric = Rubric.objects.get(userSolution=userSolution, evaluator=self.request.user).latest()
+                formset = RubricLineFormset(prefix='rubriclines',
+                                            initial=[{'learningObjective': rubricLine.learningObjective,
+                                                      'student': rubricLine.student,
+                                                      'evidencePresent': rubricLine.evidencePresent,
+                                                      'evidenceMissing': rubricLine.evidenceMissing,
+                                                      'feedback': rubricLine.feedback,
+                                                      'suggestions': rubricLine.suggestions,
+                                                      'completionLevel': rubricLine.completionLevel,
+                                                      'needsLaterAttention': rubricLine.needsLaterAttention,
+                                                      'ignore': rubricLine.ignore
+                                                      } for rubricLine in rubricLines],
+                                            queryset=RubricLine.objects.none())
+
+                critFormset = CriterionFormSet(prefix='criteria',
+                                               initial=[{'userSolution': criteriaLine.userSolution,
+                                                         'criteria': criteriaLine.criteria,
+                                                         'achievement': criteriaLine.achievement} for
+                                                        criteriaLine in criteriaLines],
+                                               queryset=CriteriaLine.objects.none())
+
+                rubricFormset = RubricFormSet(prefix='rFormset',
+                                              queryset=Rubric.objects.none(),
+                                              initial={'userSolution': rubric.userSolution,
+                                                       'challenge': rubric.challenge,
+                                                       'evaluator': self.request.user,
+                                                       'generalFeedback': rubric.generalFeedback,
+                                                       'challengeCompletionLevel': rubric.challengeCompletionLevel})
+
+        # if challenge has been flagged for customization
+        # reroute it to this function to apply the corrected learning
+        # objectives and return it to the view
+        elif userSolution.customized is True:
+            print('Customized Eval')
+            # evaluated = Evaluated(whoEvaluated=self.request.user)
+            challenge = ChallengeAddendum.objects.get(userSolution=userSolution)
+            lo_list = LearningObjective.objects.filter(challengeaddendum=challenge).order_by('compGroup', 'compNumber',
+                                                                                             'loNumber', )
+            neededCriteria = Criterion.objects.filter(learningObj__in=lo_list)
+            context['criteria'] = neededCriteria
+            print('lo_list ' + str(len(lo_list)))
+            print('needCriteria ' + str(len(neededCriteria)))
+
+            formset = RubricLineFormset(prefix='rubriclines',
+                                        initial=[{'learningObjective': learningObjective.pk, 'student': learningObjective
+                                                  } for learningObjective in lo_list],
+                                        queryset=RubricLine.objects.none())
+
+
+            critFormset = CriterionFormSet(prefix='criteria',
+                                           initial=[{'userSolution': userSolution, 'criteria': criterion, } for
+                                                    criterion in neededCriteria], queryset=CriteriaLine.objects.none())
+
+            rubricFormset = RubricFormSet(prefix='rFormset',
+                                          queryset=Rubric.objects.none())
+            # custom_rubric_producer(ChallengeAddendum.objects.get(challenge=thisUserSolution))
+
+        # create new rubric, checked for rubricline objects from this challenge
+        # and none existed, so queryset is none and extra forms is set to LO count
+        else:
+            print('New Eval')
+            formset = RubricLineFormset(prefix='rubriclines',
+                                        initial=[
+                                            {'learningObjective': learningObjective.pk, 'student': userSolution} for
+                                            learningObjective in
+                                            lo_list], queryset=RubricLine.objects.none())
+
+            critFormset = CriterionFormSet(prefix='criteria',
+                                           initial=[{'userSolution': userSolution, 'criteria': criterion} for
+                                                    criterion in neededCriteria],
+                                           queryset=CriteriaLine.objects.none())
+            print(userSolution)
+            print(userSolution.challengeName)
+            print(self.request.user)
+            rubricFormset = RubricFormSet(prefix='rFormset',
+                                          queryset=Rubric.objects.none(),
+                                          initial=[{'userSolution': userSolution,
+                                                   'challenge': userSolution.challengeName,
+                                                   'evaluator': self.request.user}])
+
+        context['formset'] = formset
+        context['critFormset'] = critFormset
+        context['rubricFormset'] = rubricFormset
+        return context
+
+    def post(self, request, *args, **kwargs):
+        formset = RubricLineFormset(request.POST, prefix='rubriclines')
+        critFormset = CriterionFormSet(request.POST, prefix='criteria')
+        rubricFormset = RubricFormSet(request.POST, prefix='rFormset')
+
+        userSolution = UserSolution.objects.get(pk=self.kwargs['pk'])
+
+        # print(critFormset.errors)
+        if formset.is_valid() and critFormset.is_valid() and rubricFormset.is_valid():
+            evaluated = Evaluated.objects.create(whoEvaluated=self.request.user)
+            userSolution.evaluated.add(evaluated)
+
+            for form in formset:
+                f = form.save(commit=False)
+                f.evaluated = evaluated
+                f.save()
+            for critForm in critFormset:
+                c = critForm.save(commit=False)
+                c.evaluator = evaluated
+                c.save()
+            rubricFormset.save()
+            userSolution.save()
+            formset.save()
+            critFormset.save()
+
+            return HttpResponseRedirect('/evals')
+
+        else:
+            messages.error(request, "Error")
+            challenge = UserSolution.objects.get(pk=self.kwargs['pk']).challengeName
+            student = userSolution.userOwner
+            content = {'formset': formset, 'critFormset': critFormset, 'challenge': challenge,
+                       'student': student, 'rubricFormset': rubricFormset}
             return render(request, 'rubrics/rubric_form.html', content)
             # return self.render_to_response(self.get_context_data(formset=formset))
 

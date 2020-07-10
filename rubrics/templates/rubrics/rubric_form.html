@@ -118,11 +118,18 @@ Evaluate a Challenge
         {% endfor %}
 
         </div>
+    <div class="rubricField">
+    {{ rubricFormset.management_form }}
+        {% for form in rubricFormset %}
 
+        {{ form }}
+            {{ form.id }}
+        {% endfor %}
+    </div>
         {% csrf_token %}
 
 
-        <p><input type="submit" value="Next"></p>
+        <p><input type="submit" value="Submit evaluation"></p>
     </form>
 
     <div class="vertSliderContainer">
