@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ challenge.name }}
+{% endblock %}
+
+{% block content %}
+
+<h1>{{ challenge }}</h1>
+    <p>
+        <input type="button" onclick='window.location.href="/learningExperience/{{ previous }}";' value="Previous">
+    </p>
+    <br/>
+<h2>Learning Objectives</h2>
+    <ul class="challengeListObj">
+        {% for learningObjective in learningObjectives_list %}
+                <li class="challengeListObj"><strong>{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}
+                    .{{ learningObjective.loNumber }}</strong>
+                {{ learningObjective.name }}</li>
+        {% endfor %}
+    </ul>
+    <p>Tags:</p>
+    <ul class="challengeListObj">
+        {% for tag in challenge.tags.all %}
+            <li class="challengeListObj">{{ tag.name }}</li>
+        {% endfor %}
+    </ul>
+<div>
+        <h2>Solution</h2>
+        <p>Provide a link or set of links to your solution.
+            <br>You may also enter it directly into this field if you wish.</p>
+        <form action="" method="post" enctype="multipart/form-data">
+                {{ form.management_form }}
+                {{ form }}
+
+
+
+            <input type="submit" value="Upload Solution">
+        {% csrf_token %}
+
+        </form>
+
+</div>
+
+{% endblock %}

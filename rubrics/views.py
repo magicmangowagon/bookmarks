@@ -167,7 +167,12 @@ class ChallengeDetail(FormView):
 
 class TfJSolutionSubmissionView(FormView):
     form_class = TfJSolutionSubmissionFormset
-    template_name = ''
+    template_name = 'rubrics/tfj_upload.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(TfJSolutionSubmissionView, self).get_context_data(**kwargs)
+        context['form'] = TfJSolutionSubmissionFormset
+        return context
 
 
 class SolutionSectionView(DetailView):
