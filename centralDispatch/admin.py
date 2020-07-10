@@ -27,5 +27,5 @@ class ChallengeStatusAdmin(admin.ModelAdmin):
 class SolutionStatusAdmin(admin.ModelAdmin):
     list_display = ['solutionInstance', ]
     fields = ['solutionInstance', 'userSolution', 'solutionSubmitted', 'solutionEvaluated', 'solutionCoachReviewed',
-              'solutionRejected', 'returnTo','solutionCompleted']
+              'solutionRejected', 'returnTo', 'solutionCompleted']
 

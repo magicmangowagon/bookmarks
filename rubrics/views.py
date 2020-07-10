@@ -634,16 +634,14 @@ class SolutionEvaluationView(FormView):
 
         context['userRole'] = self.request.user.profile.role
 
-        # The idea: Run through the list of learning objectives attached to this challenge and add criterion
-        # to contextual list if they match one of the learning objectives.
         neededCriteria = Criterion.objects.filter(learningObj__in=lo_list)
         criteriaLength = len(neededCriteria)
 
-        # edit view, checks for rubricLine objects from this challenge
-        # and sets the formset query to that instance
         context['criteria'] = neededCriteria
         context['count'] = criteriaLength
 
+        # Set up each formset, always create new ones initialized based on conditions
+        # delineated below
         RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=loCount, fields=(
             'ignore', 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions',
             'completionLevel',
@@ -663,17 +661,33 @@ class SolutionEvaluationView(FormView):
                                                       'evaluator': forms.HiddenInput,
                                                       'challengeCompletionLevel': forms.HiddenInput})
 
-        if RubricLine.objects.filter(student=userSolution).filter(
-                evaluated__whoEvaluated=self.request.user).exists():
+        # Need a more thorough check of status of solution, initial return to should populate with coaches feedback.
+        # After that do we lock the eval? Allow the Evaluator to continue editing until a coach looks at it again?
+        if RubricLine.objects.filter(student=userSolution).exists():
             print('found old eval')
             if SolutionStatus.objects.filter(userSolution=userSolution):
                 print('status object found')
                 solutionStatus = SolutionStatus.objects.get(userSolution=userSolution)
                 if solutionStatus.returnTo == self.request.user:
                     print('returned to evaluator')
-                    rubricLines = RubricLine.objects.filter(userSolution=userSolution).latest().distinct()
-                    criteriaLines = CriteriaLine.objects.all().filter(userSolution=userSolution).latest().distinct()
-                    rubric = Rubric.objects.filter(userSolution=userSolution).latest()
+                    rubricLines = RubricLine.objects.filter(
+                        learningObjective__in=userSolution.solutionInstance.learningObjectives.all()).order_by('learningObjective').distinct('learningObjective')
+                    criteriaLines = CriteriaLine.objects.all().filter(userSolution=userSolution).order_by('criteria').distinct('criteria')
+                    try:
+                        rubric = Rubric.objects.filter(userSolution=userSolution, evaluator=self.request.user).last()
+                        rubricFormset = RubricFormSet(prefix='rFormset',
+                                                      queryset=Rubric.objects.none(),
+                                                      initial=[{'userSolution': rubric.userSolution,
+                                                               'challenge': rubric.challenge,
+                                                               'evaluator': self.request.user,
+                                                               'generalFeedback': rubric.generalFeedback}])
+                    except:
+                        rubricFormset = RubricFormSet(prefix='rFormset',
+                                                      queryset=Rubric.objects.none(),
+                                                      initial=[{'userSolution': userSolution,
+                                                               'challenge': userSolution.challengeName,
+                                                               'evaluator': self.request.user}])
+
                     formset = RubricLineFormset(prefix='rubriclines',
                                                 initial=[{'learningObjective': rubricLine.learningObjective,
                                                           'student': rubricLine.student,
@@ -694,14 +708,14 @@ class SolutionEvaluationView(FormView):
                                                             criteriaLine in criteriaLines],
                                                    queryset=CriteriaLine.objects.none())
 
-                    rubricFormset = RubricFormSet(prefix='rFormset',
-                                                  queryset=Rubric.objects.none(), initial={'userSolution': rubric.userSolution,
-                                                                                           'challenge': rubric.challenge,
-                                                                                           'evaluator': self.request.user,
-                                                                                           'generalFeedback': rubric.generalFeedback,
-                                                                                           'challengeCompletionLevel': rubric.challengeCompletionLevel})
 
-            else:
+                else:
+                    print('Not for you')
+                    formset = 'Not Authorized'
+                    critFormset = 'Not Authorized'
+                    rubricFormset = 'Not Authorized'
+
+            elif RubricLine.objects.filter.filter(evaluated__whoEvaluated=self.request.user, userSolution=userSolution).exists():
                 print('Eval unchanged')
                 rubricLines = RubricLine.objects.all().filter(userSolution=userSolution,
                                                               evaluated__whoEvaluated=self.request.user).latest().distinct()
@@ -735,6 +749,7 @@ class SolutionEvaluationView(FormView):
                                                        'evaluator': self.request.user,
                                                        'generalFeedback': rubric.generalFeedback,
                                                        'challengeCompletionLevel': rubric.challengeCompletionLevel})
+
 
         # if challenge has been flagged for customization
         # reroute it to this function to apply the corrected learning
