@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 from .models import LearningObjective, Rubric, Criterion, Competency, Challenge, UserSolution, RubricLine, CriteriaLine, \
     CompetencyProgress, ChallengeAddendum, LearningExperience, LearningExpoResponses, Evaluated, SolutionInstance, \
-    MegaChallenge, CoachReview, ChallengeSolutionJunction, ChallengeResources, ChallengeResourcesFile
+    MegaChallenge, CoachReview, ChallengeSolutionJunction, ChallengeResources, ChallengeResourcesFile, TfJSolution, TfJEval
 
 
 class CriteriaInline(admin.TabularInline):
@@ -65,6 +65,17 @@ class ChallengeResourceFileInline(SortableInlineAdminMixin, admin.TabularInline)
 class UserSolution(admin.ModelAdmin):
     list_display = ['pk', 'userOwner', 'challengeName', 'solutionInstance', 'customized']
     pass
+
+
+@admin.register(TfJSolution)
+class TfJSolutionAdmin(admin.ModelAdmin):
+    list_display = ('solutionInstance', 'solution', 'user')
+    filter_horizontal = ('learningObjectives',)
+
+
+@admin.register(TfJEval)
+class TfJEvalAdmin(admin.ModelAdmin):
+    list_display = ('learningObjective', 'userSolution')
 
 
 @admin.register(Evaluated)

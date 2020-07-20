@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ usersolution.userowner }}
+{% endblock %}
+
+{% block content %}
+
+    <h1>{{ usersolution.solutionInstance }}</h1>
+<p>Submitted by {{ usersolution.user.first_name }} {{ usersolution.user.last_name }}</p>
+
+     <form action=""  method="POST" enctype="multipart/form-data" id="post_form">
+
+    {{ formset.management_form }}
+      <div class="rubricField">
+         {% for form in formset %}
+            <h3>{{ form.learningObjective.initial }}</h3>
+             <ul>{{ form.userSolution }}<span style="display: none"> {{ form.learningObjective }} </span>
+                <li>
+                    <label>{{ form.question1.label }}</label>
+                    {{ form.question1 }}
+                </li>
+             <li>
+                    <label>{{ form.question2.label }}</label>
+                    {{ form.question2 }}
+                </li>
+             <li>
+                    <label>{{ form.question3.label }}</label>
+                    {{ form.question3 }}
+                </li>
+             <li>
+                    <label>{{ form.question4.label }}</label>
+                    {{ form.question4 }}
+                </li>
+             <li>
+                    <label>{{ form.question5.label }}</label>
+                    {{ form.question5 }}
+                </li>
+             </ul>
+         {% endfor %}
+      </div>
+    {% csrf_token %}
+
+        <p><br><input type="submit" value="Submit evaluation"></p>
+    </form>
+
+{% endblock %}

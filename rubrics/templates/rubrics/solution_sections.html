@@ -11,9 +11,15 @@
 
     <div class="solution-content-box">
         <h2 id="{{ solution.id }}">
-            <a href="/challenge/{{ solution.id }}">
+            {% if solution.specialized %}
+                <a href="/tfjsolution/{{ solution.id }}">
                 {{ solution.name }}
-            </a>
+                </a>
+            {% else %}
+                <a href="/challenge/{{ solution.id }}">
+                {{ solution.name }}
+                </a>
+            {% endif %}
         </h2>
         <ul class="challengeListObj">
         {% for learningObjective in solution.learningObjectives.all %}

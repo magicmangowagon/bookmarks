@@ -5,11 +5,12 @@ from django.http import HttpResponseRedirect, HttpResponseForbidden, JsonRespons
 from centralDispatch.models import SolutionRouter
 from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion, CriteriaLine, \
     Competency, CompetencyProgress, ChallengeAddendum, LearningExperience, LearningExpoResponses, Evaluated, \
-    CoachReview, SolutionInstance, MegaChallenge, ChallengeResources, ChallengeResourcesFile
+    CoachReview, SolutionInstance, MegaChallenge, ChallengeResources, ChallengeResourcesFile, TfJEval, TfJSolution
 from .forms import UserFileForm, UserFileFormset, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, \
     CriterionFormSet, CriteriaForm, CurrentStudentToView, RubricAddendumForm, RubricAddendumFormset, \
     LearningExperienceFormset, LearningExperienceForm, LearningExpoFeedbackForm, LearningExpoFeedbackFormset, \
-    CoachReviewForm, CoachReviewFormset, UserSolutionToView, TfJSolutionSubmissionFormset
+    CoachReviewForm, CoachReviewFormset, UserSolutionToView, TfJSolutionSubmissionFormset, TfJEvalFormset, TfJEvalForm, \
+    TfJForm
 from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.edit import FormMixin
 from django.urls import reverse
@@ -167,24 +168,63 @@ class ChallengeDetail(FormView):
 
 class TfJSolutionSubmissionView(FormView):
     form_class = TfJSolutionSubmissionFormset
+    model = SolutionInstance
     template_name = 'rubrics/tfj_upload.html'
 
     def get_context_data(self, **kwargs):
         context = super(TfJSolutionSubmissionView, self).get_context_data(**kwargs)
-        context['form'] = TfJSolutionSubmissionFormset
+        TfJSolutionSubmissionFormset = modelformset_factory(TfJSolution, extra=1, formset=TfJForm, fields=('solution', 'learningObjectives'), )
+        formset = TfJSolutionSubmissionFormset(initial={'solutionInstance': self.kwargs['pk']})
+
+        context['form'] = formset
         return context
+
+
+class TfJEvaluation(FormView):
+    model = TfJSolution
+    form_class = TfJEvalFormset
+    template_name = 'rubrics/tfjeval.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(TfJEvaluation, self).get_context_data(**kwargs)
+        solution = TfJSolution.objects.get(pk=self.kwargs['pk'])
+
+        TfJEvalFormset = modelformset_factory(TfJEval, formset=TfJEvalForm,
+                                       extra=solution.learningObjectives.all().count(), fields=
+                                       ('learningObjective', 'userSolution', 'question1', 'question2', 'question3',
+                                        'question4', 'question5'),
+                                       widgets={'userSolution': forms.HiddenInput() })
+
+        formset = TfJEvalFormset(initial=[{'learningObjective': learningObjective, 'userSolution': solution}
+                                          for learningObjective in solution.learningObjectives.all()])
+        context['formset'] = formset
+        context['usersolution'] = solution
+        return context
+
+    def post(self, request, *args, **kwargs):
+        if request.method == 'POST':
+            formset = TfJEvalFormset(request.POST)
+
+            if formset.is_valid():
+                evaluator = Evaluated.objects.create(whoEvaluated=self.request.user)
+                # evaluator.save()
+                # evaluator = Evaluated.objects.create(whoEvaluated=self.request.user)
+                print(evaluator)
+                for form in formset:
+                    f = form.save(commit=False)
+                    f.evaluator = evaluator
+                    form.save()
+                formset.save()
+                return HttpResponseRedirect('/evals')
+            else:
+                print(formset.errors)
+                # evaluator.delete()
+                return self.render_to_response(self.get_context_data(formset=formset))
 
 
 class SolutionSectionView(DetailView):
     template_name = 'rubrics/solution_sections.html'
     model = Challenge
-    # context_object_name = 'solutions'
-
-    '''
-    def get_queryset(self):
-        queryset = SolutionInstance.objects.all().filter(challenge_that_owns_me=self.kwargs['pk'])
-        return queryset
-    '''
 
     def get_context_data(self, **kwargs):
         context = super(SolutionSectionView, self).get_context_data(**kwargs)

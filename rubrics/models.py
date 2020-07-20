@@ -353,6 +353,25 @@ class TfJSolution(models.Model):
     user = models.ForeignKey(User, default='', null=False, on_delete=models.CASCADE)
 
 
+class TfJQuestionField(models.Model):
+    question = models.CharField(default='', blank=False, max_length=1000)
+    response = RichTextUploadingField()
+
+
+class TfJEval(models.Model):
+    learningObjective = models.ForeignKey(LearningObjective, default='', null=False, on_delete=models.CASCADE)
+    userSolution = models.ForeignKey(TfJSolution, blank=True, default='', on_delete=models.CASCADE)
+    # question = models.ManyToManyField(TfJQuestionField, blank=True)
+    question1 = models.TextField('Why did you pick this TFJ learning objective?', default='', blank=True)
+    question2 = models.TextField('How does TFJ intersect with this challenge and your solutions?', default='', blank=True)
+    question3 = models.TextField('How do you interpret this learning objective?', default='', blank=True)
+    question4 = models.TextField('What resources did you use to grow in this area?', default='', blank=True)
+    question5 = models.TextField('How did this work move you forward in Teaching for Justice? What are your next steps for this competency?', default='', blank=True)
+    evaluator = models.ForeignKey(Evaluated, blank=False, default='', null=False, on_delete=models.CASCADE)
+
+
+
+
 # ___________
 # LEARNING EXPERIENCE LIKERT ENTRIES
 # Model to store the TCs bool responses to learning expo matrix table thing

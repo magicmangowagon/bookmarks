@@ -3,7 +3,8 @@ from . import views
 from .views import ChallengeDetail, ChallengeListView, SolutionDetailView, SolutionListView, RubricFormView, \
     EvalDetailView, EvalListView, RubricFinalFormView, CompetencyView, RubricAddendum, PreEvaluationUpdate, \
     LearningExperienceCreator, LearningExperienceView, ChallengeCover, CoachingReviewView, SolutionSectionView, \
-    MegaSubPage, CoachingReviewSession, searchSubmissions, ChallengeResourcesView, TFJHotFixView, SolutionEvaluationView, TfJSolutionSubmissionView
+    MegaSubPage, CoachingReviewSession, searchSubmissions, ChallengeResourcesView, TFJHotFixView, \
+    SolutionEvaluationView, TfJSolutionSubmissionView, TfJEvaluation
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
@@ -32,6 +33,7 @@ urlpatterns = [
     path('solutionSearch', login_required(views.searchSubmissions), name='solutionSearch'),
     path('challengeResources/<int:pk>', login_required(views.ChallengeResourcesView.as_view()), name='challengeResources'),
     path('tfj', login_required(TFJHotFixView.as_view()), name='tfj-solutions'),
-    path('tfjsolution<int:pk>', login_required(TfJSolutionSubmissionView.as_view()), name='tfj-submission'),
+    path('tfjsolution/<int:pk>', login_required(TfJSolutionSubmissionView.as_view()), name='tfj-submission'),
+    path('tfjeval/<int:pk>', login_required(TfJEvaluation.as_view()), name='tfj-evaluation'),
     # path('edit/', views.edit, name='edit'),
 ]

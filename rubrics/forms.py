@@ -1,7 +1,8 @@
 from django import forms
 from django.forms import modelformset_factory, BaseModelFormSet
 from .models import Challenge, UserSolution, Rubric, RubricLine, CriteriaLine, \
-    ChallengeAddendum, LearningExperience, LearningExpoResponses, CoachReview, TfJSolution, LearningObjective
+    ChallengeAddendum, LearningExperience, LearningExpoResponses, CoachReview, TfJSolution, LearningObjective, \
+    SolutionInstance, TfJEval
 from django.contrib.auth.models import User
 
 
@@ -68,18 +69,24 @@ class UserFileForm(BaseModelFormSet):
         widgets = {'challengeName': forms.HiddenInput(), 'userOwner': forms.HiddenInput}
 
 
-class TfJForm(BaseModelFormSet):
-    model = TfJSolution
-    loChoices = forms.ModelChoiceField(queryset=LearningObjective.objects.all())
-
-    def __init__(self, *args, **kwargs):
-        super(TfJForm, self).__init__(*args, **kwargs)
-        self.fields['loChoices'].queryset = LearningObjective.objects.filter(
-            solutioninstance=self.model.solutionInstance.learningObjectives.all())
+class TfJForm(forms.ModelForm):
+    learningObjectives = forms.ModelChoiceField(queryset=LearningObjective.objects.filter(compGroup='E'))
 
     class Meta:
-        fields = {'loChoices', 'solution'}
-        widgets = {'solutionInstance': forms.HiddenInput(), 'user': forms.HiddenInput()}
+        model = TfJSolution
+        fields = {'learningObjectives', 'solution', 'solutionInstance'}
+        widgets = {'user': forms.HiddenInput()}
+
+    def __init__(self, *args, **kwargs):
+        super(TfJForm, self).__init__(**kwargs)
+
+
+
+class TfJEvalForm(BaseModelFormSet):
+    class Meta:
+        model = TfJEval
+        fields = ('learningObjective', 'userSolution', 'question1', 'question2', 'question3',
+                                                                            'question4', 'question5')
 
 
 class LearningExperienceForm(BaseModelFormSet):
@@ -112,8 +119,11 @@ UserFileFormset = modelformset_factory(UserSolution, formset=UserFileForm, field
    'helpfulLearningExp', 'notHelpfulLearningExp', 'changeLearningExp', 'notIncludedLearningExp'),
                                        widgets={'challengeName': forms.HiddenInput(), 'userOwner': forms.HiddenInput, 'solutionInstance': forms.HiddenInput})
 
-TfJSolutionSubmissionFormset = modelformset_factory(TfJSolution, formset=TfJForm, fields='__all__')
+TfJSolutionSubmissionFormset = modelformset_factory(TfJSolution, formset=TfJForm, fields=('solution', 'learningObjectives', 'solutionInstance'))
 
+TfJEvalFormset = modelformset_factory(TfJEval, formset=TfJEvalForm, fields=('learningObjective', 'userSolution',
+                                                                            'question1', 'question2', 'question3',
+                                                                            'question4', 'question5'))
 
 CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, fields=('achievement', 'criteria',
                                                                                     'userSolution'), widgets={'criteria': forms.HiddenInput})
