@@ -347,7 +347,8 @@ class UserSolution(models.Model):
 # modified solution for Teaching for Justice curriculum
 
 class TfJSolution(models.Model):
-    learningObjectives = models.ManyToManyField(LearningObjective, blank=True)
+    tcLO = models.ForeignKey(LearningObjective, default='', null=False, on_delete=models.CASCADE)
+    coachLO = models.ForeignKey(LearningObjective, default='', null=False, on_delete=models.CASCADE, related_name='coachLO')
     solution = RichTextUploadingField()
     solutionInstance = models.ForeignKey(SolutionInstance, default='', null=False, on_delete=models.CASCADE)
     user = models.ForeignKey(User, default='', null=False, on_delete=models.CASCADE)

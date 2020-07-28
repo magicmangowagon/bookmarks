@@ -347,6 +347,16 @@ select {
     vertical-align: middle;
 }
 
+.tfjSolutionForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.tfjSolutionForm label {
+    width: fit-content;
+    margin-top: 10pt;
+}
+
 .rubricField li {
     display: inline-block;
 }
@@ -1181,4 +1191,97 @@ input[type=text] {
     margin: 0 2pt 24pt;
     border: 1px solid #00a497;
     border-radius: 0 4pt 4pt 4pt;
+}
+
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.readyToStart {
+    display: flex;
+    flex-direction: row;
+}
+
+.readyToStart p {
+    line-height: unset;
+    padding: 0;
+    margin: 0 0 0 10pt;
+    font-weight: 600;
+    font-size: 10pt;
+
+}
+
+.readyToStart label {
+    float: none;
+    clear: unset;
+    color: unset;
+    font-weight: 300;
+    padding: unset;
+    margin: auto;
+    border-radius: unset;
+    background-color: unset;
+    max-width: unset;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+    height: 17px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 17px;
+    width: 30px;
+    left: 0;
+    bottom: 0;
+    vertical-align: middle;
+    background-color: #00a497;
+    -webkit-transition: .2s;
+    transition: .2s;
+}
+
+input:checked + .slider {
+  background-color: #12b760;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(30px);
+  -ms-transform: translateX(30px);
+  transform: translateX(30px);
+    border-radius: 0 34px 34px 0;
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 34px 0  0 34px;
 }

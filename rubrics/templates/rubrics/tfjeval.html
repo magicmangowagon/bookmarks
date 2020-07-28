@@ -16,10 +16,13 @@
          {% for form in formset %}
             <h3>{{ form.learningObjective.initial }}</h3>
              <ul>{{ form.userSolution }}<span style="display: none"> {{ form.learningObjective }} </span>
+                {% if form.learningObjective.initial != usersolution.solutionInstance.learningObjectives.first %}
                 <li>
+
                     <label>{{ form.question1.label }}</label>
                     {{ form.question1 }}
                 </li>
+                 {% endif %}
              <li>
                     <label>{{ form.question2.label }}</label>
                     {{ form.question2 }}

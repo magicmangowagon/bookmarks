@@ -14,26 +14,32 @@
         {% endif %}
     {% endfor %}
 
-
-            {{ challenge.name }}
+    {{ challenge.name }}
 
     </a>
-    </h2> <div>
-    <!--
-    <form action="" method="post" enctype="multipart/form-data">
+
+
+    </h2>  <div>
+<form action="" method="post" enctype="multipart/form-data">
     {{ challengeStatusForm.management_form }}
 
          {% for form in challengeStatusForm %}
 
             {% if form.challenge.value == challenge.id %}
-                <p>Ready to start?</p>
-                {{ form.challengeAccepted }}
+
+                <div class="readyToStart">
+                    <label class="switch">
+                        {{ form.challengeAccepted }}
+                        <span class="slider round"></span></label>
+                <p id="challengeAccepted">I am starting this challenge</p>
+                </div>
                 {{ form.user }}{{ form.challenge }}
                 {{ form.id }}
             {% endif %}
         {% endfor %}
     {% csrf_token %}
-    </form> -->
+    </form>
+
     <ul class="challengeListObj">
         {% for learningObjective in challenge.learningObjs.all %}
             <li class="challengeListObj">{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}.

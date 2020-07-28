@@ -69,8 +69,8 @@ class UserSolution(admin.ModelAdmin):
 
 @admin.register(TfJSolution)
 class TfJSolutionAdmin(admin.ModelAdmin):
-    list_display = ('solutionInstance', 'solution', 'user')
-    filter_horizontal = ('learningObjectives',)
+    list_display = ('solutionInstance', 'solution', 'user', 'coachLO', 'tcLO')
+    # filter_horizontal = ('learningObjectives',)
 
 
 @admin.register(TfJEval)

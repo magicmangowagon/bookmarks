@@ -9,7 +9,7 @@ from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjecti
 from .forms import UserFileForm, UserFileFormset, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, \
     CriterionFormSet, CriteriaForm, CurrentStudentToView, RubricAddendumForm, RubricAddendumFormset, \
     LearningExperienceFormset, LearningExperienceForm, LearningExpoFeedbackForm, LearningExpoFeedbackFormset, \
-    CoachReviewForm, CoachReviewFormset, UserSolutionToView, TfJSolutionSubmissionFormset, TfJEvalFormset, TfJEvalForm, \
+    CoachReviewForm, CoachReviewFormset, UserSolutionToView, TfJEvalFormset, TfJEvalForm, \
     TfJForm
 from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.edit import FormMixin
@@ -167,17 +167,38 @@ class ChallengeDetail(FormView):
 
 
 class TfJSolutionSubmissionView(FormView):
-    form_class = TfJSolutionSubmissionFormset
+    form_class = TfJForm
     model = SolutionInstance
     template_name = 'rubrics/tfj_upload.html'
 
     def get_context_data(self, **kwargs):
         context = super(TfJSolutionSubmissionView, self).get_context_data(**kwargs)
-        TfJSolutionSubmissionFormset = modelformset_factory(TfJSolution, extra=1, formset=TfJForm, fields=('solution', 'learningObjectives'), )
-        formset = TfJSolutionSubmissionFormset(initial={'solutionInstance': self.kwargs['pk']})
+        # TfJSolutionSubmissionFormset = modelformset_factory(TfJSolution, extra=1, formset=TfJForm, fields=('solution', 'learningObjectives'), )
+        # formset = TfJSolutionSubmissionFormset(initial={'solutionInstance': self.kwargs['pk']})
+        solutionInstance = SolutionInstance.objects.get(pk=self.kwargs['pk'])
+        formset = TfJForm(initial={'solutionInstance': self.kwargs['pk'], 'user': self.request.user,
+                                   'coachLO': solutionInstance.learningObjectives.first()})
 
-        context['form'] = formset
+        context['solutionInstance'] = solutionInstance
+        context['formset'] = formset
+        previousRubricLines = RubricLine.objects.all().filter(student__userOwner=self.request.user, learningObjective__competency__compGroup='E').order_by('learningObjective__compNumber')
+        # previousTfJEvals = TfJEval.objects.all().filter(userSolution__user=self.request.user).order_by('learningObjective__compNumber')
+        context['previousWork'] = previousRubricLines
+
+        relatedLearningExperiences = LearningExperience.objects.all().filter(
+            challenge=solutionInstance.challenge_that_owns_me.first()).order_by('index')
+        context['previous'] = relatedLearningExperiences.last().pk
+
         return context
+
+    def form_valid(self, form):
+        print('valid')
+        form.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        print('fuck')
+        return '/challenge/' + str(self.kwargs['pk']) + '/success'
 
 
 class TfJEvaluation(FormView):
@@ -188,15 +209,17 @@ class TfJEvaluation(FormView):
     def get_context_data(self, **kwargs):
         context = super(TfJEvaluation, self).get_context_data(**kwargs)
         solution = TfJSolution.objects.get(pk=self.kwargs['pk'])
+        learningObjectives = solution.coachLO | solution.tcLO
+        if not solution.coachLO:
+            solution.coachLO = solution.solutionInstance.learningObjectives.first()
+            solution.save()
 
-        TfJEvalFormset = modelformset_factory(TfJEval, formset=TfJEvalForm,
-                                       extra=solution.learningObjectives.all().count(), fields=
-                                       ('learningObjective', 'userSolution', 'question1', 'question2', 'question3',
-                                        'question4', 'question5'),
-                                       widgets={'userSolution': forms.HiddenInput() })
+        TfJEvalFormset = modelformset_factory(TfJEval, formset=TfJEvalForm, extra=2, fields=(
+            'learningObjective', 'userSolution', 'question1', 'question2', 'question3', 'question4', 'question5'),
+                                              widgets={'userSolution': forms.HiddenInput()})
 
         formset = TfJEvalFormset(initial=[{'learningObjective': learningObjective, 'userSolution': solution}
-                                          for learningObjective in solution.learningObjectives.all()])
+                                          for learningObjective in learningObjectives])
         context['formset'] = formset
         context['usersolution'] = solution
         return context
@@ -713,7 +736,7 @@ class SolutionEvaluationView(FormView):
             if SolutionStatus.objects.filter(userSolution=userSolution):
                 print('status object found')
                 solutionStatus = SolutionStatus.objects.get(userSolution=userSolution)
-                if solutionStatus.returnTo == self.request.user:
+                if solutionStatus.returnTo == self.request.user or self.request.user.profile.role == 4:
                     print('returned to evaluator')
                     rubricLines = RubricLine.objects.filter(
                         learningObjective__in=userSolution.solutionInstance.learningObjectives.all()).order_by('learningObjective').distinct('learningObjective')
@@ -763,7 +786,7 @@ class SolutionEvaluationView(FormView):
             elif RubricLine.objects.filter.filter(evaluated__whoEvaluated=self.request.user, userSolution=userSolution).exists():
                 print('Eval unchanged')
                 rubricLines = RubricLine.objects.all().filter(userSolution=userSolution,
-                                                              evaluated__whoEvaluated=self.request.user).latest().distinct()
+                                                              evaluated__whoEvaluated=self.request.user).order_by('learningObjective').distinct('learningObjective').latest()
                 criteriaLines = CriteriaLine.objects.all().filter(userSolution=userSolution,
                                                                   evaluated__whoEvaluated=self.request.user).latest().distinct()
                 rubric = Rubric.objects.get(userSolution=userSolution, evaluator=self.request.user).latest()
@@ -924,11 +947,13 @@ class CoachingReviewView(FormView):
 
         # set criteriaLines based on whether this is a new evaluation or not
         if CriteriaLine.objects.filter(evaluator__whoEvaluated=self.request.user, userSolution=thisUserSolution).exists():
+            print('Found criteriaLines')
             criteriaLines = CriteriaLine.objects.filter(userSolution=thisUserSolution, evaluator__whoEvaluated=self.request.user).distinct().order_by(
                 'criteria__learningObj')
         else:
-            criteriaLines = CriteriaLine.objects.all().filter(userSolution=thisUserSolution, ).exclude(evaluator__isnull=True).distinct().order_by(
-                'criteria__learningObj')
+            print('farts')
+            criteriaLines = CriteriaLine.objects.all().filter(userSolution=thisUserSolution, ).order_by(
+                'criteria__learningObj').distinct('criteria__learningObj')
 
         context['finalRubric'] = finalRubric
         context['learningObjectives'] = lo_list

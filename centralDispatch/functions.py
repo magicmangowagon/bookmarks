@@ -22,7 +22,7 @@ def evaluatorAssigned(assignmentKeeper):
     email_recipient = assignmentKeeper.evaluator.user.email
     print('email ' + str(email_recipient))
     send_mail('The Orchard: New TC submission', assignmentKeeper.userSolution.userOwner.first_name +
-              ' has submitted a solution for ' + assignmentKeeper.userSolution,
+              ' has submitted a solution for ' + str(assignmentKeeper.userSolution.solutionInstance),
               'noreply@wwgradschool.org', [email_recipient, ], fail_silently=False)
     return
 
