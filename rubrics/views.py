@@ -759,10 +759,10 @@ class SolutionEvaluationView(FormView):
                 if solutionStatus.returnTo == self.request.user or self.request.user.profile.role == 4:
                     print('returned to evaluator')
                     rubricLines = RubricLine.objects.filter(
-                        learningObjective__in=userSolution.solutionInstance.learningObjectives.all()).order_by('learningObjective').distinct('learningObjective')
-                    criteriaLines = CriteriaLine.objects.all().filter(userSolution=userSolution).order_by('criteria').distinct('criteria')
+                        learningObjective__in=userSolution.solutionInstance.learningObjectives.all()).order_by('learningObjective', '-evaluated__date').distinct('learningObjective')
+                    criteriaLines = CriteriaLine.objects.all().filter(userSolution=userSolution).order_by('criteria', '-evaluator__date').distinct('criteria')
                     try:
-                        rubric = Rubric.objects.filter(userSolution=userSolution, evaluator=self.request.user).last()
+                        rubric = Rubric.objects.all().filter(userSolution=userSolution).last()
                         rubricFormset = RubricFormSet(prefix='rFormset',
                                                       queryset=Rubric.objects.none(),
                                                       initial=[{'userSolution': rubric.userSolution,

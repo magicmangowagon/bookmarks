@@ -1,7 +1,8 @@
 // When the user scrolls the page, execute myFunction
 window.onscroll = function() {stickyOffset()};
 
-$(".readyToStart").change(autoSave);
+
+$("textarea, select, input").change(autoSave);
 //$(document).on("change", ".form-control", function () {
 //  autoGet();
 //});
@@ -39,18 +40,20 @@ function autoSave(bannerDisplayOn) {
         data: $("form").serialize(),
         type: "POST",
         url: $(this).attr('action'),
+
     });
+    bannerDisplay();
 
 
 }
 
 function bannerDisplay() {
     $('#content').before(($('<div class="savedBanner"> Saved </div>')));
-    bannerRemove();
+    $(self).delay(0.1).remove();
 }
 
 function bannerRemove() {
-    $(self).delay(800).remove();
+    $(self).delay(1).remove();
 }
 
 function getCookie(name) {

@@ -353,6 +353,9 @@ class TfJSolution(models.Model):
     solutionInstance = models.ForeignKey(SolutionInstance, default='', null=False, on_delete=models.CASCADE)
     user = models.ForeignKey(User, default='', null=False, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return str(self.solutionInstance) + ' ' + str(self.user)
+
 
 class TfJQuestionField(models.Model):
     question = models.CharField(default='', blank=False, max_length=1000)

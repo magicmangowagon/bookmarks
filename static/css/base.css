@@ -1263,18 +1263,21 @@ input[type=text] {
 }
 
 input:checked + .slider {
-  background-color: #12b760;
+    background-color: #f69160;
+    box-shadow: inset -1px -4px 6px 2px #ff7eae;
+    <!-- border: #f69160 solid 2px; -->
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 3px #2f3a42;
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(30px);
-  -ms-transform: translateX(30px);
-  transform: translateX(30px);
+  -webkit-transform: translateX(24px);
+  -ms-transform: translateX(24px);
+  transform: translateX(24px);
     border-radius: 0 34px 34px 0;
+    box-shadow: inset 5px 0 4px 0 #f5dd5d73;
 }
 
 /* Rounded sliders */
