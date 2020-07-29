@@ -1264,8 +1264,7 @@ input[type=text] {
 
 input:checked + .slider {
     background-color: #f69160;
-    box-shadow: inset -1px -4px 6px 2px #ff7eae;
-    <!-- border: #f69160 solid 2px; -->
+
 }
 
 input:focus + .slider {
@@ -1277,7 +1276,6 @@ input:checked + .slider:before {
   -ms-transform: translateX(24px);
   transform: translateX(24px);
     border-radius: 0 34px 34px 0;
-    box-shadow: inset 5px 0 4px 0 #f5dd5d73;
 }
 
 /* Rounded sliders */

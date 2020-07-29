@@ -1,8 +1,8 @@
 // When the user scrolls the page, execute myFunction
 window.onscroll = function() {stickyOffset()};
 
-
-$("textarea, select, input").change(autoSave);
+$(".readyToStart").change(autoSave);
+//$("textarea, select, input").change(autoSave);
 //$(document).on("change", ".form-control", function () {
 //  autoGet();
 //});
@@ -42,7 +42,7 @@ function autoSave(bannerDisplayOn) {
         url: $(this).attr('action'),
 
     });
-    bannerDisplay();
+    // bannerDisplay();
 
 
 }
