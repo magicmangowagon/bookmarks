@@ -371,8 +371,6 @@ class TfJEval(models.Model):
     evaluator = models.ForeignKey(Evaluated, blank=False, default='', null=False, on_delete=models.CASCADE)
 
 
-
-
 # ___________
 # LEARNING EXPERIENCE LIKERT ENTRIES
 # Model to store the TCs bool responses to learning expo matrix table thing

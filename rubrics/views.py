@@ -209,17 +209,36 @@ class TfJEvaluation(FormView):
     def get_context_data(self, **kwargs):
         context = super(TfJEvaluation, self).get_context_data(**kwargs)
         solution = TfJSolution.objects.get(pk=self.kwargs['pk'])
-        learningObjectives = solution.coachLO | solution.tcLO
+
         if not solution.coachLO:
             solution.coachLO = solution.solutionInstance.learningObjectives.first()
             solution.save()
+        learningObjectives = [solution.coachLO, solution.tcLO]
+        if TfJEval.objects.filter(userSolution=solution).exists():
+            previousEvals = TfJEval.objects.all().filter(userSolution=solution).order_by('learningObjective__loNumber',
+                                                                                 '-evaluator__date').distinct(
+                'learningObjective__loNumber')
+            print(previousEvals.count())
+            TfJEvalFormset = modelformset_factory(TfJEval, formset=TfJEvalForm, extra=2, fields=(
+                'learningObjective', 'userSolution', 'question1', 'question2', 'question3', 'question4', 'question5'),
+                                                  widgets={'userSolution': forms.HiddenInput()})
 
-        TfJEvalFormset = modelformset_factory(TfJEval, formset=TfJEvalForm, extra=2, fields=(
-            'learningObjective', 'userSolution', 'question1', 'question2', 'question3', 'question4', 'question5'),
-                                              widgets={'userSolution': forms.HiddenInput()})
+            formset = TfJEvalFormset(initial=[{'learningObjective': previousEval.learningObjective,
+                                               'userSolution': previousEval.userSolution,
+                                               'question1': previousEval.question1,
+                                               'question2': previousEval.question2,
+                                               'question3': previousEval.question3,
+                                               'question4': previousEval.question4,
+                                               'question5': previousEval.question5}
+                                              for previousEval in previousEvals], queryset=TfJEval.objects.none())
 
-        formset = TfJEvalFormset(initial=[{'learningObjective': learningObjective, 'userSolution': solution}
-                                          for learningObjective in learningObjectives])
+        else:
+            TfJEvalFormset = modelformset_factory(TfJEval, formset=TfJEvalForm, extra=2, fields=(
+                'learningObjective', 'userSolution', 'question1', 'question2', 'question3', 'question4', 'question5'),
+                                                  widgets={'userSolution': forms.HiddenInput()})
+
+            formset = TfJEvalFormset(initial=[{'learningObjective': learningObjective, 'userSolution': solution}
+                                              for learningObjective in learningObjectives])
         context['formset'] = formset
         context['usersolution'] = solution
         return context
@@ -227,16 +246,17 @@ class TfJEvaluation(FormView):
     def post(self, request, *args, **kwargs):
         if request.method == 'POST':
             formset = TfJEvalFormset(request.POST)
+            evaluator = Evaluated.objects.create(whoEvaluated=self.request.user)
 
             if formset.is_valid():
-                evaluator = Evaluated.objects.create(whoEvaluated=self.request.user)
-                # evaluator.save()
-                # evaluator = Evaluated.objects.create(whoEvaluated=self.request.user)
-                print(evaluator)
                 for form in formset:
                     f = form.save(commit=False)
                     f.evaluator = evaluator
-                    form.save()
+                    f.save()
+                # evaluator.save()
+                # evaluator = Evaluated.objects.create(whoEvaluated=self.request.user)
+                print(evaluator)
+
                 formset.save()
                 return HttpResponseRedirect('/evals')
             else:
