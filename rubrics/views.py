@@ -181,9 +181,9 @@ class TfJSolutionSubmissionView(FormView):
 
         context['solutionInstance'] = solutionInstance
         context['formset'] = formset
-        previousRubricLines = RubricLine.objects.all().filter(student__userOwner=self.request.user, learningObjective__competency__compGroup='E').order_by('learningObjective__compNumber')
-        # previousTfJEvals = TfJEval.objects.all().filter(userSolution__user=self.request.user).order_by('learningObjective__compNumber')
-        context['previousWork'] = previousRubricLines
+        # previousRubricLines = RubricLine.objects.all().filter(student__userOwner=self.request.user, learningObjective__competency__compGroup='E').order_by('learningObjective__compNumber')
+        previousTfJEvals = TfJEval.objects.all().filter(userSolution__user=self.request.user).order_by('learningObjective__compNumber')
+        context['previousWork'] = previousTfJEvals
 
         relatedLearningExperiences = LearningExperience.objects.all().filter(
             challenge=solutionInstance.challenge_that_owns_me.first()).order_by('index')
@@ -241,6 +241,9 @@ class TfJEvaluation(FormView):
                                               for learningObjective in learningObjectives])
         context['formset'] = formset
         context['usersolution'] = solution
+
+        context['previousWork'] = TfJEval.objects.filter(userSolution=solution).order_by(
+            'learningObjective__compNumber', 'learningObjective__loNumber')
         return context
 
     def post(self, request, *args, **kwargs):

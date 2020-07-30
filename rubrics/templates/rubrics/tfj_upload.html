@@ -40,7 +40,14 @@
     <h2>Previous Work</h2>
     <p>{{ previousWork.count }}</p>
     {% for object in previousWork %}
-        {{ object }}
+        <div class="previousExamplesEntry">
+            <h4>{{ object.learningObjective }}</h4>
+            <p>{{ object.question1 }}</p>
+            <p>{{ object.question2 }}</p>
+            <p>{{ object.question3 }}</p>
+            <p>{{ object.question3 }}</p>
+            <p>{{ object.question4 }}</p>
+        </div>
     {% endfor %}
     </div>
 
