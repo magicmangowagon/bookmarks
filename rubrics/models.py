@@ -63,6 +63,9 @@ class LearningObjective(models.Model):
         fullname = str(self.compGroup) + "-" + str(self.compNumber) + "." + str(self.loNumber) + " " + str(self.name)
         return fullname
 
+    class Meta:
+        ordering = ['compGroup', 'compNumber', 'loNumber']
+
 
 # __________
 # CHALLENGES

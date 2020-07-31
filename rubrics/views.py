@@ -36,14 +36,12 @@ class ChallengeCover(DetailView):
 
         if challengeCover.megaChallenge:
             challenges = Challenge.objects.all().filter(megaChallenge=challengeCover.megaChallenge)
-            learningObjectives = []
-            for challenge in challenges:
-                lo_list = LearningObjective.objects.all().filter(challenge=challenge).order_by('compGroup', 'compNumber', 'loNumber')
-                for learningObjective in lo_list:
-                    if learningObjective not in learningObjectives:
-                        learningObjectives.append(learningObjective)
+            learningObjectives = LearningObjective.objects.filter(
+                challenge__in=challengeCover.megaChallenge.challenge_set.all()).order_by('compGroup', 'compNumber', 'loNumber')
 
-            context['learningObjectives'] = learningObjectives
+
+            context['learningObjectives'] = LearningObjective.objects.filter(
+                challenge__in=challengeCover.megaChallenge.challenge_set.all()).order_by('compGroup', 'compNumber', 'loNumber')
             context['challengeCover'] = Challenge.objects.all().filter(megaChallenge=challengeCover.megaChallenge)
         else:
             learningObjectives = LearningObjective.objects.all().filter(challenge=challengeCover).order_by('compGroup',
@@ -54,13 +52,11 @@ class ChallengeCover(DetailView):
 
         context['criterionList'] = Criterion.objects.all().filter(learningObj__in=learningObjectives)
         theseComps = []
-        competencies = Competency.objects.all()
-        for learningObjective in learningObjectives:
-            for competency in competencies:
-                if competency.compGroup == learningObjective.compGroup and competency.compNumber == learningObjective.compNumber:
-                    if competency not in theseComps:
-                        theseComps.append(competency)
-        context['competencies'] = theseComps
+        competencies = Competency.objects.filter(compGroup__in=learningObjectives.values('compGroup'),
+                                                 compNumber__in=learningObjectives.values('compNumber')
+                                                 ).order_by('compGroup', 'compNumber')
+
+        context['competencies'] = competencies
 
         try:
             relatedLearningExperiences = LearningExperience.objects.all().filter(challenge=challengeCover).order_by('index')
@@ -762,7 +758,9 @@ class SolutionEvaluationView(FormView):
                 if solutionStatus.returnTo == self.request.user or self.request.user.profile.role == 4:
                     print('returned to evaluator')
                     rubricLines = RubricLine.objects.filter(
-                        learningObjective__in=userSolution.solutionInstance.learningObjectives.all()).order_by('learningObjective', '-evaluated__date').distinct('learningObjective')
+                        learningObjective__in=userSolution.solutionInstance.learningObjectives.all()).order_by('learningObjective__id', '-evaluated__date', ).distinct('learningObjective').filter(
+                        student=userSolution)
+                    # rubricLines = RubricLines.order_by('learningObjective__compGroup', 'learningObjective__compNumber', 'learningObjective__compNumber',)
                     criteriaLines = CriteriaLine.objects.all().filter(userSolution=userSolution).order_by('criteria', '-evaluator__date').distinct('criteria')
                     try:
                         rubric = Rubric.objects.all().filter(userSolution=userSolution).last()
