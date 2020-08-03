@@ -42,7 +42,6 @@ function autoSave(bannerDisplayOn) {
         url: $(this).attr('action'),
 
     });
-    // bannerDisplay();
 
 
 }

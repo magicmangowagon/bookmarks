@@ -9,10 +9,10 @@
 {% for challenge in challenges %}
 
 <div class="challengeListEntry">
-    <div class="challengeSubEntry">{% if challenge.picture %}<img src="{{ challenge.picture.url }}" height="60px">{% endif %}</div>
+    <div class="challengeSubEntry">{% if challenge.challenge_set.first.picture %}<img src="{{ challenge.challenge_set.first.picture.url }}" height="60px">{% endif %}</div>
     <div class="challengeSubEntry">
         <h2>
-            <a href="challengeCover/{{ challenge.id }}">
+            <a href="challengeCover/{{ challenge.challenge_set.first.id }}">
                 {% if challenge.megaChallenge %}
                     {{ challenge.megaChallenge.name }}
                 {% else %}
@@ -22,25 +22,23 @@
 
         </h2>
         <ul class="challengeListObj">
-        {% if challenge.megaChallenge %}
-        {% for learningObjective in mega_lo %}
-            {% for challenge in challenge.megaChallenge.challenge_set.all %}
-                    {% if challenge in learningObjective.challenge.all %}
-                        {% ifchanged %}<li class="challengeListObj">{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}.
-                            {{ learningObjective.loNumber }}</li>{% endifchanged %}
-                    {% endif %}
-                {% endfor %}
-            {% endfor %}
-        {% else %}
+
+        {% for challenge in challenge.challenge_set.all %}
+
             {% for learningObjective in challenge.learningObjs.all %}
-                <li class="challengeListObj">{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}.
-                    {{ learningObjective.loNumber }}</li>
+
+                <li class="challengeListObj" id="{{ challenge }}{{ learningObjective.id }}">{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}.
+                                {{ learningObjective.loNumber }}</li>
+
             {% endfor %}
-        {% endif %}
+        {% endfor %}
         </ul>
     </div>
 </div>
 
 {% endfor %}
+<script  type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
 
+
+</script>
 {% endblock content %}

@@ -17,6 +17,7 @@ from django.urls import reverse
 from django.forms import modelformset_factory
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
+from django.db.models import Q
 from .functions import process_rubricLine, assess_competency_done
 from django.core.mail import send_mail
 from .filters import EvalFilter
@@ -35,15 +36,16 @@ class ChallengeCover(DetailView):
         challengeCover = Challenge.objects.get(pk=self.kwargs['pk'])
 
         if challengeCover.megaChallenge:
+            print('mega')
             challenges = Challenge.objects.all().filter(megaChallenge=challengeCover.megaChallenge)
             learningObjectives = LearningObjective.objects.filter(
                 challenge__in=challengeCover.megaChallenge.challenge_set.all()).order_by('compGroup', 'compNumber', 'loNumber')
 
 
-            context['learningObjectives'] = LearningObjective.objects.filter(
-                challenge__in=challengeCover.megaChallenge.challenge_set.all()).order_by('compGroup', 'compNumber', 'loNumber')
+            context['learningObjectives'] = learningObjectives
             context['challengeCover'] = Challenge.objects.all().filter(megaChallenge=challengeCover.megaChallenge)
         else:
+            print('not mega')
             learningObjectives = LearningObjective.objects.all().filter(challenge=challengeCover).order_by('compGroup',
                                                                                                            'compNumber',
                                                                                                            'loNumber')
@@ -51,11 +53,10 @@ class ChallengeCover(DetailView):
             context['challengeCover'] = challengeCover
 
         context['criterionList'] = Criterion.objects.all().filter(learningObj__in=learningObjectives)
-        theseComps = []
-        competencies = Competency.objects.filter(compGroup__in=learningObjectives.values('compGroup'),
-                                                 compNumber__in=learningObjectives.values('compNumber')
-                                                 ).order_by('compGroup', 'compNumber')
 
+        competencies = Competency.objects.filter(learningObjs__in=learningObjectives).order_by('-id', 'compGroup', 'compNumber').distinct('id')
+        print(learningObjectives.count())
+        print(competencies.count())
         context['competencies'] = competencies
 
         try:
@@ -331,15 +332,15 @@ class PreEvaluationUpdate(ListView):
 
 
 class ChallengeListView(ListView):
-    model = Challenge
+    model = MegaChallenge
     # queryset = Challenge.objects.all().filter(display=True).order_by('challengeGroupChoices')
     context_object_name = 'challenges'
     template_name = 'rubrics/list.html'
-    queryset = Challenge.objects.all().filter(display=True).order_by('challengeGroupChoices')
+    queryset = MegaChallenge.objects.all().filter(display=True).order_by('challengeGroupChoices')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['mega_lo'] = LearningObjective.objects.all().filter(challenge__megaChallenge__isnull=False).distinct().order_by('compGroup', 'compNumber', 'loNumber')
+
         context['megaChallenges'] = MegaChallenge.objects.all()
         return context
 
@@ -543,12 +544,10 @@ class RubricFormView(FormView):
 
         if thisUserSolution.customized:
             challenge = ChallengeAddendum.objects.get(userSolution=thisUserSolution)
-            lo_list = LearningObjective.objects.filter(challengeaddendum=challenge).order_by('compGroup', 'compNumber',
-                                                                                            'loNumber')
+            lo_list = LearningObjective.objects.filter(challengeaddendum=challenge)
         else:
             challenge = UserSolution.objects.get(pk=usersolution).solutionInstance
-            lo_list = LearningObjective.objects.filter(solutioninstance=challenge).order_by('compGroup', 'compNumber',
-                                                                                            'loNumber')
+            lo_list = LearningObjective.objects.filter(solutioninstance=challenge)
 
         context['lo_list'] = lo_list
         context['student'] = thisUserSolution
@@ -701,12 +700,11 @@ class SolutionEvaluationView(FormView):
 
         if userSolution.customized:
             challenge = ChallengeAddendum.objects.get(userSolution=userSolution)
-            lo_list = LearningObjective.objects.filter(challengeaddendum=challenge).order_by('compGroup', 'compNumber',
-                                                                                             'loNumber')
+            lo_list = LearningObjective.objects.filter(challengeaddendum=challenge)
         else:
             challenge = userSolution.solutionInstance
-            lo_list = LearningObjective.objects.filter(solutioninstance=challenge).order_by('compGroup', 'compNumber',
-                                                                                            'loNumber')
+            lo_list = LearningObjective.objects.filter(solutioninstance=challenge)
+
         context['lo_list'] = lo_list
         context['student'] = userSolution
         context['usersolution'] = userSolution
@@ -947,34 +945,30 @@ class CoachingReviewView(FormView):
         # Check if this is a modified solution
         if thisUserSolution.customized:
             challenge = ChallengeAddendum.objects.get(userSolution=thisUserSolution)
-            lo_list = LearningObjective.objects.filter(challengeaddendum=challenge).order_by('compGroup', 'compNumber',
-                                                                                            'loNumber').distinct().distinct()
+            lo_list = LearningObjective.objects.filter(challengeaddendum=challenge)
         else:
             challenge = UserSolution.objects.get(pk=userSolution).solutionInstance
-            lo_list = LearningObjective.objects.filter(solutioninstance=challenge).order_by('compGroup', 'compNumber',
-                                                                                            'loNumber')
-        criteria = Criterion.objects.filter(learningObj__in=lo_list).order_by('learningObj__compGroup',
-                                                                              'learningObj__compNumber',
-                                                                              'learningObj__loNumber')
+            lo_list = LearningObjective.objects.filter(solutioninstance=challenge)
+        criteria = Criterion.objects.filter(learningObj__in=lo_list).order_by('learningObj_id')
         # set rubricLines based on whether this is a new evaluation or not
         if RubricLine.objects.all().filter(evaluated__whoEvaluated=self.request.user, student=thisUserSolution).exists():
-            rubricLines = RubricLine.objects.all().filter(evaluated__whoEvaluated=self.request.user, student=thisUserSolution).exclude(evaluated__isnull=True).distinct()
+            rubricLines = RubricLine.objects.all().filter(evaluated__whoEvaluated=self.request.user, student=
+            thisUserSolution).exclude(evaluated__isnull=True).order_by('learningObjective__id', '-evaluated__date').distinct('learningObjective')
             finalRubric = Rubric.objects.all().filter(userSolution=thisUserSolution).filter(evaluator=self.request.user).distinct()
         else:
-            rubricLines = RubricLine.objects.filter(student=thisUserSolution).exclude(evaluated__isnull=True).order_by('learningObjective__compGroup',
-                                                                                       'learningObjective__compNumber',
-                                                                                       'learningObjective__loNumber')
+            rubricLines = RubricLine.objects.filter(student=thisUserSolution).exclude(evaluated__isnull=True).order_by(
+                'learningObjective__id', '-evaluated__date').distinct('learningObjective')
             finalRubric = Rubric.objects.all().filter(userSolution=thisUserSolution)
 
         # set criteriaLines based on whether this is a new evaluation or not
         if CriteriaLine.objects.filter(evaluator__whoEvaluated=self.request.user, userSolution=thisUserSolution).exists():
             print('Found criteriaLines')
-            criteriaLines = CriteriaLine.objects.filter(userSolution=thisUserSolution, evaluator__whoEvaluated=self.request.user).distinct().order_by(
-                'criteria__learningObj')
+            criteriaLines = CriteriaLine.objects.filter(userSolution=thisUserSolution, evaluator__whoEvaluated=self.request.user).order_by(
+                'criteria__learningObj__id')
         else:
             print('farts')
             criteriaLines = CriteriaLine.objects.all().filter(userSolution=thisUserSolution, ).order_by(
-                'criteria__learningObj').distinct('criteria__learningObj')
+                'criteria__learningObj__id').distinct('criteria__learningObj')
 
         context['finalRubric'] = finalRubric
         context['learningObjectives'] = lo_list

@@ -249,7 +249,7 @@ class ChallengeResourcesFile(models.Model):
 class Competency(models.Model):
     name = models.CharField(max_length=250)
     description = models.TextField()
-    learningObjs = models.ForeignKey(LearningObjective, blank=True, null=True, on_delete=models.CASCADE)
+    learningObjs = models.ManyToManyField(LearningObjective, blank=True)
     tags = TaggableManager(blank=True)
 
     # may want to store something called hasCompleted, and/or hasCompletedPreviously
