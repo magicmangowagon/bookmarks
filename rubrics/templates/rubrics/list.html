@@ -7,17 +7,16 @@
 <h1>Challenges</h1>
 
 {% for challenge in challenges %}
-
+{% ifchanged challenge.challengeGroupChoices %}<h3>Group {{ challenge.challengeGroupChoices }}</h3>{% endifchanged %}
 <div class="challengeListEntry">
+
     <div class="challengeSubEntry">{% if challenge.challenge_set.first.picture %}<img src="{{ challenge.challenge_set.first.picture.url }}" height="60px">{% endif %}</div>
     <div class="challengeSubEntry">
         <h2>
             <a href="challengeCover/{{ challenge.challenge_set.first.id }}">
-                {% if challenge.megaChallenge %}
-                    {{ challenge.megaChallenge.name }}
-                {% else %}
+
                     {{ challenge.name }}
-                {% endif %}
+
             </a>
 
         </h2>
