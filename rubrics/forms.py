@@ -70,7 +70,7 @@ class UserFileForm(BaseModelFormSet):
 
 
 class TfJForm(forms.ModelForm):
-    tcLO = forms.ModelChoiceField(queryset=LearningObjective.objects.all().filter(compGroup='E'))
+    tcLO = forms.ModelChoiceField(queryset=LearningObjective.objects.all().filter(compGroup='E').exclude(archive=True))
     # coachLO = forms.ModelChoiceField(queryset=LearningObjective.objects.all().filter(compGroup='E'))
 
     class Meta:

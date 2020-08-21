@@ -155,3 +155,17 @@ class ChallengeTracker(SingleTableView):
         context['solutionInstances'] = SolutionInstance.objects.all().order_by('challenge_that_owns_me')
         # thing = SolutionStatus.objects.filter(challengestatus__solutionStatusByInstance__challengestatus=)
         return context
+
+
+class HackingAboutPage(ListView):
+    model = ChallengeStatus
+    queryset = ChallengeStatus.objects.all()
+    template_name = 'centralDispatch/hackingabout.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(HackingAboutPage, self).get_context_data(**kwargs)
+
+        completed = UserSolution.objects.filter(solutionstatus__solutionCompleted=True)
+        context['completed'] = completed
+
+        return context

@@ -17,10 +17,13 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.conf import settings
 from django.views.static import serve
+from wagtail.admin import urls as wagtailadmin_urls
+from wagtail.core import urls as wagtail_urls
+from wagtail.documents import urls as wagtaildocs_urls
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
     path('api', include('growthTracker.urls')),
     path('', include('rubrics.urls')),
     path('', include('account.urls')),
@@ -29,6 +32,11 @@ urlpatterns = [
     path('', include('centralDispatch.urls')),
     path('djrichtextfield/', include('djrichtextfield.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('admin/', admin.site.urls),
+    path('cms/', include(wagtailadmin_urls)),
+    path('documents/', include(wagtaildocs_urls)),
+    path('pages/', include(wagtail_urls)),
+    # re_path(r'', include(wagtail_urls)),
 ]
 
 

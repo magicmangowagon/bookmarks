@@ -5,7 +5,13 @@ from taggit.managers import TaggableManager
 from datetime import datetime
 from rubrics.models import Challenge, LearningExperience, Evaluated
 
-# Create your models here.
+
+# Categories for posts
+class InfoCategory(models.Model):
+    infoClass = models.CharField(max_length=600)
+
+    def __str__(self):
+        return self.infoClass
 
 
 # BASE INFO MODEL
@@ -15,3 +21,4 @@ class BaseInfo(models.Model):
     dateCreated = models.DateTimeField(auto_now=True)
     occurrenceDate = models.DateTimeField(default=datetime.now())
     learningExpos = models.ManyToManyField(LearningExperience, blank=True)
+    category = models.ManyToManyField(InfoCategory, blank=True)

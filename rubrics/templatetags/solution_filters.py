@@ -12,3 +12,10 @@ def check_evaluated(userSolution, user):
 @register.filter(name='get_obj_attr')
 def get_obj_attr(obj, field):
     return getattr(obj, field)
+
+
+@register.simple_tag
+def get_verbose_name(thing):
+  return thing.verbose_name
+
+

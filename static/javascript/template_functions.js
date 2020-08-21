@@ -10,6 +10,19 @@ $(".readyToStart").change(autoSave);
 var header = document.getElementById("stuckDiv");
 // notch.
 
+$(document).ready(function(){ // document ready
+
+    $("a").filter(function () {
+        return this.hostname && this.hostname !== location.hostname;
+    }).each(function () {
+        $(this).attr({
+            target: "_blank",
+            title: "Visit " + this.href + " (click to open in a new window)"
+        });
+    });
+
+});
+
 // Get the offset position of the navbar
 var sticky = header.offsetTop;
 

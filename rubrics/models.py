@@ -111,6 +111,9 @@ class MegaChallenge(models.Model):
     clinicalNeeds = RichTextField('Clinical Needs', default='', blank=True)
     standardSolution = RichTextField('Standard Solution', default='', blank=True)
     pullQuote = models.CharField('Pull Quote', max_length=1000, default='', blank=True)
+    drivingQ = RichTextUploadingField(verbose_name='Driving Questions', default='', blank=True)
+    soldThemes = RichTextUploadingField('SoLD Themes', default='', blank=True)
+    tfjFocus = RichTextUploadingField('Teaching for Justice Focus', default='', blank=True)
     picture = models.ImageField(upload_to='uploads/challenges/', blank=True, height_field='height', default='')
     height = models.IntegerField(default=0, blank=True)
     A = 'A'

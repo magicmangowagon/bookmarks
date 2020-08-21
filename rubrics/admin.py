@@ -147,7 +147,7 @@ class LearningExpAdmin(admin.ModelAdmin):
 
 @admin.register(Rubric)
 class RubricAdmin(admin.ModelAdmin):
-    list_display = ['evaluator', 'challenge']
+    list_display = ['evaluator', 'challenge', 'userSolution']
 
 
 @admin.register(Criterion)

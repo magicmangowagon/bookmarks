@@ -9,6 +9,8 @@
     <h1>{{ usersolution.solutionInstance }}</h1>
 <p>Submitted by {{ usersolution.user.first_name }} {{ usersolution.user.last_name }}</p>
 
+<p><span style="font-weight: bold">Solution</span><br> {{ usersolution.solution|urlize|safe }}</p>
+
      <form action=""  method="POST" enctype="multipart/form-data" id="post_form">
 
     {{ formset.management_form }}
@@ -47,5 +49,24 @@
 
         <p><br><input type="submit" value="Submit evaluation"></p>
     </form>
+    <div class="previousExamples">
+    <h2>Previous Work</h2>
+    <p>{{ previousWork.count }}</p>
+    {% for object in previousWork %}
+        <div class="previousExamplesEntry">
+            <h4>{{ object.learningObjective }}</h4>
+            <label>Why did you pick this TFJ learning objective?</label>
+            <p>{{ object.question1 }}</p>
+            <label>How does TFJ intersect with this challenge and your solutions?</label>
+            <p>{{ object.question2 }}></p>
+            <label>How do you interpret this learning objective?</label>
+            <p>{{ object.question3 }}</p>
+            <label>What resources did you use to grow in this area?</label>
+            <p>{{ object.question4 }}</p>
+            <label>How did this work move you forward in Teaching for Justice? What are your next steps for this competency?</label>
+            <p>{{ object.question5 }}</p>
+        </div>
+    {% endfor %}
+    </div>
 
 {% endblock %}

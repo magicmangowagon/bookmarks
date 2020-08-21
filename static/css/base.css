@@ -999,7 +999,11 @@ img.user-detail {
 /* Challenge Cover sheet styling */
 
 .critList {
-    display: none;
+    border-left: 2px solid #00a497;
+    padding: 2pt;
+    margin: 10pt;
+    font-weight: lighter;
+    list-style: none;
 }
 
 .pullQuote {
@@ -1173,6 +1177,34 @@ img.user-detail {
     border: 2pt solid #00a497;
     padding: 0 12pt 12pt;
     border-radius: 4pt;
+}
+
+.previousExamplesEntry label {
+    float: unset;
+}
+
+.previousExamplesEntry p {
+    margin-bottom: 12pt;
+}
+
+.lilButton {
+    background-color: #00a497;
+    border: none;
+    color: white;
+    padding: 2px 4px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 11px;
+}
+
+.lilButton:hover {
+    background-color: #81ce81;
+    color: #2f3a42;
+}
+
+.lilButton:active {
+    background-color: #f69160;
 }
 
 textarea {

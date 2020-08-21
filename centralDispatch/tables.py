@@ -1,14 +1,22 @@
 import django_tables2 as tables
 from .models import SolutionStatus, ChallengeStatus
+from rubrics.models import Evaluated
 from django.utils.html import mark_safe
 from rubrics.views import SolutionDetailView
 
 
 class SolutionTable(tables.Table):
     userSolution = tables.Column(linkify={"viewname": "solution-detail", "args": [tables.A("userSolution__pk")]},)
-    tc = tables.Column(accessor='challengestatus', verbose_name='Last Name')
+    # tc = tables.Column(accessor='challengestatus', verbose_name='Last Name')
     challenge = tables.Column(accessor='challengestatus', verbose_name='Challenge')
     challengeAccepted = tables.BooleanColumn(accessor='challengestatus', verbose_name='Challenge Accepted')
+    completionDate = tables.Column(accessor='userSolution__evaluated')
+
+    def render_completionDate(self, value):
+        try:
+            return value.all().last().date
+        except:
+            return 'no eval'
 
     def render_challengeAccepted(self, value):
         try:
@@ -47,18 +55,18 @@ class SolutionTable(tables.Table):
     class Meta:
         model = SolutionStatus
 
-        fields = {'tc',
+        fields = {'userSolution__userOwner__last_name',
                   'userSolution__userOwner__first_name',
                   'challenge',
                   'challengeAccepted',
                   'userSolution', 'solutionSubmitted', 'solutionEvaluated',
-                  'solutionCoachReviewed', 'solutionRejected', 'returnedTo', 'solutionCompleted'}
-        sequence = ('tc',
+                  'solutionCoachReviewed', 'solutionRejected', 'returnedTo', 'solutionCompleted', 'completionDate'}
+        sequence = ('userSolution__userOwner__last_name',
                     'userSolution__userOwner__first_name',
                     'challenge',
                     'challengeAccepted',
                   'userSolution', 'solutionSubmitted', 'solutionEvaluated',
-                  'solutionCoachReviewed', 'solutionRejected', 'returnedTo', 'solutionCompleted')
+                  'solutionCoachReviewed', 'solutionRejected', 'returnedTo', 'solutionCompleted', 'completionDate')
         attrs = {"class": "solutionStatusTable"}
         # solutions = tables.ManyToManyColumn(transform='challengestatus__solutionStatusByInstance__challengestatus')
         # fields = ('user', 'challenge', 'solutions', 'cs')

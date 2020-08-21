@@ -1,4 +1,5 @@
 from .models import RubricLine, Competency, CompetencyProgress, LearningObjective, ChallengeAddendum, Challenge, MegaChallenge
+
 from zipfile import ZipFile
 
 

@@ -18,11 +18,11 @@ from django.forms import modelformset_factory
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
 from django.db.models import Q
-from .functions import process_rubricLine, assess_competency_done
+from .functions import assess_competency_done
 from django.core.mail import send_mail
 from .filters import EvalFilter
 from centralDispatch.models import ChallengeStatus, SolutionStatus
-from centralDispatch.functions import submissionAlert, evaluationCompleted
+from centralDispatch.functions import submissionAlert, evaluationCompleted, process_rubricLine
 from centralDispatch.forms import ChallengeStatusForm, ChallengeStatusFormset
 
 
@@ -44,6 +44,8 @@ class ChallengeCover(DetailView):
 
             context['learningObjectives'] = learningObjectives
             context['challengeCover'] = Challenge.objects.all().filter(megaChallenge=challengeCover.megaChallenge)
+            context['challengeParent'] = challengeCover.megaChallenge
+            print(challengeCover.megaChallenge.challenge_set.all())
         else:
             print('not mega')
             learningObjectives = LearningObjective.objects.all().filter(challenge=challengeCover).order_by('compGroup',
@@ -179,7 +181,7 @@ class TfJSolutionSubmissionView(FormView):
         context['solutionInstance'] = solutionInstance
         context['formset'] = formset
         # previousRubricLines = RubricLine.objects.all().filter(student__userOwner=self.request.user, learningObjective__competency__compGroup='E').order_by('learningObjective__compNumber')
-        previousTfJEvals = TfJEval.objects.all().filter(userSolution__user=self.request.user).order_by('learningObjective__compNumber')
+        previousTfJEvals = TfJEval.objects.all().filter(userSolution__user=self.request.user).order_by('learningObjective__compNumber', 'learningObjective__loNumber')
         context['previousWork'] = previousTfJEvals
 
         relatedLearningExperiences = LearningExperience.objects.all().filter(
@@ -194,7 +196,6 @@ class TfJSolutionSubmissionView(FormView):
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
-        print('fuck')
         return '/challenge/' + str(self.kwargs['pk']) + '/success'
 
 
@@ -238,7 +239,9 @@ class TfJEvaluation(FormView):
                                               for learningObjective in learningObjectives])
         context['formset'] = formset
         context['usersolution'] = solution
-
+        previousTfJEvals = TfJEval.objects.all().filter(userSolution__user=solution.user).order_by(
+            'learningObjective__compNumber')
+        context['previousWork'] = previousTfJEvals
         context['previousWork'] = TfJEval.objects.filter(userSolution=solution).order_by(
             'learningObjective__compNumber', 'learningObjective__loNumber')
         return context
@@ -505,9 +508,10 @@ class RubricFinalFormView(FormView):
                 if coachForm.is_valid():
                     coachForm.save()
                     print('coachReview saved')
-            process_rubricLine(completionLevelObj)
-            assess_competency_done(completionLevelObj)
-            evaluationCompleted(userSolution, self.request.user)
+                    if self.request.user.profile.role >= 3:
+                        process_rubricLine(completionLevelObj)
+                        assess_competency_done(completionLevelObj)
+                        evaluationCompleted(userSolution, self.request.user)
             return HttpResponseRedirect('/evals')
         else:
             messages.error(request, "Error")
@@ -1318,7 +1322,10 @@ class EvalDetailView(DetailView):
         if self.request.user.profile.role is not 1:
             context['evaluation'] = RubricLine.objects.all().filter(student=rubric)
         else:
-            context['evaluation'] = RubricLine.objects.all().filter(student=rubric, evaluated__whoEvaluated__profile__role__gte=3).filter(student__coachReview__release=True)
+            print('Checking for rubricLines')
+            rubricLines = RubricLine.objects.all().filter(student=rubric, evaluated__whoEvaluated__profile__role__gte=3).filter(student__coachReview__release=True)
+            print(rubricLines.count())
+            context['evaluation'] = rubricLines
         context['userRole'] = self.request.user.profile.role
 
         try:

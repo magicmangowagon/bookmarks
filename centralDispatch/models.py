@@ -91,6 +91,7 @@ class ChallengeStatus(models.Model):
     challenge = models.ForeignKey(Challenge, default='', on_delete=models.CASCADE)
     user = models.ForeignKey(User, default='', on_delete=models.CASCADE)
     solutionStatusByInstance = models.ManyToManyField(SolutionStatus, blank=True, default='', related_name='challengestatus')
+    completed = models.BooleanField(default=False)
 
     def __str__(self):
         return self.challenge.name + ' ' + self.user.__str__()

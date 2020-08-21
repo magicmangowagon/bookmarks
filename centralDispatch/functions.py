@@ -44,6 +44,26 @@ def evaluationCompleted(userSolution, user):
                   'noreply@wwgradschool.org', email_recipient, fail_silently=False)
 
 
+# moved processRubricLines in to CentralDispatch
+def process_rubricLine(rubricLines):
+    completed = False
+    for RubricLine in rubricLines:
+        if (RubricLine.completionLevel < 50 and RubricLine.needsLaterAttention == 'B') or (RubricLine.completionLevel >= 50 and RubricLine.needsLaterAttention == 'A'):
+            RubricLine.ready = False
+            completed = False
+        else:
+            RubricLine.ready = True
+            completed = True
+        RubricLine.save()
+    print('checking for completion')
+    if completed:
+        solutionStatus = SolutionStatus.objects.get(userSolution=rubricLines.first().student)
+        solutionStatus.solutionCompleted = True
+        solutionStatus.save()
+        print('completed')
+    return rubricLines
+
+
 # script to call when tracking stack goes live to update old
 # solutions and correctly mark status
 def generateStatus():

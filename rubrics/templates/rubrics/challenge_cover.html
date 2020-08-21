@@ -44,7 +44,14 @@
                 <p>{{ challengeCover.description | safe }}</p>
             {% endif %}
         </div>
+     {% if challengeParent.drivingQ %}
+    <div class="course-content-box">
 
+            <h3>Driving Question</h3>
+            <p>{{ challengeParent.drivingQ | safe | urlize }}</p>
+
+    </div>
+    {% endif %}
         <div class="course-content-box">
             <h3>Learning Objectives</h3>
             {% for competency in competencies %}
@@ -52,23 +59,38 @@
                     <p><strong>{{ competency.compGroup }} - {{ competency.compNumber }} {{ competency.name }}</strong></p>
                     {% for learningObjective in competency.learningObjs.all %}
                         {% if learningObjective in learningObjectives %}
-                            <div class="learningObj_list"><p>{{ learningObjective.loNumber }}: {{ learningObjective.name }}</p></div>
+                            <div class="learningObj_list"><p>{{ learningObjective.loNumber }}: {{ learningObjective.name }}
+                                <button onclick="hideShow('critList{{ learningObjective.id }}')" class="lilButton">Criteria</button></p></div>
                         {% endif %}
-                            <!-- <ul id="critList">
+                            <ul id="critList{{ learningObjective.id }}" class="critList">
                             {% for criterion in criterionList %}
 
                                     {% if learningObjective == criterion.learningObj %}
                                         <li>{{ criterion }}</li>
                                     {% endif %}
                             {% endfor %}
-                            </ul> -->
+                            </ul>
 
                     {% endfor %}
                 </div>
             {% endfor %}
         </div>
 
+    {% if challengeParent.soldThemes %}
+    <div class="course-content-box">
 
+        <h3>SoLd Themes</h3>
+        <p>{{ challengeParent.soldThemes | safe | urlize }}</p>
+    </div>
+    {% endif %}
+
+    {% if challengeParent.tfjFocus %}
+    <div class="course-content-box">
+
+        <h3>Teaching for Justice Focus</h3>
+        <p>{{ challengeParent.tfjFocus | safe | urlize }}</p>
+    </div>
+    {% endif %}
 
     </div>
     <div class="course-content-box">
@@ -103,8 +125,15 @@
             x.style.display = "block";
           } else {
             x.style.display = "none";
-  }
-}
+          }
+        }
+        function hideAll(elemClass) {
+            var x = document.getElementsByClassName(elemClass);
+            for (var i =0; i<x.length; i++){
+                x[i].style.display = "none";
+            }
+        }
+        document.onLoad = hideAll("critList")
 
     </script>
 {% endblock %}

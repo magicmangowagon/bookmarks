@@ -54,7 +54,19 @@ INSTALLED_APPS = [
     'django_filters',
     'bookmarks.custom_storage',
     'django_tables2',
-    'bootstrap4'
+    'bootstrap4',
+    'wagtail.contrib.forms',
+    'wagtail.contrib.redirects',
+    'wagtail.embeds',
+    'wagtail.sites',
+    'wagtail.users',
+    'wagtail.snippets',
+    'wagtail.documents',
+    'wagtail.images',
+    'wagtail.search',
+    'wagtail.admin',
+    'wagtail.core',
+    'wagtail.contrib.modeladmin',
 ]
 
 MIDDLEWARE = [
@@ -164,10 +176,11 @@ if DEBUG is True:
     # STATIC_URL = 'shit/'
     # STATIC_URL = 'https://' + AWS_S3_CUSTOM_DOMAIN + AWS_LOCATION + '/'
     # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-    # DEFAULT_FILE_STORAGE = STATICFILES_STORAGE
-    # STATIC_ROOT = '/static/'
+
+    STATIC_ROOT = '/static/'
     STATIC_URL = '/static/'
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+    DEFAULT_FILE_STORAGE = STATICFILES_STORAGE
 
 else:
     STATIC_URL = 'https://' + AWS_S3_CUSTOM_DOMAIN + AWS_LOCATION + '/'
@@ -299,3 +312,6 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 # Configure Django App for Heroku.
 django_heroku.settings(locals(), staticfiles=False)
+
+#Wagtail
+WAGTAIL_SITE_NAME = 'The Orchard'
