@@ -4,12 +4,13 @@
 {% block title %}Woodrow Wilson Academy{% endblock %}
 
 {% block content %}
-<h1>Challenges</h1>
+<h1>{{ baseInfoList.first.category.first.infoClass }}</h1>
 
 {% for baseInfo in baseInfoList %}
-    <ul>
-        <li><a href="{{ baseInfo }}">{{ baseInfo.title }}</a> </li>
-    </ul>
+    <div class="infolistContainer">
+        <div class="infolist"><a class="infolistLink" href="infodetail/{{ baseInfo.pk }}"><h3>{{ baseInfo.title }} - {{ baseInfo.occurrenceDate.date }}</h3></a>
+            <p>{{ baseInfo.mainText | truncatewords_html:150 | safe }}</p> <a href="infodetail/{{ baseInfo.pk }}">more </a></div>
+    </div>
 {% endfor %}
 
 {% endblock content %}

@@ -1320,3 +1320,26 @@ input:checked + .sliderCheck:before {
 .sliderCheck.round:before {
   border-radius: 34px 0  0 34px;
 }
+
+.infolist h3{
+    width: 100%;
+    background-color: #00a497;
+    color: #FFFFFF;
+    font-weight: 500;
+    font-size: 16pt;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding: 2pt 6pt;
+}
+
+
+
+.infolist h3:hover {
+    background-color: #f69160;
+    color: #003469;
+}
+
+.infolistContainer {
+    display: flex;
+    flex-direction: column;
+}

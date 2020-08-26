@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load solution_filters %}
+
+{% block title %}Woodrow Wilson Academy{% endblock %}
+
+{% block content %}
+<h1>{{ info.title }}</h1>
+<h3>{{ info.category.first.infoClass }} - {{ info.occurrenceDate.date }}</h3>
+
+    <p>{{ info.mainText | safe }}</p>
+
+{% endblock content %}
