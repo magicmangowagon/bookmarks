@@ -48,7 +48,7 @@
     <div class="course-content-box">
 
             <h3>Driving Question</h3>
-            <p>{{ challengeParent.drivingQ | safe | urlize }}</p>
+            <p>{{ challengeParent.drivingQ | safe }}</p>
 
     </div>
     {% endif %}
@@ -79,8 +79,8 @@
     {% if challengeParent.soldThemes %}
     <div class="course-content-box">
 
-        <h3>SoLd Themes</h3>
-        <p>{{ challengeParent.soldThemes | safe | urlize }}</p>
+        <h3>Science of Learning and Development Themes</h3>
+        <p>{{ challengeParent.soldThemes | safe }}</p>
     </div>
     {% endif %}
 
@@ -88,7 +88,7 @@
     <div class="course-content-box">
 
         <h3>Teaching for Justice Focus</h3>
-        <p>{{ challengeParent.tfjFocus | safe | urlize }}</p>
+        <p>{{ challengeParent.tfjFocus | safe }}</p>
     </div>
     {% endif %}
 

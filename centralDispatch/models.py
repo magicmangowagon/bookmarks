@@ -5,7 +5,8 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.postgres.fields import ArrayField
 from account.models import Profile
-from rubrics.models import Challenge, MegaChallenge, UserSolution, RubricLine, Rubric, SolutionInstance
+from rubrics.models import Challenge, MegaChallenge, UserSolution, RubricLine, Rubric, SolutionInstance, LearningExperience
+from info.models import BaseInfo
 from django.core.exceptions import ValidationError
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
@@ -96,8 +97,12 @@ class ChallengeStatus(models.Model):
     def __str__(self):
         return self.challenge.name + ' ' + self.user.__str__()
 
-   # class Meta:
-       # constraints = (models.UniqueConstraint(fields=['user', 'challenge'], name='unique_challenge_status'),)
+
+class StudioExpoChoice(models.Model):
+    date = models.DateField(auto_now=True)
+    user = models.ForeignKey(User, null=False, default='', on_delete=models.CASCADE)
+    learningExpoChoice = models.ForeignKey(LearningExperience, null=True, default='', on_delete=models.CASCADE)
+    session = models.ForeignKey(BaseInfo, null=False, default='', on_delete=models.CASCADE)
 
 
 @receiver(post_save, sender=UserSolution, dispatch_uid=str(UserSolution))

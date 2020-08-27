@@ -8,5 +8,10 @@
 <h3>{{ info.category.first.infoClass }} - {{ info.occurrenceDate.date }}</h3>
 
     <p>{{ info.mainText | safe }}</p>
-
+    <form class="barSelector">
+    <h4>Which Learning Experience will you be working on in {{ baseinfo.category.first }} this week?</h4>
+    <label>
+   {{ form.learningExpoChoice }}
+        </label>
+    </form>
 {% endblock content %}

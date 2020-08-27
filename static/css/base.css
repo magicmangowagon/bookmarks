@@ -1332,6 +1332,31 @@ input:checked + .sliderCheck:before {
     padding: 2pt 6pt;
 }
 
+.barSelector label{
+    width: fit-content;
+    background-color: unset;
+    color: #003469;
+    clear: unset;
+    font-weight: unset;
+    padding: unset;
+    margin: unset;
+    border-radius: unset;
+    max-width: unset;
+}
+
+.barSelector ul{
+   list-style: none;
+    padding-inline-start: 0;
+    padding: 0;
+    margin: 0;
+}
+
+
+.barSelector input[type="radio"] {
+    margin: auto;
+    float: unset;
+    clear: unset;
+}
 
 
 .infolist h3:hover {

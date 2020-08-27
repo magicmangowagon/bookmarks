@@ -40,7 +40,7 @@ class ChallengeCover(DetailView):
             challenges = Challenge.objects.all().filter(megaChallenge=challengeCover.megaChallenge)
             learningObjectives = LearningObjective.objects.filter(
                 challenge__in=challengeCover.megaChallenge.challenge_set.all()).order_by('compGroup', 'compNumber', 'loNumber')
-
+            print(learningObjectives)
             context['learningObjectives'] = learningObjectives
             context['challengeCover'] = Challenge.objects.all().filter(megaChallenge=challengeCover.megaChallenge)
             context['challengeParent'] = challengeCover.megaChallenge

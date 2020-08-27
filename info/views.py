@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, FormView
 from .models import BaseInfo
+from centralDispatch.models import StudioExpoChoice
+from centralDispatch.forms import StudioExpoChoiceForm
 # Create your views here.
 
 
@@ -19,5 +21,6 @@ class BaseInfoDetail(DetailView):
         context = super(BaseInfoDetail, self).get_context_data(**kwargs)
         info = BaseInfo.objects.get(id=self.kwargs['pk'])
         context['info'] = info
-
+        form = StudioExpoChoiceForm(baseInfo=info, initial={'user': self.request.user, 'session': info},)
+        context['form'] = form
         return context

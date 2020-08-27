@@ -2,7 +2,8 @@ from django import forms
 from django.forms import modelformset_factory, BaseModelFormSet, ModelForm
 from rubrics.models import Challenge, UserSolution, Rubric, RubricLine, CriteriaLine, \
     ChallengeAddendum, LearningExperience, LearningExpoResponses, CoachReview
-from .models import SolutionRouter, AssignmentKeeper, ChallengeStatus, SolutionStatus
+from .models import SolutionRouter, AssignmentKeeper, ChallengeStatus, SolutionStatus, StudioExpoChoice
+from info.models import BaseInfo
 from django.contrib.auth.models import User
 
 # create form for router, then a form for manual assignment. Going to have to dig into AJAX to make this work
@@ -38,6 +39,20 @@ class SolutionStatusForm(forms.ModelForm):
     class Meta:
         model = SolutionStatus
         fields = ['solutionRejected', 'returnTo', 'solutionCompleted']
+
+
+class StudioExpoChoiceForm(forms.ModelForm):
+    learningExpoChoice = forms.ModelChoiceField(queryset=LearningExperience.objects.all(), empty_label=None)
+
+    class Meta:
+        model = StudioExpoChoice
+        fields = ['user', 'learningExpoChoice', 'session']
+        widgets = {'user': forms.HiddenInput(), 'session': forms.HiddenInput(), }
+
+    def __init__(self, baseInfo, *args, **kwargs):
+        super(StudioExpoChoiceForm, self).__init__(*args, **kwargs)
+        self.fields['learningExpoChoice'].widget = forms.RadioSelect()
+        self.fields['learningExpoChoice'].queryset = baseInfo.learningExpos.all()
 
 
 ChallengeStatusFormset = modelformset_factory(ChallengeStatus, extra=0, fields=('user', 'challenge', 'challengeAccepted'))
