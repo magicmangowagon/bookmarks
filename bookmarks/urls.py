@@ -36,6 +36,7 @@ urlpatterns = [
     path('cms/', include(wagtailadmin_urls)),
     path('documents/', include(wagtaildocs_urls)),
     path('pages/', include(wagtail_urls)),
+    path('comments/', include('django_comments_xtd.urls')),
     # re_path(r'', include(wagtail_urls)),
 ]
 

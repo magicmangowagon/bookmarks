@@ -6,5 +6,5 @@ from .views import BaseInfoList, BaseInfoDetail
 
 urlpatterns = [
     path('infolist', BaseInfoList.as_view(), name='infoList'),
-    path('infodetail/<int:pk>', BaseInfoDetail.as_view(), name='infodetail')
+    path('infodetail/<int:pk>', BaseInfoDetail.as_view(), name='infodetail', )
 ]

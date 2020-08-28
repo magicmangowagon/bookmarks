@@ -6,6 +6,7 @@ from datetime import datetime
 from rubrics.models import Challenge, LearningExperience, Evaluated
 
 
+
 # Categories for posts
 class InfoCategory(models.Model):
     infoClass = models.CharField(max_length=600)
@@ -22,3 +23,10 @@ class BaseInfo(models.Model):
     occurrenceDate = models.DateTimeField(default=datetime.now())
     learningExpos = models.ManyToManyField(LearningExperience, blank=True)
     category = models.ManyToManyField(InfoCategory, blank=True)
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('infodetail', args=(self.id,))
+
+    def __str__(self):
+        return self.title

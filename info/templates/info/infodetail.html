@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load solution_filters %}
+{% load comments %}
 
 {% block title %}Woodrow Wilson Academy{% endblock %}
 
@@ -14,4 +15,24 @@
    {{ form.learningExpoChoice }}
         </label>
     </form>
+    <h3>Discussion</h3>
+    {% get_comment_count for object as comment_count %}
+    <div class="py-4 text-center">
+
+  &nbsp;&sdot;&nbsp;
+  {{ comment_count }} comment{{ comment_count|pluralize }}
+  ha{{ comment_count|pluralize:"s,ve" }} been posted.
+{% if comment_count %}
+<hr/>
+<div class="comments">
+  {% render_comment_list for object %}
+</div>
+{% endif %}
+    <div class="card card-block mb-5">
+  <div class="card-body">
+    <h4 class="card-title text-center pb-3">Post your comment</h4>
+      {% render_comment_form for object %}
+  </div>
+</div>
+</div>
 {% endblock content %}

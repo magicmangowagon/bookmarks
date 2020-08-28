@@ -67,6 +67,9 @@ INSTALLED_APPS = [
     'wagtail.admin',
     'wagtail.core',
     'wagtail.contrib.modeladmin',
+    'django_comments_xtd',
+    'django_comments',
+    'django.contrib.sites'
 ]
 
 MIDDLEWARE = [
@@ -83,6 +86,8 @@ MIDDLEWARE = [
     'compression_middleware.middleware.CompressionMiddleware',
 
 ]
+
+
 
 ROOT_URLCONF = 'bookmarks.urls'
 
@@ -172,15 +177,18 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
+
+
 if DEBUG is True:
     # STATIC_URL = 'shit/'
     # STATIC_URL = 'https://' + AWS_S3_CUSTOM_DOMAIN + AWS_LOCATION + '/'
     # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
+    # SITE_ID = 'localhost:8000'
     STATIC_ROOT = '/static/'
     STATIC_URL = '/static/'
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
     DEFAULT_FILE_STORAGE = STATICFILES_STORAGE
+    SITE_ID = 2
 
 else:
     STATIC_URL = 'https://' + AWS_S3_CUSTOM_DOMAIN + AWS_LOCATION + '/'
@@ -188,6 +196,8 @@ else:
     DEFAULT_FILE_STORAGE = STATICFILES_STORAGE
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
     SECURE_SSL_REDIRECT = True
+    SITE_ID = 1
+    # SITE_ID = 'https://' + AWS_S3_CUSTOM_DOMAIN
 
 # STATIC_ROOT = '/static/'
 MEDIA_URL = '/media/'
@@ -204,6 +214,9 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'noreply@wwgradschool.org'
 EMAIL_HOST_PASSWORD = os.environ.get('GSUITE')
+
+COMMENTS_APP = 'django_comments_xtd'
+COMMENTS_XTD_MAX_THREAD_LEVEL = 50
 
 AWS_QUERYSTRING_AUTH = False
 
