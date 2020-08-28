@@ -216,7 +216,7 @@ EMAIL_HOST_USER = 'noreply@wwgradschool.org'
 EMAIL_HOST_PASSWORD = os.environ.get('GSUITE')
 
 COMMENTS_APP = 'django_comments_xtd'
-COMMENTS_XTD_MAX_THREAD_LEVEL = 50
+COMMENTS_XTD_MAX_THREAD_LEVEL = 5
 
 AWS_QUERYSTRING_AUTH = False
 

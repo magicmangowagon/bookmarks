@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load solution_filters %}
+{% load comments %}
+{% load comments_xtd %}
+
+{% block title %}Woodrow Wilson Academy{% endblock %}
+
+{% block content %}
+<h1>{{ discussionBoard.challenge.name }} Discussion</h1>
+    <p>{{ discussionBoard.description | safe }}</p>
+
+
+    <div class="discussionBoard">
+    <div class="addTopic" id="addTopic">
+        <h4>Topics</h4>
+        <button onclick="hideShow('dropDown')" class="addMore">
+            <svg width="1.5rem" height="1.5rem" id="addMorePlus" viewBox="0 0 16 16" class="bi bi-plus-circle-fill" fill="#003469" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+</svg>
+        </button>
+
+    </div>
+        <div id="dropDown" class="dropDown">
+        <form action=""  method="post" enctype="multipart/form-data">
+            <label>{{ addTopic.title.label }}</label>
+            {{ addTopic.title }}
+            <label>{{ addTopic.description.label }}</label>
+            {{ addTopic.description }}
+            {{ addTopic.creator }}
+            {{ addTopic.creationDate }}
+            {{ addTopic.board }}
+        <input type="submit" value="Submit">
+
+            {% csrf_token %}
+        </form>
+            <hr>
+            </div>
+
+
+    {% for object in topics %}
+
+        <div class="discussionTopic">
+            <h4 class="discussionTitle"><a href="/discussiontopic/{{ object.id }}">{{ object.title }}</a> </h4>
+            <span class="topicCreator">{{ object.creator }}</span>
+            <p>{{ object.creationDate }}</p>
+        <p>{{ object.description | truncatewords_html:50 }}</p>
+        </div>
+    {% endfor %}
+
+    </div>
+
+    <script type="text/javascript">
+    function hideShow(id) {
+          var x = document.getElementById(id);
+          if (x.style.display === "none") {
+            x.style.display = "block";
+          } else {
+            x.style.display = "none";
+          }
+        }
+        function hideAll(elemClass) {
+            var x = document.getElementsByClassName(elemClass);
+            for (var i =0; i<x.length; i++){
+                x[i].style.display = "none";
+            }
+        }
+        document.onLoad = hideAll("dropDown")
+    </script>
+{% endblock content %}

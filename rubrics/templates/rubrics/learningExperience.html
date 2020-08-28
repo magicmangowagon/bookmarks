@@ -48,6 +48,9 @@
 
                         <div id="{{ relatedChallenge.pk }}" class="challengeSubNav">
                         <hr>
+
+                                <a href="/discussionboard/{{ discussion.pk }}">Discussion Board</a>
+
                             {% for object in relatedChallenge.learningexperience_set.all %}
                                 <li id="active{{ object.pk }}"><a href="{{ object.pk }}">{{ object.name }}</a> </li>
                             {% endfor %}

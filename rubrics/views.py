@@ -24,6 +24,7 @@ from .filters import EvalFilter
 from centralDispatch.models import ChallengeStatus, SolutionStatus
 from centralDispatch.functions import submissionAlert, evaluationCompleted, process_rubricLine
 from centralDispatch.forms import ChallengeStatusForm, ChallengeStatusFormset
+from info.models import DiscussionBoard
 
 
 class ChallengeCover(DetailView):
@@ -1142,7 +1143,11 @@ class LearningExperienceView(DetailView):
         if learningExpo.challenge.megaChallenge:
             relatedChallenges = MegaChallenge.objects.get(challenge=learningExpo.challenge).challenge_set.all().order_by('my_order')
             for challenge in relatedChallenges:
-                print(challenge.learningexperience_set.all())
+                if DiscussionBoard.objects.filter(challenge=challenge).exists():
+                    print(DiscussionBoard.objects.get(challenge=challenge))
+                    context['discussion'] = DiscussionBoard.objects.get(challenge=challenge)
+                else:
+                    context['discussion'] = ''
             # relatedChallenges = megaChallenge.challenge_set
             context['relatedChallenges'] = relatedChallenges
 
