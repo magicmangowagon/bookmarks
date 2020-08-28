@@ -1321,6 +1321,11 @@ input:checked + .sliderCheck:before {
   border-radius: 34px 0  0 34px;
 }
 
+.lilDesc {
+    margin: auto;
+    font-size: 75%;
+}
+
 .infolist h3{
     width: 100%;
     background-color: #00a497;

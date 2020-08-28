@@ -36,6 +36,11 @@
 
     </div>
     <div class="multiChallengeNav">
+    <div class="learningExpoList">
+
+        <h3><span class="lilDesc">Cover Sheet</span><br>
+            <a href="/challengeCover/{{ learningExpo.challenge.pk }}">{{ learningExpo.challenge.megaChallenge.name }}</a></h3>
+    </div>
         {% if relatedChallenges %}
             {% for relatedChallenge in relatedChallenges %}
                 <div class="learningExpoList">
