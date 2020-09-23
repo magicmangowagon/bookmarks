@@ -114,12 +114,11 @@ def CreateEvaluation(userSolution):
     solutionStatus = SolutionStatus.objects.get(userSolution=userSolution)
     if solutionStatus.solutionEvaluated:
         rubricLines = RubricLine.objects.all().filter(userSolution=userSolution).distinct().latest()
+        return rubricLines
     else:
         if not userSolution.customized:
             learningObjectives = userSolution.solutionInstance.learningObjectives.all()
         else:
             challengeAddendum = ChallengeAddendum.objects.get(userSolution=userSolution)
             learningObjectives = challengeAddendum.learningObjs.all()
-
-
-    return learningObjectives
+        return learningObjectives

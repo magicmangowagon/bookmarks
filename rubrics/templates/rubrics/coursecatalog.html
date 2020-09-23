@@ -45,11 +45,11 @@ Course Catalog
                             <div class="learningObj_list">
                                 {% ifchanged learningObjective %}
                                     <p>{{ learningObjective.loNumber }}: {{ learningObjective.name }}
-                                    <button onclick="hideShow('critList{{ learningObjective.id }}')" class="lilButton">Criteria</button></p>
+                                    <button onclick="hideShow('critList{{ learningObjective.id }}{{ challenge.id }}')" class="lilButton">Criteria</button></p>
                                 {% endifchanged %}
                             </div>
 
-                            <ul id="critList{{ learningObjective.id }}" class="critList">
+                            <ul id="critList{{ learningObjective.id }}{{ challenge.id }}" class="critList">
                                 {% for criterion in learningObjective.return_all_criterion %}
                                             <li>{{ criterion }}</li>
                                 {% endfor %}
