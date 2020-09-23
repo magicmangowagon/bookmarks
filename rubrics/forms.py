@@ -147,3 +147,23 @@ LearningExperienceFormset = modelformset_factory(LearningExperience, formset=Lea
 
 LearningExpoFeedbackFormset = modelformset_factory(LearningExpoResponses, formset=LearningExpoFeedbackForm, fields=(
     'learningExperienceResponse', 'learningExperience', 'user'), widgets={'user': forms.HiddenInput()})
+
+
+class MagicRubricLineForm(forms.ModelForm):
+    class Meta:
+        model = RubricLine
+        fields = ['learningObjective', 'student']
+
+    def __init__(self, learningObjective, *args, **kwargs):
+        super(MagicRubricLineForm, self).__init__(*args, **kwargs)
+        self.field['learningObjective'] = kwargs['instance']
+
+
+MagicRubricLineFormset = modelformset_factory(RubricLine, form=MagicRubricLineForm)
+
+
+
+
+
+
+

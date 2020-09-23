@@ -66,6 +66,9 @@ class LearningObjective(models.Model):
     class Meta:
         ordering = ['compGroup', 'compNumber', 'loNumber']
 
+    def return_all_criterion(self):
+        return Criterion.objects.filter(learningObj=self)
+
 
 # __________
 # CHALLENGES
@@ -139,6 +142,11 @@ class MegaChallenge(models.Model):
 
     def __str__(self):
         return self.name
+
+    def return_all_learningObjectives(self):
+        learningObjectives = LearningObjective.objects.filter(challenge__megaChallenge=self).order_by(
+            'compGroup', 'compNumber', 'loNumber').distinct('compGroup', 'compNumber', 'loNumber').filter(archive=False)
+        return learningObjectives
 
 
 class Challenge(models.Model):

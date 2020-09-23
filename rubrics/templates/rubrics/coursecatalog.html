@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load solution_filters %}
+
+{% block title %}
+Course Catalog
+{% endblock %}
+
+{% block content %}
+    {% for challenge in challenges %}
+<div class="coverSheet">
+    <div class="coverSheetTitleContainer">
+        <div class="coverSheetTitle">
+            <h1>{{ challenge.name }}</h1>
+        </div> <!-- coverSheetTitle -->
+        <div class="challengeGroup">
+            <p>group</p>
+            <h2>{{ challenge.challenge_set.first.challengeGroupChoices }}</h2>
+        </div> <!-- challengeGroup -->
+    </div><!-- coverSheetTitleContainer -->
+
+    <div class="pullQuote">
+            <h2>{{ challenge.challenge_set.first.pullQuote }}</h2>
+    </div> <!-- pullQuote -->
+
+    <div class="course-content-container">
+        <div class="course-content-box">
+            <h3>Challenge Overview</h3>
+            <p>{{ challenge.challenge_set.first.description | safe }}</p>
+        </div> <!-- course-content-box -->
+         {% if challenge.challenge_set.first.drivingQ %}
+            <div class="course-content-box">
+                    <h3>Driving Questions</h3>
+                    <p>{{ challenge.challenge_set.first.drivingQ | safe }}</p>
+            </div> <!-- course-content-box DrivingQ -->
+        {% endif %}
+    </div>
+        <div class="course-content-box">
+            <h3>Learning Objectives</h3>
+        {% for learningObjective in challenge.return_all_learningObjectives %}
+
+                        <div class="competencies">
+                            {% ifchanged learningObjective.competency_set.first.name %}
+                            <p><strong>{{ learningObjective.compGroup }} - {{ learningObjective.competency_set.first.compNumber }} {{ learningObjective.competency_set.first.name }}</strong></p>
+                            {% endifchanged %}
+                            <div class="learningObj_list">
+                                {% ifchanged learningObjective %}
+                                    <p>{{ learningObjective.loNumber }}: {{ learningObjective.name }}
+                                    <button onclick="hideShow('critList{{ learningObjective.id }}')" class="lilButton">Criteria</button></p>
+                                {% endifchanged %}
+                            </div>
+
+                            <ul id="critList{{ learningObjective.id }}" class="critList">
+                                {% for criterion in learningObjective.return_all_criterion %}
+                                            <li>{{ criterion }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+        {% endfor %}
+        </div>
+
+
+
+    {% if challenge.challenge_set.first.soldThemes %}
+    <div class="course-content-box">
+
+        <h3>Science of Learning and Development Themes</h3>
+        <p>{{ challenge.challenge_set.first.soldThemes | safe }}</p>
+    </div>
+    {% endif %}
+
+    {% if challenge.challenge_set.first.tfjFocus %}
+    <div class="course-content-box">
+        <h3>Teaching for Justice Focus</h3>
+        <p>{{ challenge.challenge_set.first.tfjFocus | safe }}</p>
+    </div>
+    {% endif %}
+
+
+    <div class="course-content-box">
+        <h3>Clinical Needs</h3>
+            {% for challenge in challenge.challenge_set.all %}
+                <h4>{{ challenge.name }}</h4>
+                <hr>
+                <p>{{ challenge.clinicalNeeds | safe }}</p>
+            {% endfor %}
+    </div>
+
+    <div>
+            <input type="button" onclick='window.location.href="/subsolutions/{{ challenge.id }}";' value="Next">
+
+
+    </div>
+
+    {% endfor %}
+</div>
+    <script>
+        function hideShow(id) {
+          var x = document.getElementById(id);
+          if (x.style.display === "none") {
+            x.style.display = "block";
+          } else {
+            x.style.display = "none";
+          }
+        }
+        function hideAll(elemClass) {
+            var x = document.getElementsByClassName(elemClass);
+            for (var i =0; i<x.length; i++){
+                x[i].style.display = "none";
+            }
+        }
+        document.onLoad = hideAll("critList")
+
+    </script>
+{% endblock %}

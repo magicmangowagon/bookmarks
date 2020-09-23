@@ -27,6 +27,21 @@ from centralDispatch.forms import ChallengeStatusForm, ChallengeStatusFormset
 from info.models import DiscussionBoard
 
 
+class CourseCatalog(ListView):
+    model = MegaChallenge
+    # queryset = Challenge.objects.all().filter(display=True).order_by('challengeGroupChoices')
+    context_object_name = 'challenges'
+    template_name = 'rubrics/coursecatalog.html'
+    queryset = MegaChallenge.objects.all().filter(display=True).order_by('challengeGroupChoices')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        competencies = Competency.objects.all().order_by('-id', 'compGroup', 'compNumber').distinct('id')
+        context['competencies'] = competencies
+        context['megaChallenges'] = MegaChallenge.objects.all()
+        return context
+
+
 class ChallengeCover(DetailView):
 
     model = Challenge

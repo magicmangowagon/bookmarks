@@ -4,7 +4,7 @@ from .views import ChallengeDetail, ChallengeListView, SolutionDetailView, Solut
     EvalDetailView, EvalListView, RubricFinalFormView, CompetencyView, RubricAddendum, PreEvaluationUpdate, \
     LearningExperienceCreator, LearningExperienceView, ChallengeCover, CoachingReviewView, SolutionSectionView, \
     MegaSubPage, CoachingReviewSession, searchSubmissions, ChallengeResourcesView, TFJHotFixView, \
-    SolutionEvaluationView, TfJSolutionSubmissionView, TfJEvaluation
+    SolutionEvaluationView, TfJSolutionSubmissionView, TfJEvaluation, CourseCatalog
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
@@ -35,5 +35,6 @@ urlpatterns = [
     path('tfj', login_required(TFJHotFixView.as_view()), name='tfj-solutions'),
     path('tfjsolution/<int:pk>', login_required(TfJSolutionSubmissionView.as_view()), name='tfj-submission'),
     path('tfjeval/<int:pk>', login_required(TfJEvaluation.as_view()), name='tfj-evaluation'),
+    path('coursecatalog', login_required(CourseCatalog.as_view()), name='course-catalog'),
     # path('edit/', views.edit, name='edit'),
 ]

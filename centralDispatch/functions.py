@@ -1,4 +1,4 @@
-from rubrics.models import Challenge, UserSolution, SolutionInstance, Rubric, RubricLine
+from rubrics.models import Challenge, UserSolution, SolutionInstance, Rubric, RubricLine, ChallengeAddendum
 from centralDispatch.models import SolutionRouter, AssignmentKeeper, SolutionStatus, ChallengeStatus
 from account.models import Profile
 from django.contrib.auth.models import User
@@ -110,3 +110,16 @@ def GenerateChallengeStatus():
             ChallengeStatus.objects.create(user=userSolution.userOwner, challenge=userSolution.challengeName)
 
 
+def CreateEvaluation(userSolution):
+    solutionStatus = SolutionStatus.objects.get(userSolution=userSolution)
+    if solutionStatus.solutionEvaluated:
+        rubricLines = RubricLine.objects.all().filter(userSolution=userSolution).distinct().latest()
+    else:
+        if not userSolution.customized:
+            learningObjectives = userSolution.solutionInstance.learningObjectives.all()
+        else:
+            challengeAddendum = ChallengeAddendum.objects.get(userSolution=userSolution)
+            learningObjectives = challengeAddendum.learningObjs.all()
+
+
+    return learningObjectives
