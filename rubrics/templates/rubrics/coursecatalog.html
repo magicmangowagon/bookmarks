@@ -27,10 +27,10 @@ Course Catalog
             <h3>Challenge Overview</h3>
             <p>{{ challenge.challenge_set.first.description | safe }}</p>
         </div> <!-- course-content-box -->
-         {% if challenge.challenge_set.first.drivingQ %}
+         {% if challenge.drivingQ %}
             <div class="course-content-box">
                     <h3>Driving Questions</h3>
-                    <p>{{ challenge.challenge_set.first.drivingQ | safe }}</p>
+                    <p>{{ challenge.drivingQ | safe }}</p>
             </div> <!-- course-content-box DrivingQ -->
         {% endif %}
     </div>
@@ -60,18 +60,18 @@ Course Catalog
 
 
 
-    {% if challenge.challenge_set.first.soldThemes %}
+    {% if challenge.soldThemes %}
     <div class="course-content-box">
 
         <h3>Science of Learning and Development Themes</h3>
-        <p>{{ challenge.challenge_set.first.soldThemes | safe }}</p>
+        <p>{{ challenge.soldThemes | safe }}</p>
     </div>
     {% endif %}
 
-    {% if challenge.challenge_set.first.tfjFocus %}
+    {% if challenge.tfjFocus %}
     <div class="course-content-box">
         <h3>Teaching for Justice Focus</h3>
-        <p>{{ challenge.challenge_set.first.tfjFocus | safe }}</p>
+        <p>{{ challenge.tfjFocus | safe }}</p>
     </div>
     {% endif %}
 
