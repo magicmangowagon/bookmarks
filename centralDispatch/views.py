@@ -67,7 +67,8 @@ class NewSolutionDispatch(FormView):
     def get_context_data(self, **kwargs):
         context = super(NewSolutionDispatch, self).get_context_data(**kwargs)
 
-        newSubmissions = UserSolution.objects.filter(evaluated__isnull=True).filter(assignmentkeeper__evaluator__isnull=True).distinct()
+        newSubmissions = UserSolution.objects.filter(evaluated__isnull=True).filter(assignmentkeeper__coach__isnull=True).filter(
+            coachReview__isnull=True).filter(userOwner__is_active=True).distinct()
         solutionInstances = SolutionInstance.objects.filter(usersolution__in=newSubmissions).order_by('usersolution__challengeName__challengeGroupChoices')
         NewSubmissionFormset = modelformset_factory(AssignmentKeeper, extra=0,
                                                     formset=AssignmentKeeperForm,
@@ -82,13 +83,19 @@ class NewSolutionDispatch(FormView):
 
     def post(self, request, *args, **kwargs):
         newSolutionFormset = NewSolutionFormset(request.POST, prefix='newSolutions')
-        newSubmissions = UserSolution.objects.filter(evaluated__isnull=True)
+        newSubmissions = UserSolution.objects.filter(evaluated__isnull=True).filter(
+            assignmentkeeper__coach__isnull=True).filter(
+            coachReview__isnull=True).filter(userOwner__is_active=True).distinct()
         # solutionInstances = SolutionRouter.objects.filter(usersolution__in=newSubmissions).order_by('usersolution__challengeName__challengeGroupChoices')
         asd = AssignmentKeeper.objects.filter(userSolution__in=newSubmissions).exclude(evaluator__isnull=True)
         if newSolutionFormset.is_valid():
             newSolutionFormset.save()
-            for assignmentKeeper in asd:
-                evaluatorAssigned(assignmentKeeper)
+            for form in newSolutionFormset:
+                f = form.instance
+                if f.evaluator:
+                    evaluatorAssigned(f)
+                elif not f.evaluator and f.coach:
+                    evaluatorAssigned(f)
             return self.form_valid(newSolutionFormset)
         else:
             print(newSolutionFormset.errors)

@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -181,13 +181,13 @@ STATICFILES_DIRS = [
 
 if DEBUG is True:
     # STATIC_URL = 'shit/'
-    # STATIC_URL = 'https://' + AWS_S3_CUSTOM_DOMAIN + AWS_LOCATION + '/'
-    # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    STATIC_URL = 'https://' + AWS_S3_CUSTOM_DOMAIN + AWS_LOCATION + '/'
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     # SITE_ID = 'localhost:8000'
     STATIC_ROOT = '/static/'
-    STATIC_URL = '/static/'
-    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-    DEFAULT_FILE_STORAGE = STATICFILES_STORAGE
+    # STATIC_URL = '/static/'
+    # STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+    # DEFAULT_FILE_STORAGE = STATICFILES_STORAGE
     SITE_ID = 2
 
 else:
@@ -219,6 +219,8 @@ COMMENTS_APP = 'django_comments_xtd'
 COMMENTS_XTD_MAX_THREAD_LEVEL = 5
 
 AWS_QUERYSTRING_AUTH = False
+
+ADMINS = ['Liam', 'liamhunt@mit.edu']
 
 DJRICHTEXTFIELD_CONFIG = {
     'js': ['ckeditor/ckeditor/ckeditor.js'],

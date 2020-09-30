@@ -687,6 +687,8 @@ input[type=submit], a.button {
     font-size:12px;
     text-transform:uppercase;
     border-radius: 2pt;
+    font-family: Oswald, "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+    box-shadow: 2px 2px #263d48;
 }
 input:hover[type=submit], a.button {
     font-weight:bold;

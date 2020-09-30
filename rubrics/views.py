@@ -111,8 +111,8 @@ class ChallengeDetail(FormView):
         existingSolutions = UserSolution.objects.all().filter(challengeName=thisChallenge, userOwner=self.request.user)
         theseLearningExpos = LearningExperience.objects.all().filter(challenge=thisChallenge)
         thisSolutionInstance = SolutionInstance.objects.get(pk=self.kwargs['pk'])
-
-        relatedLearningExperiences = LearningExperience.objects.all().filter(challenge=thisChallenge).order_by('index')
+        print(thisChallenge)
+        relatedLearningExperiences = LearningExperience.objects.filter(challenge=thisChallenge).order_by('index')
 
         context['previous'] = relatedLearningExperiences.last().pk
 

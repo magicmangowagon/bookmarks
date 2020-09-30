@@ -50,6 +50,8 @@ Course Catalog
                             </div>
 
                             <ul id="critList{{ learningObjective.id }}{{ challenge.id }}" class="critList">
+                                 <li><strong>Criteria</strong></li>
+
                                 {% for criterion in learningObjective.return_all_criterion %}
                                             <li>{{ criterion }}</li>
                                 {% endfor %}
@@ -86,7 +88,7 @@ Course Catalog
     </div>
 
     <div>
-            <input type="button" onclick='window.location.href="/subsolutions/{{ challenge.id }}";' value="Next">
+
 
 
     </div>
@@ -108,7 +110,7 @@ Course Catalog
                 x[i].style.display = "none";
             }
         }
-        document.onLoad = hideAll("critList")
+
 
     </script>
 {% endblock %}
