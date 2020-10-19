@@ -56,9 +56,10 @@ def evaluationCompleted(userSolution, user):
 def process_rubricLine(rubricLines):
     completed = False
     for RubricLine in rubricLines:
-        if (RubricLine.completionLevel < 50 and RubricLine.needsLaterAttention == 'B') or (RubricLine.completionLevel >= 50 and RubricLine.needsLaterAttention == 'A'):
+        if RubricLine.completionLevel < 50:
             RubricLine.ready = False
             completed = False
+            break
         else:
             RubricLine.ready = True
             completed = True

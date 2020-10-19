@@ -136,12 +136,12 @@ class AssignedSolutions(ListView):
         return context
 
 
-class SolutionTracker(SingleTableMixin, FilterView):
+class SolutionTracker(SingleTableMixin, FilterView, ListView):
     template_name = 'centralDispatch/solutiontracker.html'
     model = SolutionStatus
     table_class = SolutionTable
     table_pagination = {'per_page': 100}
-
+    queryset = SolutionStatus.objects.filter(userSolution__userOwner__is_active=True)
     filterset_class = SolutionTrackerFilter
 
     def get_context_data(self, *, object_list=None, **kwargs):

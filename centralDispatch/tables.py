@@ -31,7 +31,7 @@ class SolutionTable(tables.Table):
             return mc
         except:
             try:
-                mc = self.userSolution.challenge
+                mc = self.userSolution.challengeName
             except:
                 mc = 'Not Found'
             return mc
@@ -53,7 +53,7 @@ class SolutionTable(tables.Table):
     #    return challenge
 
     class Meta:
-        model = SolutionStatus
+        model = SolutionStatus# .objects.filter(userSolution__userOwner__is_active=True)
 
         fields = {'userSolution__userOwner__last_name',
                   'userSolution__userOwner__first_name',

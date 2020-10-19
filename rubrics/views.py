@@ -16,6 +16,7 @@ from django.views.generic.edit import FormMixin
 from django.urls import reverse
 from django.forms import modelformset_factory
 from django.contrib import messages
+# from django.contrib.messages import get_messages
 from django.contrib.auth.models import User, Group
 from django.db.models import Q
 from .functions import assess_competency_done
@@ -511,21 +512,27 @@ class RubricFinalFormView(FormView):
 
     def post(self, request, *args, **kwargs):
         form = RubricFormSet(request.POST, prefix='rFormset')
-        completionLevelObj = RubricLine.objects.all().filter(student=self.kwargs['pk'])
+
         userSolution = UserSolution.objects.get(id=self.kwargs['pk'])
 
         if self.request.user.profile.role >= 3:
             coachForm = CoachReviewFormset(request.POST, prefix='coachRevFormset')
 
         if form.is_valid():
+            super().form_valid(form)
             form.save()
+
+            theseRubricLines = RubricLine.objects.filter(evaluated__whoEvaluated=self.request.user).filter(
+                student=userSolution).order_by('learningObjective__id', '-evaluated__date',).distinct('learningObjective')
+            # completionLevelObj = RubricLine.objects.all().filter(self__in=f)
             if self.request.user.profile.role >= 3:
                 if coachForm.is_valid():
                     coachForm.save()
                     print('coachReview saved')
                     if self.request.user.profile.role >= 3:
-                        process_rubricLine(completionLevelObj)
-                        assess_competency_done(completionLevelObj)
+
+                        process_rubricLine(theseRubricLines)
+                        assess_competency_done(theseRubricLines)
                         evaluationCompleted(userSolution, self.request.user)
             return HttpResponseRedirect('/evals')
         else:
