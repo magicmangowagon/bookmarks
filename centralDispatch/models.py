@@ -62,9 +62,16 @@ class SomethingHappened(models.Model):
     time = ArrayField(models.DateTimeField(), default=list)
     userSolution = models.ForeignKey(UserSolution, on_delete=models.SET_NULL, null=True, default='')
     archivedName = models.CharField(max_length=1000, default='')
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True, null=True)
+    modCount = models.IntegerField(default=0)
 
     def __str__(self):
         return self.userSolution.__str__()
+
+    def save(self, *args, **kwargs):
+        self.modCount += 1
+        return super(SomethingHappened, self).save(*args, **kwargs)
 
 
 class SolutionStatus(models.Model):
@@ -85,6 +92,10 @@ class SolutionStatus(models.Model):
                 return ' status'
         else:
             return self.userSolution.__str__() + ' status'
+
+    def get_somethingHappened(self):
+        somethingHappened = SomethingHappened.objects.get(userSolution=self.userSolution)
+        return somethingHappened
 
 
 class ChallengeStatus(models.Model):

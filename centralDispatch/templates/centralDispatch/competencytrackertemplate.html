@@ -1,0 +1,24 @@
+
+{% extends "base.html" %}
+{% load django_tables2 %}
+{% load render_table from django_tables2 %}
+{% load bootstrap4 %}
+
+
+
+{% block title %}Woodrow Wilson Academy: Competency Tracker{% endblock %}
+
+{% block content %}
+    Something
+    <form action=""  method="get">
+                {{ userWorkForm }}
+
+                <input type="submit" value="change student">
+            </form>
+
+    <ul>
+    {% for rubricLine in rubricLines %}
+        <li>{{ rubricLine }}</li>
+    {% endfor rubricLines %}
+    </ul>
+{% endblock content %}

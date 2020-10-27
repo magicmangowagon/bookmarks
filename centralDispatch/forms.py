@@ -41,6 +41,12 @@ class SolutionStatusForm(forms.ModelForm):
         fields = ['solutionRejected', 'returnTo', 'solutionCompleted']
 
 
+class UserWorkToView(forms.Form):
+    chooseUser = forms.ModelChoiceField(queryset=User.objects.all().filter(profile__role=1).filter(
+        is_active=True).order_by('last_name'), initial=0, required=True, label='Choose User',)
+    fields = ['chooseUser']
+
+
 class StudioExpoChoiceForm(forms.ModelForm):
     learningExpoChoice = forms.ModelChoiceField(queryset=LearningExperience.objects.all(), empty_label=None)
 

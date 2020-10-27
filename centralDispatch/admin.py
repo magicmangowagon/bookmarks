@@ -9,12 +9,14 @@ class SolutionRouterAdmin(admin.ModelAdmin):
 
 @admin.register(AssignmentKeeper)
 class AssignmentKeepAdmin(admin.ModelAdmin):
-    fields = ['userSolution', 'coach', 'evaluator', ]
+    fields = ['userSolution', 'coach', 'evaluator']
 
 
 @admin.register(SomethingHappened)
 class SomethingHappenedAdmin(admin.ModelAdmin):
-    fields = ['userSolution', 'archivedName', 'time']
+    fields = ['userSolution', 'archivedName', 'time', 'created', 'modified']
+    list_display = ['userSolution', 'created']
+    readonly_fields = ['created', 'modified']
 
 
 @admin.register(ChallengeStatus)

@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from rubrics.models import UserSolution, Challenge, Evaluated, SolutionInstance, MegaChallenge
+from rubrics.models import UserSolution, Challenge, Evaluated, SolutionInstance, MegaChallenge, RubricLine, Rubric, \
+    Competency, CompetencyProgress
 from account.models import Profile
 from django.contrib.auth.models import User
 from .models import SolutionRouter, AssignmentKeeper, ChallengeStatus, SolutionStatus
 from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.edit import FormMixin, UpdateView
-from .forms import SolutionRouterForm, AssignmentKeeperForm, SolutionRouterFormset, SolutionRouterFormB, NewSolutionFormset
+from .forms import SolutionRouterForm, AssignmentKeeperForm, SolutionRouterFormset, SolutionRouterFormB, \
+    NewSolutionFormset, UserWorkToView
 from django.forms import BaseModelFormSet, modelformset_factory
 from django import forms
 from django.http import HttpResponseRedirect
@@ -141,7 +143,7 @@ class SolutionTracker(SingleTableMixin, FilterView, ListView):
     model = SolutionStatus
     table_class = SolutionTable
     table_pagination = {'per_page': 100}
-    queryset = SolutionStatus.objects.filter(userSolution__userOwner__is_active=True)
+    queryset = SolutionStatus.objects.filter(userSolution__userOwner__is_active=True).order_by('-userSolution__somethinghappened__created')
     filterset_class = SolutionTrackerFilter
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -175,4 +177,21 @@ class HackingAboutPage(ListView):
         completed = UserSolution.objects.filter(solutionstatus__solutionCompleted=True)
         context['completed'] = completed
 
+        return context
+
+
+class CompetencyTracker(ListView):
+    model = Competency
+    queryset = Competency.objects.all()
+    template_name = 'centralDispatch/competencytrackertemplate.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(CompetencyTracker, self).get_context_data(**kwargs)
+        userWorkForm = UserWorkToView(self.request.GET)
+        context['userWorkForm'] = userWorkForm
+        rubricLines = RubricLine.objects.filter(student__userOwner=User.objects.first())
+
+        if userWorkForm.is_valid():
+            rubricLines = RubricLine.objects.filter(student__userOwner=userWorkForm.cleaned_data['chooseUser'])
+        context['rubricLines'] = rubricLines
         return context

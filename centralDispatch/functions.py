@@ -1,9 +1,10 @@
 from rubrics.models import Challenge, UserSolution, SolutionInstance, Rubric, RubricLine, ChallengeAddendum
-from centralDispatch.models import SolutionRouter, AssignmentKeeper, SolutionStatus, ChallengeStatus
+from centralDispatch.models import SolutionRouter, AssignmentKeeper, SolutionStatus, ChallengeStatus, SomethingHappened
 from account.models import Profile
 from django.contrib.auth.models import User
 from account.models import Profile
 from django.core.mail import send_mail
+from datetime import datetime, timedelta
 
 
 def submissionAlert(challenge, tc):
@@ -131,3 +132,30 @@ def CreateEvaluation(userSolution):
             challengeAddendum = ChallengeAddendum.objects.get(userSolution=userSolution)
             learningObjectives = challengeAddendum.learningObjs.all()
         return learningObjectives
+
+
+def PopulateSomethingHappened():
+    somethings = SomethingHappened.objects.all()
+
+    for s in somethings:
+        if s.time[0]:
+            s.created = s.time[0]
+        else:
+            newTime = datetime.now() - timedelta(days=260)
+            s.time.append(newTime)
+        try:
+            s.modified = s.time[-1]
+            s.modCount = len(s.time)
+        except:
+            pass
+        s.save()
+
+
+def createSomethings():
+    userSolutions = UserSolution.objects.all().filter(somethinghappened__isnull=True)
+
+    for solution in userSolutions:
+        SomethingHappened.objects.create(userSolution=solution)
+        newTime = datetime.now() - timedelta(days=260)
+        SomethingHappened.objects.filter(userSolution=solution).update(created=newTime)
+

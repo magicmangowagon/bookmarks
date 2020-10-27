@@ -1,7 +1,8 @@
 from .views import SolutionDispatch
 from django.urls import path
 from . import views
-from .views import SolutionDispatch, NewSolutionDispatch, AssignedSolutions, SolutionTracker, ChallengeTracker, HackingAboutPage
+from .views import SolutionDispatch, NewSolutionDispatch, AssignedSolutions, SolutionTracker, ChallengeTracker, \
+    HackingAboutPage, CompetencyTracker
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
@@ -11,6 +12,6 @@ urlpatterns = [
     path('assignedsolutions', login_required(AssignedSolutions.as_view()), name='assigned-solutions'),
     path('solutiontracker', login_required(SolutionTracker.as_view()), name='solution-tracker'),
     path('challengetracker', login_required(ChallengeTracker.as_view()), name='challenge-tracker'),
-    path('hackingabout', login_required(HackingAboutPage.as_view()),  name='hackingabout')
-
+    path('hackingabout', login_required(HackingAboutPage.as_view()),  name='hackingabout'),
+    path('competencytracker', login_required(CompetencyTracker.as_view()), name='competency-tracker')
 ]
