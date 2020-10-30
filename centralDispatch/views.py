@@ -12,11 +12,12 @@ from .forms import SolutionRouterForm, AssignmentKeeperForm, SolutionRouterForms
 from django.forms import BaseModelFormSet, modelformset_factory
 from django import forms
 from django.http import HttpResponseRedirect
-from .functions import submissionAlert, evaluatorAssigned
+from .functions import submissionAlert, evaluatorAssigned, processCompetency
 from django_tables2 import SingleTableView, LazyPaginator, SingleTableMixin
 from .tables import SolutionTable, ChallengeTable
 from django_filters.views import FilterView
 from .filters import SolutionTrackerFilter
+import json
 
 
 # Create your views here.
@@ -189,9 +190,13 @@ class CompetencyTracker(ListView):
         context = super(CompetencyTracker, self).get_context_data(**kwargs)
         userWorkForm = UserWorkToView(self.request.GET)
         context['userWorkForm'] = userWorkForm
-        rubricLines = RubricLine.objects.filter(student__userOwner=User.objects.first())
+        rubricLines = RubricLine.objects.filter(student__userOwner=User.objects.first()).order_by(
+            'learningObjective__id', '-student__evaluated__date').distinct('learningObjective')
 
         if userWorkForm.is_valid():
-            rubricLines = RubricLine.objects.filter(student__userOwner=userWorkForm.cleaned_data['chooseUser'])
-        context['rubricLines'] = rubricLines
+            rubricLines = RubricLine.objects.filter(student__userOwner=userWorkForm.cleaned_data['chooseUser']).order_by(
+                'learningObjective__id', '-student__evaluated__date').distinct('learningObjective')
+        context['rubricLines'] = processCompetency(rubricLines)
+        # json.dumps(processCompetency(rubricLines), indent=4)
+
         return context

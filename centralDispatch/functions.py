@@ -1,4 +1,4 @@
-from rubrics.models import Challenge, UserSolution, SolutionInstance, Rubric, RubricLine, ChallengeAddendum
+from rubrics.models import Challenge, UserSolution, SolutionInstance, Rubric, RubricLine, ChallengeAddendum, Competency, LearningObjective
 from centralDispatch.models import SolutionRouter, AssignmentKeeper, SolutionStatus, ChallengeStatus, SomethingHappened
 from account.models import Profile
 from django.contrib.auth.models import User
@@ -72,6 +72,26 @@ def process_rubricLine(rubricLines):
         solutionStatus.save()
         print('completed')
     return rubricLines
+
+
+def processCompetency(rubricLines):
+    learningObjectives = LearningObjective.objects.all().filter(archive=False).order_by('compGroup', 'compNumber', 'loNumber')
+    competencies = Competency.objects.all()
+    compiledRubricLines = {}
+    for competency in competencies:
+        compiledRubricLines.update({competency.id: {}})
+        for lo in learningObjectives:
+            if lo in competency.learningObjs.all():
+                try:
+                    rl = rubricLines.get(learningObjective=lo)
+                    if UserSolution.objects.get(rubricline=rl).solutionstatus_set.first().solutionCompleted is True:
+                        compiledRubricLines[competency.id].update({lo.id: 2})
+                    else:
+                        compiledRubricLines[competency.id].update({lo.id: 1})
+                except RubricLine.DoesNotExist:
+                    compiledRubricLines[competency.id].update({lo.id: 0})
+
+    return compiledRubricLines
 
 
 # script to call when tracking stack goes live to update old

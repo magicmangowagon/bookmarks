@@ -1,24 +1,35 @@
 
 {% extends "base.html" %}
+
 {% load django_tables2 %}
 {% load render_table from django_tables2 %}
 {% load bootstrap4 %}
+{% load static %}
 
 
 
 {% block title %}Woodrow Wilson Academy: Competency Tracker{% endblock %}
 
 {% block content %}
-    Something
+
     <form action=""  method="get">
-                {{ userWorkForm }}
+        {{ userWorkForm }}
+        <input type="submit" value="change student">
+    </form>
 
-                <input type="submit" value="change student">
-            </form>
+    <div id="chart" onclick="createGraph({{ rubricLines }})">
 
-    <ul>
-    {% for rubricLine in rubricLines %}
-        <li>{{ rubricLine }}</li>
-    {% endfor rubricLines %}
-    </ul>
+    </div>
+
+
 {% endblock content %}
+
+{% block javascript %}
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" rel="prefetch"></script>
+    <script type="text/javascript" src="{% static "javascript/visualizations.js" %}"></script>
+    <script type="text/javascript" >
+        $(window).on("load", function () {
+            createGraph({{ rubricLines }}, "chart")
+        })
+    </script>
+{% endblock javascript %}

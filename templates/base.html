@@ -17,10 +17,12 @@
   gtag('config', 'UA-151280334-1');
 </script>
 
+
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
     <link href="{% static "css/base.css" %}" rel="stylesheet">
-
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script rel="prefetch" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
 
 </head>
 <body>
@@ -63,9 +65,12 @@
         {% endblock %}
     </div>
 
-</body>
-    <script rel="prefetch" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+    {% block javascript %}
 
-    <script type="text/javascript" src="{% static "javascript/template_functions.js" %}"></script>
+    {% endblock javascript %}
+
+</body>
+
+
 
 </html>
