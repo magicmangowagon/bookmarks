@@ -85,12 +85,13 @@ def processCompetency(rubricLines):
         for lo in learningObjectives:
             loLabel = str(lo.compGroup) + '.' + str(lo.compNumber) + '-' + str(lo.loNumber)
             if lo in competency.learningObjs.all():
-                rl = rubricLines.filter(learningObjective=lo)
-                for r in rl:
-                    if UserSolution.objects.get(rubricline=r).solutionstatus_set.first().solutionCompleted is True:
-                        compiledRubricLines[str(competency)].update({r.id: [2, loLabel]})
-                    else:
-                        compiledRubricLines[str(competency)].update({r.id: [1, loLabel]})
+                if rubricLines.filter(learningObjective=lo):
+                    rl = rubricLines.filter(learningObjective=lo)
+                    for r in rl:
+                        if UserSolution.objects.get(rubricline=r).solutionstatus_set.first().solutionCompleted is True:
+                            compiledRubricLines[str(competency)].update({r.id: [2, loLabel]})
+                        else:
+                            compiledRubricLines[str(competency)].update({r.id: [1, loLabel]})
                 else:
                     compiledRubricLines[str(competency)].update({lo.id: [0, loLabel]})
 
