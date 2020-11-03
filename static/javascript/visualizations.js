@@ -45,14 +45,15 @@ function createGraph(data, element){
             //label.setAttributeNS(null, "y", labelLocationY.toString())
             label.setAttributeNS(null, "font-family", "Oswald")
             label.setAttributeNS(null, "fill", "black")
-            label.setAttributeNS(null, "font-size", "14pt")
+            label.setAttributeNS(null, "font-size", "12pt")
             label.setAttributeNS(null, "font-weight", "500")
 
             let textNode = document.createTextNode(v[1])
 
             let labelPath = document.createElementNS(xmlns, "textPath")
             labelPath.setAttributeNS(null, "href", "#" + arc.id)
-            labelPath.setAttributeNS(null, "startOffset", "125")
+            labelPath.setAttributeNS(null, "startOffset", "50%")
+            labelPath.setAttributeNS(null, "side", "right")
             // labelPath.appendChild(textNode)
             // labelPath.setAttributeNS(xlink, "xlink:href", arc.id)
             labelPath.appendChild(textNode)
