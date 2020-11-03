@@ -11,13 +11,11 @@
 {% block title %}Woodrow Wilson Academy: Competency Tracker{% endblock %}
 
 {% block content %}
-
     <form action=""  method="get">
         {{ userWorkForm }}
         <input type="submit" value="change student">
     </form>
-
-    <div id="chart" onclick="createGraph({{ rubricLines }})">
+    <div id="chart">
 
     </div>
 
@@ -29,7 +27,8 @@
     <script type="text/javascript" src="{% static "javascript/visualizations.js" %}"></script>
     <script type="text/javascript" >
         $(window).on("load", function () {
-            createGraph({{ rubricLines }}, "chart")
+
+            createGraph({{rubricLines | safe}}, "chart")
         })
     </script>
 {% endblock javascript %}

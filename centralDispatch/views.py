@@ -191,11 +191,13 @@ class CompetencyTracker(ListView):
         userWorkForm = UserWorkToView(self.request.GET)
         context['userWorkForm'] = userWorkForm
         rubricLines = RubricLine.objects.filter(student__userOwner=User.objects.first()).order_by(
-            'learningObjective__id', '-student__evaluated__date').distinct('learningObjective')
+                'learningObjective__id', '-student__evaluated__date').distinct(
+                'learningObjective__id')
 
         if userWorkForm.is_valid():
             rubricLines = RubricLine.objects.filter(student__userOwner=userWorkForm.cleaned_data['chooseUser']).order_by(
-                'learningObjective__id', '-student__evaluated__date').distinct('learningObjective')
+                'learningObjective__id', '-student__evaluated__date').distinct(
+                'learningObjective__id')
         context['rubricLines'] = processCompetency(rubricLines)
         # json.dumps(processCompetency(rubricLines), indent=4)
 

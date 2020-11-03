@@ -647,7 +647,21 @@ ol {
     margin: auto;
 }
 
+#chart {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
 
+.compDiv {
+    text-align: center;
+    font-family: Oswald, "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: auto;
+    display: table;
+    vertical-align: middle;
+}
 
 /* forms */
 form {

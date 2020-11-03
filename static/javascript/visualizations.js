@@ -2,26 +2,30 @@
 
 // d3.select("body").append()
 let xmlns = "http://www.w3.org/2000/svg"
+let xlink = "http://www.w3.org/1999/xlink"
 
 function createGraph(data, element){
     let svgContainer = document.getElementById(element)
     for (const [key, value] of Object.entries(data)) {
-        let g = generateSVG("300", "circle", "#003469", "400", key)
         let i = 1
+        let k = key.toString() + "." + i.toString()
+        let g = generateSVG("300", "circle", "#003469", "400", key)
+        // g.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href")
+
         let startAngle = 0
         for (const [k, v] of Object.entries(data[key])) {
 
             //add strokes or something based on lo's within competency
             let loCount = Object.keys(data[key]).length
             let dashArray = (360 / loCount);
-            console.log(dashArray)
+            // console.log(dashArray)
             // let rot = (360/ [v].findIndex()).toString()
-            console.log([v])
+            // console.log([v])
             let outerCircle = g.getElementById("1."+key.toString())
             let innerCircle = g.getElementById("2."+key.toString());
             let radius = outerCircle.getAttribute("r").toString()
             let strokeColor = ""
-            let v2 = [v][0]
+            let v2 = [v][0][0]
 
             let testNo = 150
             let endAngle = startAngle + dashArray
@@ -33,11 +37,33 @@ function createGraph(data, element){
             arc.setAttributeNS(null, "d", "M"+ "150" + ","
                 + "150" + " L" + x1.toString()+ "," + y1.toString() + " A180,180 "  +  " 0 0,1 " +
                 x2.toString()+ "," + y2.toString() + " z")
+            arc.id = "arc" + key.toString() + i.toString()
+            let labelLocationX = (x1 + x2)/2
+            let labelLocationY = (y1 + y2)/2
+            let label = document.createElementNS(xmlns, "text")
+            //label.setAttributeNS(null, "x", labelLocationX.toString())
+            //label.setAttributeNS(null, "y", labelLocationY.toString())
+            label.setAttributeNS(null, "font-family", "Oswald")
+            label.setAttributeNS(null, "fill", "black")
+            label.setAttributeNS(null, "font-size", "14pt")
+            label.setAttributeNS(null, "font-weight", "500")
+
+            let textNode = document.createTextNode(v[1])
+
+            let labelPath = document.createElementNS(xmlns, "textPath")
+            labelPath.setAttributeNS(null, "href", "#" + arc.id)
+            labelPath.setAttributeNS(null, "startOffset", "125")
+            // labelPath.appendChild(textNode)
+            // labelPath.setAttributeNS(xlink, "xlink:href", arc.id)
+            labelPath.appendChild(textNode)
+            label.appendChild(labelPath)
+
+
             ++i;
-            console.log("start angle" + startAngle.toString() + " endAngle: " + endAngle.toString())
+            // console.log("start angle" + startAngle.toString() + " endAngle: " + endAngle.toString())
 
             startAngle += dashArray
-            console.log(v2)
+            // console.log(v2)
             if (v2 === 2) {
                 strokeColor = "#00a497"
             }
@@ -53,15 +79,33 @@ function createGraph(data, element){
             innerCircle.setAttributeNS(null, "stroke", strokeColor)
             innerCircle.setAttributeNS(null, "stroke-width", outerCircle.getAttribute("r").toString())
             innerCircle.setAttributeNS(null, "stroke-dasharray", dashArray + " 1")
+            g.appendChild(label)
         }
         let svgElem3 = document.createElementNS(xmlns, "circle");
-        svgElem3.id = "3." + key.toString();
-        svgElem3.setAttributeNS(null, "r", "75")
+        svgElem3.id = "3." + key;
+        svgElem3.setAttributeNS(null, "r", "120")
         svgElem3.setAttributeNS(null, "cx", "150")
         svgElem3.setAttributeNS(null, "cy", "150")
         svgElem3.setAttributeNS(null, "fill", "white")
         svgElem3.setAttributeNS(null, "stroke", "#003469")
         g.appendChild(svgElem3)
+        let compWrap = document.createElementNS(xmlns, "foreignObject")
+        compWrap.setAttributeNS(null, "width", "150")
+        compWrap.setAttributeNS(null, "height", "120")
+        compWrap.setAttributeNS(null, "x", "75")
+        compWrap.setAttributeNS(null, "y", "75")
+
+
+        let compLabel = document.createElementNS("http://www.w3.org/1999/xhtml","div")
+        let compText = document.createTextNode(key)
+        let compLabelPos = "150"
+        compLabel.setAttributeNS(null, "class", "compDiv")
+
+        console.log(data[key])
+        compLabel.appendChild(compText)
+        compWrap.appendChild(compLabel)
+        g.appendChild(compWrap)
+        // compDiv.appendChild(compLabel)
         svgContainer.appendChild(g)
     }
 }
@@ -78,7 +122,7 @@ function generateSVG(size, shape, fill, viewport, key) {
     // add shape to each viewBox, turn this into a switch statement/dict or something
     // basically writing my own viz library at this point...
     let svgElem = document.createElementNS(xmlns, shape);
-    svgElem.id = "1." + key.toString();
+    svgElem.id = "1." + key;
     let sizeControl =  (size / 2.5).toString();
     // if (shape === "circle")
         svgElem.setAttributeNS(null, "r", sizeControl)
@@ -87,7 +131,7 @@ function generateSVG(size, shape, fill, viewport, key) {
         svgElem.setAttributeNS(null, "fill", fill)
 
     let svgElem2 = document.createElementNS(xmlns, "circle");
-    svgElem2.id = "2." + key.toString();
+    svgElem2.id = "2." + key;
     let sizeControl2 =  (sizeControl / 2).toString();
     svgElem2.setAttributeNS(null, "r", sizeControl2)
     svgElem2.setAttributeNS(null, "cx", sizeControl)

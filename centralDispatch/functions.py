@@ -75,21 +75,24 @@ def process_rubricLine(rubricLines):
 
 
 def processCompetency(rubricLines):
-    learningObjectives = LearningObjective.objects.all().filter(archive=False).order_by('compGroup', 'compNumber', 'loNumber')
-    competencies = Competency.objects.all()
+    learningObjectives = LearningObjective.objects.all().filter(archive=False).order_by('compGroup', 'compNumber',
+                                                                                        'loNumber').distinct()
+    competencies = Competency.objects.all().order_by('compGroup', 'compNumber')
     compiledRubricLines = {}
     for competency in competencies:
-        compiledRubricLines.update({competency.id: {}})
+        compiledRubricLines.update({str(competency): {}
+                                    })
         for lo in learningObjectives:
+            loLabel = str(lo.compGroup) + '.' + str(lo.compNumber) + '-' + str(lo.loNumber)
             if lo in competency.learningObjs.all():
-                try:
-                    rl = rubricLines.get(learningObjective=lo)
-                    if UserSolution.objects.get(rubricline=rl).solutionstatus_set.first().solutionCompleted is True:
-                        compiledRubricLines[competency.id].update({lo.id: 2})
+                rl = rubricLines.filter(learningObjective=lo)
+                for r in rl:
+                    if UserSolution.objects.get(rubricline=r).solutionstatus_set.first().solutionCompleted is True:
+                        compiledRubricLines[str(competency)].update({r.id: [2, loLabel]})
                     else:
-                        compiledRubricLines[competency.id].update({lo.id: 1})
-                except RubricLine.DoesNotExist:
-                    compiledRubricLines[competency.id].update({lo.id: 0})
+                        compiledRubricLines[str(competency)].update({r.id: [1, loLabel]})
+                else:
+                    compiledRubricLines[str(competency)].update({lo.id: [0, loLabel]})
 
     return compiledRubricLines
 
