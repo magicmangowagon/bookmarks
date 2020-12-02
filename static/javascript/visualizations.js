@@ -147,3 +147,7 @@ function generateSVG(size, shape, fill, viewport, key) {
     return svgCont
 }
 
+
+function generateCircleChart(data) {
+
+}

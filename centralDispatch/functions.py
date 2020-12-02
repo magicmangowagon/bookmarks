@@ -74,15 +74,45 @@ def process_rubricLine(rubricLines):
     return rubricLines
 
 
+def processCompetencyD3(user):
+    challenges = Challenge.objects.all().filter(display=True)
+    learningObjs = {}
+    for challenge in challenges:
+        for solutionInstance in challenge.solutions.all():
+            if UserSolution.objects.filter(solutionInstance=solutionInstance, userOwner=user).exists():
+                userSolution = UserSolution.objects.get(solutionInstance=solutionInstance, userOwner=user)
+                if SolutionStatus.objects.get(userSolution=userSolution).solutionCompleted is True:
+                    for learningObjective in solutionInstance.learningObjectives.all():
+                        learningObjs.update({str(solutionInstance.id) + '.' + str(learningObjective.id): [learningObjective, 1]})
+                else:
+                    for learningObjective in solutionInstance.learningObjectives.all():
+                        learningObjs.update({str(solutionInstance.id) + '.' + str(learningObjective.id): [learningObjective, 2]})
+
+            else:
+                for learningObjective in solutionInstance.learningObjectives.all():
+                    learningObjs.update({str(solutionInstance.id) + '.' + str(learningObjective.id): [learningObjective, 0]})
+    return learningObjs
+
+
 def processCompetency(rubricLines):
     learningObjectives = LearningObjective.objects.all().filter(archive=False).order_by('compGroup', 'compNumber',
                                                                                         'loNumber').distinct()
+    challenges = Challenge.objects.all().filter(display=True)
+    los = []
+
+    print('learningObjectives Length' + str(len(learningObjectives)))
+    for challenge in challenges:
+        for learningObjective in challenge.learningObjs.all():
+            los.append(learningObjective)
     competencies = Competency.objects.all().order_by('compGroup', 'compNumber')
+    print('los Length' + str(len(los)))
     compiledRubricLines = {}
     for competency in competencies:
         compiledRubricLines.update({str(competency): {}
                                     })
-        for lo in learningObjectives:
+        i = 0
+        for lo in los:
+            i += 1
             loLabel = str(lo.compGroup) + '.' + str(lo.compNumber) + '-' + str(lo.loNumber)
             if lo in competency.learningObjs.all():
                 if rubricLines.filter(learningObjective=lo):
@@ -93,7 +123,7 @@ def processCompetency(rubricLines):
                         else:
                             compiledRubricLines[str(competency)].update({r.id: [1, loLabel]})
                 else:
-                    compiledRubricLines[str(competency)].update({lo.id: [0, loLabel]})
+                    compiledRubricLines[str(competency)].update({lo.id + i: [0, loLabel]})
 
     return compiledRubricLines
 

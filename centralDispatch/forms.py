@@ -47,6 +47,7 @@ class UserWorkToView(forms.Form):
     fields = ['chooseUser']
 
 
+
 class StudioExpoChoiceForm(forms.ModelForm):
     learningExpoChoice = forms.ModelChoiceField(queryset=LearningExperience.objects.all(), empty_label=None)
 
