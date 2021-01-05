@@ -25,7 +25,7 @@ function createGraph(data, element){
             let innerCircle = g.getElementById("2."+key.toString());
             let radius = outerCircle.getAttribute("r").toString()
             let strokeColor = ""
-            let v2 = [v][0][0]
+            let v2 = [v][0][1]
 
             let testNo = 150
             let endAngle = startAngle + dashArray
@@ -48,7 +48,7 @@ function createGraph(data, element){
             label.setAttributeNS(null, "font-size", "12pt")
             label.setAttributeNS(null, "font-weight", "500")
 
-            let textNode = document.createTextNode(v[1])
+            let textNode = document.createTextNode(v[0])
 
             let labelPath = document.createElementNS(xmlns, "textPath")
             labelPath.setAttributeNS(null, "href", "#" + arc.id)
@@ -149,5 +149,42 @@ function generateSVG(size, shape, fill, viewport, key) {
 
 
 function generateCircleChart(data) {
+    //console.log(data)
+
+    //console.log(d3.indexes(data, d => d.key))
+    let width = 800
+    let height = 800
+    let radius = Math.min(width, height)/2
+    let color = d3.scaleOrdinal(d3.schemeDark2)
+
+    let g = d3.select('svg')
+        .attr('width', width)
+        .attr('height', height)
+        .append('g')
+        .attr('transform', 'translate(' + width/2 + ',' + height/2 + ')')
+
+    let partition = d3.partition()
+        .size([2 * Math.PI, radius])
+
+    let root = d3.hierarchy(data)
+        .sum(function (d) {
+            return d.size
+        })
+
+    partition(root)
+    let arc = d3.arc()
+        .startAngle(function (d) {return d.x0})
+        .endAngle(function (d) {return d.x1})
+        .innerRadius(function (d) {return d.y0})
+        .outerRadius(function (d) {return d.y1})
+
+    g.selectAll('path')
+        .data(root.descendants())
+        .enter()
+        .append('path')
+        .attr("display", function (d) {return d.depth ? null: "none"})
+        .attr("d", arc)
+        .style('stroke', 'pink')
+        .style('fill', function (d) {return color((d.children ? d : d.parent).data.name)})
 
 }

@@ -190,7 +190,7 @@ class CompetencyTracker(ListView):
         context = super(CompetencyTracker, self).get_context_data(**kwargs)
         userWorkForm = UserWorkToView(self.request.GET)
         context['userWorkForm'] = userWorkForm
-        user = userWorkForm['chooseUser']
+        user = userWorkForm['chooseUser'].initial
         rubricLines = RubricLine.objects.filter(student__userOwner=User.objects.first()).order_by(
                 'learningObjective__id', '-student__evaluated__date').distinct(
                 'learningObjective__id')
@@ -201,7 +201,9 @@ class CompetencyTracker(ListView):
                 'learningObjective__id', '-student__evaluated__date').distinct(
                 'learningObjective__id')
         # context['rubricLines'] = processCompetency(rubricLines)
-        context['d3RubricLines'] = processCompetencyD3(user)
+        context['d3RubricLines'] = json.dumps(processCompetencyD3(user), indent=4, default=lambda x: x.__dict__)
+        # context['d3RubricLines'] = processCompetencyD3(user)
+
         # json.dumps(processCompetency(rubricLines), indent=4)
 
         return context

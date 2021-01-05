@@ -11,12 +11,13 @@
 {% block title %}Woodrow Wilson Academy: Competency Tracker{% endblock %}
 
 {% block content %}
-    <p id="test">{{ d3RubricLines }}</p>
+
     <form action=""  method="get">
         {{ userWorkForm }}
         <input type="submit" value="change student">
     </form>
     <div id="chart">
+        <svg></svg>
 
     </div>
 
@@ -26,10 +27,13 @@
 {% block javascript %}
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" rel="prefetch"></script>
     <script type="text/javascript" src="{% static "javascript/visualizations.js" %}"></script>
+    <script type="text/javascript" src="https://d3js.org/d3.v6.min.js"></script>
+    <script type="text/javascript" src="{% static "javascript/plotly-latest.min.js" %}"></script>
     <script type="text/javascript" >
+
         $(window).on("load", function () {
 
-            createGraph({{rubricLines | safe}}, "chart")
+            generateCircleChart({{d3RubricLines | safe}}, "chart")
         })
     </script>
 {% endblock javascript %}

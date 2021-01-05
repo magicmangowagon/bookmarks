@@ -76,22 +76,62 @@ def process_rubricLine(rubricLines):
 
 def processCompetencyD3(user):
     challenges = Challenge.objects.all().filter(display=True)
-    learningObjs = {}
+    # learningObjs = {}
+    comps = {}
+    learningsObjs = {'name': 'lo', 'children': []}
+    competencies = Competency.objects.all().order_by('compGroup', 'compNumber')
+    i = 1
+    for competency in competencies:
+        comps.update({str(competency): []})
+
     for challenge in challenges:
         for solutionInstance in challenge.solutions.all():
             if UserSolution.objects.filter(solutionInstance=solutionInstance, userOwner=user).exists():
                 userSolution = UserSolution.objects.get(solutionInstance=solutionInstance, userOwner=user)
                 if SolutionStatus.objects.get(userSolution=userSolution).solutionCompleted is True:
                     for learningObjective in solutionInstance.learningObjectives.all():
-                        learningObjs.update({str(solutionInstance.id) + '.' + str(learningObjective.id): [learningObjective, 1]})
+                        # comps['competencies'][str(learningObjective.competency_set.first())].update(
+                        learningsObjs['children'].append(
+                            ({str(learningObjective.id): {
+                                'learning objective': learningObjective.name,
+                                'completionLevel': 1,
+                                'size': 1,
+                                'competency': str(learningObjective.competency_set.first())
+                            }})
+                        )
                 else:
                     for learningObjective in solutionInstance.learningObjectives.all():
-                        learningObjs.update({str(solutionInstance.id) + '.' + str(learningObjective.id): [learningObjective, 2]})
+                        # comps['competencies'][str(learningObjective.competency_set.first())].update(
+                        learningsObjs['children'].append(
+                            ({learningObjective.id: {
+                                'learning objective': learningObjective.name,
+                                'completionLevel': 2,
+                                'size': 1,
+                                'competency': str(learningObjective.competency_set.first())
+                            }})
+                        )
 
             else:
                 for learningObjective in solutionInstance.learningObjectives.all():
-                    learningObjs.update({str(solutionInstance.id) + '.' + str(learningObjective.id): [learningObjective, 0]})
-    return learningObjs
+                    # comps['competencies'][str(learningObjective.competency_set.first())].update(
+                    learningsObjs['children'].append(
+                        ({learningObjective.id: {
+                            'learning objective': learningObjective.name,
+                            'completionLevel': 0,
+                            'size': 1,
+                            'competency': str(learningObjective.competency_set.first())
+                            }})
+                        )
+    # Closest I've gotten. The path were actually drawn before I attempted to
+    # create a nested dict. Weren't circular due to the lack of hierarchical
+    # structure in passed data.
+
+    # this is the shit to work on
+    # for comp in comps:
+    #     for lo in hackyAttempt.items():
+    #         if lo == comp:
+    #             comps[comp].append(lo)
+    return learningsObjs
 
 
 def processCompetency(rubricLines):
