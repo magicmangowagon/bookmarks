@@ -262,7 +262,7 @@ class Competency(models.Model):
     description = models.TextField()
     learningObjs = models.ManyToManyField(LearningObjective, blank=True)
     tags = TaggableManager(blank=True)
-
+    archive = models.BooleanField(default=False)
     # may want to store something called hasCompleted, and/or hasCompletedPreviously
     # if competence is based on mastery of learningObjectives, does that assessment ever change?
     # re-score of a challenge solution could lead to mastery being removed, we should track if that happens

@@ -6,7 +6,7 @@ let xlink = "http://www.w3.org/1999/xlink"
 
 function createGraph(data, element){
     let svgContainer = document.getElementById(element)
-    for (const [key, value] of Object.entries(data)) {
+    for (const [key, size] of Object.entries(data)) {
         let i = 1
         let k = key.toString() + "." + i.toString()
         let g = generateSVG("300", "circle", "#003469", "400", key)
@@ -148,20 +148,22 @@ function generateSVG(size, shape, fill, viewport, key) {
 }
 
 
-function generateCircleChart(data) {
+function generateCircleChart(data2) {
     //console.log(data)
-
+    //let data = d3.group(data2, d => d.name)
+    let data = data2
+    console.log(data2)
     //console.log(d3.indexes(data, d => d.key))
-    let width = 800
-    let height = 800
-    let radius = Math.min(width, height)/2
-    let color = d3.scaleOrdinal(d3.schemeDark2)
+    let width = 1000
+    let height = 1000
+    let radius = Math.min(width, height) / 2
+    let color = d3.scaleOrdinal(d3.schemeBlues[4])
 
     let g = d3.select('svg')
         .attr('width', width)
         .attr('height', height)
         .append('g')
-        .attr('transform', 'translate(' + width/2 + ',' + height/2 + ')')
+        .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
 
     let partition = d3.partition()
         .size([2 * Math.PI, radius])
@@ -173,18 +175,76 @@ function generateCircleChart(data) {
 
     partition(root)
     let arc = d3.arc()
-        .startAngle(function (d) {return d.x0})
-        .endAngle(function (d) {return d.x1})
-        .innerRadius(function (d) {return d.y0})
-        .outerRadius(function (d) {return d.y1})
+        .startAngle(function (d) {
+            return d.x0
+        })
+        .endAngle(function (d) {
+            return d.x1
+        })
+        .innerRadius(function (d) {
+            return d.y0
+        })
+        .outerRadius(function (d) {
+            return d.y1
+        })
 
     g.selectAll('path')
         .data(root.descendants())
         .enter()
+        .append('g')
+        .attr("class", "pathG")
         .append('path')
-        .attr("display", function (d) {return d.depth ? null: "none"})
+        .attr("display", function (d) {
+            return d.depth ? null : "none"
+        })
         .attr("d", arc)
-        .style('stroke', 'pink')
-        .style('fill', function (d) {return color((d.children ? d : d.parent).data.name)})
+        .style('stroke', 'white')
+        .style('fill', function (d) {
+            return color((d.children ? d : d.parent).data.name)
+        })
 
+    g.selectAll('g.pathG')
+        .append("text")
+        .text(function (d){return d.data.name})
+        .attr("class", "compLabel")
+        .attr("y", "1")
+        .attr("dy", "0")
+        .attr("transform", function(d) {
+                        return "translate(" + arc.centroid(d) + ")rotate(" + computeTextRotation(d) + ")";
+                })
+    g.selectAll('text.compLabel')
+        .call(wrap, 150)
+
+}
+
+function computeTextRotation(d) {
+        let angle = (d.x0 + d.x1) / Math.PI * 90;
+
+        // Avoid upside-down labels
+        //return (angle < 120 || angle > 270) ? angle : angle + 180  // labels as rims
+        return (angle < 180) ? angle - 90 : angle + 90  // labels as spokes
+}
+
+function wrap(text, width) {
+  text.each(function() {
+    let text = d3.select(this),
+        words = text.text().split(/\s+/).reverse(),
+        word,
+        line = [],
+        lineNumber = 0,
+        lineHeight = 1.1, // ems
+        y = text.attr("y"),
+        dy = parseFloat(text.attr("dy")),
+        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+    while (word = words.pop()) {
+      line.push(word);
+      tspan.text(line.join(" "));
+      if (tspan.node().getComputedTextLength() > width) {
+        line.pop();
+        tspan.text(line.join(" "));
+        line = [word];
+        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+      }
+    }
+  });
 }

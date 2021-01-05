@@ -663,6 +663,14 @@ ol {
     vertical-align: middle;
 }
 
+.compLabel {
+    text-anchor: middle;
+    alignment-baseline: middle;
+    font-size: 1em;
+    font-family: Oswald, "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+    font-weight: 400;
+}
+
 /* forms */
 form {
     overflow:auto;
