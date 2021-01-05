@@ -97,7 +97,8 @@ def processCompetencyD3(user):
                                 'fullName': learningObjective.name,
                                 'completionLevel': 1,
                                 'size': 1,
-                                'competency': str(learningObjective.competency_set.first())
+                                'competency': str(learningObjective.competency_set.first()),
+                                'children': []
                             }
                         )
                 else:
@@ -109,7 +110,8 @@ def processCompetencyD3(user):
                                 'fullName': learningObjective.name,
                                 'completionLevel': 2,
                                 'size': 1,
-                                'competency': str(learningObjective.competency_set.first())
+                                'competency': str(learningObjective.competency_set.first()),
+                                'children': []
                             }
                         )
 
@@ -120,25 +122,27 @@ def processCompetencyD3(user):
                         {
                             'name': str(learningObjective.compGroup) + '.' + str(learningObjective.compNumber) + '-' + str(learningObjective.loNumber),
                                 'fullName': learningObjective.name,
-                            'completionLevel': 0,
+                            'completionLevel': 0.1,
                             'size': 1,
-                            'competency': str(learningObjective.competency_set.first())
+                            'competency': str(learningObjective.competency_set.first()),
+                            'children': []
                         }
                         )
     # Closest I've gotten. The path were actually drawn before I attempted to
     # create a nested dict. Weren't circular due to the lack of hierarchical
     # structure in passed data.
-    for lo in learningsObjs:
+    for i, lo in enumerate(learningsObjs):
         for comp in comps:
             if lo['competency'] == comp['name']:
-                comp['children'].append(lo)
+                if len(comp['children']) < 1:
+                    comp['children'].append(lo)
+                elif i > 0:
+                    if learningsObjs[i - 1]['competency'] == lo['competency']:
+                        learningsObjs[i - 1]['children'].append(lo)
+
     dataNode = {'name': 'Competencies',
                 'children': comps}
-    # this is the shit to work on
-    # for comp in comps:
-    #     for lo in hackyAttempt.items():
-    #         if lo == comp:
-    #             comps[comp].append(lo)
+
     return dataNode
 
 

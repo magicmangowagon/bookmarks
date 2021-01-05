@@ -669,6 +669,7 @@ ol {
     font-size: 1em;
     font-family: Oswald, "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
     font-weight: 400;
+    fill: white;
 }
 
 /* forms */

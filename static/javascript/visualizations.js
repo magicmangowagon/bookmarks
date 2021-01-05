@@ -152,13 +152,14 @@ function generateCircleChart(data2) {
     //console.log(data)
     //let data = d3.group(data2, d => d.name)
     let data = data2
-    console.log(data2)
-    //console.log(d3.indexes(data, d => d.key))
+    console.log(data)
     let width = 1000
     let height = 1000
     let radius = Math.min(width, height) / 2
     let color = d3.scaleOrdinal(d3.schemeBlues[4])
-
+    let c = d3.scaleThreshold()
+        .domain([0.2, 1.1, 3.1])
+        .range(["#7f8b85", "#81ce81", "#FF7BAC"])
     let g = d3.select('svg')
         .attr('width', width)
         .attr('height', height)
@@ -166,27 +167,25 @@ function generateCircleChart(data2) {
         .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
 
     let partition = d3.partition()
-        .size([2 * Math.PI, radius])
+        .size([2 * Math.PI, radius * radius])
 
     let root = d3.hierarchy(data)
         .sum(function (d) {
             return d.size
         })
-
+        .sort(function (a, b) {
+            return b.value - a.value
+        })
     partition(root)
+
+
+
     let arc = d3.arc()
-        .startAngle(function (d) {
-            return d.x0
-        })
-        .endAngle(function (d) {
-            return d.x1
-        })
-        .innerRadius(function (d) {
-            return d.y0
-        })
-        .outerRadius(function (d) {
-            return d.y1
-        })
+        .startAngle(function(d) { return d.x0 })
+    .endAngle(function(d) { return d.x1 })
+    .innerRadius(function(d) { return Math.sqrt(d.y0)- 1 })
+    .outerRadius(function(d) { return Math.sqrt(d.y1)})
+
 
     g.selectAll('path')
         .data(root.descendants())
@@ -200,8 +199,15 @@ function generateCircleChart(data2) {
         .attr("d", arc)
         .style('stroke', 'white')
         .style('fill', function (d) {
-            return color((d.children ? d : d.parent).data.name)
+            if (d.data.completionLevel) {
+                return c(d.data.completionLevel)
+            }
+            else {
+                return "#003469"
+            }
+
         })
+
 
     g.selectAll('g.pathG')
         .append("text")
@@ -214,6 +220,20 @@ function generateCircleChart(data2) {
                 })
     g.selectAll('text.compLabel')
         .call(wrap, 150)
+
+
+
+}
+
+function autoBox() {
+  document.body.appendChild(this);
+  const {x, y, width, height} = this.getBBox();
+  document.body.removeChild(this);
+  return [x, y, width, height];
+}
+
+function generateStackedRadialChart(data2) {
+
 
 }
 
