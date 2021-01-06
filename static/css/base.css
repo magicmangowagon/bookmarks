@@ -651,6 +651,7 @@ ol {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    align-content: center;
 }
 
 .compDiv {
@@ -662,6 +663,8 @@ ol {
     display: table;
     vertical-align: middle;
 }
+
+
 
 .compLabel {
     text-anchor: middle;

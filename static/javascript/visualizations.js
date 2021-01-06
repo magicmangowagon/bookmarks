@@ -167,15 +167,13 @@ function generateCircleChart(data2) {
         .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
 
     let partition = d3.partition()
-        .size([2 * Math.PI, radius * radius])
+        .size([2 * Math.PI, radius ])
 
     let root = d3.hierarchy(data)
         .sum(function (d) {
             return d.size
         })
-        .sort(function (a, b) {
-            return b.value - a.value
-        })
+
     partition(root)
 
 
@@ -183,8 +181,8 @@ function generateCircleChart(data2) {
     let arc = d3.arc()
         .startAngle(function(d) { return d.x0 })
     .endAngle(function(d) { return d.x1 })
-    .innerRadius(function(d) { return Math.sqrt(d.y0)- 1 })
-    .outerRadius(function(d) { return Math.sqrt(d.y1)})
+    .innerRadius(function(d) { return d.y0 })
+    .outerRadius(function(d) { return d.y1 })
 
 
     g.selectAll('path')

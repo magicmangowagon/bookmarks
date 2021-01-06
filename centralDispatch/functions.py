@@ -98,7 +98,7 @@ def processCompetencyD3(user):
                                 'completionLevel': 1,
                                 'size': 1,
                                 'competency': str(learningObjective.competency_set.first()),
-                                'children': []
+                                'children': returnChallenge(learningObjective, 1)
                             }
                         )
                 else:
@@ -111,7 +111,8 @@ def processCompetencyD3(user):
                                 'completionLevel': 2,
                                 'size': 1,
                                 'competency': str(learningObjective.competency_set.first()),
-                                'children': []
+                                'children': returnChallenge(learningObjective, 2)
+
                             }
                         )
 
@@ -125,25 +126,67 @@ def processCompetencyD3(user):
                             'completionLevel': 0.1,
                             'size': 1,
                             'competency': str(learningObjective.competency_set.first()),
-                            'children': []
+                            'children': returnChallenge(learningObjective, 0.1)
                         }
                         )
     # Closest I've gotten. The path were actually drawn before I attempted to
     # create a nested dict. Weren't circular due to the lack of hierarchical
     # structure in passed data.
-    for i, lo in enumerate(learningsObjs):
-        for comp in comps:
+    for comp in comps:
+        for lo in learningsObjs:
+            pass
+
+    for comp in comps:
+        tempList = []
+        for lo in learningsObjs:
             if lo['competency'] == comp['name']:
-                if len(comp['children']) < 1:
-                    comp['children'].append(lo)
-                elif i > 0:
-                    if learningsObjs[i - 1]['competency'] == lo['competency']:
-                        learningsObjs[i - 1]['children'].append(lo)
+                # if len(comp['children']) < 1:
+                comp['children'].append(lo)
+                # elif i > 0:
+                #    if learningsObjs[i - 1]['competency'] == lo['competency']:
+                #        learningsObjs[i - 1]['children'].append(lo)
+
+    #for comp in comps:
+        # nestList(comp['children'])
 
     dataNode = {'name': 'Competencies',
                 'children': comps}
 
     return dataNode
+
+
+def returnChallenge(learningObj, cL):
+    challengeArray = []
+    challenges = list(learningObj.challenge.all())
+
+    # i = len(challenges) - 1
+    x = len(challenges) - 1
+    for challenge in challenges:
+        challenge = {
+            'name': str(challenge.name),
+            'size': 6,
+            'children': [],
+            'completionLevel': cL
+        }
+        challengeArray.append(challenge)
+    #x = len(challengeArray)
+    if len(challengeArray) > 0:
+        for i, item in enumerate(reversed(challengeArray)):
+            if 0 < i < len(challengeArray):
+                item['children'].append(challengeArray.pop(i - 1))
+            print(str(i))
+    return challengeArray
+
+
+def nestList(comp):
+    #i = len(comp['children']) - 1
+    #tempList = comp['children']
+    print(comp)
+    for i, item in enumerate(reversed(comp)):
+        comp[i]['children'].append(comp.pop(item))
+
+        print('running ' + str(i))
+    return comp
 
 
 def processCompetency(rubricLines):
