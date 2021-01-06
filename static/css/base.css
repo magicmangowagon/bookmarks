@@ -669,10 +669,11 @@ ol {
 .compLabel {
     text-anchor: middle;
     alignment-baseline: middle;
-    font-size: 1em;
+    font-size: 7pt;
     font-family: Oswald, "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
     font-weight: 400;
     fill: white;
+    font-size-adjust: 0.5;
 }
 
 /* forms */

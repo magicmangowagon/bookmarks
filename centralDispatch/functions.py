@@ -96,7 +96,7 @@ def processCompetencyD3(user):
                                 'name': str(learningObjective.compGroup) + '.' + str(learningObjective.compNumber) + '-' + str(learningObjective.loNumber),
                                 'fullName': learningObjective.name,
                                 'completionLevel': 1,
-                                'size': 1,
+                                'size': 3,
                                 'competency': str(learningObjective.competency_set.first()),
                                 'children': returnChallenge(learningObjective, 1)
                             }
@@ -109,7 +109,7 @@ def processCompetencyD3(user):
                                 'name': str(learningObjective.compGroup) + '.' + str(learningObjective.compNumber) + '-' + str(learningObjective.loNumber),
                                 'fullName': learningObjective.name,
                                 'completionLevel': 2,
-                                'size': 1,
+                                'size': 3,
                                 'competency': str(learningObjective.competency_set.first()),
                                 'children': returnChallenge(learningObjective, 2)
 
@@ -124,7 +124,7 @@ def processCompetencyD3(user):
                             'name': str(learningObjective.compGroup) + '.' + str(learningObjective.compNumber) + '-' + str(learningObjective.loNumber),
                                 'fullName': learningObjective.name,
                             'completionLevel': 0.1,
-                            'size': 1,
+                            'size': 3,
                             'competency': str(learningObjective.competency_set.first()),
                             'children': returnChallenge(learningObjective, 0.1)
                         }
@@ -164,17 +164,18 @@ def returnChallenge(learningObj, cL):
     for challenge in challenges:
         challenge = {
             'name': str(challenge.name),
-            'size': 6,
+            'size': 15,
             'children': [],
             'completionLevel': cL
         }
         challengeArray.append(challenge)
-    #x = len(challengeArray)
-    if len(challengeArray) > 0:
-        for i, item in enumerate(reversed(challengeArray)):
-            if 0 < i < len(challengeArray):
+    x = len(challengeArray)
+    # if len(challengeArray) > 0:
+    for i, item in enumerate(challengeArray):
+        if len(challengeArray) > 0:
+            if i < x:
                 item['children'].append(challengeArray.pop(i - 1))
-            print(str(i))
+            print('i ' + str(i) + ' and array length ' + str(len(challengeArray)) + ' ' + item['name'])
     return challengeArray
 
 

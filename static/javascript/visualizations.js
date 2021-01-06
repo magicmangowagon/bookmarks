@@ -217,7 +217,7 @@ function generateCircleChart(data2) {
                         return "translate(" + arc.centroid(d) + ")rotate(" + computeTextRotation(d) + ")";
                 })
     g.selectAll('text.compLabel')
-        .call(wrap, 150)
+        .call(wrap, 120)
 
 
 
