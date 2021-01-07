@@ -189,21 +189,23 @@ class CompetencyTracker(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(CompetencyTracker, self).get_context_data(**kwargs)
         userWorkForm = UserWorkToView(self.request.GET)
-        context['userWorkForm'] = userWorkForm
-        user = userWorkForm['chooseUser'].initial
-        rubricLines = RubricLine.objects.filter(student__userOwner=User.objects.first()).order_by(
-                'learningObjective__id', '-student__evaluated__date').distinct(
-                'learningObjective__id')
+        if self.request.user.profile.role != 1:
+            context['userWorkForm'] = userWorkForm
+            user = userWorkForm['chooseUser'].initial
+            rubricLines = RubricLine.objects.filter(student__userOwner=User.objects.first()).order_by(
+                    'learningObjective__id', '-student__evaluated__date').distinct(
+                    'learningObjective__id')
 
-        if userWorkForm.is_valid():
-            user = userWorkForm.cleaned_data['chooseUser']
-            rubricLines = RubricLine.objects.filter(student__userOwner=userWorkForm.cleaned_data['chooseUser']).order_by(
-                'learningObjective__id', '-student__evaluated__date').distinct(
-                'learningObjective__id')
-        # context['rubricLines'] = processCompetency(rubricLines)
-        context['d3RubricLines'] = json.dumps(processCompetencyD3(user), indent=4)
-        # context['d3RubricLines'] = processCompetencyD3(user)
+            if userWorkForm.is_valid():
+                user = userWorkForm.cleaned_data['chooseUser']
+                rubricLines = RubricLine.objects.filter(student__userOwner=userWorkForm.cleaned_data['chooseUser']).order_by(
+                    'learningObjective__id', '-student__evaluated__date').distinct(
+                    'learningObjective__id')
+            # context['rubricLines'] = processCompetency(rubricLines)
+            context['d3RubricLines'] = json.dumps(processCompetencyD3(user), indent=4)
+            # context['d3RubricLines'] = processCompetencyD3(user)
 
-        # json.dumps(processCompetency(rubricLines), indent=4)
-
+            # json.dumps(processCompetency(rubricLines), indent=4)
+        else:
+            context['d3RubricLines'] = json.dumps(processCompetencyD3(self.request.user), indent=4)
         return context

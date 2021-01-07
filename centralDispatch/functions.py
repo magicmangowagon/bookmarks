@@ -163,13 +163,14 @@ def returnChallenge(learningObj, cL):
     x = len(challenges) - 1
     for challenge in challenges:
         challenge = {
-            'name': str(challenge.name),
+            'name': generateShortName(str(challenge.name)),
+            'fullName': str(challenge.name),
             'size': 15,
             'children': [],
             'completionLevel': cL
         }
         challengeArray.append(challenge)
-    x = len(challengeArray)
+    x = len(challengeArray) - 1
     # if len(challengeArray) > 0:
     for i, item in enumerate(challengeArray):
         if len(challengeArray) > 0:
@@ -177,6 +178,17 @@ def returnChallenge(learningObj, cL):
                 item['children'].append(challengeArray.pop(i - 1))
             print('i ' + str(i) + ' and array length ' + str(len(challengeArray)) + ' ' + item['name'])
     return challengeArray
+
+
+def generateShortName(name):
+    shortName = name.split()
+    result = ''
+    if len(shortName) > 1:
+        for i in range(len(shortName)):
+            result += shortName[i][0].upper()
+    else:
+        result = name
+    return result
 
 
 def nestList(comp):

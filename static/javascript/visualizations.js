@@ -149,10 +149,11 @@ function generateSVG(size, shape, fill, viewport, key) {
 
 
 function generateCircleChart(data2) {
-    //console.log(data)
+
     //let data = d3.group(data2, d => d.name)
     let data = data2
     console.log(data)
+    //console.log(d3.group(data, d => d.data.name()))
     let width = 1000
     let height = 1000
     let radius = Math.min(width, height) / 2
@@ -178,11 +179,23 @@ function generateCircleChart(data2) {
 
 
 
-    let arc = d3.arc()
-        .startAngle(function(d) { return d.x0 })
-    .endAngle(function(d) { return d.x1 })
-    .innerRadius(function(d) { return d.y0 })
-    .outerRadius(function(d) { return d.y1 })
+    //let arc = d3.arc()
+    //    .startAngle(function(d) { return d.x0 })
+    //.endAngle(function(d) { return d.x1 })
+    //.innerRadius(function(d) { return d.y0 })
+    //.outerRadius(function(d) { return d.y1 })
+
+    let rscale = d3.scaleLinear()
+        .domain([0,0.8,1.0])
+        .range([0, 10])
+    console.log(rscale)
+let arc = d3.arc()
+    .startAngle(d => d.x0)
+    .endAngle(d => d.x1)
+    .padAngle(d => Math.min((d.x1 - d.x0) / 12, 0.005))
+    .padRadius(radius * .4)
+    .innerRadius(d => d.y0 )
+    .outerRadius(d => d.y1 * .98)
 
 
     g.selectAll('path')
