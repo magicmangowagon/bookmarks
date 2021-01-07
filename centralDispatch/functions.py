@@ -82,7 +82,8 @@ def processCompetencyD3(user):
     competencies = Competency.objects.all().filter(archive=False).order_by('compGroup', 'compNumber')
     i = 1
     for competency in competencies:
-        comps.append({'name': str(competency), 'children': []})
+        comps.append({'name': str(competency.compGroup) + '.' + str(competency.compNumber), 'fullName': str(competency.name),
+                      'children': []})
 
     for challenge in challenges:
         for solutionInstance in challenge.solutions.all():
@@ -122,32 +123,23 @@ def processCompetencyD3(user):
                     learningsObjs.append(
                         {
                             'name': str(learningObjective.compGroup) + '.' + str(learningObjective.compNumber) + '-' + str(learningObjective.loNumber),
-                                'fullName': learningObjective.name,
+                            'fullName': learningObjective.name,
                             'completionLevel': 0.1,
                             'size': 3,
                             'competency': str(learningObjective.competency_set.first()),
                             'children': returnChallenge(learningObjective, 0.1)
                         }
                         )
-    # Closest I've gotten. The path were actually drawn before I attempted to
-    # create a nested dict. Weren't circular due to the lack of hierarchical
-    # structure in passed data.
-    for comp in comps:
-        for lo in learningsObjs:
-            pass
 
     for comp in comps:
         tempList = []
         for lo in learningsObjs:
-            if lo['competency'] == comp['name']:
+            if lo['competency'] == comp['fullName']:
                 # if len(comp['children']) < 1:
                 comp['children'].append(lo)
                 # elif i > 0:
                 #    if learningsObjs[i - 1]['competency'] == lo['competency']:
                 #        learningsObjs[i - 1]['children'].append(lo)
-
-    #for comp in comps:
-        # nestList(comp['children'])
 
     dataNode = {'name': 'Competencies',
                 'children': comps}
@@ -159,25 +151,24 @@ def returnChallenge(learningObj, cL):
     challengeArray = []
     challenges = list(learningObj.challenge.all())
 
-    # i = len(challenges) - 1
-    x = len(challenges) - 1
+
     for challenge in challenges:
         challenge = {
             'name': generateShortName(str(challenge.name)),
             'fullName': str(challenge.name),
-            'size': 15,
+            'size': 5,
             'children': [],
             'completionLevel': cL
         }
         challengeArray.append(challenge)
     x = len(challengeArray) - 1
     # if len(challengeArray) > 0:
-    for i, item in enumerate(challengeArray):
-        if len(challengeArray) > 0:
-            if i < x:
-                item['children'].append(challengeArray.pop(i - 1))
-            print('i ' + str(i) + ' and array length ' + str(len(challengeArray)) + ' ' + item['name'])
-    return challengeArray
+    #for i, item in enumerate(challengeArray):
+    #    if len(challengeArray) > 0:
+    #        if i < x:
+    #            item['children'].append(challengeArray.pop(i - 1))
+    #        print('i ' + str(i) + ' and array length ' + str(len(challengeArray)) + ' ' + item['name'])
+    return nestList(challengeArray)
 
 
 def generateShortName(name):
@@ -191,15 +182,16 @@ def generateShortName(name):
     return result
 
 
-def nestList(comp):
-    #i = len(comp['children']) - 1
-    #tempList = comp['children']
-    print(comp)
-    for i, item in enumerate(reversed(comp)):
-        comp[i]['children'].append(comp.pop(item))
-
-        print('running ' + str(i))
-    return comp
+def nestList(array):
+    x = len(array)
+    tempList = array
+    for i, item in enumerate(array):
+        # if len(array) > 0:
+         if 0< i < x:
+            item['children'].append(array.pop(array.index(item) - 1))
+            nestList(array)
+        # print('i ' + str(i) + ' and array length ' + str(len(array)) + ' ' + item['name'])
+    return array
 
 
 def processCompetency(rubricLines):

@@ -154,8 +154,8 @@ function generateCircleChart(data2) {
     let data = data2
     console.log(data)
     //console.log(d3.group(data, d => d.data.name()))
-    let width = 1000
-    let height = 1000
+    let width = 1400
+    let height = 1400
     let radius = Math.min(width, height) / 2
     let color = d3.scaleOrdinal(d3.schemeBlues[4])
     let c = d3.scaleThreshold()
@@ -230,23 +230,12 @@ let arc = d3.arc()
                         return "translate(" + arc.centroid(d) + ")rotate(" + computeTextRotation(d) + ")";
                 })
     g.selectAll('text.compLabel')
-        .call(wrap, 120)
+        //.call(wrap, 60)
 
 
 
 }
 
-function autoBox() {
-  document.body.appendChild(this);
-  const {x, y, width, height} = this.getBBox();
-  document.body.removeChild(this);
-  return [x, y, width, height];
-}
-
-function generateStackedRadialChart(data2) {
-
-
-}
 
 function computeTextRotation(d) {
         let angle = (d.x0 + d.x1) / Math.PI * 90;
