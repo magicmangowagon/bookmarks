@@ -134,7 +134,7 @@ def processCompetencyD3(user):
     for comp in comps:
         tempList = []
         for lo in learningsObjs:
-            if lo['competency'] == comp['fullName']:
+            if lo['competency'] == comp['fullName'] and lo not in comp['children']:
                 # if len(comp['children']) < 1:
                 comp['children'].append(lo)
                 # elif i > 0:

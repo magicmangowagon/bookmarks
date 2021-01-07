@@ -152,7 +152,7 @@ function generateCircleChart(data2) {
 
     //let data = d3.group(data2, d => d.name)
     let data = data2
-    console.log(data)
+    //console.log(d3.group(data.Competencies, d => d.name))
     //console.log(d3.group(data, d => d.data.name()))
     let width = 1400
     let height = 1400
@@ -184,11 +184,13 @@ function generateCircleChart(data2) {
     //.endAngle(function(d) { return d.x1 })
     //.innerRadius(function(d) { return d.y0 })
     //.outerRadius(function(d) { return d.y1 })
+let x = d3.scaleLinear()
+    .domain([0, 1])
+    .range([0, 2 * Math.PI])
+    let y = d3.scaleLinear()
+    .domain([0, 1])
+    .range([0, 2 * Math.PI])
 
-    let rscale = d3.scaleLinear()
-        .domain([0,0.8,1.0])
-        .range([0, 10])
-    console.log(rscale)
 let arc = d3.arc()
     .startAngle(d => d.x0)
     .endAngle(d => d.x1)
@@ -196,6 +198,11 @@ let arc = d3.arc()
     .padRadius(radius * .4)
     .innerRadius(d => d.y0 )
     .outerRadius(d => d.y1 * .98)
+    //.startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x))); })
+    //.endAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx))); })
+    //.innerRadius(function(d) { return Math.max(0, y(d.y)); })
+    //.outerRadius(function(d) { return Math.max(0, y(d.y + d.dy)); });
+    let keyC = [0, 1, 2]
 
 
     g.selectAll('path')
@@ -218,6 +225,8 @@ let arc = d3.arc()
             }
 
         })
+        .on("click", click)
+
 
 
     g.selectAll('g.pathG')
@@ -229,9 +238,15 @@ let arc = d3.arc()
         .attr("transform", function(d) {
                         return "translate(" + arc.centroid(d) + ")rotate(" + computeTextRotation(d) + ")";
                 })
+
     g.selectAll('text.compLabel')
         //.call(wrap, 60)
+    let svg = d3.select("svg")
 
+
+    function click(d) {
+      generateCircleChart(d => d.children)
+    }
 
 
 }
