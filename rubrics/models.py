@@ -70,8 +70,6 @@ class LearningObjective(models.Model):
         return Criterion.objects.filter(learningObj=self)
 
 
-
-
 # __________
 # CHALLENGES
 # Works as the main/only way to organize learningObjectives and therefore rubricLines for TC completion.

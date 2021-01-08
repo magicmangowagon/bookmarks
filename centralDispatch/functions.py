@@ -1,4 +1,4 @@
-from rubrics.models import Challenge, UserSolution, SolutionInstance, Rubric, RubricLine, ChallengeAddendum, Competency, LearningObjective
+from rubrics.models import Challenge, MegaChallenge, UserSolution, SolutionInstance, Rubric, RubricLine, ChallengeAddendum, Competency, LearningObjective
 from centralDispatch.models import SolutionRouter, AssignmentKeeper, SolutionStatus, ChallengeStatus, SomethingHappened
 from account.models import Profile
 from django.contrib.auth.models import User
@@ -65,12 +65,10 @@ def process_rubricLine(rubricLines):
             RubricLine.ready = True
             completed = True
         RubricLine.save()
-    print('checking for completion')
     if completed:
         solutionStatus = SolutionStatus.objects.get(userSolution=rubricLines.first().student)
         solutionStatus.solutionCompleted = True
         solutionStatus.save()
-        print('completed')
     return rubricLines
 
 
@@ -82,15 +80,21 @@ def processCompetencyD3(user):
     competencies = Competency.objects.all().filter(archive=False).order_by('compGroup', 'compNumber')
     i = 1
     for competency in competencies:
-        comps.append({'name': str(competency.compGroup) + '.' + str(competency.compNumber), 'fullName': str(competency.name),
+        comps.append({'name': str(competency.compGroup) + '.' + str(competency.compNumber),
+                      'fullName': str(competency.name),
+                      'id': competency.pk,
                       'children': []})
 
+    # this needs to be reworked, I don't think we actually care about
+    # each lo/rubricLine, pull one instance of each lo (link it up
+    # with any other versions of it) and then move on to the challenge/megaChallenge
+    # and solutionInstance collection
     for challenge in challenges:
         for solutionInstance in challenge.solutions.all():
             if UserSolution.objects.filter(solutionInstance=solutionInstance, userOwner=user).exists():
                 userSolution = UserSolution.objects.get(solutionInstance=solutionInstance, userOwner=user)
                 if SolutionStatus.objects.get(userSolution=userSolution).solutionCompleted is True:
-                    for learningObjective in solutionInstance.learningObjectives.all():
+                    for learningObjective in solutionInstance.learningObjectives.all().order_by('id').distinct('id'):
                         # comps['competencies'][str(learningObjective.competency_set.first())].update(
                         learningsObjs.append(
                             {
@@ -118,7 +122,7 @@ def processCompetencyD3(user):
                         )
 
             else:
-                for learningObjective in solutionInstance.learningObjectives.all():
+                for learningObjective in solutionInstance.learningObjectives.all().order_by('id').distinct('id'):
                     # comps['competencies'][str(learningObjective.competency_set.first())].update(
                     learningsObjs.append(
                         {
@@ -132,14 +136,9 @@ def processCompetencyD3(user):
                         )
 
     for comp in comps:
-        tempList = []
         for lo in learningsObjs:
             if lo['competency'] == comp['fullName'] and lo not in comp['children']:
-                # if len(comp['children']) < 1:
                 comp['children'].append(lo)
-                # elif i > 0:
-                #    if learningsObjs[i - 1]['competency'] == lo['competency']:
-                #        learningsObjs[i - 1]['children'].append(lo)
 
     dataNode = {'name': 'Competencies',
                 'children': comps}
@@ -147,27 +146,24 @@ def processCompetencyD3(user):
     return dataNode
 
 
-def returnChallenge(learningObj, cL):
+# pull out the challenges that this LO is in
+# change it to pull the megachallenge, and
+# create an aggregate list of solution instances
+def returnChallenge(learningObj, cl):
     challengeArray = []
-    challenges = list(learningObj.challenge.all())
+    challenges = learningObj.challenge.all()
 
+    for challenge in list(challenges):
 
-    for challenge in challenges:
         challenge = {
             'name': generateShortName(str(challenge.name)),
             'fullName': str(challenge.name),
             'size': 5,
             'children': [],
-            'completionLevel': cL
+            'completionLevel': cl
         }
         challengeArray.append(challenge)
-    x = len(challengeArray) - 1
-    # if len(challengeArray) > 0:
-    #for i, item in enumerate(challengeArray):
-    #    if len(challengeArray) > 0:
-    #        if i < x:
-    #            item['children'].append(challengeArray.pop(i - 1))
-    #        print('i ' + str(i) + ' and array length ' + str(len(challengeArray)) + ' ' + item['name'])
+
     return nestList(challengeArray)
 
 
@@ -184,13 +180,10 @@ def generateShortName(name):
 
 def nestList(array):
     x = len(array)
-    tempList = array
     for i, item in enumerate(array):
-        # if len(array) > 0:
-         if 0< i < x:
+        if 0 < i < x:
             item['children'].append(array.pop(array.index(item) - 1))
             nestList(array)
-        # print('i ' + str(i) + ' and array length ' + str(len(array)) + ' ' + item['name'])
     return array
 
 

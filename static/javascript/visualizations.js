@@ -225,9 +225,6 @@ let arc = d3.arc()
             }
 
         })
-        .on("click", click)
-
-
 
     g.selectAll('g.pathG')
         .append("text")
@@ -242,13 +239,6 @@ let arc = d3.arc()
     g.selectAll('text.compLabel')
         //.call(wrap, 60)
     let svg = d3.select("svg")
-
-
-    function click(d) {
-      generateCircleChart(d => d.children)
-    }
-
-
 }
 
 
