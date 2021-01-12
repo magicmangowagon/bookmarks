@@ -992,9 +992,9 @@ class CoachingReviewView(FormView):
             criteriaLines = CriteriaLine.objects.filter(userSolution=thisUserSolution, evaluator__whoEvaluated=self.request.user).order_by(
                 'criteria__learningObj__id')
         else:
-            print('farts')
-            criteriaLines = CriteriaLine.objects.all().filter(userSolution=thisUserSolution, ).order_by(
-                'criteria__learningObj__id').distinct('criteria__learningObj')
+            print('no criteria lines detected')
+            criteriaLines = CriteriaLine.objects.all().filter(userSolution=thisUserSolution).order_by('-criteria_id',
+                'criteria__learningObj__id').distinct('criteria_id')
 
         context['finalRubric'] = finalRubric
         context['learningObjectives'] = lo_list
@@ -1047,6 +1047,7 @@ class CoachingReviewView(FormView):
                                            queryset=CriteriaLine.objects.filter(userSolution=thisUserSolution,
                                                                                 evaluator__whoEvaluated=self.request.user).distinct())
         else:
+            print(criteriaLines.count())
             # evaluated = Evaluated.objects.create(whoEvaluated=self.request.user)
             CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, extra=len(criteriaLines), fields=(
                 'achievement', 'criteria', 'userSolution'), widgets={'criteria': forms.HiddenInput,
@@ -1287,7 +1288,8 @@ class EvalListView(ListView):
         if profile.role == 3 or profile.role == 2:
             group = self.request.user.groups.all()
             print(group)
-            queryset = UserSolution.objects.filter(userOwner__groups__in=group).filter(evaluated__isnull=False).distinct()
+            queryset = UserSolution.objects.filter(userOwner__groups__in=group).filter(
+                evaluated__isnull=False).order_by('-id')
             return queryset
 
         else:

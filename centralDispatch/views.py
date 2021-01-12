@@ -108,24 +108,25 @@ class NewSolutionDispatch(FormView):
 class AssignedSolutions(ListView):
     template_name = 'rubrics/eval_list.html'
     queryset = UserSolution.objects.none()
+    paginate_by = 2
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(AssignedSolutions, self).get_context_data()
         if self.request.user.profile.role == 1:
-            tc = UserSolution.objects.all().filter(userOwner=self.request.user)
+            tc = UserSolution.objects.all().filter(userOwner=self.request.user).order_by('-id')
             context['userSolutions'] = tc
 
         elif self.request.user.profile.role == 2:
             evaluator = UserSolution.objects.all().filter(assignmentkeeper__evaluator=self.request.user.profile)
             if UserSolution.objects.all().filter(evaluated__whoEvaluated=self.request.user).exists():
-                pastEvals = UserSolution.objects.all().filter(evaluated__whoEvaluated=self.request.user)
+                pastEvals = UserSolution.objects.all().filter(evaluated__whoEvaluated=self.request.user).order_by('-id')
                 context['userSolutions'] = evaluator | pastEvals
             else:
                 context['userSolutions'] = evaluator
 
         elif self.request.user.profile.role == 3:
             coach = UserSolution.objects.all().filter(assignmentkeeper__coach=self.request.user.profile)
-            topic = UserSolution.objects.all().filter(userOwner__profile__subjectMatter=self.request.user.profile.subjectMatter)
+            topic = UserSolution.objects.all().filter(userOwner__profile__subjectMatter=self.request.user.profile.subjectMatter).order_by('-id')
             if UserSolution.objects.all().filter(evaluated__whoEvaluated=self.request.user).exists():
                 pastEvals = UserSolution.objects.all().filter(evaluated__whoEvaluated=self.request.user)
                 context['userSolutions'] = coach | pastEvals | topic
@@ -133,7 +134,7 @@ class AssignedSolutions(ListView):
                 context['userSolutions'] = coach | topic
 
         elif self.request.user.profile.role == 4:
-            everyone = UserSolution.objects.all()
+            everyone = UserSolution.objects.all().order_by('-id')
             context['userSolutions'] = everyone
 
         return context
