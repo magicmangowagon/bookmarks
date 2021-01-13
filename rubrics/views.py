@@ -533,7 +533,9 @@ class RubricFinalFormView(FormView):
 
                         process_rubricLine(theseRubricLines)
                         assess_competency_done(theseRubricLines)
-                        evaluationCompleted(userSolution, self.request.user)
+            # moved this out of the above conditional, thinking this is the
+            # reason evaluation notifications aren't going out to coaches
+            evaluationCompleted(userSolution, self.request.user)
             return HttpResponseRedirect('/evals')
         else:
             messages.error(request, "Error")
@@ -1045,7 +1047,7 @@ class CoachingReviewView(FormView):
 
             critFormset = CriterionFormSet(prefix='criteria',
                                            queryset=CriteriaLine.objects.filter(userSolution=thisUserSolution,
-                                                                                evaluator__whoEvaluated=self.request.user).distinct())
+                                                                                evaluator__whoEvaluated=self.request.user))
         else:
             print(criteriaLines.count())
             # evaluated = Evaluated.objects.create(whoEvaluated=self.request.user)
