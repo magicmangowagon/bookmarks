@@ -8,6 +8,6 @@
 
     </form>
     {% for object in object_list %}
-        <a href="portfolioUpload/{{ object.id }}">{{ object.name }}</a>
+        <a href="portfoliodetail/{{ object.id }}">{{ object.portfolio.name }}</a>
     {% endfor %}
 {% endblock content %}

@@ -11,6 +11,7 @@ class UserPortfolioForm(forms.ModelForm):
     class Meta:
         model = UserPortfolio
         fields = ['creator', 'chosenLearningObjs', 'portfolio', 'link', 'proudDetail', 'hardDetail']
+        widgets = {'creator': forms.HiddenInput, 'portfolio': forms.HiddenInput}
 
     def __init__(self, portfolio, *args, **kwargs):
         super(UserPortfolioForm, self).__init__(*args, **kwargs)
