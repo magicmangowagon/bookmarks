@@ -30,6 +30,7 @@ urlpatterns = [
     path('', include('growthTracker.urls')),
     path('', include('info.urls')),
     path('', include('centralDispatch.urls')),
+    path('', include('portfolio.urls')),
     path('djrichtextfield/', include('djrichtextfield.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('admin/', admin.site.urls),

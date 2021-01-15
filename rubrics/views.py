@@ -6,6 +6,7 @@ from centralDispatch.models import SolutionRouter
 from .models import Challenge, UserSolution, Rubric, RubricLine, LearningObjective, Criterion, CriteriaLine, \
     Competency, CompetencyProgress, ChallengeAddendum, LearningExperience, LearningExpoResponses, Evaluated, \
     CoachReview, SolutionInstance, MegaChallenge, ChallengeResources, ChallengeResourcesFile, TfJEval, TfJSolution
+from portfolio.models import Portfolio, UserPortfolio
 from .forms import UserFileForm, UserFileFormset, RubricLineForm, RubricLineFormset, RubricForm, RubricFormSet, \
     CriterionFormSet, CriteriaForm, CurrentStudentToView, RubricAddendumForm, RubricAddendumFormset, \
     LearningExperienceFormset, LearningExperienceForm, LearningExpoFeedbackForm, LearningExpoFeedbackFormset, \
@@ -294,7 +295,7 @@ class SolutionSectionView(DetailView):
         context['challenge'] = challenge
         context['lo_list'] = LearningObjective.objects.all().filter(challenge=challenge).order_by('compGroup', 'compNumber', 'loNumber')
         solutions = SolutionInstance.objects.all().filter(challenge_that_owns_me=challenge).order_by('order')
-
+        portfolios = Portfolio.objects.filter(challenge=challenge)
         # field_value = getattr(obj, field_name)
         for solution in solutions:
 
@@ -308,8 +309,20 @@ class SolutionSectionView(DetailView):
                                (solution.CLASSROOMEVIDENCE, 'Classroom Evidence', solution.name),
                                (solution.OBSERVATION, 'Observation', solution.name)]
 
+            for portfolio in portfolios:
+                context['pdegree'] = [(portfolio.DESIGN, 'Design', portfolio.name),
+                                     (portfolio.SIMULATE, 'Simulate', portfolio.name),
+                                     (solution.IMPLEMENT, 'Implement', solution.name)]
+                context['pscale'] = [(portfolio.ONEONONE, 'One on One', portfolio.name),
+                                    (portfolio.SMALLGROUP, 'Small Group', portfolio.name),
+                                    (portfolio.FULLCLASS, 'Full Class', portfolio.name)]
+                context['ptype'] = [(portfolio.REFLECTION, 'Reflection', portfolio.name),
+                                   (portfolio.CLASSROOMEVIDENCE, 'Classroom Evidence', portfolio.name),
+                                   (portfolio.OBSERVATION, 'Observation', portfolio.name)]
+
         print(solutions.count())
         context['solutions'] = solutions
+        context['portfolios'] = portfolios
         return context
 
 

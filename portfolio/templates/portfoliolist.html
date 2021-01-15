@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+
+{% block title %}Woodrow Wilson Academy{% endblock %}
+
+{% block content %}
+     <form>
+
+    </form>
+    {% for object in object_list %}
+        <a href="portfolioUpload/{{ object.id }}">{{ object.name }}</a>
+    {% endfor %}
+{% endblock content %}

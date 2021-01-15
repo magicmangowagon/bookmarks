@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+
+{% block title %}Woodrow Wilson Academy{% endblock %}
+
+{% block content %}
+<form method="post">
+    {{ form }}
+    <input type="submit" value="Upload Solution">
+{% csrf_token %}
+    </form>
+{% endblock content %}

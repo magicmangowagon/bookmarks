@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'growthTracker.apps.GrowthtrackerConfig',
     'info.apps.InfoConfig',
     'centralDispatch.apps.CentraldispatchConfig',
+    'portfolio.apps.PortfolioConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -176,7 +177,6 @@ AWS_DEFAULT_ACL = 'public-read'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-
 
 
 if DEBUG is True:
@@ -328,5 +328,5 @@ CORS_ORIGIN_ALLOW_ALL = True
 # Configure Django App for Heroku.
 django_heroku.settings(locals(), staticfiles=False)
 
-#Wagtail
+# Wagtail
 WAGTAIL_SITE_NAME = 'The Orchard'
