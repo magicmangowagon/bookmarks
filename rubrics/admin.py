@@ -82,7 +82,7 @@ class TfJEvalAdmin(admin.ModelAdmin):
 class Evaluated(admin.ModelAdmin):
     list_display = ['whoEvaluated', 'date']
     inlines = [
-        UserSolutionInline, RubricLineInline
+        UserSolutionInline,
     ]
 
 
