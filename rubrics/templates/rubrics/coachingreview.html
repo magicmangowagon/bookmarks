@@ -30,12 +30,14 @@ Evaluate Challenge {{ finalRubric.challenge.name }}
                 {% endif %}
                     {{ form.student }}
                     {{ critFormset.management_form }}
+                    <li style="display: none" id="{{ form.learningObjective.value }}"></li>
                     <ul>
                         {% for criteria in criteria %}
-                            {% if criteria.learningObj_id == form.learningObjective.value %}
-                                <li>{{ criteria }}:
-                                    {% for CriteriaForm in critFormset %}
 
+                            {% if criteria.learningObj_id == form.learningObjective.value %}
+
+                                <li id="{{ criteria.id }}">{{ criteria }}:
+                                    {% for CriteriaForm in critFormset %}
                                         {% if CriteriaForm.criteria.value == criteria.id %}
 
                                             {{ CriteriaForm.achievement }}{{ CriteriaForm.criteria }}{{ CriteriaForm.userSolution }}</li><br>

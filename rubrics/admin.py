@@ -9,6 +9,7 @@ from .models import LearningObjective, Rubric, Criterion, Competency, Challenge,
 
 class CriteriaInline(admin.TabularInline):
     model = Criterion
+    fields = ['name', ]
 
 
 class LearningObjsInline(admin.TabularInline):

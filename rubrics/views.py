@@ -608,6 +608,7 @@ class RubricFormView(FormView):
         # The idea: Run through the list of learning objectives attached to this challenge and add criterion
         # to contextual list if they match one of the learning objectives.
         neededCriteria = Criterion.objects.filter(learningObj__in=lo_list)
+        print(neededCriteria)
         criteriaLength = len(neededCriteria)
 
         # edit view, checks for rubricLine objects from this challenge
@@ -616,7 +617,7 @@ class RubricFormView(FormView):
         context['count'] = criteriaLength
 
         if RubricLine.objects.filter(student=thisUserSolution).filter(evaluated__whoEvaluated=self.request.user).exists():
-
+            print("found rubricLines in Eval form")
             RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=0, fields=(
                 'ignore', 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions', 'completionLevel',
                 'student', 'needsLaterAttention'), widgets={'student': forms.HiddenInput,
@@ -987,12 +988,22 @@ class CoachingReviewView(FormView):
         # Check if this is a modified solution
         if thisUserSolution.customized:
             challenge = ChallengeAddendum.objects.get(userSolution=thisUserSolution)
-            lo_list = LearningObjective.objects.filter(challengeaddendum=challenge)
+            # lo_list = LearningObjective.objects.filter(challengeaddendum=challenge)
         else:
             challenge = UserSolution.objects.get(pk=userSolution).solutionInstance
-            lo_list = LearningObjective.objects.filter(solutioninstance=challenge)
-        criteria = Criterion.objects.filter(learningObj__in=lo_list).order_by('learningObj_id')
+            # lo_list = LearningObjective.objects.filter(solutioninstance=challenge)
+
+        if RubricLine.objects.filter(student=thisUserSolution).exists:
+            lo_list = []
+            criteria = []
+            pastRubricLines = RubricLine.objects.filter(student=thisUserSolution).order_by('learningObjective__id').distinct('learningObjective__id')
+            for r in pastRubricLines:
+                lo_list.append(r.learningObjective)
+                for c in r.learningObjective.return_all_criterion():
+                    criteria.append(c)
+            # lo_list = LearningObjective.objects.filter(learningObjective__in=pastRubricLines.all())
         # set rubricLines based on whether this is a new evaluation or not
+        # criteria = Criterion.objects.filter(learningObj__in=lo_list).order_by('learningObj_id')
         if RubricLine.objects.all().filter(evaluated__whoEvaluated=self.request.user, student=thisUserSolution).exists():
             rubricLines = RubricLine.objects.all().filter(evaluated__whoEvaluated=self.request.user, student=
             thisUserSolution).exclude(evaluated__isnull=True).order_by('learningObjective__id', '-evaluated__date').distinct('learningObjective')
