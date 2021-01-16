@@ -37,13 +37,17 @@ def evaluatorAssigned(assignmentKeeper):
 
 
 def evaluationCompleted(userSolution, user):
+    print('evaluationCompletedFunctionRunning')
     try:
         email_recipient = AssignmentKeeper.objects.get(userSolution=userSolution).coach.user.email
         send_mail('The Orchard: New evaluator submission', user.first_name +
                   ' has submitted an evaluation for ' + str(userSolution),
                   'noreply@wwgradschool.org', [email_recipient, ], fail_silently=False)
+        print('evaluationCompletedFunctionRunning "within try"')
+
     except:
         users = User.objects.all().filter(profile__role=4)
+        print('evaluationCompletedFunctionRunning "within except"')
         email_recipients = []
         for user in users:
             email_recipients.append(user.email)

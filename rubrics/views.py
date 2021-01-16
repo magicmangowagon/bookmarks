@@ -534,7 +534,9 @@ class RubricFinalFormView(FormView):
         if form.is_valid():
             super().form_valid(form)
             form.save()
-
+            evaluated = Evaluated.objects.create(whoEvaluated=self.request.user)
+            userSolution.evaluated.add(evaluated)
+            userSolution.save()
             theseRubricLines = RubricLine.objects.filter(evaluated__whoEvaluated=self.request.user).filter(
                 student=userSolution).order_by('learningObjective__id', '-evaluated__date',).distinct('learningObjective')
             # completionLevelObj = RubricLine.objects.all().filter(self__in=f)
@@ -542,10 +544,9 @@ class RubricFinalFormView(FormView):
                 if coachForm.is_valid():
                     coachForm.save()
                     print('coachReview saved')
-                    if self.request.user.profile.role >= 3:
-
-                        process_rubricLine(theseRubricLines)
-                        assess_competency_done(theseRubricLines)
+                    # if self.request.user.profile.role >= 3:
+                        # process_rubricLine(theseRubricLines)
+                        # assess_competency_done(theseRubricLines)
             # moved this out of the above conditional, thinking this is the
             # reason evaluation notifications aren't going out to coaches
             evaluationCompleted(userSolution, self.request.user)
