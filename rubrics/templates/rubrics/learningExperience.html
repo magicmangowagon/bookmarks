@@ -44,7 +44,7 @@
         {% if relatedChallenges %}
             {% for relatedChallenge in relatedChallenges %}
                 <div class="learningExpoList">
-                    <h3><a onclick="challengeNavShow({{ relatedChallenge.pk }})">{{ relatedChallenge.name }} </a></h3>
+                    <h3 id="{{ relatedChallenge }}"><a onclick="challengeNavShow({{ relatedChallenge.pk }})">{{ relatedChallenge.name }} </a></h3>
 
                         <div id="{{ relatedChallenge.pk }}" class="challengeSubNav">
                         <hr>
@@ -52,9 +52,11 @@
                                 <a href="/discussionboard/{{ discussion.pk }}">Discussion Board</a>
 
                             {% for object in relatedChallenge.learningexperience_set.all %}
-                                <li id="active{{ object.pk }}"><a href="{{ object.pk }}">{{ object.name }}</a> </li>
+                                <li id="active{{ object.pk }}" class="anExpo"><a href="{{ object.pk }}">{{ object.name }}</a> </li>
                             {% endfor %}
+                        {% if relatedChallenge.solutions.all %}
                                 <li class="solutionUpload"><a href="/solutionsection/{{ relatedChallenge.pk }}">Solution Upload </a> </li>
+                        {% endif %}
                             {% if resources %}
                                 <li><a href="/challengeResources/{{ resources.pk }}">Challenge Resources</a> </li>
                             {% endif %}
@@ -69,7 +71,7 @@
         <ul>
 
             {% for expoList in expoList %}
-                <li id="active{{ expoList.pk }}"><a href="{{ expoList.pk }}">{{ expoList.name }}</a> </li>
+                <li id="active{{ expoList.pk }}" ><a href="{{ expoList.pk }}">{{ expoList.name }}</a> </li>
             {% endfor %}
                 <li class="solutionUpload"><a href="/solutionsection/{{ learningExpo.challenge.pk }}">Solution Upload </a> </li>
             {% if resources %}
@@ -83,7 +85,12 @@
      </div>
 
     {% if last == True %}
-    <input type="button" onclick='window.location.href="/solutionsection/{{ learningExpo.challenge.pk }}";' value="Next">
+        {% if learningExpo.challenge.solutions.all %}
+            <input type="button" onclick='window.location.href="/solutionsection/{{ learningExpo.challenge.pk }}";' value="Next">
+        {% else %}
+
+            <input id ="nextBtn" type="button"  onclick='window.location.href="{{ nextLearningExpo }}";' value="Next">
+        {% endif %}
     {% else %}
         <input type="button" onclick='window.location.href="{{ nextLearningExpo }}";' value="Next">
 {% endif %}
@@ -94,6 +101,7 @@
     <input type="button" onclick='window.location.href="{{ previous }}";' value="Previous">
 {% endif %}
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+            <script type="text/javascript" src="{% static "javascript/challengeNav.js" %}"></script>
 
 <script>
 function challengeNavShow (challenge) {

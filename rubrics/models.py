@@ -108,6 +108,7 @@ class SolutionInstance(models.Model):
 class MegaChallenge(models.Model):
     name = models.CharField(default='', max_length=500)
     display = models.BooleanField('Show Challenge', default=True)
+    collapse = models.BooleanField(default=False, verbose_name='Collapse sub challenges')
     solutions = models.ManyToManyField(SolutionInstance, blank=True, related_name="mega_challenge_that_owns_me")
     overRide = models.BooleanField(default=False)
     description = RichTextUploadingField('Challenge Overview', default='', blank=True)

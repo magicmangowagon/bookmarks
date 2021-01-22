@@ -385,9 +385,10 @@ class MegaSubPage(FormView):
     def get_context_data(self, **kwargs):
         context = super(MegaSubPage, self).get_context_data(**kwargs)
         challenges = Challenge.objects.all().filter(megaChallenge=self.kwargs['pk']).order_by('my_order')
-        context['challenges'] = challenges
+        megaChallenge = MegaChallenge.objects.get(id=self.kwargs['pk'])
+        context['megachallenge'] = megaChallenge
         learningExpos = []
-
+        context['challenges'] = challenges
         # Determine best way to stop non-tc's from generating these models, leave as is for now
         for challenge in challenges:
             learningExpos.append(LearningExperience.objects.all().filter(challenge=challenge).order_by('index').first())
@@ -1212,14 +1213,17 @@ class LearningExperienceView(DetailView):
         print(str(learningExpo.index) + ' of ' + str(relatedLearningExperiences.count()))
 
         if learningExpo != relatedLearningExperiences.last():
-            print(relatedLearningExperiences[learningExpo.index].index)
+            # print(relatedLearningExperiences[learningExpo.index].index)
 
             context['nextLearningExpo'] = LearningExperience.objects.get(challenge=learningExpo.challenge, index=learningExpo.index + 1).pk
             context['last'] = False
         else:
-            context['nextLearningExpo'] = learningExpo.challenge
-            context['last'] = True
-
+            if learningExpo.challenge.solutions.all():
+                context['nextLearningExpo'] = learningExpo.challenge
+                context['last'] = True
+            else:
+                context['nextLearningExpo'] = learningExpo.challenge
+                context['last'] = True
         if learningExpo != relatedLearningExperiences.first():
             context['previous'] = LearningExperience.objects.get(challenge=learningExpo.challenge, index=learningExpo.index - 1).pk
             context['first'] = False

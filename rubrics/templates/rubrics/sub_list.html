@@ -1,12 +1,14 @@
 {% extends "base.html" %}
-
+{% load static %}
 
 {% block title %}Woodrow Wilson Academy{% endblock %}
 
 {% block content %}
 <h1>{{ megachallenge.name }} Challenge Parts</h1>
 
+
 {% for challenge in challenges %}
+    <div id="{{ challenge.id }}" class="subChallenge">
 <h2>
     {% for learningExpo in learningExpos %}
         {% if learningExpo.challenge == challenge %}
@@ -46,7 +48,20 @@
                 {{ learningObjective.loNumber }}</li>
         {% endfor %}
     </ul>
-
+</div>
 {% endfor %}
 </div>
 {% endblock content %}
+
+{% block javascript %}
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" rel="prefetch"></script>
+    <script type="text/javascript" src="{% static "javascript/challengeNav.js" %}"></script>
+    {% if megachallenge.collapse %}
+        <script type="text/javascript">
+
+            $(window).on("load", function () {
+                    collapseMegaChallenge()
+                })
+        </script>
+    {% endif %}
+{% endblock javascript %}
