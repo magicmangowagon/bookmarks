@@ -48,7 +48,7 @@
                     <h3 id="{{ relatedChallenge }}"><a onclick="challengeNavShow({{ relatedChallenge.pk }})">
                         {% if not relatedChallenge.megaChallenge.collapse %}{{ relatedChallenge.name }}
                         {% else %}
-                            Part {{ relatedChallenges|returnIndex:relatedChallenge }}
+                            Section {{ relatedChallenges|returnIndex:relatedChallenge }}
                         {% endif %} </a></h3>
 
                         <div id="{{ relatedChallenge.pk }}" class="challengeSubNav">
