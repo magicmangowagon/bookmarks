@@ -96,12 +96,15 @@
     <div class="course-content-box">
         <h3>Clinical Needs</h3>
         {% if challengeCover.0.megaChallenge %}
-
-            {% for challengeCover in challengeCover %}
-                <h4>{{ challengeCover.name }}</h4>
-                <hr>
-                <p>{{ challengeCover.clinicalNeeds | safe }}</p>
-            {% endfor %}
+            {% if not challengeCover.0.megaChallenge.collapse %}
+                {% for challengeCover in challengeCover %}
+                    <h4>{{ challengeCover.name }}</h4>
+                    <hr>
+                    <p>{{ challengeCover.clinicalNeeds | safe }}</p>
+                {% endfor %}
+            {% else %}
+                {{ challengeCover.0.megaChallenge.clinicalNeeds | safe }}
+            {% endif %}
         {% else %}
             <p>{{ challengeCover.clinicalNeeds | safe }}</p>
         {% endif %}

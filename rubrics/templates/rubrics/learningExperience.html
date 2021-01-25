@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}
+    {% load solution_filters %}
 {{ learningExpo.name }}
 {% endblock %}
 
@@ -44,7 +45,11 @@
         {% if relatedChallenges %}
             {% for relatedChallenge in relatedChallenges %}
                 <div class="learningExpoList">
-                    <h3 id="{{ relatedChallenge }}"><a onclick="challengeNavShow({{ relatedChallenge.pk }})">{{ relatedChallenge.name }} </a></h3>
+                    <h3 id="{{ relatedChallenge }}"><a onclick="challengeNavShow({{ relatedChallenge.pk }})">
+                        {% if not relatedChallenge.megaChallenge.collapse %}{{ relatedChallenge.name }}
+                        {% else %}
+                            Part {{ relatedChallenges|returnIndex:relatedChallenge }}
+                        {% endif %} </a></h3>
 
                         <div id="{{ relatedChallenge.pk }}" class="challengeSubNav">
                         <hr>
@@ -89,7 +94,7 @@
             <input type="button" onclick='window.location.href="/solutionsection/{{ learningExpo.challenge.pk }}";' value="Next">
         {% else %}
 
-            <input id ="nextBtn" type="button"  onclick='window.location.href="{{ nextLearningExpo }}";' value="Next">
+            <input id ="nextBtn" type="button"  onclick='window.location.href="{{ relatedChallenges|nextExpo:learningExpo.challenge }}";' value="Next">
         {% endif %}
     {% else %}
         <input type="button" onclick='window.location.href="{{ nextLearningExpo }}";' value="Next">
