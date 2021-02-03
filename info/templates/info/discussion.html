@@ -22,13 +22,16 @@
     </div>
         <div id="dropDown" class="dropDown">
         <form action=""  method="post" enctype="multipart/form-data">
+
             <label>{{ addTopic.title.label }}</label>
             {{ addTopic.title }}
             <label>{{ addTopic.description.label }}</label>
+
             {{ addTopic.description }}
             {{ addTopic.creator }}
             {{ addTopic.creationDate }}
             {{ addTopic.board }}
+            {{ addTopic.media }}
         <input type="submit" value="Submit">
 
             {% csrf_token %}
@@ -43,7 +46,7 @@
             <h4 class="discussionTitle"><a href="/discussiontopic/{{ object.id }}">{{ object.title }}</a> </h4>
             <span class="topicCreator">{{ object.creator }}</span>
             <p>{{ object.creationDate }}</p>
-        <p>{{ object.description | truncatewords_html:50 }}</p>
+        <p>{{ object.description | truncatewords_html:50 | safe }}</p>
         </div>
     {% endfor %}
 

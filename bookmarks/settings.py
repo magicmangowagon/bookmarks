@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -252,7 +252,7 @@ DJRICHTEXTFIELD_CONFIG = {
 
         ],
         'format_tags': 'p;h1;h2;h3',
-        'width': 1000
+        'width': 'calc(100% - 1pt)'
     }
 }
 
@@ -318,7 +318,7 @@ CKEDITOR_CONFIGS = {
             'dialogui',
             'elementspath'
         ]),
-        'width': 1000
+        'width': '100%'
     }
 }
 

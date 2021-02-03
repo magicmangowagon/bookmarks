@@ -1418,13 +1418,51 @@ input:checked + .sliderCheck:before {
     background-color: #de9404;
 }
 
-
+.discussionBoard {
+    width: 100%;
+}
 
 .addTopic {
     display: flex;
     flex-direction: row;
     width: 10%;
     vertical-align: center;
+}
+
+.dropDown label {
+    width: 100%;
+    border-radius: unset;
+    padding: 4pt 0 4pt 2pt;
+    margin: 12pt auto 0;
+    clear: unset;
+    max-width: unset;
+
+}
+
+.dropDown input[type=text] {
+    width: 100%;
+    padding: 2pt 0;
+    margin: 10pt 0;
+    border-radius: unset;
+    border: 1px solid  #d1d1d1;
+}
+
+.dropDown input[type=submit] {
+    float: unset;
+}
+
+.dropDown .cke_contents {
+    border: 1px solid  #d1d1d1;
+}
+
+.dropDown .cke_chrome {
+    border: none;
+}
+
+.dropDown form {
+    overflow: unset;
+    width: auto;
+    border: none;
 }
 
 .comments {
