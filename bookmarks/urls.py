@@ -38,6 +38,7 @@ urlpatterns = [
     path('documents/', include(wagtaildocs_urls)),
     path('pages/', include(wagtail_urls)),
     path('comments/', include('django_comments_xtd.urls')),
+    path('hijack/', include('hijack.urls'))
     # re_path(r'', include(wagtail_urls)),
 ]
 

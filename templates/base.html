@@ -4,9 +4,10 @@
 {% load staticfiles %}
 {% load solution_filters %}
 {% load comments %}
-
+{% load hijack_tags %}
 <html lang="en">
 <head>
+<link rel="stylesheet" type="text/css" href="{% static 'hijack/hijack-styles.css' %}" />
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async rel="prefetch" src="https://www.googletagmanager.com/gtag/js?id=UA-151280334-1"></script>
 <script>
@@ -26,6 +27,7 @@
 
 </head>
 <body>
+{% hijack_notification %}
     <div id="header">
     <div class="headerBottom">
         <span class="logo"><img height="100px" alt="Woodrow Wilson Graduate School of Teaching and Learning" src="{% static "media/hm_logo.png" %}"></span>

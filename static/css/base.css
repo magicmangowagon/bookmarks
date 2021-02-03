@@ -1470,6 +1470,19 @@ input:checked + .sliderCheck:before {
     padding: 1pt 10pt;
 }
 
+.hijackBtn {
+    background: #f5dd5d;
+    color: #003469;
+    padding: 2px;
+    margin: 10pt 0 0;
+    font-size: 10px;
+    text-transform: uppercase;
+    border-radius: 2pt;
+    font-family: Oswald, "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+    box-shadow: 2px 2px #de9404;
+    border-color: unset;
+}
+
 .infolist h3{
     width: 100%;
     background-color: #00a497;

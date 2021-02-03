@@ -210,3 +210,15 @@ class CompetencyTracker(ListView):
         else:
             context['d3RubricLines'] = json.dumps(processCompetencyD3(self.request.user), indent=4)
         return context
+
+
+def assume_id(request):
+
+    if request.method == 'POST':
+
+        form = UserWorkToView(request.POST)
+        if form.is_valid():
+            user = form.cleaned_data['chooseUser'].id
+            return redirect('hijack/', user)
+    else:
+        return render(request, 'centralDispatch/assume_id.html', {'form': UserWorkToView})

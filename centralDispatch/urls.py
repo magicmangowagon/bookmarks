@@ -2,7 +2,7 @@ from .views import SolutionDispatch
 from django.urls import path
 from . import views
 from .views import SolutionDispatch, NewSolutionDispatch, AssignedSolutions, SolutionTracker, ChallengeTracker, \
-    HackingAboutPage, CompetencyTracker
+    HackingAboutPage, CompetencyTracker, assume_id
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
@@ -13,5 +13,6 @@ urlpatterns = [
     path('solutiontracker', login_required(SolutionTracker.as_view()), name='solution-tracker'),
     path('challengetracker', login_required(ChallengeTracker.as_view()), name='challenge-tracker'),
     path('hackingabout', login_required(HackingAboutPage.as_view()),  name='hackingabout'),
-    path('competencytracker', login_required(CompetencyTracker.as_view()), name='competency-tracker')
+    path('competencytracker', login_required(CompetencyTracker.as_view()), name='competency-tracker'),
+    path('assumeuserid', login_required(assume_id), name='assume-id')
 ]

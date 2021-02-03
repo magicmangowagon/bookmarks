@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -70,7 +70,9 @@ INSTALLED_APPS = [
     'wagtail.contrib.modeladmin',
     'django_comments_xtd',
     'django_comments',
-    'django.contrib.sites'
+    'django.contrib.sites',
+    'hijack',
+    'compat'
 ]
 
 MIDDLEWARE = [

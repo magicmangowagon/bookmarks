@@ -5,6 +5,12 @@
 {% endblock %}
 
 {% block content %}
+    {% if request.user.profile.role is 4 %}
+<form action="/hijack/{{ usersolution.userOwner_id }}/" method="post">
+    {% csrf_token %}
+    <button type="submit">Hijack {{ usersolution.userOwner.username }}</button>
+</form>
+{% endif %}
 <div id="stuckDiv">
 <div class="infoBar">
     <div class="infoBarSub"> <h1>{{ usersolution.challengeName }} - <em>{{ usersolution.solutionInstance }}</em></h1>

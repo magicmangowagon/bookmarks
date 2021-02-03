@@ -24,7 +24,12 @@
     {% for userSolution in filter.qs %}
         <div class="competencyPod">
                 <h3>{{ userSolution.userOwner.last_name }} - {{ userSolution.challengeName }}</h3>
-
+                {% if request.user.profile.role == 4 %}
+                    <form action="/hijack/{{ userSolution.userOwner.id }}/" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="hijackBtn">Assume id: {{ userSolution.userOwner.username }}</button>
+                    </form>
+                {% endif %}
                  <h4>{{ userSolution.solutionInstance.name }} - <a href="solutions/{{ userSolution.id }}">Solution</a></h4>
 
                 <p><a href="evals/{{ userSolution.id }}">Evaluation</a> | <a href="coachingreview/{{ userSolution.id }}">Coach Review</a></p>

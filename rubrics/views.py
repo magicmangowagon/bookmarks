@@ -1453,7 +1453,7 @@ class CompetencyView(ListView, FormMixin):
 
 
 def searchSubmissions(request):
-    solutions = UserSolution.objects.all()
+    solutions = UserSolution.objects.all().order_by('-evaluated__date')
     coachReviews = CoachReview.objects.all()
     solution_filter = EvalFilter(request.GET, queryset=solutions)
     return render(request, 'rubrics/solutions.html', {'filter': solution_filter, 'coachReview': coachReviews})

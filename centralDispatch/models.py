@@ -126,16 +126,19 @@ def create_assignment_tracking_models(sender, **kwargs):
         except ChallengeStatus.DoesNotExist:
             print('created challenge status')
             challengeStatus = ChallengeStatus.objects.create(challenge=kwargs['instance'].challengeName, user=kwargs['instance'].userOwner)
-
+        # what the fuck is going on here! Clean this up, figure out how to call this
         if SolutionStatus.objects.filter(solutionInstance=kwargs['instance'].solutionInstance,
                                          challengestatus__solutionStatusByInstance__challengestatus__user=kwargs['instance'].userOwner).exists():
             print('found solution status object' + str(kwargs['instance'].solutionInstance))
-            s = challengeStatus.solutionStatusByInstance.get(solutionInstance=kwargs['instance'].solutionInstance)
+            s = SolutionStatus.objects.get(solutionInstance=kwargs['instance'].solutionInstance,
+                                         challengestatus__solutionStatusByInstance__challengestatus__user=kwargs['instance'].userOwner)
             s.userSolution = kwargs['instance']
+            s.solutionInstance = kwargs['instance'].solutionInstance
             s.solutionSubmitted = True
             s.save()
         else:
-            s = SolutionStatus.objects.create(userSolution=kwargs['instance'], solutionSubmitted=True, )
+            s = SolutionStatus.objects.create(userSolution=kwargs['instance'], solutionSubmitted=True,
+                                              solutionInstance=kwargs['instance'].solutionInstance)
             challengeStatus.solutionStatusByInstance.add(s)
             challengeStatus.save()
 

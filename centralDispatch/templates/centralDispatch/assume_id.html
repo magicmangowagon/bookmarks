@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Assume Id {% endblock %}
+{% block content %}
+<h1>Assume role of user</h1>
+<form  method="post" >
+    {{ form }}
+<input type="submit" >
+{% csrf_token %}
+</form>
+{% endblock %}
