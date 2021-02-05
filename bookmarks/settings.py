@@ -335,3 +335,25 @@ django_heroku.settings(locals(), staticfiles=False)
 
 # Wagtail
 WAGTAIL_SITE_NAME = 'The Orchard'
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+        'file': {
+           'level': 'ERROR',
+           'class': 'logging.FileHandler',
+           'filename': 'static/log.django',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'ERROR'),
+        },
+    },
+}
