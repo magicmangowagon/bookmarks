@@ -30,7 +30,13 @@
         {% for learningObjective in solution.learningObjectives.all %}
             <li class="challengeListObj"><strong>{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}
                         .{{ learningObjective.loNumber }}</strong>
-                    {{ learningObjective.name }}</li>
+                    {{ learningObjective.name }}
+            <button onclick="hideShow('critList{{ learningObjective.id }}')" class="lilButton">Criteria</button>
+            {% for crit in learningObjective.return_all_criterion %}
+                <ul id="critList{{ learningObjective.id }}" class="critList">
+                <li>{{ crit }}</li>
+                </ul>
+                {% endfor %}</li>
         {% endfor %}
         </ul>
             <h3>Solution Bounds</h3>
@@ -183,7 +189,24 @@
 
 {% endfor %}
 
+<script>
+        function hideShow(id) {
+          var x = document.getElementById(id);
+          if (x.style.display === "none") {
+            x.style.display = "block";
+          } else {
+            x.style.display = "none";
+          }
+        }
+        function hideAll(elemClass) {
+            var x = document.getElementsByClassName(elemClass);
+            for (var i =0; i<x.length; i++){
+                x[i].style.display = "none";
+            }
+        }
+        document.onLoad = hideAll("critList")
 
+    </script>
 </div>
 
 <div class="solutionNav">
