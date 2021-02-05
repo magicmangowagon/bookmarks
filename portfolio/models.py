@@ -32,5 +32,5 @@ class UserPortfolio(BaseUserGeneratedObject):
 
 
 class TempUserPortfolio(UserSolution):
-    team = models.ManyToManyField(User, null=True)
+    team = models.ManyToManyField(User, blank=True)
 

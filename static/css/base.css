@@ -22,11 +22,13 @@
 
 #topHeader a {
     color: #003469;
+    font-family: Oswald, "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
 }
 
 #topHeader .user {
     font-size: 110%;
-    font-weight: 600;
+    font-weight: 500;
+    font-family: Oswald, "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
 
 }
 
