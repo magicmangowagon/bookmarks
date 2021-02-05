@@ -128,10 +128,9 @@ def create_assignment_tracking_models(sender, **kwargs):
             challengeStatus = ChallengeStatus.objects.create(challenge=kwargs['instance'].challengeName, user=kwargs['instance'].userOwner)
         # what the fuck is going on here! Clean this up, figure out how to call this
         if SolutionStatus.objects.filter(solutionInstance=kwargs['instance'].solutionInstance,
-                                         challengestatus__solutionStatusByInstance__challengestatus__user=kwargs['instance'].userOwner).exists():
+                                         userSolution=kwargs['instance']).exists():
             print('found solution status object' + str(kwargs['instance'].solutionInstance))
-            s = SolutionStatus.objects.get(solutionInstance=kwargs['instance'].solutionInstance,
-                                         challengestatus__solutionStatusByInstance__challengestatus__user=kwargs['instance'].userOwner)
+            s = SolutionStatus.objects.get(solutionInstance=kwargs['instance'].solutionInstance, userSolution=kwargs['instance'])
             s.userSolution = kwargs['instance']
             s.solutionInstance = kwargs['instance'].solutionInstance
             s.solutionSubmitted = True
