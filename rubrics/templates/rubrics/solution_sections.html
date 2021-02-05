@@ -32,11 +32,13 @@
                         .{{ learningObjective.loNumber }}</strong>
                     {{ learningObjective.name }}
             <button onclick="hideShow('critList{{ learningObjective.id }}')" class="lilButton">Criteria</button>
-            {% for crit in learningObjective.return_all_criterion %}
+
                 <ul id="critList{{ learningObjective.id }}" class="critList">
+            {% for crit in learningObjective.return_all_criterion %}
                 <li>{{ crit }}</li>
+                {% endfor %}
                 </ul>
-                {% endfor %}</li>
+                </li>
         {% endfor %}
         </ul>
             <h3>Solution Bounds</h3>
