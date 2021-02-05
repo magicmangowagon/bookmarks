@@ -28,6 +28,7 @@ class ChallengeStatusAdmin(admin.ModelAdmin):
 @admin.register(SolutionStatus)
 class SolutionStatusAdmin(admin.ModelAdmin):
     list_display = ['solutionInstance', 'userSolution']
+    search_fields = ['userSolution__userOwner__last_name']
     fields = ['solutionInstance', 'userSolution', 'solutionSubmitted', 'solutionEvaluated', 'solutionCoachReviewed',
               'solutionRejected', 'returnTo', 'solutionCompleted']
 

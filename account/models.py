@@ -6,11 +6,13 @@ from django.contrib.auth.models import User
 
 
 class Profile(models.Model):
+    VISITOR = 0
     TC = 1
     CLINICALSUPER = 2
     COACH = 3
     ADMIN = 4
     ROLE_CHOICES = (
+        (VISITOR, 'Visitor'),
         (TC, 'Teaching Candidate'),
         (CLINICALSUPER, 'Evaluator'),
         (COACH, 'Challenge Coach'),
@@ -42,4 +44,4 @@ class Profile(models.Model):
 @receiver(post_save, sender=User, dispatch_uid="something_here")
 def create_profile(sender, **kwargs):
     if kwargs.get('created', False):
-        Profile.objects.create(user=kwargs['instance'])
+        Profile.objects.create(user=kwargs['instance'], role=0)

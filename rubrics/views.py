@@ -700,7 +700,6 @@ class RubricFormView(FormView):
 
         userSolution = UserSolution.objects.get(pk=self.kwargs['pk'])
 
-        # print(critFormset.errors)
         if formset.is_valid() and critFormset.is_valid():
             evaluated = Evaluated.objects.create(whoEvaluated=self.request.user)
             userSolution.evaluated.add(evaluated)
@@ -1096,6 +1095,7 @@ class CoachingReviewView(FormView):
         rForm = RubricLineFormset(request.POST, prefix='rFormset')
         critForm = CriterionFormSet(request.POST, prefix='criteria')
         print(critForm.errors)
+        rubricLines = []
         if rForm.is_valid() and critForm.is_valid():
             evaluated = Evaluated.objects.create(whoEvaluated=self.request.user)
             # userSolution.evaluated.add(evaluated)
@@ -1103,6 +1103,7 @@ class CoachingReviewView(FormView):
                 f = form.save(commit=False)
                 f.evaluated = evaluated
                 f.save()
+                rubricLines.append(f)
             for critForm in critForm:
                 c = critForm.save(commit=False)
                 c.evaluator = evaluated
@@ -1110,6 +1111,7 @@ class CoachingReviewView(FormView):
             # userSolution.save()
 
             rForm.save()
+            process_rubricLine(rubricLines)
             critForm.save()
             return redirect('solution-end-eval', self.kwargs['pk'])
             # return HttpResponseRedirect('/evals')

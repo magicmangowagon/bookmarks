@@ -8,7 +8,7 @@ from .models import SolutionRouter, AssignmentKeeper, ChallengeStatus, SolutionS
 from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.edit import FormMixin, UpdateView
 from .forms import SolutionRouterForm, AssignmentKeeperForm, SolutionRouterFormset, SolutionRouterFormB, \
-    NewSolutionFormset, UserWorkToView
+    NewSolutionFormset, UserWorkToView, AllUsersForm
 from django.forms import BaseModelFormSet, modelformset_factory
 from django import forms
 from django.http import HttpResponseRedirect
@@ -178,7 +178,7 @@ class HackingAboutPage(ListView):
 
         completed = UserSolution.objects.filter(solutionstatus__solutionCompleted=True)
         context['completed'] = completed
-
+        context['challengeStatus'] = ChallengeStatus.objects.all().order_by('user__last_name')
         return context
 
 
@@ -212,13 +212,13 @@ class CompetencyTracker(ListView):
         return context
 
 
-def assume_id(request):
+def assume_id(self, request):
 
-    if request.method == 'POST':
+    form = AllUsersForm(self.request.GET)
 
-        form = UserWorkToView(request.POST)
-        if form.is_valid():
-            user = form.cleaned_data['chooseUser'].id
-            return redirect('hijack/', user)
+    if form.is_valid():
+        user = form.cleaned_data['chooseUser'].id
+        print(user)
+        return redirect('hijack', user)
     else:
-        return render(request, 'centralDispatch/assume_id.html', {'form': UserWorkToView})
+        return render(request, 'centralDispatch/assume_id.html', {'form': form})

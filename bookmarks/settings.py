@@ -72,7 +72,8 @@ INSTALLED_APPS = [
     'django_comments',
     'django.contrib.sites',
     'hijack',
-    'compat'
+    'compat',
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [
@@ -191,6 +192,7 @@ if DEBUG is True:
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
     DEFAULT_FILE_STORAGE = STATICFILES_STORAGE
     SITE_ID = 2
+    HIJACK_ALLOW_GET_REQUESTS = True
 
 else:
     STATIC_URL = 'https://' + AWS_S3_CUSTOM_DOMAIN + AWS_LOCATION + '/'
@@ -199,6 +201,7 @@ else:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
     SECURE_SSL_REDIRECT = True
     SITE_ID = 1
+    HIJACK_ALLOW_GET_REQUESTS = False
     # SITE_ID = 'https://' + AWS_S3_CUSTOM_DOMAIN
 
 # STATIC_ROOT = '/static/'

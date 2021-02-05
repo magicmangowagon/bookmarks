@@ -4,6 +4,7 @@ from . import views
 from .views import SolutionDispatch, NewSolutionDispatch, AssignedSolutions, SolutionTracker, ChallengeTracker, \
     HackingAboutPage, CompetencyTracker, assume_id
 from django.contrib.auth.decorators import login_required
+from hijack.views import login_with_id
 
 urlpatterns = [
     # path('rubrics', views.update_challenge, name='challenge-form'),
@@ -14,5 +15,6 @@ urlpatterns = [
     path('challengetracker', login_required(ChallengeTracker.as_view()), name='challenge-tracker'),
     path('hackingabout', login_required(HackingAboutPage.as_view()),  name='hackingabout'),
     path('competencytracker', login_required(CompetencyTracker.as_view()), name='competency-tracker'),
-    path('assumeuserid', login_required(assume_id), name='assume-id')
+    path('assumeuserid', login_required(assume_id), name='assume-id'),
+    path('hijack/user_id', login_with_id, name='hijack')
 ]

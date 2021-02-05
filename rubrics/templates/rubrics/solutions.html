@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load solution_filters %}
+{% load crispy_forms_filters %}
 
 {% block title %}Woodrow Wilson Academy{% endblock %}
 
@@ -29,6 +30,8 @@
                     {% csrf_token %}
                     <button type="submit" class="hijackBtn">Assume id: {{ userSolution.userOwner.username }}</button>
                     </form>
+
+
                 {% endif %}
                  <h4>{{ userSolution.solutionInstance.name }} - <a href="solutions/{{ userSolution.id }}">Solution</a></h4>
 

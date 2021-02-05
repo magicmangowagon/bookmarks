@@ -116,7 +116,7 @@ class StudioExpoChoice(models.Model):
     session = models.ForeignKey(BaseInfo, null=False, default='', on_delete=models.CASCADE)
 
 
-@receiver(post_save, sender=UserSolution, dispatch_uid=str(UserSolution))
+@receiver(post_save, sender=UserSolution, dispatch_uid=str(UserSolution) +  str(datetime.now()))
 def create_assignment_tracking_models(sender, **kwargs):
     if kwargs.get('created', False):
         AssignmentKeeper.objects.create(userSolution=kwargs['instance'], )

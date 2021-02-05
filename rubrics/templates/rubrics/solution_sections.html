@@ -11,6 +11,7 @@
 
     <div class="solution-content-box">
         <h2 id="{{ solution.id }}">
+        {% if request.user.profile.role != 0 %}
             {% if solution.specialized %}
                 <a href="/tfjsolution/{{ solution.id }}">
                 {{ solution.name }}
@@ -20,6 +21,10 @@
                 {{ solution.name }}
                 </a>
             {% endif %}
+            {% else %}
+            {{ solution.name }}
+            <span class="visitorNote">| Solution Upload Disabled</span>
+        {% endif %}
         </h2>
         <ul class="challengeListObj">
         {% for learningObjective in solution.learningObjectives.all %}
@@ -85,7 +90,7 @@
         <hr>
         <h4>Solution Prompt</h4>
         <p>{{ solution.prompt|safe }}</p>
-    <input type="button" onclick='window.location.href="/challenge/{{ solution.id }}";' value="Submit a Solution">
+    {% if request.user.profile.role != 0 %}<input type="button" onclick='window.location.href="/challenge/{{ solution.id }}";' value="Submit a Solution">{% endif %}
         </div>
 
 
@@ -97,10 +102,13 @@
 
     <div class="solution-content-box">
         <h2 id="{{ portfolio.id }}">
-
+            {% if request.user.profile.role != 0 %}
                 <a href="/portfolioUpload/{{ portfolio.id }}">
                 {{ portfolio.name }}
                 </a>
+            {% else %}
+                {{ portfolio.name }}
+            {% endif %}
 
         </h2>
         <ul class="challengeListObj">
@@ -167,7 +175,9 @@
         <hr>
         <h4>Solution Prompt</h4>
         <p>{{ portfolio.prompt|safe }}</p>
+    {% if request.user.profile.role != 0 %}
     <input type="button" onclick='window.location.href="/portfolioUpload/{{ portfolio.id }}";' value="Submit a Solution">
+    {% endif %}
         </div>
 
 

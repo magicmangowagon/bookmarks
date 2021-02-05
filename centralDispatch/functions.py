@@ -260,6 +260,21 @@ def generateStatus():
         solutionStatus.save()
 
 
+def fixEmptySolutionStatus():
+    cas = ChallengeStatus.objects.all()
+    for ca in cas:
+        # print(ca)
+        for solutionStatus in ca.solutionStatusByInstance.all():
+            if solutionStatus.userSolution is None:
+                # print(solutionStatus)
+                if UserSolution.objects.filter(userOwner=ca.user, solutionInstance=solutionStatus.solutionInstance).exists():
+                    print(UserSolution.objects.get(userOwner=ca.user, solutionInstance=solutionStatus.solutionInstance))
+
+                    userSolution = UserSolution.objects.get(userOwner=ca.user, solutionInstance=solutionStatus.solutionInstance)
+                    solutionStatus.userSolution = userSolution
+                    solutionStatus.save(update_fields=['userSolution'])
+
+
 def GenerateChallengeStatus():
     tcs = User.objects.all().filter(profile__role=1)
     challenges = Challenge.objects.all().filter(display=True, solutions__isnull=False)

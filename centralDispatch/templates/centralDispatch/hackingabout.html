@@ -9,5 +9,14 @@
 {% block title %}Woodrow Wilson Academy{% endblock %}
 
 {% block content %}
-
+    <table style="border: 1px solid black">
+{% for challengeS in challengeStatus %}
+    <tr>
+    <td style="padding: 2pt; border: 1px solid black">{{ challengeS }}</td>
+        {% for s in challengeS.solutionStatusByInstance.all %}
+        <td style="padding: 2pt; border: 1px solid black">{{ s.solutionInstance }}</td>
+            {% endfor %}
+    </tr>
+    {% endfor %}
+    </table>
 {% endblock content %}

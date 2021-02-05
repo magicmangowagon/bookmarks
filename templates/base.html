@@ -28,9 +28,21 @@
 </head>
 <body>
 {% hijack_notification %}
+<div id="topHeader">
+    <span class="user">
+        {% if request.user.is_authenticated %}
+            Hello {{ request.user.first_name }},
+            <a href="{% url "logout" %}">Logout</a>
+            {% if request.user.is_staff %}| <a href="/admin" target="_blank">Edit Site</a>{% endif %}
+        {% else %}
+            <a href="{% url "login" %}">Log-in | </a>
+            <a href="{% url "register" %}">Register</a>
+        {% endif %}
+    </span>
+</div>
     <div id="header">
     <div class="headerBottom">
-        <span class="logo"><img height="100px" alt="Woodrow Wilson Graduate School of Teaching and Learning" src="{% static "media/hm_logo.png" %}"></span>
+        <span class="logo"><img height="100px" alt="High Meadows Graduate School of Teaching and Learning" src="{% static "media/hm_logo.png" %}"></span>
         {% if request.user.is_authenticated %}
         <ul class="menu">
             <li {% if section == "dashboard" %}class="selected"{% endif %}>
@@ -39,26 +51,16 @@
             <li {% if section == "challenges" %}class="selected"{% endif %}>
             <a href="/">Challenges</a>
             </li>
+        {% if request.user.profile.role != 0 %}
             <li {% if section == "competency" %}class="selected"{% endif %}>
             <a href="/competency">Competency</a>
             </li>
-            <li {% if section == "discussion" %}class="selected"{% endif %}>
-            <a href="http://discourse.wwa-lms.org">Discussion</a>
-            </li>
 
+        {% endif %}
         </ul>
         {% endif %}
 
-    <span class="user">
-        {% if request.user.is_authenticated %}
-            Hello {{ request.user.first_name }},
-            <a href="{% url "logout" %}">Logout</a><br>
-            {% if request.user.is_staff %}<a href="/admin" target="_blank">Edit Site</a>{% endif %}
-        {% else %}
-            <a href="{% url "login" %}">Log-in | </a>
-            <a href="{% url "register" %}">Register</a>
-        {% endif %}
-    </span>
+
     </div>
 
     </div>

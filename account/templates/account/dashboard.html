@@ -8,23 +8,24 @@
 
     <h1>Dashboard</h1>
     <p>Welcome to your dashboard, {{ request.user.first_name }}.</p>
-    {% if request.user.profile.role == 4 %}
-        <h3><a href="centraldispatch/newsolutions">Assign Evaluators and Coaches</a> </h3>
-        <h3><a href="solutionSearch" >God View</a></h3>
-    {% endif %}
-    {% if request.user.profile.role == 1 %}
-    <p>View your submitted solutions here: <br>
-    <a href="solutions">User Solutions</a></p>
+    {% if request.user.profile.role != 0 %}
+        {% if request.user.profile.role == 4 %}
+            <h3><a href="centraldispatch/newsolutions">Assign Evaluators and Coaches</a> </h3>
+            <h3><a href="solutionSearch" >God View</a></h3>
+        {% endif %}
+        {% if request.user.profile.role == 1 %}
+        <p>View your submitted solutions here: <br>
+        <a href="solutions">User Solutions</a></p>
 
-        <p>View your evaluated solutions here: <br>
-    <a href="evals">Evaluated Solutions</a></p>
-    {% endif %}
+            <p>View your evaluated solutions here: <br>
+        <a href="evals">Evaluated Solutions</a></p>
+        {% endif %}
 
-    {% if request.user.profile.role != 1 %}
-    <p>Solutions and Evaluations<br>
-    <a href="assignedsolutions">Submitted Solutions</a></p>
-    {% endif %}
-
+        {% if request.user.profile.role != 1 %}
+        <p>Solutions and Evaluations<br>
+        <a href="assignedsolutions">Submitted Solutions</a></p>
+        {% endif %}
+{% endif %}
 
     <br>
     <p>View the entire course catalog:<br>
