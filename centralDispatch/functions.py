@@ -70,7 +70,7 @@ def process_rubricLine(rubricLines):
             completed = True
         RubricLine.save()
     if completed:
-        solutionStatus = SolutionStatus.objects.get(userSolution=rubricLines.first().student)
+        solutionStatus = SolutionStatus.objects.get(userSolution=rubricLines[0].student)
         solutionStatus.solutionCompleted = True
         solutionStatus.save()
     return rubricLines
