@@ -76,6 +76,7 @@ def process_rubricLine(rubricLines):
     return rubricLines
 
 
+# generate dataset for D3
 def processCompetencyD3(user):
     challenges = Challenge.objects.all().filter(display=True)
     # learningObjs = {}
@@ -171,6 +172,9 @@ def returnChallenge(learningObj, cl):
     return nestList(challengeArray)
 
 
+# Truncate the long names in the platform
+# until a shortname model field is in place
+# and populated by the learning designers
 def generateShortName(name):
     shortName = name.split()
     result = ''
@@ -182,6 +186,11 @@ def generateShortName(name):
     return result
 
 
+# Iterate through a list and make the preceding element
+# a child of the current element
+# a somewhat hacky way to get the data structured
+# for a D3 Sunburst used in the Competency Tracker
+# should probably be on the front end when I get a moment
 def nestList(array):
     x = len(array)
     for i, item in enumerate(array):
