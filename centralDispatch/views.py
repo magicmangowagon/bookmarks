@@ -155,6 +155,46 @@ class SolutionTracker(SingleTableMixin, FilterView, ListView):
         return context
 
 
+class NewDashboard(SingleTableMixin, FilterView, ListView):
+    template_name = 'centralDispatch/newDashboard.html'
+    model = SolutionStatus
+    table_class = SolutionTable
+    table_pagination = {'per_page': 25}
+
+    filterset_class = SolutionTrackerFilter
+
+    def get_queryset(self):
+        if self.request.user.profile.role != 1:
+            queryset = SolutionStatus.objects.filter(userSolution__userOwner__is_active=True).order_by(
+                '-userSolution__somethinghappened__created')
+        else:
+            queryset = SolutionStatus.objects.filter(userSolution__userOwner=self.request.user).order_by(
+                '-userSolution__somethinghappened__created')
+        return queryset
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(NewDashboard, self).get_context_data(**kwargs)
+        context['filter'] = SolutionTrackerFilter
+        context['solutionInstances'] = SolutionInstance.objects.all().order_by('challenge_that_owns_me')
+
+        userWorkForm = UserWorkToView(self.request.GET)
+        if self.request.user.profile.role != 1:
+            context['userWorkForm'] = userWorkForm
+            user = userWorkForm['chooseUser'].initial
+
+            if userWorkForm.is_valid():
+                user = userWorkForm.cleaned_data['chooseUser']
+
+            context['d3RubricLines'] = json.dumps(processCompetencyD3(user), indent=4)
+            # context['d3RubricLines'] = processCompetencyD3(user)
+
+            # json.dumps(processCompetency(rubricLines), indent=4)
+        else:
+            context['d3RubricLines'] = json.dumps(processCompetencyD3(self.request.user), indent=4)
+
+        return context
+
+
 class ChallengeTracker(SingleTableView):
     template_name = 'centralDispatch/solutiontracker.html'
     model = ChallengeStatus

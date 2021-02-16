@@ -1,0 +1,62 @@
+
+{% extends "base.html" %}
+{% load django_tables2 %}
+{% load render_table from django_tables2 %}
+{% load bootstrap4 %}
+{% load static %}
+
+
+
+{% block title %}Woodrow Wilson Academy{% endblock %}
+
+{% block content %}
+    <div class="tabNav">
+    <button class="tabbtn" id="defaultOpen" onclick="openPage('tab1', this)">Solutions</button>
+    <button class="tabbtn" onclick="openPage('tab2', this)">Competency</button>
+        <div id="tab1" class="tabcontent">
+            <div class="expoWrapper">
+
+            <div class="expoVertWrapper">
+                {% render_table table 'django_tables2/bootstrap.html' %}
+            </div>
+                {% if request.user.profile.role != 1 %}
+                    <div class="trackerFilter">
+                    <h3>Filter</h3>
+                    {% if filter %}
+                        <form action="" method="get" class="solutionFilter">
+                            {% bootstrap_form filter.form  %}
+                            {% bootstrap_button 'Filter'  %}
+                        </form>
+                    {% endif %}
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    <div id="tab2" class="tabcontent">
+    <form action=""  method="get">
+        {{ userWorkForm }}
+        <input type="submit" value="change student">
+    </form>
+    <div id="chart">
+        <svg></svg>
+
+    </div>
+    </div>
+</div>
+{% endblock content %}
+
+
+{% block javascript %}
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" rel="prefetch"></script>
+    <script type="text/javascript" src="{% static "javascript/visualizations.js" %}"></script>
+    <script type="text/javascript" src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://d3js.org/d3-array.v2.min.js"></script>
+    <script src="{% static "javascript/tabs.js" %}"></script>
+    <script type="text/javascript" >
+
+        $(window).on("load", function () {
+
+            generateCircleChart({{d3RubricLines | safe}}, "chart")
+        })
+    </script>
+{% endblock javascript %}

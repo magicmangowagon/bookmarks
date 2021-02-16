@@ -10,6 +10,31 @@
     font-display: swap;
 }
 
+.tabcontent {
+    display: none;
+}
+
+.tabbtn {
+    background-color: #003469;
+    color: white;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 17px;
+    width: 49%;
+    border-radius: 12pt 12pt 0 0;
+}
+
+.tabbtn:hover {
+    background-color: #FF7BAC;
+
+}
+
+.tabbtn:active {
+    background-color: #00ad9c;
+}
+
 #topHeader {
     background-color: #aedac3;
 
