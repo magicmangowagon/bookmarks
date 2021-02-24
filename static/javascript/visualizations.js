@@ -314,9 +314,12 @@ function generateCircleChart2(data) {
         currently the console output is sub .5, when the output should be a float
         between 1 - 5 or so. Once that's sorted LO's should be in a segmented ring
         around the parent comp. From there we want to attach a RESTful API call
-        to pull in the next layer of data > sub challenges with their solution
+        to pull in the next layer of data => sub challenges with their solution
         instances as the segmented ring around them, and the solution instances
-        for each segmented outside of that.
+        for each segment outside of that.
+
+        Also need to fix the endAngle calculation for the LO's, do some math to include
+        the radius in our radians calculation
         */
 
         console.log(value['name'] + " " + value['children'].length)
