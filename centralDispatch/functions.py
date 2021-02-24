@@ -147,8 +147,8 @@ def processCompetencyD3(user):
 
     dataNode = {'name': 'Competencies',
                 'children': comps}
-
-    return dataNode
+    newNode = comps
+    return newNode
 
 
 # pull out the challenges that this LO is in
@@ -157,14 +157,21 @@ def processCompetencyD3(user):
 def returnChallenge(learningObj, cl):
     challengeArray = []
     challenges = learningObj.challenge.all()
-
+    megaChallenge = challenges.first()
     for challenge in list(challenges):
-
+        solutions = challenge.solutions.all()
+        si = []
+        for solution in solutions:
+            solution = {
+                'name': generateShortName(solution.name),
+                'size': 4
+            }
         challenge = {
             'name': generateShortName(str(challenge.name)),
             'fullName': str(challenge.name),
             'size': 5,
-            'children': [],
+            'children': [si],
+            'solutions': si,
             'completionLevel': cl
         }
         challengeArray.append(challenge)

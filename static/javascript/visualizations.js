@@ -177,7 +177,14 @@ function generateCircleChart(data2) {
     root.each(d => d.current = d)
     partition(root)
 
-
+    const parent = g.append("circle")
+      .attr("r", radius)
+      .attr("fill", "none")
+      .attr("pointer-events", "all")
+      .on("click", function (data2) {
+            $("g").remove()
+            return generateCircleChart(data2)
+        })
 
     //let arc = d3.arc()
     //    .startAngle(function(d) { return d.x0 })
@@ -198,17 +205,17 @@ let arc = d3.arc()
     .padRadius(radius * .4)
     .innerRadius(d => d.y0 )
     .outerRadius(d => d.y1 * .98)
-    //.startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x))); })
-    //.endAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx))); })
-    //.innerRadius(function(d) { return Math.max(0, y(d.y)); })
-    //.outerRadius(function(d) { return Math.max(0, y(d.y + d.dy)); });
     let keyC = [0, 1, 2]
-
+    //let circle =
 
     let path = g.selectAll('path')
         .data(root.descendants())
         .enter()
         .append('g')
+        .on("click", function (d) {
+            $("g").remove()
+            return generateCircleChart(d.data)
+        })
         .attr("class", "pathG")
         .append('path')
         .attr("display", function (d) {
@@ -236,174 +243,120 @@ let arc = d3.arc()
                         return "translate(" + arc.centroid(d) + ")rotate(" + computeTextRotation(d) + ")";
                 })
 
-    path.filter(d => d.children)
-      .style("cursor", "pointer")
-      .on("click", clicked);
+
 
     g.selectAll('text.compLabel')
         //.call(wrap, 60)
-    let svg = d3.select("svg")
 
-    const parent = g.append("circle")
-      .datum(root)
-      .attr("r", radius / 6)
-      .attr("fill", "none")
-      .attr("pointer-events", "all")
-      .on("click", clicked);
-
-    function clicked(event, p) {
-        parent.datum(p.parent || root)
-
-        root.each(d => d.target = {
-          x0: Math.max(0, Math.min(1, (d.x0 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
-          x1: Math.max(0, Math.min(1, (d.x1 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
-          y0: Math.max(0, d.y0 - p.depth),
-          y1: Math.max(0, d.y1 - p.depth)
-    })}
-
-
-    const t = g.transition().duration(750);
-
-    // Transition the data on all arcs, even the ones that aren’t visible,
-    // so that if this transition is interrupted, entering arcs will start
-    // the next transition from the desired position.
-    path.transition(t)
-        .tween("data", d => {
-          const i = d3.interpolate(d.current, d.target);
-          return t => d.current = i(t);
-        })
-      .filter(function(d) {
-        return +this.getAttribute("fill-opacity") || arcVisible(d.target);
-      })
-        .attr("fill-opacity", d => arcVisible(d.target) ? (d.children ? 0.6 : 0.4) : 0)
-        .attrTween("d", d => () => arc(d.current));
-
-    function arcVisible(d) {
-    return d.y1 <= 3 && d.y0 >= 1 && d.x1 > d.x0;
-  }
 
 }
 
 
 function generateCircleChart2(data) {
-    //let partition = d3.partition(data)
-    let partition = data => {
-  const root = d3.hierarchy(data)
-      .sum(d => d.value)
-      .sort((a, b) => b.value - a.value);
-  return d3.partition()
-      .size([2 * Math.PI, root.height + 1])
-    (root);
+    let width = window.innerWidth
+    let height = window.innerHeight
+    let count = data.length
+    let radius = 700
+    let colors = {
+        0: "gray",
+        1: "red",
+        2: "blue",
+        3: "green",
+        4: "purple"
+    }
+    let hmBlue = "#003469"
+
+    console.log(count)
+    let main = d3.select("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("id", "centerNode")
+        .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
+
+    let tot = 0
+    for (const[i, value] of data.entries()) {
+        tot += value['children'].length
+    }
+    let angleThreshold = 360/tot
+    let endAngleAccessor = 0
+    for (const[i, value] of Object.entries(data)) {
+
+        let arcRadians = (Math.PI/180) * (value['children'].length * (angleThreshold))
+        let arc = d3.arc()
+            .startAngle(endAngleAccessor)
+            .endAngle(endAngleAccessor + arcRadians)
+            .padAngle(.2)
+            .padRadius(15)
+            .innerRadius(100 )
+            .outerRadius(200)
+
+        let g = main.append("g")
+            .attr("id", i)
+        g.append("path")
+            .attr("d", arc)
+            .attr("fill", hmBlue)
+            .attr("id", "comp" + value['name'])
+        g.append("text")
+            .attr("x", 10)
+            .attr("y", 10)
+            .attr("fill", "black")
+
+            .append("textPath")
+            .attr("xlink:href", "#comp" + value['name'])
+            .text(value['name'])
+        let subAngleThreshold = arcRadians / value['children'].length
+        let subEndAngleAccessor = endAngleAccessor
+
+        /* The Fuck am I Doing
+        trying to sub divide the LO's based on the arc length of the parent
+        It's not working, look at when the arcRadians is calculated and go from there
+        currently the console output is sub .5, when the output should be a float
+        between 1 - 5 or so. Once that's sorted LO's should be in a segmented ring
+        around the parent comp. From there we want to attach a RESTful API call
+        to pull in the next layer of data > sub challenges with their solution
+        instances as the segmented ring around them, and the solution instances
+        for each segmented outside of that.
+        */
+
+        console.log(value['name'] + " " + value['children'].length)
+        console.log("angle threshold: " + angleThreshold + " sub angle threshold: " + subAngleThreshold)
+        for (const[i, v] of Object.entries(value['children'])){
+            let newRadius = 220
+            let subArc = d3.arc()
+                .startAngle(subEndAngleAccessor)
+                .endAngle(subAngleThreshold + subAngleThreshold)
+                .padAngle(.82)
+                .padRadius(15)
+                .innerRadius(newRadius)
+                .outerRadius(newRadius + 50)
+            g.append("path")
+                .attr("d", subArc)
+                .attr("fill", hmBlue)
+                .attr("id", "challenge" + v['name'])
+            g.append("text")
+                .attr("x", 10)
+                .attr("y", 10)
+                .attr("fill", "black")
+
+                .append("textPath")
+                .attr("xlink:href", "#challenge" + v['name'])
+            .text(v['name'])
+        }
+        endAngleAccessor += arcRadians
+    }
 }
-    const root = partition(data);
-let c = d3.scaleThreshold()
-        .domain([0.2, 1.1, 3.1])
-        .range(["#7f8b85", "#81ce81", "#FF7BAC"])
-  root.each(d => d.current = d);
-    let width = 932
-    let color = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, data.children.length + 1))
-  const svg = d3.select("svg")
-      .attr("viewBox", [0, 0, width, width])
-      .style("font", "10px sans-serif");
-let radius = width / 6
-  const g = svg.append("g")
-      .attr("transform", `translate(${width / 2},${width / 2})`);
-  let arc = d3.arc()
-    .startAngle(d => d.x0)
-    .endAngle(d => d.x1)
-    .padAngle(d => Math.min((d.x1 - d.x0) / 2, 0.005))
-    .padRadius(radius * 1.5)
-    .innerRadius(d => d.y0 * radius)
-    .outerRadius(d => Math.max(d.y0 * radius, d.y1 * radius - 1))
-    let format = d3.format(",d")
-  const path = g.append("g")
-    .selectAll("path")
-    .data(root.descendants().slice(1))
-    .join("path")
-      .style('fill', function (d) {
-            if (d.data.completionLevel) {
-                return c(d.data.completionLevel)
-            }
-            else {
-                return "#003469"
-            }
-        })
-      .attr("d", d => arc(d.current));
 
-  path.filter(d => d.children)
-      .style("cursor", "pointer")
-      .on("click", clicked);
+function arcGenerator(start, end, radius) {
+    let arc = d3.arc()
+        .startAngle(start)
+        .endAngle(end)
+        .padAngle(.25)
+        .padRadius(150)
+        .innerRadius(radius )
+        .outerRadius(radius * 2)
 
-  path.append("title")
-      .text(d => `${d.ancestors().map(d => d.data.name).reverse().join("/")}\n${format(d.value)}`);
-
-  const label = g.append("g")
-      .attr("pointer-events", "none")
-      .attr("text-anchor", "middle")
-      .style("user-select", "none")
-    .selectAll("text")
-    .data(root.descendants().slice(1))
-    .join("text")
-      .attr("dy", "0.35em")
-      .attr("fill-opacity", d => +labelVisible(d.current))
-      .attr("transform", d => labelTransform(d.current))
-      .text(d => d.data.name);
-
-  const parent = g.append("circle")
-      .datum(root)
-      .attr("r", radius)
-      .attr("fill", "none")
-      .attr("pointer-events", "all")
-      .on("click", clicked);
-
-  function clicked(event, p) {
-    parent.datum(p.parent || root);
-
-    root.each(d => d.target = {
-      x0: Math.max(0, Math.min(1, (d.x0 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
-      x1: Math.max(0, Math.min(1, (d.x1 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
-      y0: Math.max(0, d.y0 - p.depth),
-      y1: Math.max(0, d.y1 - p.depth)
-    });
-
-    const t = g.transition().duration(750);
-
-    // Transition the data on all arcs, even the ones that aren’t visible,
-    // so that if this transition is interrupted, entering arcs will start
-    // the next transition from the desired position.
-    path.transition(t)
-        .tween("data", d => {
-          const i = d3.interpolate(d.current, d.target);
-          return t => d.current = i(t);
-        })
-      .filter(function(d) {
-        return +this.getAttribute("fill-opacity") || arcVisible(d.target);
-      })
-        .attr("fill-opacity", d => arcVisible(d.target) ? (d.children ? 0.6 : 0.4) : 0)
-        .attrTween("d", d => () => arc(d.current));
-
-    label.filter(function(d) {
-        return +this.getAttribute("fill-opacity") || labelVisible(d.target);
-      }).transition(t)
-        .attr("fill-opacity", d => +labelVisible(d.target))
-        .attrTween("transform", d => () => labelTransform(d.current));
-  }
-
-  function arcVisible(d) {
-    return d.y1 <= 3 && d.y0 >= 1 && d.x1 > d.x0;
-  }
-
-  function labelVisible(d) {
-    return d.y1 <= 3 && d.y0 >= 1 && (d.y1 - d.y0) * (d.x1 - d.x0) > 0.03;
-  }
-
-  function labelTransform(d) {
-    const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
-    const y = (d.y0 + d.y1) / 2 * radius;
-    return `rotate(${x - 90}) translate(${y},0) rotate(${x < 180 ? 0 : 180})`;
-  }
-
-  return svg.node();
+        return arc
 }
 
 
