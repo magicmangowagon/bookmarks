@@ -256,13 +256,11 @@ function generateCircleChart2(data) {
     let width = window.innerWidth
     let height = window.innerHeight
     let count = data.length
-    let radius = 700
+    let radius = width/2
     let colors = {
-        0: "gray",
-        1: "red",
-        2: "blue",
-        3: "green",
-        4: "purple"
+        0: "#7f8b85",
+        1: "#FF7BAC",
+        2: "#81ce81",
     }
     let hmBlue = "#003469"
 
@@ -281,16 +279,17 @@ function generateCircleChart2(data) {
     let angleThreshold = 360/tot
     let endAngleAccessor = 0
     for (const[i, value] of Object.entries(data)) {
-
+        let centerRadius = 150
         let arcRadians = (Math.PI/180) * (value['children'].length * (angleThreshold))
         let arc = d3.arc()
             .startAngle(endAngleAccessor)
             .endAngle(endAngleAccessor + arcRadians)
             .padAngle(.2)
             .padRadius(15)
-            .innerRadius(100 )
-            .outerRadius(200)
+            .innerRadius(centerRadius - 50)
+            .outerRadius(centerRadius)
 
+        // generating the base of competencies
         let g = main.append("g")
             .attr("id", i)
         g.append("path")
@@ -298,15 +297,15 @@ function generateCircleChart2(data) {
             .attr("fill", hmBlue)
             .attr("id", "comp" + value['name'])
         g.append("text")
-            .attr("x", 10)
-            .attr("y", 10)
-            .attr("fill", "black")
+            .attr("dy", 50)
+            .attr("x", 50)
+            .attr("fill", "white")
+            .attr("text-anchor", "middle")
 
             .append("textPath")
             .attr("xlink:href", "#comp" + value['name'])
             .text(value['name'])
-        let subAngleThreshold = arcRadians / value['children'].length
-        let subEndAngleAccessor = endAngleAccessor
+
 
         /* The Fuck am I Doing
         trying to sub divide the LO's based on the arc length of the parent
@@ -322,42 +321,119 @@ function generateCircleChart2(data) {
         the radius in our radians calculation
         */
 
-        console.log(value['name'] + " " + value['children'].length)
-        console.log("angle threshold: " + angleThreshold + " sub angle threshold: " + subAngleThreshold)
+        // store the initial values for the competency arc and
+        // pass to the learning objective arc, updates with each iteration
+        // creates subdivided arcs in line with the baseline arc
+        let subAngleThreshold = (arcRadians / value['children'].length)
+        let subEndAngleAccessor = endAngleAccessor
+
+        //
         for (const[i, v] of Object.entries(value['children'])){
-            let newRadius = 220
+            console.log(v['name'])
+            let newRadius = centerRadius + 10
             let subArc = d3.arc()
                 .startAngle(subEndAngleAccessor)
-                .endAngle(subAngleThreshold + subAngleThreshold)
-                .padAngle(.82)
+                .endAngle(subEndAngleAccessor + subAngleThreshold)
+                .padAngle(.2)
                 .padRadius(15)
                 .innerRadius(newRadius)
                 .outerRadius(newRadius + 50)
             g.append("path")
                 .attr("d", subArc)
-                .attr("fill", hmBlue)
-                .attr("id", "challenge" + v['name'])
-            g.append("text")
-                .attr("x", 10)
-                .attr("y", 10)
-                .attr("fill", "black")
+                .attr("fill", "gray")
+                .attr("id", "lo" + v['name'] + "." + i)
 
-                .append("textPath")
-                .attr("xlink:href", "#challenge" + v['name'])
-            .text(v['name'])
+            g.append("text")
+                .attr("x", 25)
+
+                .attr("class", "compTrackerTitle")
+                .attr("fill", "white")
+                .attr("dy", 25)
+             .append("textPath")
+                .attr("xlink:href", "#lo" + v['name'] + "." + i)
+                .text(v['name'])
+
+            // generating flares for each challenge, full width of learning objective arc
+            // stacked on top of one another
+            let subRadius = newRadius + 60
+
+            for (const[i, v2] of Object.entries(v['children'])) {
+                g.append("path")
+                    .attr("d", stackedArcGenerator(subEndAngleAccessor, subEndAngleAccessor + subAngleThreshold, subRadius))
+                    .attr("fill", function (){
+                        return colors[checkCompletion(v2['solutions'])]
+                    })
+                    .attr("id", v['name'] + v2['name'] + "." + i)
+                g.append("text")
+
+                    .attr("fill", "#FFFFFF")
+                    .attr("text-anchor", "start")
+                    .attr("dy", 15)
+                    .attr("class", "compTrackerText")
+                    .attr("startOffset", 10)
+                    .append("textPath")
+                    .attr("xlink:href", "#"+ v['name'] + v2['name'] + "." + i)
+                    .text(v2['name'])
+                let subRadius2 = subRadius
+                let subAngleThreshold2 = (subAngleThreshold / v2['solutions'].length)
+                let subEndAngleAccessor2 = subEndAngleAccessor
+                for (const[i, v3] of Object.entries(v2['solutions'])) {
+
+                    g.append("g")
+                        .append("path")
+                        .attr("d", inlineArcGenerator(subEndAngleAccessor2, subEndAngleAccessor2 + subAngleThreshold2, subRadius2 + 20))
+                        .attr("fill", function () {
+                            return colors[v3['complete']]
+                        })
+
+                    subEndAngleAccessor2 += subAngleThreshold2
+                }
+                subRadius += 35
+            }
+
+            subEndAngleAccessor += subAngleThreshold
         }
         endAngleAccessor += arcRadians
     }
 }
 
-function arcGenerator(start, end, radius) {
+function checkCompletion(dict) {
+    let c = 0
+    for (const[k, v] of Object.entries(dict)) {
+        console.log(v)
+        if (v['complete'] !== 0){
+            if (v['complete'] === 1) {
+                c = 1
+                break
+            }
+            else {
+                c = 2
+            }
+        }
+    }
+    return c
+}
+
+function inlineArcGenerator (subEndAngleAccessor, subAngleThreshold, radius) {
+
+            let subArc = d3.arc()
+                .startAngle(subEndAngleAccessor)
+                .endAngle(subAngleThreshold)
+                .padAngle(.25)
+                .padRadius(10)
+                .innerRadius(radius)
+                .outerRadius(radius + 10)
+    return subArc
+}
+
+function stackedArcGenerator(start, end, radius) {
     let arc = d3.arc()
         .startAngle(start)
         .endAngle(end)
         .padAngle(.25)
-        .padRadius(150)
+        .padRadius(15)
         .innerRadius(radius )
-        .outerRadius(radius * 2)
+        .outerRadius(radius + 20)
 
         return arc
 }

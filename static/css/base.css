@@ -10,6 +10,19 @@
     font-display: swap;
 }
 
+.compTrackerText {
+    font-size: 8pt;
+    font-weight: 600;
+    text-anchor: start;
+}
+
+.compTrackerTitle {
+    font-size: 8pt;
+    font-weight: 700;
+    color: #FFFFFF;
+    text-anchor: middle;
+}
+
 .tabcontent {
     display: none;
 }

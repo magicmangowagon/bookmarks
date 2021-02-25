@@ -79,74 +79,32 @@ def process_rubricLine(rubricLines):
 # generate dataset for D3
 def processCompetencyD3(user):
     challenges = Challenge.objects.all().filter(display=True)
-    # learningObjs = {}
+
     comps = []
-    learningsObjs = []
     competencies = Competency.objects.all().filter(archive=False).order_by('compGroup', 'compNumber')
     i = 1
     for competency in competencies:
-        comps.append({'name': str(competency.compGroup) + '.' + str(competency.compNumber),
-                      'fullName': str(competency.name),
-                      'id': competency.pk,
-                      'children': []})
-
+        comp = {
+                    'name': str(competency.compGroup) + '.' + str(competency.compNumber),
+                    'fullName': str(competency.name),
+                    'id': competency.pk,
+                    'children': []
+                }
+        for lo in competency.learningObjs.all():
+            lo = {
+                    'name': str(lo.compGroup) + '.' + str(lo.compNumber) + '-' + str(lo.loNumber),
+                    'fullName': lo.name,
+                    'completionLevel': 0,
+                    'competency': str(competency),
+                    'children': returnChallenge(lo, user)
+                  }
+            comp['children'].append(lo)
+        comps.append(comp)
     # this needs to be reworked, I don't think we actually care about
     # each lo/rubricLine, pull one instance of each lo (link it up
     # with any other versions of it) and then move on to the challenge/megaChallenge
     # and solutionInstance collection
-    for challenge in challenges:
-        for solutionInstance in challenge.solutions.all():
-            if UserSolution.objects.filter(solutionInstance=solutionInstance, userOwner=user).exists():
-                userSolution = UserSolution.objects.get(solutionInstance=solutionInstance, userOwner=user)
-                if SolutionStatus.objects.get(userSolution=userSolution).solutionCompleted is True:
-                    for learningObjective in solutionInstance.learningObjectives.all().order_by('id').distinct('id'):
-                        # comps['competencies'][str(learningObjective.competency_set.first())].update(
-                        learningsObjs.append(
-                            {
-                                'name': str(learningObjective.compGroup) + '.' + str(learningObjective.compNumber) + '-' + str(learningObjective.loNumber),
-                                'fullName': learningObjective.name,
-                                'completionLevel': 1,
-                                'size': 3,
-                                'competency': str(learningObjective.competency_set.first()),
-                                'children': returnChallenge(learningObjective, 1)
-                            }
-                        )
-                else:
-                    for learningObjective in solutionInstance.learningObjectives.all():
-                        # comps['competencies'][str(learningObjective.competency_set.first())].update(
-                        learningsObjs.append(
-                            {
-                                'name': str(learningObjective.compGroup) + '.' + str(learningObjective.compNumber) + '-' + str(learningObjective.loNumber),
-                                'fullName': learningObjective.name,
-                                'completionLevel': 2,
-                                'size': 3,
-                                'competency': str(learningObjective.competency_set.first()),
-                                'children': returnChallenge(learningObjective, 2)
 
-                            }
-                        )
-
-            else:
-                for learningObjective in solutionInstance.learningObjectives.all().order_by('id').distinct('id'):
-                    # comps['competencies'][str(learningObjective.competency_set.first())].update(
-                    learningsObjs.append(
-                        {
-                            'name': str(learningObjective.compGroup) + '.' + str(learningObjective.compNumber) + '-' + str(learningObjective.loNumber),
-                            'fullName': learningObjective.name,
-                            'completionLevel': 0.1,
-                            'size': 3,
-                            'competency': str(learningObjective.competency_set.first()),
-                            'children': returnChallenge(learningObjective, 0.1)
-                        }
-                        )
-
-    for comp in comps:
-        for lo in learningsObjs:
-            if lo['competency'] == comp['fullName'] and lo not in comp['children']:
-                comp['children'].append(lo)
-
-    dataNode = {'name': 'Competencies',
-                'children': comps}
     newNode = comps
     return newNode
 
@@ -154,29 +112,43 @@ def processCompetencyD3(user):
 # pull out the challenges that this LO is in
 # change it to pull the megachallenge, and
 # create an aggregate list of solution instances
-def returnChallenge(learningObj, cl):
+def returnChallenge(learningObj, user):
     challengeArray = []
     challenges = learningObj.challenge.all()
     megaChallenge = challenges.first()
     for challenge in list(challenges):
+        complete = 0
         solutions = challenge.solutions.all()
         si = []
         for solution in solutions:
-            solution = {
+            sol = {
                 'name': generateShortName(solution.name),
-                'size': 4
+                'complete': checkCompletion(solution, user)
             }
+            if checkCompletion(solution, user) != 0:
+                complete = 1
+            si.append(sol)
         challenge = {
             'name': generateShortName(str(challenge.name)),
             'fullName': str(challenge.name),
-            'size': 5,
-            'children': [si],
+            'complete': complete,
             'solutions': si,
-            'completionLevel': cl
         }
         challengeArray.append(challenge)
 
-    return nestList(challengeArray)
+    # return nestList(challengeArray)
+    return challengeArray
+
+
+def checkCompletion(solution, user):
+    try:
+        status = SolutionStatus.objects.get(solutionInstance=solution, userSolution__userOwner=user)
+        if status.solutionCompleted:
+            return 2
+        else:
+            return 1
+    except SolutionStatus.DoesNotExist:
+        return 0
 
 
 # Truncate the long names in the platform
