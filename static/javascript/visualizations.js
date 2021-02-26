@@ -271,7 +271,13 @@ function generateCircleChart2(data) {
         .append("g")
         .attr("id", "centerNode")
         .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
-
+        /*.on("click", function() {
+            generateCircleChart2(data)
+        })*/
+    let infoPane = d3.select("body")
+        .append("div")
+        .attr("class", "infoPane")
+        .text("information")
     let tot = 0
     for (const[i, value] of data.entries()) {
         tot += value['children'].length
@@ -296,6 +302,10 @@ function generateCircleChart2(data) {
             .attr("d", arc)
             .attr("fill", hmBlue)
             .attr("id", "comp" + value['name'])
+            .on("click", function () {
+                $("g").remove()
+                return generateCircleChart2(value['children'])
+            })
         g.append("text")
             .attr("dy", 50)
             .attr("x", 50)
@@ -342,7 +352,17 @@ function generateCircleChart2(data) {
                 .attr("d", subArc)
                 .attr("fill", "gray")
                 .attr("id", "lo" + v['name'] + "." + i)
-
+                .on("mouseover", function () {
+                    d3.select(this).attr("class", "hoverSegment")
+                    return infoPane.style("visibility", "visible")
+                        .text(v["name"] + ": " + v["fullName"])
+                        .style("top", d3.event.pageY + "px")
+                        .style("left", d3.event.pageX + "px")
+                })
+                .on("mouseout", function () {
+                    d3.select(this).attr("class", null)
+                    return infoPane.style("visibility", "hidden")
+                })
             g.append("text")
                 .attr("x", 25)
 
@@ -358,12 +378,23 @@ function generateCircleChart2(data) {
             let subRadius = newRadius + 60
 
             for (const[i, v2] of Object.entries(v['children'])) {
-                g.append("path")
+                let challenge = g.append("path")
                     .attr("d", stackedArcGenerator(subEndAngleAccessor, subEndAngleAccessor + subAngleThreshold, subRadius))
                     .attr("fill", function (){
-                        return colors[checkCompletion(v2['solutions'])]
+                        return colors[checkCompletion(v2['children'])]
                     })
                     .attr("id", v['name'] + v2['name'] + "." + i)
+                .on("mouseover", function () {
+                        challenge.attr("class", "hoverSegment")
+                        return infoPane.style("visibility", "visible")
+                            .text(v2["fullName"])
+                            .style("top", d3.event.pageY + "px")
+                            .style("left", d3.event.pageX + "px")
+                    })
+                    .on("mouseout", function () {
+                        challenge.attr("class", null)
+                        return infoPane.style("visibility", "hidden")
+                    })
                 g.append("text")
 
                     .attr("fill", "#FFFFFF")
@@ -374,10 +405,11 @@ function generateCircleChart2(data) {
                     .append("textPath")
                     .attr("xlink:href", "#"+ v['name'] + v2['name'] + "." + i)
                     .text(v2['name'])
+
                 let subRadius2 = subRadius
-                let subAngleThreshold2 = (subAngleThreshold / v2['solutions'].length)
+                let subAngleThreshold2 = (subAngleThreshold / v2['children'].length)
                 let subEndAngleAccessor2 = subEndAngleAccessor
-                for (const[i, v3] of Object.entries(v2['solutions'])) {
+                for (const[i, v3] of Object.entries(v2['children'])) {
 
                     g.append("g")
                         .append("path")
@@ -385,6 +417,27 @@ function generateCircleChart2(data) {
                         .attr("fill", function () {
                             return colors[v3['complete']]
                         })
+                        .on("mouseover", function () {
+                            let path = d3.select(this)
+                                .attr("class", "hoverSegment")
+                            return infoPane.style("visibility", "visible")
+                            .text(v3["name"])
+                            .style("top", d3.event.pageY + "px")
+                            .style("left", d3.event.pageX + "px")
+                        })
+                        .on("mouseout", function () {
+                            d3.select(this)
+                                .attr("class", null)
+                            return infoPane.style("visibility", "hidden")
+                        })
+                        /*g.on("mouseover", function () {
+                            return g.append("rect")
+                                .attr("width", v3['name'].length)
+                                .attr("x", this.getBoundingClientRect().x)
+                                .attr("height", 10)
+                                .attr("y", this.getBoundingClientRect().y)
+                                .attr("fill", "red")
+                        })*/
 
                     subEndAngleAccessor2 += subAngleThreshold2
                 }
@@ -395,11 +448,14 @@ function generateCircleChart2(data) {
         }
         endAngleAccessor += arcRadians
     }
+    //d3.select("centerNode")
+
 }
 
 function checkCompletion(dict) {
     let c = 0
-    for (const[k, v] of Object.entries(dict)) {
+    if (dict) {
+        for (const[k, v] of Object.entries(dict)) {
         console.log(v)
         if (v['complete'] !== 0){
             if (v['complete'] === 1) {
@@ -410,6 +466,8 @@ function checkCompletion(dict) {
                 c = 2
             }
         }
+    }
+
     }
     return c
 }

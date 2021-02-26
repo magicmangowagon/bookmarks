@@ -122,7 +122,7 @@ def returnChallenge(learningObj, user):
         si = []
         for solution in solutions:
             sol = {
-                'name': generateShortName(solution.name),
+                'name': solution.name,
                 'complete': checkCompletion(solution, user)
             }
             if checkCompletion(solution, user) != 0:
@@ -132,7 +132,7 @@ def returnChallenge(learningObj, user):
             'name': generateShortName(str(challenge.name)),
             'fullName': str(challenge.name),
             'complete': complete,
-            'solutions': si,
+            'children': si,
         }
         challengeArray.append(challenge)
 

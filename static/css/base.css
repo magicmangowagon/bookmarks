@@ -23,6 +23,24 @@
     text-anchor: middle;
 }
 
+.infoPane {
+    position: absolute;
+    z-index: 10;
+    visibility: hidden;
+    color: #2f3a42;
+    background-color: #e3dedc;
+    border: solid 3pt #00a497;
+    border-radius: 2pt;
+    padding: 2pt;
+    font-weight: 500;
+    font-family: Oswald, "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+}
+
+.hoverSegment {
+    stroke: #f5dd5d;
+    stroke-width: 6;
+}
+
 .tabcontent {
     display: none;
 }
