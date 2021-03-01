@@ -303,7 +303,7 @@ function generateCircleChart2(data) {
             .attr("fill", hmBlue)
             .attr("id", "comp" + value['name'])
             .on("click", function () {
-                zoomIn(value['children'])
+                zoomed(value['children'])
             })
         g.append("text")
             .attr("dy", 50)
@@ -363,7 +363,7 @@ function generateCircleChart2(data) {
                     return infoPane.style("visibility", "hidden")
                 })
                 .on("click", function() {
-                    zoomIn(v['children'])
+                    zoomed(v['children'])
                 })
             g.append("text")
                 .attr("x", 25)
@@ -398,7 +398,7 @@ function generateCircleChart2(data) {
                         return infoPane.style("visibility", "hidden")
                     })
                     .on("click", function() {
-                        zoomIn(v2['children'])
+                        zoomed(v2['children'])
                     })
                 g.append("text")
 
@@ -462,6 +462,39 @@ function depthDive(data) {
             }
         }
         return maxDepth + 1
+}
+
+function drawChildren(data) {
+    let angleThreshold = 360/data.length
+    let startAngle = 0
+    for (const[k, v] of Object.entries(data)) {
+        d3.select('newNode').append("g")
+                .append("path")
+                .attr("d", inlineArcGenerator(startAngle, startAngle + angleThreshold, 100))
+                .attr("fill", "gray")
+        if (v['children']) {
+            drawChildren(v['children'])
+        }
+    }
+}
+
+function zoomed(data) {
+    let total = 360
+    let start = 0
+    let padding = 100
+    let x = width/2
+    let y = height/2
+
+    let mainNode = d3.selectAll("g")
+        .attr("visibility", "hidden")
+    let newNode = d3.select("svg")
+        .append("g")
+        .attr("transform", "translate(" + x + ", " + y + ")")
+    newNode.append("g")
+                .append("path")
+                .attr("d", inlineArcGenerator(start, total, padding))
+                .attr("fill", "gray")
+
 }
 
 function zoomIn(data) {
