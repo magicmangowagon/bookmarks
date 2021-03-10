@@ -73,10 +73,12 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'hijack',
     'compat',
-    'crispy_forms'
+    'crispy_forms',
+    # 'debug_toolbar'
 ]
 
 MIDDLEWARE = [
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -88,6 +90,8 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'compression_middleware.middleware.CompressionMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware'
+    'django.middleware.cache.FetchFromCacheMiddleware',
 
 ]
 
@@ -125,6 +129,16 @@ DATABASES = {
         'PASSWORD': '2008NeuDM',
     }
 }
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
+    }
+}
+
+CACHE_MIDDLEWARE_ALIAS = 'default'
+CACHE_MIDDLEWARE_SECONDS = 600
+CACHE_MIDDLEWARE_KEY_PREFIX = '1'
 
 
 # Password validation
@@ -357,3 +371,8 @@ LOGGING = {
         },
     },
 }
+
+
+INTERNAL_IPS = [
+    '127.0.0.1'
+]

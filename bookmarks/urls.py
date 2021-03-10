@@ -20,6 +20,7 @@ from django.views.static import serve
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
+# import debug_toolbar
 from django.conf.urls.static import static
 
 urlpatterns = [
@@ -38,7 +39,8 @@ urlpatterns = [
     path('documents/', include(wagtaildocs_urls)),
     path('pages/', include(wagtail_urls)),
     path('comments/', include('django_comments_xtd.urls')),
-    path('hijack/', include('hijack.urls'))
+    path('hijack/', include('hijack.urls')),
+    # path('__debug__', include(debug_toolbar.urls))
     # re_path(r'', include(wagtail_urls)),
 ]
 

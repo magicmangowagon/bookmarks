@@ -1111,8 +1111,10 @@ class CoachingReviewView(FormView):
             # userSolution.save()
 
             rForm.save()
-            process_rubricLine(rubricLines)
+            print('sending to processing')
+
             critForm.save()
+            process_rubricLine(rubricLines)
             return redirect('solution-end-eval', self.kwargs['pk'])
             # return HttpResponseRedirect('/evals')
         else:

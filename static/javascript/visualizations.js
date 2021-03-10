@@ -303,7 +303,7 @@ function generateCircleChart2(data) {
             .attr("fill", hmBlue)
             .attr("id", "comp" + value['name'])
             .on("click", function () {
-                zoomed(value['children'])
+                zoomed(value['children'], value['type'])
             })
         g.append("text")
             .attr("dy", 50)
@@ -337,7 +337,7 @@ function generateCircleChart2(data) {
         let subEndAngleAccessor = endAngleAccessor
 
         //
-        for (const[i, v] of Object.entries(value['children'])){
+        for (const[k, v] of Object.entries(value['children'])){
 
             let newRadius = centerRadius + 10
             let subArc = d3.arc()
@@ -363,7 +363,7 @@ function generateCircleChart2(data) {
                     return infoPane.style("visibility", "hidden")
                 })
                 .on("click", function() {
-                    zoomed(v['children'])
+                    zoomed(v['children'], v['type'])
                 })
             g.append("text")
                 .attr("x", 25)
@@ -464,36 +464,51 @@ function depthDive(data) {
         return maxDepth + 1
 }
 
-function drawChildren(data) {
-    let angleThreshold = 360/data.length
+function drawChildren(data, type) {
+    let angleThreshold = 0
+    console.log(type)
     let startAngle = 0
-    for (const[k, v] of Object.entries(data)) {
-        d3.select('newNode').append("g")
-                .append("path")
-                .attr("d", inlineArcGenerator(startAngle, startAngle + angleThreshold, 100))
+    let padding = 50
+    let g = d3.select("#newNode")
+        .append("g")
+    if (type === "competency") {
+        console.log("competency")
+        angleThreshold = 360/data.length
+        let arcRadians = (Math.PI/180) * (angleThreshold)
+        for (const[k,v] of Object.entries(data)) {
+            let g = d3.select("#newNode").append("g")
+            g.append("path")
+                .attr("d", ArcGenerator(startAngle, startAngle + arcRadians, 50, 150))
+                .attr("id", v['name'])
                 .attr("fill", "gray")
-        if (v['children']) {
-            drawChildren(v['children'])
+            g.append("text")
+                .attr("dy", 10)
+                .attr("x", 50)
+                .attr("fill", "black")
+                .attr("text-anchor", "middle")
+            .append("textPath")
+                .attr("xlink:href", "#" + v['name'])
+                .text(v['name'])
+            startAngle += arcRadians
         }
     }
 }
 
-function zoomed(data) {
+function zoomed(data, type) {
     let total = 360
     let start = 0
     let padding = 100
     let x = width/2
     let y = height/2
-
+    let shit = type
+    console.log(shit)
     let mainNode = d3.selectAll("g")
         .attr("visibility", "hidden")
     let newNode = d3.select("svg")
         .append("g")
+        .attr("id", "newNode")
         .attr("transform", "translate(" + x + ", " + y + ")")
-    newNode.append("g")
-                .append("path")
-                .attr("d", inlineArcGenerator(start, total, padding))
-                .attr("fill", "gray")
+    drawChildren(data, shit)
 
 }
 
@@ -556,6 +571,18 @@ function checkCompletion(dict) {
 
     }
     return c
+}
+
+function ArcGenerator (subEndAngleAccessor, subAngleThreshold, radius1, radius2) {
+
+            let subArc = d3.arc()
+                .startAngle(subEndAngleAccessor)
+                .endAngle(subAngleThreshold)
+                .padAngle(.25)
+                .padRadius(10)
+                .innerRadius(radius1)
+                .outerRadius(radius2)
+    return subArc
 }
 
 function inlineArcGenerator (subEndAngleAccessor, subAngleThreshold, radius) {

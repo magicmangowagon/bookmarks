@@ -58,22 +58,28 @@ def evaluationCompleted(userSolution, user):
 
 
 # moved processRubricLines in to CentralDispatch
+# this is breaking when there are connection issues
+# need to investigate the db hits not triggering this check
 def process_rubricLine(rubricLines):
     completed = False
-    for RubricLine in rubricLines:
-        if RubricLine.completionLevel < 50:
-            RubricLine.ready = False
+    for rubricLine in rubricLines:
+        if rubricLine.completionLevel < 50:
+            print('not ready')
+            rubricLine.ready = False
             completed = False
+            print('breaking')
             break
         else:
-            RubricLine.ready = True
+            rubricLine.ready = True
             completed = True
-        RubricLine.save()
+        rubricLine.save()
     if completed:
+        print('complete')
         solutionStatus = SolutionStatus.objects.get(userSolution=rubricLines[0].student)
         solutionStatus.solutionCompleted = True
         solutionStatus.save()
-    return rubricLines
+        print('returning rubricLines')
+    # return rubricLines
 
 
 # generate dataset for D3
@@ -88,6 +94,7 @@ def processCompetencyD3(user):
                     'name': str(competency.compGroup) + '.' + str(competency.compNumber),
                     'fullName': str(competency.name),
                     'id': competency.pk,
+                    'type': 'competency',
                     'children': []
                 }
         for lo in competency.learningObjs.all():
@@ -96,7 +103,9 @@ def processCompetencyD3(user):
                     'fullName': lo.name,
                     'completionLevel': 0,
                     'competency': str(competency),
-                    'children': returnChallenge(lo, user)
+                    'children': returnChallenge(lo, user),
+                    'type': 'learningObj'
+
                   }
             comp['children'].append(lo)
         comps.append(comp)
@@ -123,7 +132,8 @@ def returnChallenge(learningObj, user):
         for solution in solutions:
             sol = {
                 'name': solution.name,
-                'complete': checkCompletion(solution, user)
+                'complete': checkCompletion(solution, user),
+                'type': 'solution'
             }
             if checkCompletion(solution, user) != 0:
                 complete = 1
@@ -132,6 +142,7 @@ def returnChallenge(learningObj, user):
             'name': generateShortName(str(challenge.name)),
             'fullName': str(challenge.name),
             'complete': complete,
+            'type': 'challenge',
             'children': si,
         }
         challengeArray.append(challenge)
@@ -211,6 +222,46 @@ def processCompetency(rubricLines):
                     compiledRubricLines[str(competency)].update({lo.id + i: [0, loLabel]})
 
     return compiledRubricLines
+
+
+def shit():
+    solutionStatus = SolutionStatus.objects.all()
+    for ss in solutionStatus:
+        ss.solutionCompleted = False
+        ss.save()
+
+
+def fixIncompletes():
+    userSolutions = UserSolution.objects.filter(evaluated__whoEvaluated__profile__role__gte=3).filter(solutionstatus__solutionCompleted=False)
+    solutionStatus = SolutionStatus.objects.all()
+    for u in userSolutions:
+        s = solutionStatus.get(userSolution=u)
+        rs = RubricLine.objects.filter(student=u).filter(evaluated__whoEvaluated__profile__role__gte=3).order_by(
+            'learningObjective_id', '-evaluated__date').distinct('learningObjective_id')
+        for r in rs:
+            if r.completionLevel < 50:
+                s.solutionCompleted = False
+                break
+            else:
+                s.solutionCompleted = True
+        s.save()
+    # solutionStatus = SolutionStatus.objects.filter(solutionCompleted=False)
+    # for ss in solutionStatus:
+    #     # ss.solutionCompleted = False
+    #     rs = RubricLine.objects.filter(student=ss.userSolution).filter(
+    #         evaluated__whoEvaluated__profile__role=3).order_by('evaluated__whoEvaluated',
+    #                                                            '-evaluated__date').distinct('evaluated__whoEvaluated')
+    #
+    #     for r in rs:
+    #         print(str(r.student) + ' ' + str(r.evaluated.whoEvaluated) + ' ' + str(r.evaluated.date))
+    #         if r.completionLevel < 50:
+    #             ss.solutionCompleted = False
+    #             ss.save()
+    #             break
+    #         else:
+    #             ss.solutionCompleted = True
+    #             ss.save()
+    # print(userSolutions.count())
 
 
 # script to call when tracking stack goes live to update old
