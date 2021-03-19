@@ -165,8 +165,9 @@ class NewDashboard(SingleTableMixin, FilterView, ListView):
 
     def get_queryset(self):
         if self.request.user.profile.role != 1:
-            queryset = SolutionStatus.objects.filter(userSolution__userOwner__is_active=True).order_by(
-                '-userSolution__somethinghappened__created')
+            queryset = SolutionStatus.objects.filter(userSolution__userOwner__is_active=True).order_by('-id',
+                '-userSolution__somethinghappened__modified').distinct('id')
+            print(queryset.count())
         else:
             queryset = SolutionStatus.objects.filter(userSolution__userOwner=self.request.user).order_by(
                 '-userSolution__somethinghappened__created')
@@ -175,7 +176,7 @@ class NewDashboard(SingleTableMixin, FilterView, ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(NewDashboard, self).get_context_data(**kwargs)
         context['filter'] = SolutionTrackerFilter
-        context['solutionInstances'] = SolutionInstance.objects.all().order_by('challenge_that_owns_me')
+        # context['solutionInstances'] = SolutionInstance.objects.all().order_by('challenge_that_owns_me')
 
         userWorkForm = UserWorkToView(self.request.GET)
         if self.request.user.profile.role != 1:

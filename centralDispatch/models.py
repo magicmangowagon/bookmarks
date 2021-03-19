@@ -75,11 +75,11 @@ class SomethingHappened(models.Model):
 
 
 class SolutionStatus(models.Model):
-    solutionSubmitted = models.BooleanField(default=False)
-    solutionEvaluated = models.BooleanField(default=False)
-    solutionCoachReviewed = models.BooleanField(default=False)
-    solutionRejected = models.BooleanField(default=False)
-    solutionCompleted = models.BooleanField(default=False)
+    solutionSubmitted = models.BooleanField(default=False, verbose_name='Submitted')
+    solutionEvaluated = models.BooleanField(default=False, verbose_name='Evaluated')
+    solutionCoachReviewed = models.BooleanField(default=False, verbose_name='Coach Reviewed')
+    solutionRejected = models.BooleanField(default=False, verbose_name='Needs Revision')
+    solutionCompleted = models.BooleanField(default=False, verbose_name='Completed')
     userSolution = models.ForeignKey(UserSolution, null=True, default='', on_delete=models.CASCADE)
     solutionInstance = models.ForeignKey(SolutionInstance, default='', on_delete=models.PROTECT, null=True)
     returnTo = models.ForeignKey(User, null=True, default='', on_delete=models.CASCADE, limit_choices_to=models.Q(profile__role__gte=2))

@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Evaluate a Challenge
+{% endblock %}
+
+{% block content %}
+
+<h1>{{ challenge }}: {{ solutionInstance }} - {{ student.userOwner.first_name }} {{ student.userOwner.last_name }}</h1>
+
+    <a href="/solutions/{{ usersolution.pk }}"> <h2>Evaluate {{ student.userOwner.first_name }}'s solution</h2></a>
+    <a href="/customRubric/{{ student.id }}">Modify Challenge Instance</a>
+
+
+    <form action=""  method="post" enctype="multipart/form-data">
+
+
+        {{ formset.management_form }}
+
+        {{ form }}
+        {% csrf_token %}
+
+
+        <p><input type="submit" value="Submit evaluation"></p>
+    </form>
+
+    <div class="vertSliderContainer">
+    <h3>Ready?</h3>
+        <div id="progressContainer">
+            <div id="progressBar">
+            </div>
+        </div>
+
+    <script>
+        var sliderFields = document.getElementsByClassName("slider");
+        var progressBar = document.getElementById("progressBar");
+        var progressContainer = document.getElementById("progressContainer");
+
+        var sliderTotals = 0;
+        var sliderMax = 0;
+
+        updateScreenHeight();
+
+        for(var i = 0; i < sliderFields.length; i++)
+        {
+            sliderMax += parseInt(sliderFields[i].max);
+            sliderTotals += parseInt(sliderFields[i].value);
+        }
+        progressBar.style.height = (sliderTotals/sliderFields.length) + '%';
+
+        function updateChallengeTotal()
+        {
+            sliderTotals = 0;
+            for(var i = 0; i < sliderFields.length; i++)
+            {
+                sliderTotals += parseInt(sliderFields[i].value);
+            }
+            progressBar.style.height = (sliderTotals/sliderFields.length) + '%';
+        }
+
+        function updateScreenHeight()
+        {
+            var screenHeight = window.innerHeight;
+            progressContainer.style.height = (screenHeight - (screenHeight * .35)) + 'px';
+        }
+
+
+        function showOrHide(changeSomething, thingToChange)
+        {
+            if (changeSomething[changeSomething.selectedIndex].value === "True")
+            {
+                thingToChange.style.display = "none";
+            }
+            else
+            {
+                thingToChange.style.display = "";
+            }
+        }
+
+        function grayOut(changeSomething, headerToGrayOut)
+        {
+            if(changeSomething[changeSomething.selectedIndex].value === "True")
+            {
+                headerToGrayOut.style.backgroundColor = "gray";
+            }
+            else
+            {
+                headerToGrayOut.style.backgroundColor = "#00a497";
+            }
+        }
+
+
+    </script>
+
+
+    </div>
+
+{% endblock %}

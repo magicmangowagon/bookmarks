@@ -767,16 +767,23 @@ class SolutionEvaluationView(FormView):
 
         context['criteria'] = neededCriteria
         context['count'] = criteriaLength
-
+        print(criteriaLength)
         # Set up each formset, always create new ones initialized based on conditions
         # delineated below
-        RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=loCount, fields=(
-            'ignore', 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions',
-            'completionLevel',
-            'student', 'needsLaterAttention'), widgets={'student': forms.HiddenInput,
-                                                        'completionLevel': forms.HiddenInput(),
-                                                        'ignore': forms.HiddenInput(),
-                                                        'needsLaterAttention': forms.HiddenInput()})
+        if self.request.user.profile.role > 2:
+            RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=loCount, fields=(
+                'ignore', 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions',
+                'completionLevel',
+                'student', 'needsLaterAttention'), widgets={'student': forms.HiddenInput,
+                                                            'completionLevel': forms.HiddenInput()})
+        else:
+            RubricLineFormset = modelformset_factory(RubricLine, formset=RubricLineForm, extra=loCount, fields=(
+                'ignore', 'learningObjective', 'evidencePresent', 'evidenceMissing', 'feedback', 'suggestions',
+                'completionLevel',
+                'student', 'needsLaterAttention'), widgets={'student': forms.HiddenInput,
+                                                            'completionLevel': forms.HiddenInput(),
+                                                            'ignore': forms.HiddenInput(),
+                                                            'needsLaterAttention': forms.HiddenInput()})
 
         CriterionFormSet = modelformset_factory(CriteriaLine, formset=CriteriaForm, extra=criteriaLength, fields=(
             'achievement', 'criteria', 'userSolution'), widgets={'criteria': forms.HiddenInput,
@@ -796,7 +803,7 @@ class SolutionEvaluationView(FormView):
             if SolutionStatus.objects.filter(userSolution=userSolution):
                 print('status object found')
                 solutionStatus = SolutionStatus.objects.get(userSolution=userSolution)
-                if solutionStatus.returnTo == self.request.user or self.request.user.profile.role == 4:
+                if solutionStatus.returnTo == self.request.user or self.request.user.profile.role > 2:
                     print('returned to evaluator')
                     rubricLines = RubricLine.objects.filter(
                         learningObjective__in=userSolution.solutionInstance.learningObjectives.all()).order_by('learningObjective__id', '-evaluated__date', ).distinct('learningObjective').filter(
@@ -880,7 +887,6 @@ class SolutionEvaluationView(FormView):
                                                        'generalFeedback': rubric.generalFeedback,
                                                        'challengeCompletionLevel': rubric.challengeCompletionLevel})
 
-
         # if challenge has been flagged for customization
         # reroute it to this function to apply the corrected learning
         # objectives and return it to the view
@@ -948,11 +954,13 @@ class SolutionEvaluationView(FormView):
         if formset.is_valid() and critFormset.is_valid() and rubricFormset.is_valid():
             evaluated = Evaluated.objects.create(whoEvaluated=self.request.user)
             userSolution.evaluated.add(evaluated)
+            rubricLines = []
 
             for form in formset:
                 f = form.save(commit=False)
                 f.evaluated = evaluated
                 f.save()
+                rubricLines.append(f)
             for critForm in critFormset:
                 c = critForm.save(commit=False)
                 c.evaluator = evaluated
@@ -961,7 +969,7 @@ class SolutionEvaluationView(FormView):
             userSolution.save()
             formset.save()
             critFormset.save()
-
+            process_rubricLine(rubricLines)
             return HttpResponseRedirect('/evals')
 
         else:
