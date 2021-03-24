@@ -7,6 +7,7 @@ from rubrics.views import SolutionDetailView
 
 class SolutionTable(tables.Table):
     userSolution = tables.Column(linkify={"viewname": "solution-detail", "args": [tables.A("userSolution__pk")]},)
+    # coachreview = tables.Column(linkify={"viewname": "evaluation-detail", "args": [tables.A("solutionStatus__pk")]},)
     # tc = tables.Column(accessor='challengestatus', verbose_name='Last Name')
     challenge = tables.Column(accessor='userSolution__challengeName__megaChallenge', verbose_name='Challenge')
     challengeAccepted = tables.BooleanColumn(accessor='challengestatus', verbose_name='Challenge Accepted')
@@ -32,6 +33,12 @@ class SolutionTable(tables.Table):
         except:
             return 'Not Found'
 
+    def render_coachreview(self, value):
+        try:
+            return value.solutionStatus.solutionCoachReviewed
+        except:
+            return False
+
     def render_created(self, value):
         ss = SolutionStatus.objects.get(userSolution=value)
         return ss.get_somethingHappened().created
@@ -53,14 +60,14 @@ class SolutionTable(tables.Table):
                   'challenge',
                   'challengeAccepted',
                   'userSolution', 'solutionSubmitted', 'solutionEvaluated',
-                  'solutionCoachReviewed', 'solutionRejected', 'returnedTo', 'solutionCompleted', }
+                  'solutionCoachReviewed', 'solutionRejected', 'returnTo', 'solutionCompleted', }
         sequence = ('created',
                     'userSolution__userOwner__last_name',
                     'userSolution__userOwner__first_name',
                     'challenge',
                     'challengeAccepted',
                   'userSolution', 'solutionSubmitted', 'solutionEvaluated',
-                  'solutionCoachReviewed', 'solutionRejected', 'returnedTo', 'solutionCompleted', )
+                  'solutionCoachReviewed', 'solutionRejected', 'returnTo', 'solutionCompleted', )
         attrs = {"class": "solutionStatusTable"}
         # solutions = tables.ManyToManyColumn(transform='challengestatus__solutionStatusByInstance__challengestatus')
         # fields = ('user', 'challenge', 'solutions', 'cs')

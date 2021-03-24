@@ -70,8 +70,8 @@ Evaluate Challenge {{ finalRubric.challenge.name }}
                             {% if reviewSession is False %}
 
                                 <div class="slidecontainer">
-                                   <label>Ready to move on</label>
-                                        <input type="range" min="0" max="100" value="0" step="25" class="slider" id="slider{{ form.learningObjective.value }}">
+
+                                    <label for="slider{{ form.learningObjective.value }}">Ready to move on</label><input type="range" min="0" max="100" value="0" step="25" class="slider" id="slider{{ form.learningObjective.value }}">
                                     <div class="readyTick"></div>
                                 </div>
                             {% endif %}

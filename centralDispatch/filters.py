@@ -1,7 +1,8 @@
 from django_filters import FilterSet, filters
-from .models import SolutionStatus, ChallengeStatus
-from rubrics.models import Evaluated, SolutionInstance
+from .models import SolutionStatus, ChallengeStatus, AssignmentKeeper
+from rubrics.models import Evaluated, SolutionInstance, UserSolution
 from rubrics.models import User
+from account.models import Profile
 from django.forms import forms
 
 
@@ -12,6 +13,12 @@ class SolutionTrackerFilter(FilterSet):
         (True, 'Yes'),
         (False, 'No')
     )
+    def evaluators():
+        evaluators = ()
+        ev = Profile.objects.filter(role__gte=3)
+        for e in ev:
+            evaluators += (e.id, str(e.user.last_name)),
+        return evaluators
 
     def get_full_names():
         full_names = ()
@@ -28,7 +35,8 @@ class SolutionTrackerFilter(FilterSet):
     evaluator = filters.ModelChoiceFilter(field_name='userSolution__evaluated__whoEvaluated',
                                           queryset=User.objects.filter(profile__role__gte=2),
                                           label='Evaluator', empty_label='All')
-
+    assigned = filters.ChoiceFilter(field_name='userSolution__assignmentkeeper__coach', choices=evaluators, lookup_expr='exact',
+                                         label='Assigned to', empty_label='All')
     solutionInstance = filters.ModelChoiceFilter(field_name='userSolution__solutionInstance', empty_label='All',
                                                  queryset=SolutionInstance.objects.all().order_by(
                                                      'challenge_that_owns_me__challengeGroupChoices'),
@@ -36,5 +44,5 @@ class SolutionTrackerFilter(FilterSet):
 
     class Meta:
         model = SolutionStatus
-        fields = {'tc', 'solutionInstance',
+        fields = {'assigned', 'tc', 'solutionInstance',
                   'evaluator', 'solutionCompleted'}
