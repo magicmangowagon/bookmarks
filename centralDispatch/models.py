@@ -200,6 +200,6 @@ def update_solution_status(sender, **kwargs):
         if kwargs['instance'].evaluator.profile.role == 2:
             solutionStatus.solutionEvaluated = True
             solutionStatus.save()
-        if kwargs['instance'].evaluator.profile.role == 3:
+        if kwargs['instance'].evaluator.profile.role >= 3:
             solutionStatus.solutionCoachReviewed = True
             solutionStatus.save()
