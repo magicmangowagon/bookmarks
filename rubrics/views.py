@@ -748,7 +748,7 @@ class SolutionEvaluationView(FormView):
             challenge = userSolution.solutionInstance
             lo_list = LearningObjective.objects.filter(solutioninstance=challenge)
 
-        context['lo_list'] = lo_list
+        # context['lo_list'] = lo_list
         context['student'] = userSolution
         context['usersolution'] = userSolution
 
@@ -799,15 +799,19 @@ class SolutionEvaluationView(FormView):
         # Need a more thorough check of status of solution, initial return to should populate with coaches feedback.
         # After that do we lock the eval? Allow the Evaluator to continue editing until a coach looks at it again?
         if RubricLine.objects.filter(student=userSolution).exists():
+
+            pastRubricLines = RubricLine.objects.filter(student=userSolution).order_by(
+                'learningObjective__id', '-evaluated__date', ).distinct('learningObjective').filter(
+                        student=userSolution)
+
             print('found old eval')
             if SolutionStatus.objects.filter(userSolution=userSolution):
                 print('status object found')
                 solutionStatus = SolutionStatus.objects.get(userSolution=userSolution)
                 if solutionStatus.returnTo == self.request.user or self.request.user.profile.role > 2:
                     print('returned to evaluator')
-                    rubricLines = RubricLine.objects.filter(
-                        learningObjective__in=userSolution.solutionInstance.learningObjectives.all()).order_by('learningObjective__id', '-evaluated__date', ).distinct('learningObjective').filter(
-                        student=userSolution)
+                    print(lo_list)
+                    rubricLines = pastRubricLines
                     # rubricLines = RubricLines.order_by('learningObjective__compGroup', 'learningObjective__compNumber', 'learningObjective__compNumber',)
                     criteriaLines = CriteriaLine.objects.all().filter(userSolution=userSolution).order_by('criteria', '-evaluator__date').distinct('criteria')
                     try:
