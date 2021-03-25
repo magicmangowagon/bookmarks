@@ -36,6 +36,25 @@
     font-family: Oswald, "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
 }
 
+.pagination {
+    list-style: none;
+    font-weight: 600;
+    display: flex;
+    flex-direction: row;
+
+
+}
+
+.pagination li {
+    margin: 1pt 5pt;
+    padding: 0 4px;
+}
+
+li.active {
+    background-color: #003469;
+    color: #f5dd5d;
+}
+
 .hoverSegment {
     stroke: #f5dd5d;
     stroke-width: 6;

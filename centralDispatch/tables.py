@@ -7,7 +7,7 @@ from rubrics.views import SolutionDetailView
 
 class SolutionTable(tables.Table):
     userSolution = tables.Column(linkify={"viewname": "solution-detail", "args": [tables.A("userSolution__pk")]},)
-    solutionCoachReviewed = tables.Column(linkify={"viewname": "evaluation-detail", "args": [tables.A("userSolution__pk")]},)
+    solutionCoachReviewed = tables.Column(linkify={"viewname": "coachingReview", "args": [tables.A("userSolution__pk")]},)
     # tc = tables.Column(accessor='challengestatus', verbose_name='Last Name')
     challenge = tables.Column(accessor='userSolution__challengeName__megaChallenge', verbose_name='Challenge')
     challengeAccepted = tables.BooleanColumn(accessor='challengestatus', verbose_name='Challenge Accepted')
