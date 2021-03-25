@@ -23,7 +23,7 @@ from django.db.models import Q
 from .functions import assess_competency_done
 from django.core.mail import send_mail
 from .filters import EvalFilter
-from centralDispatch.models import ChallengeStatus, SolutionStatus
+from centralDispatch.models import ChallengeStatus, SolutionStatus, AssignmentKeeper
 from centralDispatch.functions import submissionAlert, evaluationCompleted, process_rubricLine
 from centralDispatch.forms import ChallengeStatusForm, ChallengeStatusFormset
 from info.models import DiscussionBoard
@@ -767,7 +767,7 @@ class SolutionEvaluationView(FormView):
 
         context['criteria'] = neededCriteria
         context['count'] = criteriaLength
-        print(criteriaLength)
+
         # Set up each formset, always create new ones initialized based on conditions
         # delineated below
         if self.request.user.profile.role > 2:
@@ -810,7 +810,7 @@ class SolutionEvaluationView(FormView):
                 solutionStatus = SolutionStatus.objects.get(userSolution=userSolution)
                 if solutionStatus.returnTo == self.request.user or self.request.user.profile.role > 2:
                     print('returned to evaluator')
-                    print(lo_list)
+
                     rubricLines = pastRubricLines
                     # rubricLines = RubricLines.order_by('learningObjective__compGroup', 'learningObjective__compNumber', 'learningObjective__compNumber',)
                     criteriaLines = CriteriaLine.objects.all().filter(userSolution=userSolution).order_by('criteria', '-evaluator__date').distinct('criteria')
@@ -973,7 +973,10 @@ class SolutionEvaluationView(FormView):
             userSolution.save()
             formset.save()
             critFormset.save()
-            process_rubricLine(rubricLines)
+            assignmentKeeper = AssignmentKeeper.objects.get(userSolution=userSolution)
+
+            if self.request.user.profile != assignmentKeeper.evaluator:
+                process_rubricLine(rubricLines)
             return HttpResponseRedirect('/evals')
 
         else:

@@ -188,6 +188,8 @@ def update_something_happened(sender, **kwargs):
 
 @receiver(post_save, sender=Rubric, dispatch_uid=str(Rubric) + str(datetime.now()))
 def update_solution_status(sender, **kwargs):
+    assignmentKeeper = AssignmentKeeper.objects.get(userSolution=kwargs['instance'].userSolution)
+    print(str(assignmentKeeper) + 'fart')
     if kwargs.get('created', False):
         try:
             solutionStatus = SolutionStatus.objects.get(userSolution=kwargs['instance'].userSolution)
@@ -197,9 +199,12 @@ def update_solution_status(sender, **kwargs):
             challengeStatus = ChallengeStatus.objects.get(challenge=kwargs['instance'].challenge, user=kwargs['instance'].userSolution.userOwner)
             challengeStatus.solutionStatusByInstance.add(solutionStatus)
             challengeStatus.save()
-        if kwargs['instance'].evaluator.profile.role == 2:
+        print(assignmentKeeper.evaluator, kwargs['instance'].evaluator.profile)
+
+        if (kwargs['instance'].evaluator.profile.role == 2) or (kwargs['instance'].evaluator.profile == assignmentKeeper.evaluator):
             solutionStatus.solutionEvaluated = True
             solutionStatus.save()
-        if kwargs['instance'].evaluator.profile.role >= 3:
+        if (kwargs['instance'].evaluator.profile.role >= 3) and \
+                (kwargs['instance'].evaluator.profile != assignmentKeeper.evaluator):
             solutionStatus.solutionCoachReviewed = True
             solutionStatus.save()
