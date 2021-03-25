@@ -13,6 +13,9 @@
             <h3><a href="centraldispatch/newsolutions">Assign Evaluators and Coaches</a> </h3>
             <h3><a href="solutionSearch" >God View</a></h3>
         {% endif %}
+        {% if request.user.profile.role > 2 %}
+            <h3><a href="newdashboard" >New Dashboard</a></h3>
+            {% endif %}
         {% if request.user.profile.role == 1 %}
         <p>View your submitted solutions here: <br>
         <a href="solutions">User Solutions</a></p>

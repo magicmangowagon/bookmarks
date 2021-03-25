@@ -7,7 +7,7 @@ from rubrics.views import SolutionDetailView
 
 class SolutionTable(tables.Table):
     userSolution = tables.Column(linkify={"viewname": "solution-detail", "args": [tables.A("userSolution__pk")]},)
-    # coachreview = tables.Column(linkify={"viewname": "evaluation-detail", "args": [tables.A("solutionStatus__pk")]},)
+    solutionCoachReviewed = tables.Column(linkify={"viewname": "evaluation-detail", "args": [tables.A("userSolution__pk")]},)
     # tc = tables.Column(accessor='challengestatus', verbose_name='Last Name')
     challenge = tables.Column(accessor='userSolution__challengeName__megaChallenge', verbose_name='Challenge')
     challengeAccepted = tables.BooleanColumn(accessor='challengestatus', verbose_name='Challenge Accepted')
@@ -33,11 +33,8 @@ class SolutionTable(tables.Table):
         except:
             return 'Not Found'
 
-    def render_coachreview(self, value):
-        try:
-            return value.solutionStatus.solutionCoachReviewed
-        except:
-            return False
+    def render_solutionCoachReviewed(self, value):
+        return value
 
     def render_created(self, value):
         ss = SolutionStatus.objects.get(userSolution=value)
