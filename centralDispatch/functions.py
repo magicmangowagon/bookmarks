@@ -1,4 +1,5 @@
-from rubrics.models import Challenge, MegaChallenge, UserSolution, SolutionInstance, Rubric, RubricLine, ChallengeAddendum, Competency, LearningObjective
+from rubrics.models import Challenge, MegaChallenge, UserSolution, SolutionInstance, Rubric, RubricLine, \
+    ChallengeAddendum, Competency, LearningObjective, LearningExperience
 from centralDispatch.models import SolutionRouter, AssignmentKeeper, SolutionStatus, ChallengeStatus, SomethingHappened
 from account.models import Profile
 from django.contrib.auth.models import User
@@ -364,3 +365,31 @@ def createSomethings():
         newTime = datetime.now() - timedelta(days=260)
         SomethingHappened.objects.filter(userSolution=solution).update(created=newTime)
 
+
+def cloneChallenge(challenge):
+    originalChallenge = Challenge.objects.get(pk=challenge)
+    challengeClone = Challenge.objects.get(pk=challenge)
+    challengeClone.pk = None
+    challengeClone.name = 'Copy ' + challengeClone.name
+    challengeClone.display = False
+    challengeClone.save()
+    print(originalChallenge.name + str(originalChallenge.learningObjs.all().count()))
+    learningExpos = LearningExperience.objects.filter(challenge_id=challenge)
+    for lo in originalChallenge.learningObjs.all():
+        challengeClone.learningObjs.add(lo)
+        print(lo)
+        challengeClone.save()
+    for learningExpo in learningExpos:
+        newLearningExpo = learningExpo
+        newLearningExpo.pk = None
+        newLearningExpo.name = 'Copy ' + learningExpo.name
+        newLearningExpo.challenge = challengeClone
+        newLearningExpo.save()
+
+    for solution in originalChallenge.solutions.all():
+        newSolution = solution
+        newSolution.pk = None
+        newSolution.name = 'Copy ' + solution.name
+        newSolution.save()
+        challengeClone.solutions.add(newSolution)
+        challengeClone.save()

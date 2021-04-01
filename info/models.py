@@ -34,7 +34,7 @@ class BaseInfo(models.Model):
 
 
 class DiscussionBoard(models.Model):
-    challenge = models.ForeignKey(Challenge, default='', null=False, on_delete=models.PROTECT)
+    challenge = models.ForeignKey(Challenge, default='', null=False, on_delete=models.CASCADE)
     description = RichTextField(default='')
 
     def get_absolute_url(self):
