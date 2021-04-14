@@ -33,10 +33,12 @@
             </div>
         </div>
     <div id="tab2" class="tabcontent">
+        {% if request.user.profile.role > 1 %}
     <form action=""  method="get">
         {{ userWorkForm }}
         <input type="submit" value="change student">
     </form>
+        {% endif %}
     <div id="chart">
         <svg></svg>
 

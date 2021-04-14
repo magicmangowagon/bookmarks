@@ -736,7 +736,15 @@ class SolutionEvaluationView(FormView):
     model = UserSolution
     form_class = RubricLineFormset
 
+    def get(self, *args, **kwargs):
+        if self.request.user.profile.role < 2:
+            return redirect('eval-detail', self.kwargs['pk'])
+        else:
+            context = self.get_context_data()
+            return self.render_to_response(context)
+
     def get_context_data(self, **kwargs):
+
         context = super(SolutionEvaluationView, self).get_context_data()
 
         userSolution = UserSolution.objects.get(pk=self.kwargs['pk'])
@@ -1401,13 +1409,16 @@ class EvalDetailView(DetailView):
             context['evaluation'] = RubricLine.objects.all().filter(student=rubric)
         else:
             print('Checking for rubricLines')
-            rubricLines = RubricLine.objects.all().filter(student=rubric, evaluated__whoEvaluated__profile__role__gte=3).filter(student__coachReview__release=True)
+            rubricLines = RubricLine.objects.filter(student=rubric).order_by(
+                'learningObjective__id', '-evaluated__date', ).distinct('learningObjective').filter(
+                student=rubric)
+            # rubricLines = RubricLine.objects.all().filter(student=rubric, evaluated__whoEvaluated__profile__role__gte=3).filter(student__coachReview__release=True)
             print(rubricLines.count())
             context['evaluation'] = rubricLines
         context['userRole'] = self.request.user.profile.role
 
         try:
-            context['evalFinalForm'] = Rubric.objects.all().filter(userSolution=rubric, userSolution__coachReview__release=True).last()
+            context['evalFinalForm'] = Rubric.objects.all().filter(userSolution=rubric).last()
             # print(Rubric.objects.get(userSolution=rubric, evaluator__profile__role=3).generalFeedback)
         except:
             context['evalFinalForm'] = 'There was an error'
