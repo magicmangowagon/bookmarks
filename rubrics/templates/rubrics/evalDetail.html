@@ -1,11 +1,14 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}
 {{ usersolution.userowner }}
 {% endblock %}
 
 {% block content %}
-
+    <div class="expoWrapper">
+    <div class="expoVertWrapper">
+        <p>Count: {{ evaluator.count }}</p>
     <h1>{{ usersolution.challengeName }}</h1>
 <p>Submitted by {{ usersolution.userOwner }}</p>
     {% if userRole is not 1 %}
@@ -18,32 +21,52 @@
         <p>Awaiting Coach Review</p>
 
     {% else %}
-    {% for rubricLine in evaluation %}
-
-        <div class="evalField">
-        <h3>{{ rubricLine.learningObjective }} - Evaluator: {{ rubricLine.evaluated.whoEvaluated }} - {{ rubricLine.evaluated.date }}</h3>
-        <div class="evalFieldFlexContainer">
-            <div class="evalFieldFlexBox"><h4>Evidence Present
-            </h4><p>{{  rubricLine.evidencePresent }}</p></div>
-            <div class="evalFieldFlexBox"><h4>Evidence Missing
-            </h4><p>{{  rubricLine.evidenceMissing }}</p></div>
-            <div class="evalFieldFlexBox"><h4>Suggestions
-            </h4>{{  rubricLine.suggestions }}</div>
-            <div class="evalFieldFlexBox"><h4>Feedback
-            </h4><p>{{  rubricLine.feedback }}</p></div>
-            <div class="evalFieldFlexBox"><h4>Ready?</h4>{{ rubricLine.ready }}</div>
-        </div>
-
-        </div>
+        {% for evaluated in evaluator %}
+            <div id="evalContainer{{ evaluated.id }}" class="evalContainer">
+            {% for rubricLine in evaluation %}
+                {% if rubricLine.evaluated == evaluated %}
+                    <div class="eval{{ rubricLine.evaluated.id }}">
+                        <div class="evalField">
+                            <h3>{{ rubricLine.learningObjective }} - Evaluator: {{ rubricLine.evaluated.whoEvaluated }} - {{ rubricLine.evaluated.date }}</h3>
+                            <div class="evalFieldFlexContainer">
+                                <div class="evalFieldFlexBox"><h4>Evidence Present
+                                </h4><p>{{  rubricLine.evidencePresent }}</p></div>
+                                <div class="evalFieldFlexBox"><h4>Evidence Missing
+                                </h4><p>{{  rubricLine.evidenceMissing }}</p></div>
+                                <div class="evalFieldFlexBox"><h4>Suggestions
+                                </h4>{{  rubricLine.suggestions }}</div>
+                                <div class="evalFieldFlexBox"><h4>Feedback
+                                </h4><p>{{  rubricLine.feedback }}</p></div>
+                                <div class="evalFieldFlexBox"><h4>Ready?</h4>{{ rubricLine.ready }}</div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
         <!-- <div class="completionLevel">Completion Level &nbsp;<span class="scoreBubble">{{ rubricLine.completionLevel }}</span></div> -->
     {% endfor %}
-    <h2>General Feedback</h2>
+            </div>
+        {% endfor %}
+
+         <h2>General Feedback</h2>
 
     <div class="evalFieldFlexContainer">
         <div class="evalFieldFlexBox">
             <p>{{ evalFinalForm.generalFeedback }}</p>
         </div>
     </div>
+    </div>
+        <div class="expoVertWrapper">
+            <div class="evalFilter">
+        <h3>Revision History</h3>
+        {% for eval in evaluator %}
+            <button id="evalBtn{{ eval.id }}" class="revisionBtn" onclick="showEvalContainer({{ eval.id }})">{{ eval.whoEvaluated }}, {{ eval.date }}</button>
+        {% endfor %}
+        </div>
+
+        </div>
+
+</div>
+
 
     <p></p>
     <!--
@@ -60,4 +83,15 @@
 
 <p><a href="/media/{{ usersolution.file }}">{{ usersolution.file }}</a> </p>
 
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" rel="prefetch"></script>
+<script src="{% static "javascript/tabs.js" %}"></script>
+    <script type="text/javascript">
+        $(window).on("load", function () {
+            evalList({{ idList | safe }})
+            showEvalContainer({{ idList.0 }})
+        })
+    </script>
 {% endblock %}

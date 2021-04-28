@@ -27,6 +27,7 @@ from centralDispatch.models import ChallengeStatus, SolutionStatus, AssignmentKe
 from centralDispatch.functions import submissionAlert, evaluationCompleted, process_rubricLine
 from centralDispatch.forms import ChallengeStatusForm, ChallengeStatusFormset
 from info.models import DiscussionBoard
+import json
 
 
 class CourseCatalog(ListView):
@@ -982,7 +983,7 @@ class SolutionEvaluationView(FormView):
             formset.save()
             critFormset.save()
             assignmentKeeper = AssignmentKeeper.objects.get(userSolution=userSolution)
-
+            evaluationCompleted(userSolution, self.request.user)
             if self.request.user.profile != assignmentKeeper.evaluator:
                 process_rubricLine(rubricLines)
             return HttpResponseRedirect('/evals')
@@ -1406,7 +1407,14 @@ class EvalDetailView(DetailView):
         #    context['notReady'] = True
 
         if self.request.user.profile.role is not 1:
-            context['evaluation'] = RubricLine.objects.all().filter(student=rubric)
+            rubricLines = RubricLine.objects.all().filter(student=rubric).order_by('-evaluated__date', 'learningObjective__id')
+            evaluateds = Evaluated.objects.filter(rubricline__in=rubricLines).order_by('-date').distinct('date')
+            ids = []
+            for evaluated in evaluateds:
+                ids.append(str(evaluated.id))
+            context['evaluator'] = evaluateds
+            context['evaluation'] = rubricLines
+            context['idList'] = ids
         else:
             print('Checking for rubricLines')
             rubricLines = RubricLine.objects.filter(student=rubric).order_by(

@@ -43,7 +43,7 @@ def evaluationCompleted(userSolution, user):
         email_recipient = AssignmentKeeper.objects.get(userSolution=userSolution).coach.user.email
         send_mail('The Orchard: New evaluator submission', user.first_name +
                   ' has submitted an evaluation for ' + str(userSolution),
-                  'noreply@wwgradschool.org', [email_recipient, ], fail_silently=False)
+                  'noreply@wwgradschool.org', [email_recipient, userSolution.userOwner.email], fail_silently=False)
         print('evaluationCompletedFunctionRunning "within try"')
 
     except:

@@ -20,3 +20,26 @@ function openPage(pageName, element, color) {
 
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
+
+function evalList(evaluators) {
+  let i
+  let evalContainers = document.getElementsByClassName("evalContainer")
+  for (i = 0; i < evalContainers.length; i++) {
+    evalContainers[i].style.display = "none"
+  }
+
+}
+
+function showEvalContainer(evaluatorId) {
+  console.log(evaluatorId)
+  let i
+  let evalContainers = document.getElementsByClassName("evalContainer")
+  let revisionBtns = document.getElementsByClassName("revisionBtn")
+  for (i = 0; i < evalContainers.length; i++) {
+    evalContainers[i].style.display = "none"
+    revisionBtns[i].style.backgroundColor = ""
+  }
+  let containerShow = document.getElementById("evalContainer" + evaluatorId.toString())
+  containerShow.style.display = "block"
+  document.getElementById("evalBtn" + evaluatorId.toString()).style.backgroundColor = "#00ad9c"
+}

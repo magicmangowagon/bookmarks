@@ -78,11 +78,25 @@ li.active {
 
 .tabbtn:hover {
     background-color: #FF7BAC;
-
 }
 
 .tabbtn:active {
     background-color: #00ad9c;
+}
+
+
+.evalFilter button{
+    background-color: #003469;
+    color: white;
+    border: none;
+    padding: 8px;
+    margin: 2pt;
+    font-family: Oswald, "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+    font-size: 12pt;
+}
+
+.evalFilter button:hover {
+    background-color: #FF7BAC;
 }
 
 #topHeader {
