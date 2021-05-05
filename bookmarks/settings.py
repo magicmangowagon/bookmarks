@@ -216,6 +216,8 @@ if DEBUG is True:
     SITE_ID = 2
     HIJACK_ALLOW_GET_REQUESTS = True
 
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 else:
     STATIC_URL = 'https://' + AWS_S3_CUSTOM_DOMAIN + AWS_LOCATION + '/'
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
@@ -224,6 +226,13 @@ else:
     SECURE_SSL_REDIRECT = True
     SITE_ID = 1
     HIJACK_ALLOW_GET_REQUESTS = False
+
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_USE_TLS = True
+    EMAIL_PORT = 587
+    EMAIL_HOST_USER = 'noreply@wwgradschool.org'
+    EMAIL_HOST_PASSWORD = os.environ.get('GSUITE')
     # SITE_ID = 'https://' + AWS_S3_CUSTOM_DOMAIN
 
 # STATIC_ROOT = '/static/'
@@ -235,12 +244,8 @@ LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'noreply@wwgradschool.org'
-EMAIL_HOST_PASSWORD = os.environ.get('GSUITE')
+
+
 
 COMMENTS_APP = 'django_comments_xtd'
 COMMENTS_XTD_MAX_THREAD_LEVEL = 5

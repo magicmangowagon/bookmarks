@@ -1394,19 +1394,19 @@ class EvalDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(EvalDetailView, self).get_context_data(**kwargs)
         rubric = self.kwargs['pk']
-
+        solutionOwner = UserSolution.objects.get(pk=rubric).userOwner
         if UserSolution.objects.filter(coachReview__release=True):
             context['notReady'] = False
         else:
             context['notReady'] = True
-
+        print(solutionOwner, self.request.user)
         # try:
         #    if CoachReview.objects.get(userSolution=rubric).release:
         #        context['notReady'] = False
         # except:
         #    context['notReady'] = True
 
-        if self.request.user.profile.role is not 1:
+        if self.request.user.profile.role != 1:
             rubricLines = RubricLine.objects.all().filter(student=rubric).order_by('-evaluated__date', 'learningObjective__id')
             evaluateds = Evaluated.objects.filter(rubricline__in=rubricLines).order_by('-date').distinct('date')
             ids = []
@@ -1415,22 +1415,36 @@ class EvalDetailView(DetailView):
             context['evaluator'] = evaluateds
             context['evaluation'] = rubricLines
             context['idList'] = ids
-        else:
-            print('Checking for rubricLines')
-            rubricLines = RubricLine.objects.filter(student=rubric).order_by(
-                'learningObjective__id', '-evaluated__date', ).distinct('learningObjective').filter(
-                student=rubric)
-            # rubricLines = RubricLine.objects.all().filter(student=rubric, evaluated__whoEvaluated__profile__role__gte=3).filter(student__coachReview__release=True)
-            print(rubricLines.count())
+
+            try:
+                context['evalFinalForm'] = Rubric.objects.all().filter(userSolution=rubric)
+                # print(Rubric.objects.get(userSolution=rubric, evaluator__profile__role=3).generalFeedback)
+            except:
+                context['evalFinalForm'] = 'There was an error'
+                print('There was nothing found')
+        elif solutionOwner == self.request.user:
+            rubricLines = RubricLine.objects.all().filter(student=rubric).order_by('-evaluated__date',
+                                                                                   'learningObjective__id')
+            evaluateds = Evaluated.objects.filter(rubricline__in=rubricLines).order_by('-date').distinct('date')
+            ids = []
+            for evaluated in evaluateds:
+                ids.append(str(evaluated.id))
+            context['evaluator'] = evaluateds
             context['evaluation'] = rubricLines
+            context['idList'] = ids
+
+            try:
+                context['evalFinalForm'] = Rubric.objects.all().filter(userSolution=rubric)
+                # print(Rubric.objects.get(userSolution=rubric, evaluator__profile__role=3).generalFeedback)
+            except:
+                context['evalFinalForm'] = 'There was an error'
+                print('There was nothing found')
+        else:
+            context['evaluation'] = None
+            context['evalFinalForm'] = None
         context['userRole'] = self.request.user.profile.role
 
-        try:
-            context['evalFinalForm'] = Rubric.objects.all().filter(userSolution=rubric).last()
-            # print(Rubric.objects.get(userSolution=rubric, evaluator__profile__role=3).generalFeedback)
-        except:
-            context['evalFinalForm'] = 'There was an error'
-            print('There was nothing found')
+
 
         return context
 

@@ -44,16 +44,24 @@
                 {% endif %}
         <!-- <div class="completionLevel">Completion Level &nbsp;<span class="scoreBubble">{{ rubricLine.completionLevel }}</span></div> -->
     {% endfor %}
+
+            <h2>General Feedback</h2>
+
+            <div class="evalFieldFlexContainer">
+                {% for final in evalFinalForm %}
+                    {% if final.evaluator == evaluated.whoEvaluated %}
+                        <p>{{ final.evaluator }}</p>
+                        <div class="evalFieldFlexBox">
+                            <p>{{ final.generalFeedback }}</p>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
             </div>
         {% endfor %}
 
-         <h2>General Feedback</h2>
 
-    <div class="evalFieldFlexContainer">
-        <div class="evalFieldFlexBox">
-            <p>{{ evalFinalForm.generalFeedback }}</p>
-        </div>
-    </div>
     </div>
         <div class="expoVertWrapper">
             <div class="evalFilter">

@@ -17,7 +17,7 @@
     <p>Submitted by {{ usersolution.userOwner.first_name }} {{ usersolution.userOwner.last_name }}</p></div>
     <div class="infoBarSub"><h1>|</h1></div>
     {% if request.user.profile.role is not 1 %}
-        <div class="infoBarSub"><h2><a href="/solutionEval/{{ usersolution.id }}">Evaluate</a></h2></div>
+        <div class="infoBarSub"><h2><a href="/evaluation/{{ usersolution.id }}">Evaluate</a></h2></div>
     {% endif %}
  </div>
 </div>
