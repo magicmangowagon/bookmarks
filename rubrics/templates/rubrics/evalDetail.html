@@ -37,7 +37,12 @@
                                 </h4>{{  rubricLine.suggestions }}</div>
                                 <div class="evalFieldFlexBox"><h4>Feedback
                                 </h4><p>{{  rubricLine.feedback }}</p></div>
-                                <div class="evalFieldFlexBox"><h4>Ready?</h4>{{ rubricLine.ready }}</div>
+                                {% if rubricLine.ready %}
+                                    <div class="evalFieldFlexBox"><h4>Complete</h4></div>
+                                {% else %}
+                                    <div class="evalFieldFlexBox"><h4>Not Yet</h4></div>
+                                {% endif %}
+
                             </div>
                         </div>
                     </div>
