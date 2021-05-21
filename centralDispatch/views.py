@@ -165,8 +165,8 @@ class NewDashboard(SingleTableMixin, FilterView, ListView):
 
     def get_queryset(self):
         if self.request.user.profile.role != 1:
-            queryset = SolutionStatus.objects.filter(userSolution__userOwner__is_active=True).order_by('-id',
-                '-userSolution__somethinghappened__modified').distinct('id')
+            queryset = SolutionStatus.objects.filter(userSolution__userOwner__is_active=True).order_by('id',
+                '-userSolution__somethinghappened__modified')
             print(queryset.count())
         else:
             queryset = SolutionStatus.objects.filter(userSolution__userOwner=self.request.user).order_by(
