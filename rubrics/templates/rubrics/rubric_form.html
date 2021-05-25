@@ -18,6 +18,13 @@ Evaluate a Challenge
         {{ formset.management_form }}
 
         {% for form in formset %}
+            {% if form.errors %}
+                {% for field in form %}
+                    {% for error in field.errors %}
+                            {{ error|escape }}
+                        {% endfor %}
+                {% endfor %}
+            {% endif %}
                 <h3 id="h3{{ form.learningObjective.auto_id }}"> </h3>
                 <span style="display: none">{{ form.learningObjective }}</span>
                 <p>Ignore: {{ form.ignore }}</p>

@@ -821,8 +821,6 @@ class SolutionEvaluationView(FormView):
                     print('returned to evaluator')
 
                     rubricLines = pastRubricLines
-                    # rubricLines = RubricLines.order_by('learningObjective__compGroup', 'learningObjective__compNumber', 'learningObjective__compNumber',)
-                    criteriaLines = CriteriaLine.objects.all().filter(userSolution=userSolution).order_by('criteria', '-evaluator__date').distinct('criteria')
                     try:
                         rubric = Rubric.objects.all().filter(userSolution=userSolution).last()
                         rubricFormset = RubricFormSet(prefix='rFormset',
@@ -850,13 +848,21 @@ class SolutionEvaluationView(FormView):
                                                           'ignore': rubricLine.ignore
                                                           } for rubricLine in rubricLines],
                                                 queryset=RubricLine.objects.none())
-
-                    critFormset = CriterionFormSet(prefix='criteria',
-                                                   initial=[{'userSolution': criteriaLine.userSolution,
-                                                             'criteria': criteriaLine.criteria,
-                                                             'achievement': criteriaLine.achievement} for
-                                                            criteriaLine in criteriaLines],
-                                                   queryset=CriteriaLine.objects.none())
+                    if CriteriaLine.objects.filter(userSolution=userSolution).exists():
+                        criteriaLines = CriteriaLine.objects.all().filter(userSolution=userSolution).order_by(
+                            'criteria', '-evaluator__date').distinct('criteria')
+                        critFormset = CriterionFormSet(prefix='criteria',
+                                                       initial=[{'userSolution': criteriaLine.userSolution,
+                                                                 'criteria': criteriaLine.criteria,
+                                                                 'achievement': criteriaLine.achievement} for
+                                                                criteriaLine in criteriaLines],
+                                                       queryset=CriteriaLine.objects.none())
+                    else:
+                        critFormset = CriterionFormSet(prefix='criteria',
+                                                       initial=[{'userSolution': userSolution, 'criteria': criterion, }
+                                                                for
+                                                                criterion in neededCriteria],
+                                                       queryset=CriteriaLine.objects.none())
 
 
                 else:
@@ -906,26 +912,28 @@ class SolutionEvaluationView(FormView):
         elif userSolution.customized is True:
             print('Customized Eval')
             # evaluated = Evaluated(whoEvaluated=self.request.user)
-            challenge = ChallengeAddendum.objects.get(userSolution=userSolution)
-            lo_list = LearningObjective.objects.filter(challengeaddendum=challenge).order_by('compGroup', 'compNumber',
-                                                                                             'loNumber', )
-            neededCriteria = Criterion.objects.filter(learningObj__in=lo_list)
+            # challenge = ChallengeAddendum.objects.get(userSolution=userSolution)
+            # lo_list = LearningObjective.objects.filter(challengeaddendum=challenge).order_by('compGroup', 'compNumber',
+            #                                                                                 'loNumber', )
+            # neededCriteria = Criterion.objects.filter(learningObj__in=lo_list)
             context['criteria'] = neededCriteria
             print('lo_list ' + str(len(lo_list)))
             print('needCriteria ' + str(len(neededCriteria)))
 
             formset = RubricLineFormset(prefix='rubriclines',
-                                        initial=[{'learningObjective': learningObjective.pk, 'student': learningObjective
+                                        initial=[{'learningObjective': learningObjective.pk, 'student': userSolution
                                                   } for learningObjective in lo_list],
                                         queryset=RubricLine.objects.none())
-
 
             critFormset = CriterionFormSet(prefix='criteria',
                                            initial=[{'userSolution': userSolution, 'criteria': criterion, } for
                                                     criterion in neededCriteria], queryset=CriteriaLine.objects.none())
 
             rubricFormset = RubricFormSet(prefix='rFormset',
-                                          queryset=Rubric.objects.none())
+                                          queryset=Rubric.objects.none(),
+                                          initial=[{'userSolution': userSolution,
+                                                    'challenge': userSolution.challengeName,
+                                                    'evaluator': self.request.user}])
             # custom_rubric_producer(ChallengeAddendum.objects.get(challenge=thisUserSolution))
 
         # create new rubric, checked for rubricline objects from this challenge
@@ -990,11 +998,12 @@ class SolutionEvaluationView(FormView):
 
         else:
             messages.error(request, "Error")
+            print(critFormset.errors)
             challenge = UserSolution.objects.get(pk=self.kwargs['pk']).challengeName
             student = userSolution.userOwner
             content = {'formset': formset, 'critFormset': critFormset, 'challenge': challenge,
                        'student': student, 'rubricFormset': rubricFormset}
-            return render(request, 'rubrics/rubric_form.html', content)
+            return render(request, 'rubrics/rubric_form.html', context=content)
             # return self.render_to_response(self.get_context_data(formset=formset))
 
 
