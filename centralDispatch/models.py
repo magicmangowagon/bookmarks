@@ -6,6 +6,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.postgres.fields import ArrayField
 from account.models import Profile
 from rubrics.models import Challenge, MegaChallenge, UserSolution, RubricLine, Rubric, SolutionInstance, LearningExperience
+# from .functions import htmlMessage
 from info.models import BaseInfo
 from django.core.exceptions import ValidationError
 from django.db.models.signals import post_save, pre_save
@@ -116,7 +117,25 @@ class StudioExpoChoice(models.Model):
     session = models.ForeignKey(BaseInfo, null=False, default='', on_delete=models.CASCADE)
 
 
-@receiver(post_save, sender=UserSolution, dispatch_uid=str(UserSolution) +  str(datetime.now()))
+class EmailEvent(models.Model):
+    event = models.CharField(max_length=200, default='')
+    urlPath = models.CharField(max_length=200, default='')
+
+    def __str__(self):
+        return self.event
+
+
+class EmailMessage(models.Model):
+    body = models.TextField(default='')
+    name = models.CharField(max_length=200, default='')
+    solutionInstance = models.ForeignKey(SolutionInstance, default='', null=True, on_delete=models.CASCADE)
+    event = models.ForeignKey(EmailEvent, default='', null=True, on_delete=models.CASCADE, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+@receiver(post_save, sender=UserSolution, dispatch_uid=str(UserSolution) + str(datetime.now()))
 def create_assignment_tracking_models(sender, **kwargs):
     if kwargs.get('created', False):
         AssignmentKeeper.objects.create(userSolution=kwargs['instance'], )
@@ -208,3 +227,6 @@ def update_solution_status(sender, **kwargs):
                 (kwargs['instance'].evaluator.profile != assignmentKeeper.evaluator):
             solutionStatus.solutionCoachReviewed = True
             solutionStatus.save()
+
+
+

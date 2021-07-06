@@ -24,7 +24,7 @@ from .functions import assess_competency_done
 from django.core.mail import send_mail
 from .filters import EvalFilter
 from centralDispatch.models import ChallengeStatus, SolutionStatus, AssignmentKeeper
-from centralDispatch.functions import submissionAlert, evaluationCompleted, process_rubricLine
+from centralDispatch.functions import submissionAlert, evaluationCompleted, process_rubricLine, htmlMessage
 from centralDispatch.forms import ChallengeStatusForm, ChallengeStatusFormset
 from info.models import DiscussionBoard
 import json
@@ -166,10 +166,11 @@ class ChallengeDetail(FormView):
             if form.is_valid() and expoForm.is_valid():
                 form.save()
                 expoForm.save()
+                f = form.save()
                 thisChallenge = SolutionInstance.objects.get(pk=self.kwargs['pk'])
-                print(thisChallenge)
-                print(self.request.user.first_name)
-                submissionAlert(thisChallenge, self.request.user)
+                userSolution = UserSolution.objects.get(solutionInstance=thisChallenge, userOwner=self.request.user)
+                # submissionAlert(thisChallenge, self.request.user)
+                htmlMessage(userSolution, 'Solution Submission')
                 return redirect('success', self.kwargs['pk'])
             else:
                 print(form.errors)
@@ -849,6 +850,7 @@ class SolutionEvaluationView(FormView):
                                                           } for rubricLine in rubricLines],
                                                 queryset=RubricLine.objects.none())
                     if CriteriaLine.objects.filter(userSolution=userSolution).exists():
+                        print('found criteriaLines')
                         criteriaLines = CriteriaLine.objects.all().filter(userSolution=userSolution).order_by(
                             'criteria', '-evaluator__date').distinct('criteria')
                         critFormset = CriterionFormSet(prefix='criteria',
@@ -1343,7 +1345,7 @@ class RubricAddendum(FormView):
         if formset.is_valid():
             formset.save()
             solution.save()
-            return redirect('solution-eval', self.kwargs['pk'])
+            return redirect('evaluation-detail', self.kwargs['pk'])
         else:
             return self.render_to_response(self.get_context_data(formset=formset))
 

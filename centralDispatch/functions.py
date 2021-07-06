@@ -1,11 +1,14 @@
 from rubrics.models import Challenge, MegaChallenge, UserSolution, SolutionInstance, Rubric, RubricLine, \
     ChallengeAddendum, Competency, LearningObjective, LearningExperience
-from centralDispatch.models import SolutionRouter, AssignmentKeeper, SolutionStatus, ChallengeStatus, SomethingHappened
+from centralDispatch.models import SolutionRouter, AssignmentKeeper, SolutionStatus, ChallengeStatus, SomethingHappened, EmailMessage
 from account.models import Profile
 from django.contrib.auth.models import User
 from account.models import Profile
 from django.core.mail import send_mail
+from django.template.loader import render_to_string
 from datetime import datetime, timedelta
+from .models import EmailMessage
+from django.contrib.sites.models import Site
 
 
 def submissionAlert(challenge, tc):
@@ -20,42 +23,96 @@ def submissionAlert(challenge, tc):
     return
 
 
+def htmlMessage(userSolution, htmlName):
+    print(userSolution)
+    if EmailMessage.objects.filter(name=htmlName).exists():
+        users = User.objects.all().filter(profile__role=4)
+        email_recipients = []
+        for user in users:
+            email_recipients.append(user.email)
+        email_recipients.append(userSolution.userOwner.email)
+        msg = EmailMessage.objects.get(name=htmlName)
+        current_site = Site.objects.get_current()
+
+        msg_html = render_to_string('centralDispatch/mail_template.html', {'content': msg.body,
+                                                                           'creator': userSolution.userOwner.first_name,
+                                                                           'challenge': userSolution.solutionInstance.name,
+                                                                           'event': htmlName,
+                                                                           'link': str(current_site.domain) + '/' +
+                                                                                   msg.event.urlPath + '/'
+                                                                                   + str(userSolution.id)})
+        send_mail('The Orchard: ' + htmlName, userSolution.userOwner.first_name
+                  + userSolution.solutionInstance.name,
+                  'noreply@wwgradschool.org', ['liamphunt@gmail.com'], html_message=msg_html, fail_silently=False)
+        print('htmlMessage')
+    else:
+        submissionAlert(userSolution.challengeName, userSolution.userOwner)
+
+
 def evaluatorAssigned(assignmentKeeper):
+    users = User.objects.all().filter(profile__role=4)
+    email_recipients = []
+    for user in users:
+        email_recipients.append(user.email)
+
     if assignmentKeeper.evaluator:
-        email_recipient = assignmentKeeper.evaluator.user.email
-        print('email ' + str(email_recipient))
+        email_recipients.append(assignmentKeeper.evaluator.user.email)
+        creator = assignmentKeeper.evaluator.user
     elif assignmentKeeper.coach:
-        email_recipient = assignmentKeeper.coach.user.email
-        print('email ' + str(email_recipient))
+        creator = assignmentKeeper.coach.user
+
     else:
         print('not assigned')
         return
+    if EmailMessage.objects.filter(name='EvaluatorAssigned').exists():
+        msg = EmailMessage.objects.get(name='EvaluatorAssigned')
+        current_site = Site.objects.get_current()
 
-    send_mail('The Orchard: New TC submission', assignmentKeeper.userSolution.userOwner.first_name +
-              ' has submitted a solution for ' + str(assignmentKeeper.userSolution.solutionInstance),
-              'noreply@wwgradschool.org', [email_recipient, ], fail_silently=False)
+        msg_html = render_to_string('centralDispatch/mail_template.html', {'content': msg.body,
+                                                                           'creator': creator,
+                                                                           'challenge': assignmentKeeper.userSolution.solutionInstance.name,
+                                                                           'event': msg.event,
+                                                                           'link': str(current_site.domain) + '/' +
+                                                                                   msg.event.urlPath + '/'
+                                                                                   + str(assignmentKeeper.userSolution.id)})
+        send_mail('The Orchard: ' + msg.name, assignmentKeeper.userSolution.userOwner.first_name
+                  + assignmentKeeper.userSolution.solutionInstance.name,
+                  'noreply@wwgradschool.org', ['liamphunt@gmail.com'], html_message=msg_html, fail_silently=False)
+    else:
+        send_mail('The Orchard: New TC submission', assignmentKeeper.userSolution.userOwner.first_name +
+                  ' has submitted a solution for ' + str(assignmentKeeper.userSolution.solutionInstance),
+                  'noreply@wwgradschool.org', email_recipients, fail_silently=False)
     return
 
 
 def evaluationCompleted(userSolution, user):
-    print('evaluationCompletedFunctionRunning')
+    users = User.objects.all().filter(profile__role=4)
+    email_recipients = []
+    for user in users:
+        email_recipients.append(user.email)
+
     try:
         email_recipient = AssignmentKeeper.objects.get(userSolution=userSolution).coach.user.email
-        send_mail('The Orchard: New evaluator submission', user.first_name +
-                  ' has submitted an evaluation for ' + str(userSolution),
-                  'noreply@wwgradschool.org', [email_recipient, userSolution.userOwner.email], fail_silently=False)
+        email_recipients.append(email_recipient)
         print('evaluationCompletedFunctionRunning "within try"')
 
     except:
-        users = User.objects.all().filter(profile__role=4)
         print('evaluationCompletedFunctionRunning "within except"')
-        email_recipients = []
-        for user in users:
-            email_recipients.append(user.email)
-        email_recipient = email_recipients
-        send_mail('The Orchard: New evaluator submission', user.first_name +
-                  ' has submitted an evaluation for ' + str(userSolution),
-                  'noreply@wwgradschool.org', email_recipient, fail_silently=False)
+
+    if EmailMessage.objects.filter(name='EvaluationCompleted').exists():
+        msg = EmailMessage.objects.get(name='EvaluationCompleted')
+        current_site = Site.objects.get_current()
+
+        msg_html = render_to_string('centralDispatch/mail_template.html', {'content': msg.body,
+                                                                           'creator': user,
+                                                                           'challenge': userSolution.solutionInstance.name,
+                                                                           'event': msg.event,
+                                                                           'link': str(current_site.domain) + '/' +
+                                                                                   msg.event.urlPath + '/'
+                                                                                   + str(userSolution.id)})
+        send_mail('The Orchard: ' + msg.event.event, user.first_name
+                  + userSolution.solutionInstance.name,
+                  'noreply@wwgradschool.org', ['liamphunt@gmail.com'], html_message=msg_html, fail_silently=False)
 
 
 # moved processRubricLines in to CentralDispatch

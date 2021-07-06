@@ -1,15 +1,31 @@
 
-{% extends "base.html" %}
-{% load django_tables2 %}
-{% load render_table from django_tables2 %}
 {% load bootstrap4 %}
 {% load static %}
+<head>
+    <title>Email</title>
+    <link href="{% static "css/base.css" %}" rel="stylesheet">
+</head>
+
+<body style="font-family: 'Dosis', sans-serif; margin: 0; padding: 0;">
+
+<div id="topHeader" style="background-color: #aedac3; height: fit-content; display: flex; flex-basis: auto; justify-content: flex-end; padding: 2px 100px;">
+
+</div>
+    <div id="header" style="font-size: 14px; background-color: #003469; color: #fff; border-bottom-width: 12px; border-bottom-color: #00a497; border-bottom-style: solid; box-shadow: 0px 4px 7px 0px rgba(0, 0, 0, 0.2); overflow: auto; padding: 20px 100px;">
+    <div>
+        <span style="font-family: 'Oswald', sans-serif; float: left; color: #ffffff; font-size: 3em; margin-right: 10%; letter-spacing: -2px;"><img height="100px" alt="High Meadows Graduate School of Teaching and Learning" src="https://da301vtjp36z8.cloudfront.net/static/media/hm_logo.png"></span>
 
 
 
+    </div>
 
-
+    </div>
 {% block content %}
+<h4>Hello, </h4>
+    <p>New {{ event.event }} from {{ creator }} for <strong>{{ challenge }}</strong></p>
+<p>{{ content | safe }}</p>
+    <a href="//{{ link }}">Link to Solution</a>
 
 {% endblock content %}
 
+</body>

@@ -40,11 +40,14 @@ Evaluate a Challenge
                 <h2>Criteria</h2>
                 <ul>
                     {% for criteria in criteria %}
+
                         {% if criteria.learningObj_id == form.learningObjective.value %}
 
                             <li>{{ criteria }}:
                                 {% for CriteriaForm in critFormset %}
+
                                     {% if CriteriaForm.criteria.value == criteria.id %}
+
                                         {{ CriteriaForm.evaluator }}
                                         {{ CriteriaForm.achievement }}{{ CriteriaForm.criteria }}{{ CriteriaForm.userSolution }}</li><br>
                                         {{ CriteriaForm.id }}

@@ -1,5 +1,17 @@
 from django.contrib import admin
-from .models import SolutionRouter, AssignmentKeeper, SomethingHappened, SolutionStatus, ChallengeStatus
+from .models import SolutionRouter, AssignmentKeeper, SomethingHappened, SolutionStatus, ChallengeStatus, EmailMessage, \
+    EmailEvent
+
+
+@admin.register(EmailEvent)
+class EmailEventAdmin (admin.ModelAdmin):
+    fields = ['event', 'urlPath']
+    # filter_horizontal = ['event']
+
+
+@admin.register(EmailMessage)
+class EmailMessageAdmin (admin.ModelAdmin):
+    fields = ['name', 'body', 'event']
 
 
 @admin.register(SolutionRouter)
