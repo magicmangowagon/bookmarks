@@ -43,7 +43,7 @@ def htmlMessage(userSolution, htmlName):
                                                                                    + str(userSolution.id)})
         send_mail('The Orchard: ' + htmlName, userSolution.userOwner.first_name
                   + userSolution.solutionInstance.name,
-                  'noreply@wwgradschool.org', ['liamphunt@gmail.com'], html_message=msg_html, fail_silently=False)
+                  'noreply@wwgradschool.org', email_recipients, html_message=msg_html, fail_silently=False)
         print('htmlMessage')
     else:
         submissionAlert(userSolution.challengeName, userSolution.userOwner)
@@ -59,6 +59,7 @@ def evaluatorAssigned(assignmentKeeper):
         email_recipients.append(assignmentKeeper.evaluator.user.email)
         creator = assignmentKeeper.evaluator.user
     elif assignmentKeeper.coach:
+        email_recipients.append(assignmentKeeper.coach.user.email)
         creator = assignmentKeeper.coach.user
 
     else:
@@ -77,7 +78,7 @@ def evaluatorAssigned(assignmentKeeper):
                                                                                    + str(assignmentKeeper.userSolution.id)})
         send_mail('The Orchard: ' + msg.name, assignmentKeeper.userSolution.userOwner.first_name
                   + assignmentKeeper.userSolution.solutionInstance.name,
-                  'noreply@wwgradschool.org', ['liamphunt@gmail.com'], html_message=msg_html, fail_silently=False)
+                  'noreply@wwgradschool.org', email_recipients, html_message=msg_html, fail_silently=False)
     else:
         send_mail('The Orchard: New TC submission', assignmentKeeper.userSolution.userOwner.first_name +
                   ' has submitted a solution for ' + str(assignmentKeeper.userSolution.solutionInstance),
@@ -112,7 +113,7 @@ def evaluationCompleted(userSolution, user):
                                                                                    + str(userSolution.id)})
         send_mail('The Orchard: ' + msg.event.event, user.first_name
                   + userSolution.solutionInstance.name,
-                  'noreply@wwgradschool.org', ['liamphunt@gmail.com'], html_message=msg_html, fail_silently=False)
+                  'noreply@wwgradschool.org', email_recipients, html_message=msg_html, fail_silently=False)
 
 
 # moved processRubricLines in to CentralDispatch
