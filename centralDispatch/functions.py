@@ -91,7 +91,7 @@ def evaluationCompleted(userSolution, user):
     email_recipients = []
     for user in users:
         email_recipients.append(user.email)
-
+    email_recipients.append(userSolution.userOwner.email)
     try:
         email_recipient = AssignmentKeeper.objects.get(userSolution=userSolution).coach.user.email
         email_recipients.append(email_recipient)
