@@ -86,12 +86,13 @@ def evaluatorAssigned(assignmentKeeper):
     return
 
 
-def evaluationCompleted(userSolution, user):
+def evaluationCompleted(userSolution, evaluator):
     users = User.objects.all().filter(profile__role=4)
     email_recipients = []
     for user in users:
         email_recipients.append(user.email)
     email_recipients.append(userSolution.userOwner.email)
+    print(evaluator)
     try:
         email_recipient = AssignmentKeeper.objects.get(userSolution=userSolution).coach.user.email
         email_recipients.append(email_recipient)
@@ -105,7 +106,7 @@ def evaluationCompleted(userSolution, user):
         current_site = Site.objects.get_current()
 
         msg_html = render_to_string('centralDispatch/mail_template.html', {'content': msg.body,
-                                                                           'creator': user,
+                                                                           'creator': evaluator,
                                                                            'challenge': userSolution.solutionInstance.name,
                                                                            'event': msg.event,
                                                                            'link': str(current_site.domain) + '/' +

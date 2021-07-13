@@ -208,7 +208,7 @@ def update_something_happened(sender, **kwargs):
 @receiver(post_save, sender=Rubric, dispatch_uid=str(Rubric) + str(datetime.now()))
 def update_solution_status(sender, **kwargs):
     assignmentKeeper = AssignmentKeeper.objects.get(userSolution=kwargs['instance'].userSolution)
-    print(str(assignmentKeeper) + 'fart')
+    # print(str(assignmentKeeper) + 'fart')
     if kwargs.get('created', False):
         try:
             solutionStatus = SolutionStatus.objects.get(userSolution=kwargs['instance'].userSolution)

@@ -395,12 +395,12 @@ class MegaSubPage(FormView):
         for challenge in challenges:
             learningExpos.append(LearningExperience.objects.all().filter(challenge=challenge).order_by('index').first())
             if ChallengeStatus.objects.filter(user=self.request.user, challenge=challenge).exists():
-                print('fart')
+
                 cs = ChallengeStatus.objects.get(user=self.request.user, challenge=challenge)
                 cs.save()
             else:
                 ChallengeStatus.objects.create(user=self.request.user, challenge=challenge)
-                print('ChallengeStatus object created')
+                # print('ChallengeStatus object created')
 
         context['learningExpos'] = learningExpos
         ChallengeStatusFormset = modelformset_factory(ChallengeStatus, extra=0,
@@ -953,7 +953,7 @@ class SolutionEvaluationView(FormView):
                                                     criterion in neededCriteria],
                                            queryset=CriteriaLine.objects.none())
             print(userSolution)
-            print(userSolution.challengeName)
+            # print(userSolution.challengeName)
             print(self.request.user)
             rubricFormset = RubricFormSet(prefix='rFormset',
                                           queryset=Rubric.objects.none(),
@@ -972,7 +972,7 @@ class SolutionEvaluationView(FormView):
         rubricFormset = RubricFormSet(request.POST, prefix='rFormset')
 
         userSolution = UserSolution.objects.get(pk=self.kwargs['pk'])
-
+        print(self.request.user)
         # print(critFormset.errors)
         if formset.is_valid() and critFormset.is_valid() and rubricFormset.is_valid():
             evaluated = Evaluated.objects.create(whoEvaluated=self.request.user)
