@@ -227,15 +227,15 @@ class TfJEvaluation(FormView):
         context = super(TfJEvaluation, self).get_context_data(**kwargs)
         solution = TfJSolution.objects.get(pk=self.kwargs['pk'])
 
-        if not solution.coachLO:
-            solution.coachLO = solution.solutionInstance.learningObjectives.first()
-            solution.save()
+        #if not solution.coachLO:
+            #solution.coachLO = solution.solutionInstance.learningObjectives.first()
+            #solution.save()
         learningObjectives = [solution.coachLO, solution.tcLO]
         if TfJEval.objects.filter(userSolution=solution).exists():
             previousEvals = TfJEval.objects.all().filter(userSolution=solution).order_by('learningObjective__loNumber',
                                                                                  '-evaluator__date').distinct(
                 'learningObjective__loNumber')
-            print(previousEvals.count())
+
             TfJEvalFormset = modelformset_factory(TfJEval, formset=TfJEvalForm, extra=2, fields=(
                 'learningObjective', 'userSolution', 'question1', 'question2', 'question3', 'question4', 'question5'),
                                                   widgets={'userSolution': forms.HiddenInput()})
@@ -250,12 +250,14 @@ class TfJEvaluation(FormView):
                                               for previousEval in previousEvals], queryset=TfJEval.objects.none())
 
         else:
-            TfJEvalFormset = modelformset_factory(TfJEval, formset=TfJEvalForm, extra=2, fields=(
+            print('new eval ' + str(solution))
+            print(len(learningObjectives))
+            TfJEvalFormset = modelformset_factory(TfJEval, formset=TfJEvalForm, extra=len(learningObjectives), fields=(
                 'learningObjective', 'userSolution', 'question1', 'question2', 'question3', 'question4', 'question5'),
                                                   widgets={'userSolution': forms.HiddenInput()})
 
             formset = TfJEvalFormset(initial=[{'learningObjective': learningObjective, 'userSolution': solution}
-                                              for learningObjective in learningObjectives])
+                                              for learningObjective in learningObjectives], queryset=TfJEval.objects.none())
         context['formset'] = formset
         context['usersolution'] = solution
         previousTfJEvals = TfJEval.objects.all().filter(userSolution__user=solution.user).order_by(
