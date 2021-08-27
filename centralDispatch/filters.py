@@ -15,6 +15,13 @@ class SolutionTrackerFilter(FilterSet):
     )
     def evaluators():
         evaluators = ()
+        ev = Profile.objects.filter(role__gte=2)
+        for e in ev:
+            evaluators += (e.id, str(e.user.last_name)),
+        return evaluators
+
+    def coaches():
+        evaluators = ()
         ev = Profile.objects.filter(role__gte=3)
         for e in ev:
             evaluators += (e.id, str(e.user.last_name)),
@@ -35,8 +42,12 @@ class SolutionTrackerFilter(FilterSet):
     evaluator = filters.ModelChoiceFilter(field_name='userSolution__evaluated__whoEvaluated',
                                           queryset=User.objects.filter(profile__role__gte=2),
                                           label='Evaluator', empty_label='All')
-    assigned = filters.ChoiceFilter(field_name='userSolution__assignmentkeeper__coach', choices=evaluators, lookup_expr='exact',
-                                         label='Assigned to', empty_label='All')
+    assignedEvaluator = filters.ChoiceFilter(field_name='userSolution__assignmentkeeper__evaluator', choices=evaluators,
+                                             lookup_expr='exact',
+                                         label='Assigned Evaluator', empty_label='All')
+    assignedCoach = filters.ChoiceFilter(field_name='userSolution__assignmentkeeper__coach', choices=evaluators,
+                                    lookup_expr='exact',
+                                    label='Assigned Coach', empty_label='All')
     solutionInstance = filters.ModelChoiceFilter(field_name='userSolution__solutionInstance', empty_label='All',
                                                  queryset=SolutionInstance.objects.all().order_by(
                                                      'challenge_that_owns_me__challengeGroupChoices'),
@@ -44,5 +55,5 @@ class SolutionTrackerFilter(FilterSet):
 
     class Meta:
         model = SolutionStatus
-        fields = {'assigned', 'tc', 'solutionInstance',
+        fields = {'assignedEvaluator', 'assignedCoach', 'tc', 'solutionInstance',
                   'evaluator', 'solutionCompleted'}

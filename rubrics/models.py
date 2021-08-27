@@ -328,6 +328,53 @@ class Evaluated(models.Model):
 # Uploaded by a TC in response to a challenge and assessed with rubricLines
 # dictated by learningObjectives attached to the Challenge
 
+class GeneralSolution(models.Model):
+    creator = models.ForeignKey(User, null=False, default='', on_delete=models.CASCADE)
+    creationDate = models.DateTimeField(auto_created=True)
+    solutionInstance = models.ForeignKey(SolutionInstance, null=True, on_delete=models.CASCADE)
+    evaluated = models.ManyToManyField(Evaluated, blank=True, related_name='evaluator')
+
+
+class TempUserSolution(GeneralSolution):
+    # file = models.FileField(upload_to='uploads/', blank=True)
+    solution = RichTextField()
+    archived = models.BooleanField(default=False)
+    # userOwner = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
+    # challengeName = models.ForeignKey(Challenge, blank=True, null=True, on_delete=models.CASCADE)
+    # solutionInstance = models.ForeignKey(SolutionInstance, null=True, on_delete=models.CASCADE)
+    goodTitle = models.TextField(verbose_name='What’s a good title for your work?', blank=True, default='', )
+    workFit = models.TextField('How does this piece of work fit into the story of your development as a teacher? (*required)', blank=False, default='')
+    proudDetail = models.TextField('What’s a specific detail in this work that you are especially proud of? why? (*required)', blank=False, default='')
+    hardDetail = models.TextField('Which detail shows what was especially hard for you?  how? (*required)', blank=False, default='')
+    objectiveWell = models.TextField('What’s one objective that you met really well? What’s your evidence?', blank=True, default='')
+    objectivePoor = models.TextField('What’s one objective that you still want to work on? What evidence leads you to think this is  an area of growth for you?', blank=True, default='')
+    personalLearningObjective = models.TextField('Do you have any learning objectives of your own--in addition to those specified below--that you’d like the Observer to consider when they look at your work?  If so, add them at the top of the Observation Form.', blank=True, default='')
+    helpfulLearningExp = models.TextField('Choose one of the above learning experiences that you found helpful. How did it help you? (*required)', blank=False, default='')
+    notHelpfulLearningExp = models.TextField("Choose one of the above learning experiences that was less helpful. Why wasn't it helpful? (*required)", blank=False, default='')
+    changeLearningExp = models.TextField('What is one learning experience that you would change? How would you change it?', blank=True, default='')
+    notIncludedLearningExp = models.TextField('Did you engage in any helpful learning experiences that were not included in the challenge guide? Please let us know what they were so that we can think about adding them.', blank=True, default='')
+    customized = models.BooleanField(default=False)
+    # evaluated = models.ManyToManyField(Evaluated, blank=True, related_name='evaluated')
+
+    def __str__(self):
+        if self.solutionInstance is not None:
+            name = self.creator.username.__str__() + ' ' + self.solutionInstance.name.__str__()
+        else:
+            name = self.creator.username.__str__()
+        return name
+
+
+class TempTfJSolution(GeneralSolution):
+    tcLO = models.ForeignKey(LearningObjective, default='', null=False, on_delete=models.CASCADE)
+    coachLO = models.ForeignKey(LearningObjective, default='', null=False, on_delete=models.CASCADE, related_name='TempCoachLO')
+    solution = RichTextUploadingField()
+    # solutionInstance = models.ForeignKey(SolutionInstance, default='', null=False, on_delete=models.CASCADE)
+    # user = models.ForeignKey(User, default='', null=False, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.solutionInstance) + ' ' + str(self.user)
+
+
 class UserSolution(models.Model):
     file = models.FileField(upload_to='uploads/', blank=True)
     solution = RichTextField()
