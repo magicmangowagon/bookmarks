@@ -1,9 +1,9 @@
 from django.shortcuts import render, reverse, redirect
 from django.views.generic import ListView, DetailView, FormView
-from .models import BaseInfo, DiscussionBoard, DiscussionTopic
+from .models import BaseInfo, DiscussionBoard, DiscussionTopic, FakeLO, QuestionStub, FakeCompetency
 from centralDispatch.models import StudioExpoChoice
 from centralDispatch.forms import StudioExpoChoiceForm
-from .forms import AddTopicForm
+from .forms import AddTopicForm, AddComment
 # Create your views here.
 
 
@@ -21,8 +21,12 @@ class BaseInfoDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super(BaseInfoDetail, self).get_context_data(**kwargs)
         info = BaseInfo.objects.get(id=self.kwargs['pk'])
+        comps = FakeCompetency.objects.all()
+        context['comps'] = comps
         context['info'] = info
-        form = StudioExpoChoiceForm(baseInfo=info, initial={'user': self.request.user, 'session': info},)
+        form = AddComment
+
+        # form = StudioExpoChoiceForm(baseInfo=info, initial={'user': self.request.user, 'session': info},)
         context['form'] = form
         return context
 

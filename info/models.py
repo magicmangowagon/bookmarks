@@ -7,6 +7,7 @@ from rubrics.models import Challenge, LearningExperience, Evaluated
 from django.urls import reverse
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django.core.serializers import json, serialize
 
 
 # Categories for posts
@@ -62,3 +63,72 @@ class DiscussionTopic(models.Model):
 def create_discussion_board(sender, **kwargs):
     if kwargs.get('created', False):
         DiscussionBoard.objects.create(challenge=kwargs['instance'])
+
+
+class QuestionStub(models.Model):
+    question = models.CharField(max_length=1000, default='')
+    custom = models.CharField(max_length=1000, blank=True, default='')
+
+
+class FakeLO(models.Model):
+    A = 'A'
+    B = 'B'
+    C = 'C'
+    D = 'D'
+    E = 'E'
+    F = 'F'
+
+    compGroupChoices = (
+        ('A', "A"),
+        ('B', "B"),
+        ('C', "C"),
+        ('D', "D"),
+        ("E", "E"),
+        ('F', "F")
+    )
+    compGroup = models.CharField(max_length=1, choices=compGroupChoices, default=A)
+    compNumber = models.IntegerField(choices=(
+        (1, "1"),
+        (2, "2"),
+        (3, "3"),
+        (4, "4"),
+        (5, "5"),
+        (6, "6"),
+        (7, "7")
+    ))
+    loNumber = models.IntegerField(choices=(
+        (1, "1"),
+        (2, "2"),
+        (3, "3"),
+        (4, "4"),
+        (5, "5"),
+        (6, "6"),
+        (7, "7"),
+        (8, "8")
+    ))
+    name = models.TextField(blank=True, default='')
+    tags = TaggableManager(blank=True)
+    archive = models.BooleanField('Archive (hides LO)', default=False)
+    questionGroup = models.ManyToManyField(QuestionStub, blank=True)
+
+    def get_questions(self):
+        return serialize('json', self.questionGroup.all())
+
+    def __str__(self):
+        return self.name
+
+
+class CommentContainer(models.Model):
+    comment = models.ForeignKey(QuestionStub, blank=True, default='', on_delete=models.CASCADE)
+    baseInfo = models.ForeignKey(BaseInfo, blank=True, default='', on_delete=models.CASCADE)
+
+
+class FakeCompetency(models.Model):
+    fakeLos = models.ManyToManyField(FakeLO, blank=True)
+    name = models.CharField(max_length=400, blank=True, default='')
+
+    def get_los(self):
+        return serialize('json', self.fakeLos.all())
+
+    def __str__(self):
+        return self.name

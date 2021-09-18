@@ -2,38 +2,46 @@
 {% load solution_filters %}
 {% load comments %}
 {% load comments_xtd %}
+{% load static %}
 
 {% block title %}Woodrow Wilson Academy{% endblock %}
 
 {% block content %}
 <h1>{{ info.title }}</h1>
 <h3>{{ info.category.first.infoClass }} - {{ info.occurrenceDate.date }}</h3>
+    <div class="designJournalContainer">
+         <div id="djContent">
+             <p>{{ info.mainText | safe }}</p>
+         </div>
+    <div id="djEval">
+        <h2>Comment</h2>
+        {% for comp in comps %}
+            <div>
+                <button class="journalBtn" onclick="loadList('{{ comp.get_los }}')">{{ comp.name }}</button>
+            </div>
+        {% endfor %}
+    </div>
+    </div>
 
-    <p>{{ info.mainText | safe }}</p>
-    <form class="barSelector">
-    <h4>Which Learning Experience will you be working on in {{ baseinfo.category.first }} this week?</h4>
-    <label>
-   {{ form.learningExpoChoice }}
-        </label>
-    </form>
-    <h3>Discussion</h3>
-    {% get_comment_count for object as comment_count %}
-    <div class="py-4 text-center">
+    {{ form }}
 
-  &nbsp;&sdot;&nbsp;
-  {{ comment_count }} comment{{ comment_count|pluralize }}
-  ha{{ comment_count|pluralize:"s,ve" }} been posted.
-{% if comment_count %}
-<hr/>
-<div class="comments">
-  {% render_xtdcomment_tree for object %}
-</div>
-{% endif %}
-    <div class="card card-block mb-5">
-  <div class="card-body">
-    <h4 class="card-title text-center pb-3">Post your comment</h4>
-      {% render_comment_form for object %}
-  </div>
-</div>
-</div>
 {% endblock content %}
+{% block javascript %}
+ <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" rel="prefetch"></script>
+    <script type="text/javascript" src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://d3js.org/d3-array.v2.min.js"></script>
+    <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+<script src="{% static "javascript/magic_comments.js" %}"></script>
+<script type="text/javascript" >
+
+    let commentMenu = document.getElementById("djEval")
+    function hide() {
+        commentMenu.style.display = "none"
+    }
+    document.onLoad = hide()
+    let content = document.getElementById("djContent")
+    content.onclick = function () {
+        addComment("djEval")
+    }
+</script>
+{% endblock javascript %}

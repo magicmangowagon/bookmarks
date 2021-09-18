@@ -10,6 +10,28 @@
     font-display: swap;
 }
 
+.designJournalContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+
+}
+
+#djEval {
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+}
+
+#djEval button {
+
+}
+
+#djContent {
+    width: 80%;
+    margin: 10pt;
+}
+
 .compTrackerText {
     font-size: 8pt;
     font-weight: 600;
