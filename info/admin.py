@@ -34,7 +34,7 @@ class FakeLOAdmin(admin.ModelAdmin):
 
 @admin.register(QuestionStub)
 class QuestionStubAdmin(admin.ModelAdmin):
-    list_display = ['question']
+    list_display = ['question', 'questionCategory']
 
 
 @admin.register(FakeCompetency)

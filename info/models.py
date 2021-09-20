@@ -69,6 +69,20 @@ class QuestionStub(models.Model):
     question = models.CharField(max_length=1000, default='')
     custom = models.CharField(max_length=1000, blank=True, default='')
 
+    A = 'A'
+    B = 'B'
+    C = 'C'
+    D = 'D'
+
+    compGroupChoices = (
+        ('A', "Elicit"),
+        ('B', "Go Deeper"),
+        ('C', "Step Back"),
+        ('D', "Take Action"),
+
+    )
+    questionCategory = models.CharField(max_length=1, choices=compGroupChoices, default=A)
+
 
 class FakeLO(models.Model):
     A = 'A'
