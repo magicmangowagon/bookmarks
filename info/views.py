@@ -4,6 +4,7 @@ from .models import BaseInfo, DiscussionBoard, DiscussionTopic, FakeLO, Question
 from centralDispatch.models import StudioExpoChoice
 from centralDispatch.forms import StudioExpoChoiceForm
 from .forms import AddTopicForm, AddComment
+import json
 # Create your views here.
 
 
@@ -22,8 +23,28 @@ class BaseInfoDetail(DetailView):
         context = super(BaseInfoDetail, self).get_context_data(**kwargs)
         info = BaseInfo.objects.get(id=self.kwargs['pk'])
         comps = FakeCompetency.objects.all()
+        tree = []
+        for comp in comps:
+            c = {
+                'name': comp.name,
+                'children': []
+            }
+            for lo in comp.fakeLos.all():
+                l = {
+                    'name': lo.name,
+                    'children': []
+                }
+                for q in lo.questionGroup.all():
+                    l['children'].append(q.question)
+                c['children'].append(l)
+            tree.append(c)
+        print(tree)
+            # tree.update(comp)
+            # for lo in comp.get_los():
+
         context['comps'] = comps
         context['info'] = info
+        context['tree'] = json.dumps(tree)
         form = AddComment
 
         # form = StudioExpoChoiceForm(baseInfo=info, initial={'user': self.request.user, 'session': info},)

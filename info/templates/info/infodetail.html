@@ -15,9 +15,9 @@
          </div>
     <div id="djEval">
         <h2>Comment</h2>
-        {% for comp in comps %}
+        {% for comp in tree %}
             <div>
-                <button class="journalBtn" onclick="loadList('{{ comp.get_los }}')">{{ comp.name }}</button>
+                <button class="journalBtn" onclick="loadList('{{ comp | json_script:'data' }}')">{{ comp.name }}</button>
             </div>
         {% endfor %}
     </div>
