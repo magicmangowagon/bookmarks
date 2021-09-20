@@ -35,7 +35,11 @@ class BaseInfoDetail(DetailView):
                     'children': []
                 }
                 for q in lo.questionGroup.all():
-                    l['children'].append(q.question)
+                    qS = {
+
+                        'questionText': q.question
+                    }
+                    l['children'].append(qS)
                 c['children'].append(l)
             tree.append(c)
         print(tree)

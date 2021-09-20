@@ -83,6 +83,9 @@ class QuestionStub(models.Model):
     )
     questionCategory = models.CharField(max_length=1, choices=compGroupChoices, default=A)
 
+    def __str__(self):
+        return self.question
+
 
 class FakeLO(models.Model):
     A = 'A'
@@ -135,6 +138,7 @@ class FakeLO(models.Model):
 class CommentContainer(models.Model):
     comment = models.ForeignKey(QuestionStub, blank=True, default='', on_delete=models.CASCADE)
     baseInfo = models.ForeignKey(BaseInfo, blank=True, default='', on_delete=models.CASCADE)
+    coordinates = models.IntegerField(blank=True, default=0)
 
 
 class FakeCompetency(models.Model):

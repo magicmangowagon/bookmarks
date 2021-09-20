@@ -17,6 +17,11 @@
 
 }
 
+.commentBox {
+    width: 50pt;
+    border: #7f8b85 1pt solid;
+}
+
 #djEval {
     width: 15%;
     display: flex;
