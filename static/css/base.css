@@ -10,16 +10,22 @@
     font-display: swap;
 }
 
-.designJournalContainer {
+#designJournalContainer {
     width: 100%;
     display: flex;
     flex-direction: row;
+    position: relative;
 
 }
 
+.postedComment {
+    border: #2f3a42 1pt solid;
+}
+
 .commentBox {
-    width: 50pt;
-    border: #7f8b85 1pt solid;
+    width: 250pt;
+    position: absolute;
+    left: 50%;
 }
 
 #djEval {
@@ -28,13 +34,29 @@
     flex-direction: column;
 }
 
-#djEval button {
+#commentContainer {
+    display: flex;
+    flex-direction: column;
+}
 
+#djEval button {
+    background-color: #003469;
+    color: white;
+    font-family: Oswald, "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+    font-size: 15pt;
+}
+
+#djEval button:hover {
+    background-color: #00A495;
 }
 
 #djContent {
     width: 80%;
     margin: 10pt;
+}
+
+#djContent:hover {
+    cursor: cell;
 }
 
 .compTrackerText {

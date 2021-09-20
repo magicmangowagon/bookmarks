@@ -10,9 +10,13 @@ function addComment(menu) {
     }
 }
 
+function returnDefault(list) {
+    return list
+}
+
 function loadList(list) {
     let mainList = list
-    let divMenu = document.getElementById("djEval")
+    let divMenu = document.getElementById("commentContainer")
     //console.log("Running")
     //let list2 = JSON.parse(list)
     let btnContainer = document.createElement("div")
@@ -25,6 +29,7 @@ function loadList(list) {
     backBtn.innerText = "Back"
     backBtn.className = "subBtn"
     divMenu.append(backBtn)
+    let stubs = []
         for (const[k, v] of list.entries()) {
             if (v["children"]) {
                 console.log(v["name"])
@@ -41,9 +46,10 @@ function loadList(list) {
             }
             else {
                 console.log("stubs")
-                loadStubs(list)
+                stubs.push(v)
             }
         }
+        loadStubs(stubs)
 
 
 }
@@ -53,7 +59,7 @@ function loadStubs (stubs) {
     console.log("stubs")
     console.log(stubs)
     //console.log(stubs.length)
-    let divMenu = document.getElementById("djEval")
+    let divMenu = document.getElementById("commentContainer")
     for (const[k, v] of stubs.entries()) {
         console.log(k, v)
         let newBtn = document.createElement("button")
@@ -66,11 +72,30 @@ function loadStubs (stubs) {
 }
 
 function createFeedback(qText) {
+    let body = document.getElementById("designJournalContainer")
     let comment = document.createElement("div")
-    let evalBox = document.getElementById("djEval")
+    let evalBox = document.getElementById("commentContainer")
     comment.className = "commentBox"
-    comment.innerText = qText
-    evalBox.append(comment)
+    let inputField = document.createElement("textarea")
+    inputField.defaultValue = qText
+    comment.append(inputField)
+    let submit = document.createElement("button")
+    submit.value = "Submit"
+    comment.append(submit)
+    submit.textContent = "Submit"
+    let postedComment = document.createElement("div")
+        postedComment.className = "postedComment"
+
+    body.append(comment)
+    submit.onclick = function () {
+
+        postedComment.textContent = inputField.value
+        evalBox.append(postedComment)
+        comment.remove()
+    }
+    //comment.innerText = qText
+
+
 }
 
 function removeBtns() {

@@ -9,17 +9,23 @@
 {% block content %}
 <h1>{{ info.title }}</h1>
 <h3>{{ info.category.first.infoClass }} - {{ info.occurrenceDate.date }}</h3>
-    <div class="designJournalContainer">
+    <div id="designJournalContainer">
          <div id="djContent">
              <p>{{ info.mainText | safe }}</p>
          </div>
+
+
     <div id="djEval">
-        <h2>Comment</h2>
+        <h2>Comments</h2>
+        <div id="commentContainer">
+
+        </div>
+         <!-- <button onclick="loadList('{{ tree | safe }}')">Back</button> -->
 
     </div>
     </div>
 
-    {{ form }}
+
 
 {% endblock content %}
 {% block javascript %}
@@ -30,15 +36,16 @@
 <script src="{% static "javascript/magic_comments.js" %}"></script>
 <script type="text/javascript" >
 
-    let commentMenu = document.getElementById("djEval")
+    let commentMenu = document.getElementById("commentContainer")
     function hide() {
         commentMenu.style.display = "none"
     }
     document.onLoad = hide()
     let content = document.getElementById("djContent")
     content.onclick = function () {
-        addComment("djEval")
+        addComment("commentContainer")
     }
     document.onLoad = loadList({{ tree|safe }})
+    //document.onLoad = returnDefault()
 </script>
 {% endblock javascript %}
