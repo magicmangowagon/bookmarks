@@ -15,7 +15,7 @@
     </div>
          <div id="djContent">
              <div>{% for prompt in info.prompts.all %}
-             <p>{{ prompt.question }}</p>
+             <p><strong>{{ prompt.question }}</strong></p>
                  <p>{{ prompt.response | safe }}</p>
              {% endfor %}</div>
             <div><p>{{ info.mainText | safe }}</p></div>
