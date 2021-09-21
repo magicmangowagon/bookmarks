@@ -41,6 +41,20 @@
     border: gray 1pt solid;
 }
 
+.djPrompts {
+    width: 35%;
+    margin: 0 1em;
+}
+
+.djLong {
+    width: 65%;
+}
+
+.djPrompts h3 {
+    background-color: #00A495;
+    color: white;
+}
+
 #postedComments {
     width: 10%;
     position: relative;

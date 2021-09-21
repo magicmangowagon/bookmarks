@@ -14,11 +14,11 @@
         <h2>Comments</h2>
     </div>
          <div id="djContent">
-             <div>{% for prompt in info.prompts.all %}
-             <p><strong>{{ prompt.question }}</strong></p>
+             <div class="djPrompts">{% for prompt in info.prompts.all %}
+                 <h3>{{ prompt.question }}</h3>
                  <p>{{ prompt.response | safe }}</p>
              {% endfor %}</div>
-            <div><p>{{ info.mainText | safe }}</p></div>
+            <div class="djLong"><p>{{ info.mainText | safe }}</p></div>
          </div>
 
 
