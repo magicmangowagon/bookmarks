@@ -83,6 +83,8 @@
 #djContent {
     width: 74%;
     margin: 10pt;
+    display: flex;
+    flex-direction: row;
 }
 
 #djContent:hover {

@@ -18,10 +18,16 @@ class InfoCategory(models.Model):
         return self.infoClass
 
 
+class Prompts(models.Model):
+    question = models.CharField(max_length=500, default='', blank=True)
+    response = RichTextField()
+
+
 # BASE INFO MODEL
 class BaseInfo(models.Model):
     title = models.CharField(max_length=600)
     mainText = RichTextField()
+    prompts = models.ManyToManyField(Prompts, blank=True)
     dateCreated = models.DateTimeField(auto_now=True)
     occurrenceDate = models.DateTimeField(default=datetime.now())
     learningExpos = models.ManyToManyField(LearningExperience, blank=True)
