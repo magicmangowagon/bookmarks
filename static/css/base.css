@@ -20,18 +20,46 @@
 
 .postedComment {
     border: #2f3a42 1pt solid;
+
 }
 
 .commentBox {
-    width: 250pt;
+    width: 400pt;
     position: absolute;
-    left: 50%;
+    left: 40%;
+    height: fit-content;
+    background-color: #e4e2e2;
+    border: #00A495 2pt solid;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 5pt;
+}
+
+.commentBox textarea {
+    border-radius: 0;
+    border: gray 1pt solid;
+}
+
+#postedComments {
+    width: 10%;
+    position: relative;
 }
 
 #djEval {
     width: 15%;
     display: flex;
     flex-direction: column;
+}
+
+.submitBtn {
+    background-color: #003469;
+    color: white;
+    font-family: Oswald, "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+    font-size: 12pt;
+    width: auto;
+    margin: auto;
+    border: none;
 }
 
 #commentContainer {
@@ -43,7 +71,9 @@
     background-color: #003469;
     color: white;
     font-family: Oswald, "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
-    font-size: 15pt;
+    font-size: 11pt;
+    margin: 1pt 0;
+    border: none;
 }
 
 #djEval button:hover {
@@ -51,7 +81,7 @@
 }
 
 #djContent {
-    width: 80%;
+    width: 74%;
     margin: 10pt;
 }
 

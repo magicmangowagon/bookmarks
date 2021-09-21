@@ -10,13 +10,16 @@
 <h1>{{ info.title }}</h1>
 <h3>{{ info.category.first.infoClass }} - {{ info.occurrenceDate.date }}</h3>
     <div id="designJournalContainer">
+    <div id="postedComments">
+        <h2>Comments</h2>
+    </div>
          <div id="djContent">
              <p>{{ info.mainText | safe }}</p>
          </div>
 
 
     <div id="djEval">
-        <h2>Comments</h2>
+
         <div id="commentContainer">
 
         </div>
@@ -42,10 +45,10 @@
     }
     document.onLoad = hide()
     let content = document.getElementById("djContent")
-    content.onclick = function () {
-        addComment("commentContainer")
-    }
+    //content.onclick = function () {
+    //    addComment("commentContainer")
+    //}
     document.onLoad = loadList({{ tree|safe }})
-    //document.onLoad = returnDefault()
+    document.onLoad = returnDefault({{ tree | safe }})
 </script>
 {% endblock javascript %}

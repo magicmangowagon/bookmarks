@@ -23,6 +23,7 @@ class BaseInfoDetail(DetailView):
         context = super(BaseInfoDetail, self).get_context_data(**kwargs)
         info = BaseInfo.objects.get(id=self.kwargs['pk'])
         comps = FakeCompetency.objects.all()
+        category = []
         tree = []
         for comp in comps:
             c = {
@@ -36,7 +37,7 @@ class BaseInfoDetail(DetailView):
                 }
                 for q in lo.questionGroup.all():
                     qS = {
-
+                        'category': q.questionCategory,
                         'questionText': q.question
                     }
                     l['children'].append(qS)
