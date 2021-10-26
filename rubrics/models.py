@@ -372,7 +372,7 @@ class TempTfJSolution(GeneralSolution):
     # user = models.ForeignKey(User, default='', null=False, on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.solutionInstance) + ' ' + str(self.user)
+        return str(self.solutionInstance) + ' ' + str(self.creator)
 
 
 class UserSolution(models.Model):

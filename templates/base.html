@@ -51,12 +51,7 @@
             <li {% if section == "challenges" %}class="selected"{% endif %}>
             <a href="/">Challenges</a>
             </li>
-        {% if request.user.profile.role != 0 %}
-            <li {% if section == "competency" %}class="selected"{% endif %}>
-            <a href="/competency">Competency</a>
-            </li>
 
-        {% endif %}
         </ul>
         {% endif %}
 

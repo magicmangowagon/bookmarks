@@ -1,5 +1,5 @@
 from rubrics.models import Challenge, MegaChallenge, UserSolution, SolutionInstance, Rubric, RubricLine, \
-    ChallengeAddendum, Competency, LearningObjective, LearningExperience
+    ChallengeAddendum, Competency, LearningObjective, LearningExperience, TempUserSolution
 from centralDispatch.models import SolutionRouter, AssignmentKeeper, SolutionStatus, ChallengeStatus, SomethingHappened, EmailMessage
 from account.models import Profile
 from django.contrib.auth.models import User
@@ -452,3 +452,9 @@ def cloneChallenge(challenge):
         newSolution.save()
         challengeClone.solutions.add(newSolution)
         challengeClone.save()
+
+
+def CopyUsersolutionsToGeneralSolution():
+    oldSolutions = UserSolution.objects.all()
+    for oldS in oldSolutions:
+        TempUserSolution.objects.create(creator=oldS.userOwner, solutionInstance=oldS.solutionInstance, )

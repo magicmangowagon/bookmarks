@@ -15,7 +15,34 @@
     display: flex;
     flex-direction: row;
     position: relative;
+}
 
+#newFeedback {
+    position: absolute;
+    left: 50%;
+    padding: 5pt;
+    margin: 5pt;
+    background-color: #c3d7d3;
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+
+}
+
+#newFeedbackContent {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: #f3f3f3;
+}
+
+#newFeedbackContent button {
+    margin: 10pt !important;
+
+}
+
+.backBtn {
+    width: 20pt;
 }
 
 .postedComment {

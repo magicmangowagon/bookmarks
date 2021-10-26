@@ -23,7 +23,16 @@
 
 
     <div id="djEval">
+            <button onclick="show(newFeedback)">Add New Feedback</button>
+        <div id="newFeedback">
+        <button onclick="backToComps('newFeedbackBtn')" class="backBtn"><</button><h3>New Feedback</h3>
+        <div id="newFeedbackContent">
+            {% for comp in comps %}
+                <button onclick="addNewFeedback({{ comp.get_los }})" class="newFeedbackComp">{{ comp.name }}</button>
+            {% endfor %}
+        </div>
 
+        </div>
         <div id="commentContainer">
 
         </div>
@@ -44,8 +53,13 @@
 <script type="text/javascript" >
 
     let commentMenu = document.getElementById("commentContainer")
+    let newFeedback = document.getElementById("newFeedback")
     function hide() {
         commentMenu.style.display = "none"
+        newFeedback.style.display = "none"
+    }
+    function show(element) {
+        element.style.display = "flex"
     }
     document.onLoad = hide()
     let content = document.getElementById("djContent")

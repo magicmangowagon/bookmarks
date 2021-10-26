@@ -154,6 +154,55 @@ function connectComment(id) {
     comment.style.border = "red 1pt solid"
 }
 
+
+function addNewFeedback(los) {
+    let parentContainer = document.getElementById("newFeedbackContent")
+    let compBtns = document.getElementsByClassName("newFeedbackComp")
+    console.log(compBtns)
+    $(compBtns).hide()
+    let existingBtns = document.getElementsByClassName("newFeedbackBtn")
+    $(existingBtns).remove()
+    for (const[k, v] of los.entries()) {
+        console.log(v)
+        let newBtn = document.createElement("button")
+        newBtn.innerText = v["fields"]["name"]
+        newBtn.className = "newFeedbackBtn"
+        newBtn.onclick = function () {newFeedbackForm(v["fields"]["name"])}
+        parentContainer.append(newBtn)
+    }
+}
+
+function newFeedbackForm(name) {
+    let existingBtns = document.getElementsByClassName("newFeedbackBtn")
+    $(existingBtns).remove()
+    let parentContainer = document.getElementById("newFeedbackContent")
+    let loName = document.createElement("h4")
+    loName.textContent = name
+    parentContainer.append(loName)
+    let questionType = document.createElement("select")
+    let questionText = document.createElement("textarea")
+    let stepBack = document.createElement("option")
+    stepBack.text = "Step Back"
+    let goDeeper = document.createElement("option")
+    goDeeper.text = "Go Deeper"
+    let tryIt = document.createElement("option")
+    tryIt.text = "Try it Out"
+    questionType.add(stepBack)
+    questionType.add(goDeeper)
+    questionType.add(tryIt)
+    questionType.className = "newFeedbackBtn"
+    questionText.className = "newFeedbackBtn"
+    parentContainer.append(questionType)
+    parentContainer.append(questionText)
+}
+
+function backToComps(className) {
+    let compBtns = document.getElementsByClassName("newFeedbackComp")
+    let loBtns = document.getElementsByClassName("newFeedbackBtn")
+    $(loBtns).remove()
+    $(compBtns).show()
+}
+
 function removeBtns() {
     let btns = document.getElementsByClassName("subBtn")
     $(btns).remove()
