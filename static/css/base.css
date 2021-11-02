@@ -29,6 +29,23 @@
 
 }
 
+#addFeedback {
+    display: none;
+    position: absolute;
+
+}
+
+#containerForm {
+    position: absolute;
+    left: 50%;
+    width: 25%;
+    display: none;
+}
+
+#addFeedback button {
+    margin: 1pt;
+}
+
 #newFeedbackContent {
     display: flex;
     flex-direction: row;

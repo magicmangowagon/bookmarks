@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import modelformset_factory, BaseModelFormSet, ModelForm
-from .models import DiscussionBoard, DiscussionTopic, FakeLO, QuestionStub
+from .models import DiscussionBoard, DiscussionTopic, FakeLO, QuestionStub, CommentContainer
 
 
 class AddTopicForm(forms.ModelForm):
@@ -12,11 +12,18 @@ class AddTopicForm(forms.ModelForm):
 
 
 class AddComment(forms.ModelForm):
-    lo = forms.ModelChoiceField(queryset=QuestionStub.objects.none(), empty_label=None)
+    # lo = forms.ModelChoiceField(queryset=QuestionStub.objects.none(), empty_label=None)
 
     class Meta:
-        model = FakeLO
-        fields = ['lo', ]
+        model = QuestionStub
+        fields = ['learningObjective', 'question', 'questionCategory']
 
     # def __init__(self):
     #     super(AddComment, self).__init__()
+
+
+class CommentContainerForm(forms.ModelForm):
+
+    class Meta:
+        model = CommentContainer
+        fields = ['comment', 'baseInfo', 'coordinates']

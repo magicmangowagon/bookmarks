@@ -11,6 +11,7 @@ from zipfile import ZipFile
 import os
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
+from django.core.serializers import json, serialize
 
 
 # __________________
@@ -295,6 +296,9 @@ class Competency(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_los(self):
+        return serialize('json', self.learningObjs.all())
 
 
 # _________

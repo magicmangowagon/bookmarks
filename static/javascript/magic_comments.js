@@ -19,16 +19,29 @@ document.getElementById("djContent").addEventListener("mousedown", function(){
     highlightText()
 })
 document.getElementById("djContent").addEventListener("mouseup", function () {
-    showCommentContainer("flex")
+    // showCommentContainer("flex")
+    showAddButton()
     //getCoordinates()
     // removeHighlight()
 })
+
+function showAddButton () {
+    let x = event.clientX
+    let y = event.clientY
+    console.log(x, y)
+    let addFeedback = document.getElementById("addFeedback")
+    addFeedback.style.display = "block"
+    addFeedback.style.left = x + "px"
+    addFeedback.style.top = y + "px"
+}
 
 function removeHighlight() {
     window.getSelection().empty()
 }
 
 function showCommentContainer (display) {
+    let addFeedbackDiv = document.getElementById("addFeedback")
+    addFeedbackDiv.style.display = "none"
     let cc = document.getElementById("commentContainer")
     cc.style.display = display
 }
@@ -95,6 +108,11 @@ function loadList(list) {
         loadStubs(stubs)
 }
 
+function hideThis (name) {
+    let thisThing = document.getElementById(name)
+    thisThing.style.display = "none"
+}
+
 function loadStubs (stubs) {
     //removeBtns()
     //console.log("stubs")
@@ -103,12 +121,14 @@ function loadStubs (stubs) {
     let divMenu = document.getElementById("commentContainer")
     for (const[k, v] of stubs.entries()) {
         //console.log(k, v)
+        let form = document.getElementById("stubForm")
         let newBtn = document.createElement("button")
         newBtn.className = "subBtn"
         newBtn.innerText = v["questionText"]
         newBtn.onclick = function () {
             createFeedback(v["questionText"])
-
+            setContainerValues(v['id'])
+            console.log(v['id'])
         }
         $(divMenu.append(newBtn))
     }
@@ -119,34 +139,22 @@ function createFeedback(qText) {
     let body = document.getElementById("designJournalContainer")
     let comment = document.createElement("div")
     let evalBox = document.getElementById("postedComments")
-    comment.className = "commentBox"
-    let inputField = document.createElement("textarea")
-    inputField.defaultValue = qText
-    comment.append(inputField)
-    let submit = document.createElement("button")
-    submit.value = "Submit"
-    submit.className = "submitBtn"
-    comment.append(submit)
-    submit.textContent = "Submit"
+    let containerForm = document.getElementById("containerForm")
+    containerForm.style.display = "block"
+    //comment.className = "commentBox"
+    //let inputField = document.createElement("textarea")
+    //inputField.defaultValue = qText
+    //comment.append(inputField)
+    //let submit = document.createElement("button")
+    //submit.value = "Submit"
+    //submit.className = "submitBtn"
+    //comment.append(submit)
+    //submit.textContent = "Submit"
     let postedComment = document.createElement("div")
         postedComment.className = "postedComment"
 
     body.append(comment)
-    submit.onclick = function () {
 
-        postedComment.textContent = inputField.value
-        evalBox.append(postedComment)
-        let idToGet = spanId
-        postedComment.id = "pC" + spanId.toString()
-
-        //postedComment.style.top = yClick.toString() + "px"
-        comment.remove()
-        removeBtns()
-        loadList(defaultList)
-        showCommentContainer("none")
-        // document.getElementById("djContent").addEventListener("click", getCoordinates)
-        //
-    }
 }
 
 function connectComment(id) {
@@ -163,12 +171,12 @@ function addNewFeedback(los) {
     let existingBtns = document.getElementsByClassName("newFeedbackBtn")
     $(existingBtns).remove()
     for (const[k, v] of los.entries()) {
-        console.log(v)
+        //console.log(v)
         let newBtn = document.createElement("button")
         newBtn.innerText = v["fields"]["name"]
         newBtn.className = "newFeedbackBtn"
-        newBtn.onclick = function () {newFeedbackForm(v["fields"]["name"])}
-        parentContainer.append(newBtn)
+        //newBtn.onclick = function () {newFeedbackForm(v["fields"]["name"])}
+        //parentContainer.append(newBtn)
     }
 }
 
@@ -282,4 +290,10 @@ function getSafeRanges(dangerous) {
 
     // Send to Console
     return response;
+}
+
+
+function setContainerValues(id) {
+    let form = document.getElementById("id_comment")
+    form.value = id
 }

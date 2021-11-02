@@ -1,9 +1,10 @@
 from django.shortcuts import render, reverse, redirect
 from django.views.generic import ListView, DetailView, FormView
-from .models import BaseInfo, DiscussionBoard, DiscussionTopic, FakeLO, QuestionStub, FakeCompetency
+from .models import BaseInfo, DiscussionBoard, DiscussionTopic, FakeLO, QuestionStub, FakeCompetency, CommentContainer
 from centralDispatch.models import StudioExpoChoice
 from centralDispatch.forms import StudioExpoChoiceForm
-from .forms import AddTopicForm, AddComment
+from rubrics.models import Competency, LearningObjective
+from .forms import AddTopicForm, AddComment, CommentContainerForm
 import json
 # Create your views here.
 
@@ -22,23 +23,28 @@ class BaseInfoDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super(BaseInfoDetail, self).get_context_data(**kwargs)
         info = BaseInfo.objects.get(id=self.kwargs['pk'])
-        comps = FakeCompetency.objects.all()
+        comps = Competency.objects.all()
         category = []
         tree = []
+        existingComments = CommentContainer.objects.filter(baseInfo=self.kwargs['pk'])
+        context['existingComments'] = existingComments
+        questionStubForm = AddComment
         for comp in comps:
             c = {
                 'name': comp.name,
                 'children': []
             }
-            for lo in comp.fakeLos.all():
+            for lo in comp.learningObjs.all():
                 l = {
                     'name': lo.name,
                     'children': []
                 }
-                for q in lo.questionGroup.all():
+                stubs = QuestionStub.objects.filter(learningObjective=lo)
+                for q in stubs:
                     qS = {
                         'category': q.questionCategory,
-                        'questionText': q.question
+                        'questionText': q.question,
+                        'id': q.id
                     }
                     l['children'].append(qS)
                 c['children'].append(l)
@@ -46,15 +52,33 @@ class BaseInfoDetail(DetailView):
         print(tree)
             # tree.update(comp)
             # for lo in comp.get_los():
-
+        containerForm = CommentContainerForm(initial={'baseInfo': self.kwargs['pk']})
+        context['containerForm'] = containerForm
+        context['qsForm'] = questionStubForm
         context['comps'] = comps
         context['info'] = info
         context['tree'] = json.dumps(tree)
-        form = AddComment
 
-        # form = StudioExpoChoiceForm(baseInfo=info, initial={'user': self.request.user, 'session': info},)
-        context['form'] = form
         return context
+
+    def post(self, request, *args, **kwargs):
+        if request.POST:
+            if request.POST.get("qStub"):
+                newQStub = AddComment(request.POST)
+
+                if newQStub.is_valid():
+                    newQStub.save()
+                    container = CommentContainer.objects.create(comment=newQStub.instance, baseInfo=
+                    BaseInfo.objects.get(pk=self.kwargs['pk']))
+                    return redirect('infodetail', pk=self.kwargs.get('pk'))
+            if request.POST.get("container"):
+                newQStub = CommentContainerForm(request.POST)
+
+                if newQStub.is_valid():
+                    newQStub.save()
+                    #container = CommentContainer.objects.create(comment=newQStub.instance, baseInfo=
+                    # BaseInfo.objects.get(pk=self.kwargs['pk']))
+                    return redirect('infodetail', pk=self.kwargs.get('pk'))
 
 
 class DiscussionBoardView(ListView):

@@ -3,7 +3,7 @@ from django.contrib.auth.models import User, Group
 from djrichtextfield.models import RichTextField
 from taggit.managers import TaggableManager
 from datetime import datetime
-from rubrics.models import Challenge, LearningExperience, Evaluated
+from rubrics.models import Challenge, LearningExperience, Evaluated, LearningObjective
 from django.urls import reverse
 from django.dispatch import receiver
 from django.db.models.signals import post_save
@@ -74,6 +74,7 @@ def create_discussion_board(sender, **kwargs):
 class QuestionStub(models.Model):
     question = models.CharField(max_length=1000, default='')
     custom = models.CharField(max_length=1000, blank=True, default='')
+    learningObjective = models.ForeignKey(LearningObjective, null=True, default='', on_delete=models.CASCADE)
 
     A = 'A'
     B = 'B'

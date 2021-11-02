@@ -12,8 +12,18 @@
     <div id="designJournalContainer">
     <div id="postedComments">
         <h2>Comments</h2>
+        {% for comment in existingComments %}
+                {{ comment.comment }}
+            {% endfor %}
     </div>
          <div id="djContent">
+         <form  method="POST" enctype="multipart/form-data" id="containerForm">
+             <p>{{ containerForm.comment.initial }}</p>
+             {{ containerForm }}
+
+            <input type="submit" value="Submit" name="container">
+            {% csrf_token %}
+        </form>
              <div class="djPrompts">{% for prompt in info.prompts.all %}
                  <h3>{{ prompt.question }}</h3>
                  <p>{{ prompt.response | safe }}</p>
@@ -23,13 +33,20 @@
 
 
     <div id="djEval">
-            <button onclick="show(newFeedback)">Add New Feedback</button>
+    <div id="addFeedback"><button onclick="showCommentContainer('flex')">Add Feedback</button><button onclick="hideThis('addFeedback')">Cancel</button></div>
+            <button onclick="show(newFeedback)">Create New Feedback</button>
         <div id="newFeedback">
         <button onclick="backToComps('newFeedbackBtn')" class="backBtn"><</button><h3>New Feedback</h3>
         <div id="newFeedbackContent">
-            {% for comp in comps %}
-                <button onclick="addNewFeedback({{ comp.get_los }})" class="newFeedbackComp">{{ comp.name }}</button>
-            {% endfor %}
+
+        <form  method="POST" enctype="multipart/form-data" id="stubForm">
+            {{ qsForm }}
+            <input type="submit" value="Submit" name="qStub">
+            {% csrf_token %}
+        </form>
+
+
+
         </div>
 
         </div>

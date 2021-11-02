@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import BaseInfo, InfoCategory, DiscussionBoard, DiscussionTopic, QuestionStub, FakeLO, FakeCompetency, Prompts
+from .models import BaseInfo, InfoCategory, DiscussionBoard, DiscussionTopic, QuestionStub, FakeLO, FakeCompetency, \
+    Prompts, CommentContainer
 from rubrics.models import LearningExperience
 from adminsortable2.admin import SortableInlineAdminMixin
 # Register your models here.
@@ -14,6 +15,11 @@ class CategoryAdmin(admin.ModelAdmin):
 class PromptsAdmin(admin.ModelAdmin):
     model = Prompts
     list_display = ['question', 'response']
+
+
+@admin.register(CommentContainer)
+class CommentContainerAdmin(admin.ModelAdmin):
+    list_display = ['comment', 'baseInfo', 'coordinates']
 
 
 @admin.register(BaseInfo)
@@ -40,7 +46,7 @@ class FakeLOAdmin(admin.ModelAdmin):
 
 @admin.register(QuestionStub)
 class QuestionStubAdmin(admin.ModelAdmin):
-    list_display = ['question', 'questionCategory']
+    list_display = ['question', 'questionCategory', 'learningObjective']
 
 
 @admin.register(FakeCompetency)
