@@ -18,18 +18,15 @@ function returnDefault(list) {
 document.getElementById("djContent").addEventListener("mousedown", function(){
     highlightText()
 })
-document.getElementById("djContent").addEventListener("mouseup", function () {
-    // showCommentContainer("flex")
-    showAddButton()
-    //getCoordinates()
-    // removeHighlight()
-})
+document.getElementById("djContent").addEventListener("mouseup", showAddButton)
 
 function showAddButton () {
     let x = event.clientX
     let y = event.clientY
     console.log(x, y)
     let addFeedback = document.getElementById("addFeedback")
+    let djContent = document.getElementById("djContent")
+    let topMath = djContent.clientHeight - y
     addFeedback.style.display = "block"
     addFeedback.style.left = x + "px"
     addFeedback.style.top = y + "px"
@@ -111,6 +108,11 @@ function loadList(list) {
 function hideThis (name) {
     let thisThing = document.getElementById(name)
     thisThing.style.display = "none"
+    thisThing.addEventListener('mouseup', function (e) {
+        e.stopImmediatePropagation()
+    })
+
+
 }
 
 function loadStubs (stubs) {
@@ -296,4 +298,6 @@ function getSafeRanges(dangerous) {
 function setContainerValues(id) {
     let form = document.getElementById("id_comment")
     form.value = id
+    let displayPar = document.getElementById("label")
+    displayPar.innerText = form.options[form.selectedIndex].text
 }

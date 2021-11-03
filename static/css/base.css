@@ -37,13 +37,43 @@
 
 #containerForm {
     position: absolute;
-    left: 50%;
-    width: 25%;
+    left: 30%;
+    width: 50%;
+    margin: 2pt;
+    display: block;
+    background-color: #f5f6f6;
+    padding: 10pt;
+}
+
+#containerForm p {
+    background: white;
+}
+
+#containerFormButtons {
+    display: flex;
+    flex-direction: row;
+}
+
+#containerFormButtons button {
+    margin: 1pt;
+    background-color: #003469;
+    color: white;
+    font-family: Oswald, "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+    font-size: 11pt;
+}
+
+#containerHide {
     display: none;
 }
 
 #addFeedback button {
     margin: 1pt;
+    background-color: #003469;
+    color: white;
+    font-family: Oswald, "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+    font-size: 11pt;
+
+    border: none;
 }
 
 #newFeedbackContent {
@@ -143,6 +173,7 @@
     margin: 10pt;
     display: flex;
     flex-direction: row;
+    position: relative;
 }
 
 #djContent:hover {
