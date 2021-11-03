@@ -97,6 +97,7 @@ MIDDLEWARE = [
 ]
 
 
+
 ROOT_URLCONF = 'bookmarks.urls'
 
 TEMPLATES = [
