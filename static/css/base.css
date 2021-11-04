@@ -45,6 +45,22 @@
     padding: 10pt;
 }
 
+#responseForm {
+    display: none;
+    position: absolute;
+    left: 25%;
+    width: 50%;
+    background-color: #f5f6f6;
+}
+
+.existingComment {
+    border: 1pt solid mediumvioletred;
+}
+
+.existingComment:hover {
+    background-color: #12c064;
+}
+
 #containerForm p {
     background: white;
 }

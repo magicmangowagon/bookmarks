@@ -11,9 +11,9 @@
 <h3>{{ info.category.first.infoClass }} - {{ info.occurrenceDate.date }}</h3>
     <div id="designJournalContainer">
     <div id="postedComments">
-        <h2>Comments</h2>
+        <h2>Conversations</h2>
         {% for comment in existingComments %}
-                {{ comment.comment }}
+            <div class="existingComment" id="comment{{ comment.id }}" onclick="loadConversation('{{ comment.comment }}')">{{ comment.comment }}</div>
             {% endfor %}
     </div>
          <div id="djContent">
@@ -57,8 +57,28 @@
         <div id="commentContainer">
 
         </div>
-         <!-- <button onclick="loadList('{{ tree | safe }}')">Back</button> -->
+         <div id="responseForm">
+         <p id="initialComment"></p>
+              {% get_comment_count for object as comment_count %}
+            <div class="py-4 text-center">
 
+  &nbsp;&sdot;&nbsp;
+
+                {% if comment_count %}
+                    <hr/>
+                    <div class="comments">
+                      {% render_xtdcomment_tree for object %}
+                    </div>
+                {% endif %}
+            <div class="card card-block mb-5">
+            <div class="card-body">
+            <h4 class="card-title text-center pb-3">Post your thoughts</h4>
+              {% render_comment_form for object %}
+              {{ object.media }}
+        </div>
+</div>
+         </div>
+        <input type="button" value="Cancel" onclick="hideThis('responseForm')">
     </div>
     </div>
 

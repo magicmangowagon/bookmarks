@@ -56,6 +56,7 @@ let spanId = 0
 function highlightText() {
     let selection = window.getSelection();
     let range = selection.getRangeAt(0);
+    console.log(range, selection)
     let newNode = document.createElement("span");
     newNode.setAttribute("style", "background-color: pink;");
     newNode.id = "highlight" + spanId.toString()
@@ -64,6 +65,14 @@ function highlightText() {
     range.surroundContents(newNode);
     getCoordinates()
     removeHighlight()
+}
+
+function loadConversation(text) {
+    let responseForm = document.getElementById("responseForm")
+    let initialComment = document.getElementById("initialComment")
+    initialComment.innerText = text
+    responseForm.style.display = "block"
+
 }
 
 function loadList(list) {
