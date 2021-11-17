@@ -1,10 +1,11 @@
 from django.shortcuts import render, reverse, redirect
 from django.views.generic import ListView, DetailView, FormView
-from .models import BaseInfo, DiscussionBoard, DiscussionTopic, FakeLO, QuestionStub, FakeCompetency, CommentContainer
+from .models import BaseInfo, DiscussionBoard, DiscussionTopic, FakeLO, QuestionStub, FakeCompetency, CommentContainer,\
+    DesignJournal, DjPage, DjResponse, DjPrompt, DesignJournalContent
 from centralDispatch.models import StudioExpoChoice
 from centralDispatch.forms import StudioExpoChoiceForm
 from rubrics.models import Competency, LearningObjective
-from .forms import AddTopicForm, AddComment, CommentContainerForm
+from .forms import AddTopicForm, AddComment, CommentContainerForm, AddDjPageForm, AddDjPromptForm, AddDjResponseForm
 import json
 # Create your views here.
 
@@ -49,7 +50,7 @@ class BaseInfoDetail(DetailView):
                     l['children'].append(qS)
                 c['children'].append(l)
             tree.append(c)
-        print(tree)
+        # print(tree)
             # tree.update(comp)
             # for lo in comp.get_los():
         containerForm = CommentContainerForm(initial={'baseInfo': self.kwargs['pk']})
@@ -114,3 +115,29 @@ class DiscussionBoardView(ListView):
 class DiscussionTopicView(DetailView):
     model = DiscussionTopic
     template_name = 'info/discussiontopic.html'
+
+
+class DesignJournalView(DetailView):
+    model = DesignJournal
+    template_name = 'info/design_journal.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(DesignJournalView, self).get_context_data(**kwargs)
+        designJournal = DesignJournal.objects.get(pk=self.kwargs['pk'])
+        djPages = DjPage.objects.filter(designJournal=self.kwargs['pk']).order_by('-date')
+        djPageForm = AddDjPageForm(initial={'designJournal': self.kwargs['pk'], 'creator': self.request.user})
+        # djResponseForm = AddDjResponseForm(initial={'designJournal': self.kwargs['pk'], 'creator': self.request.user})
+        djPrompts = DjPrompt.objects.all()
+        context['prompts'] = djPrompts
+        context['addDjPage'] = djPageForm
+        context['designJournal'] = designJournal
+        context['pages'] = djPages
+        return context
+
+    def post(self, request, *args, **kwargs):
+        djPage = AddDjPageForm(request.POST)
+
+        if djPage.is_valid():
+            djPage.save()
+            return redirect('design-journal', pk=self.kwargs['pk'])
+

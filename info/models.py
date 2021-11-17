@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User, Group
 from djrichtextfield.models import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 from taggit.managers import TaggableManager
 from datetime import datetime
 from rubrics.models import Challenge, LearningExperience, Evaluated, LearningObjective
@@ -157,3 +158,36 @@ class FakeCompetency(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class DesignJournal(models.Model):
+    user = models.ForeignKey(User, default='', blank=False, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.last_name + ' design journal'
+
+
+class DesignJournalContent(models.Model):
+    date = models.DateTimeField(auto_now_add=True)
+    creator = models.ForeignKey(User, default='', blank=False, on_delete=models.CASCADE,
+                                related_name='%(class)s_related', related_query_name='%(class)s_related')
+
+    class Meta:
+        abstract = True
+
+
+class DjPage(DesignJournalContent):
+    designJournal = models.ForeignKey(DesignJournal, default='', blank=False, on_delete=models.CASCADE)
+    content = RichTextUploadingField(default='')
+    index = models.IntegerField(default=0)
+
+
+class DjPrompt(DesignJournalContent):
+    prompt = models.CharField(default='', max_length=2000)
+
+    def return_prompt_response(self, user):
+        return DjResponse.objects.filter(prompt=self, creator=user)
+
+
+class DjResponse(DjPage):
+    prompt = models.ForeignKey(DjPrompt, default='', blank=False, on_delete=models.CASCADE)

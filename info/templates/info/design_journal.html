@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load solution_filters %}
+{% load comments %}
+{% load comments_xtd %}
+{% load static %}
+
+{% block title %}Woodrow Wilson Academy{% endblock %}
+
+{% block content %}
+<h1>{{ designJournal.user.first_name }}'s Design Journal</h1>
+    <div class="navBtns" >
+        <div class="navBtnsLeft">
+            <button onclick="previous()" class="submitBtn">Back</button>
+            <button onclick="next()" class="submitBtn">Next</button>
+        </div>
+
+        <div class="navBtnsRight">
+            <button onclick="show('djPageEditor')" class="submitBtn">Add Page</button>
+        </div>
+    </div>
+    <div id="djPageEditor">
+    <form method="POST" enctype="multipart/form-data" id="stubForm" >{{ addDjPage.media }}
+        {{ addDjPage.content }}
+        {{ addDjPage.index }}
+        {{ addDjPage.designJournal }}
+        {{ addDjPage.creator }}
+    <input type="submit" value="Submit" name="djPage">
+            {% csrf_token %}</form>
+    </div>
+    {% for page in pages %}
+        <div class="djPage" id="djPage-{{ page.id }}">
+        <h2>{{ page.date }}</h2>
+        <div>{{ page.content | safe }}</div>
+        <hr>
+        </div>
+    {% endfor %}
+
+
+
+
+
+{% endblock content %}
+{% block javascript %}
+ <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" rel="prefetch"></script>
+    <script type="text/javascript" src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://d3js.org/d3-array.v2.min.js"></script>
+    <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+<script src="{% static "javascript/magic_comments.js" %}"></script>
+<script type="text/javascript" >
+    document.onLoad = paginateDesignJournal(0)
+    let index = 0
+</script>
+{% endblock javascript %}

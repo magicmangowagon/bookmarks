@@ -1,4 +1,29 @@
+let djPageIndex = 0
+let djPages = document.getElementsByClassName("djPage")
 
+function next() {
+    if (djPageIndex < djPages.length - 1) {
+        djPageIndex++
+        paginateDesignJournal(djPageIndex)
+    }
+}
+
+function previous() {
+    if (djPageIndex > 0) {
+        djPageIndex--
+        paginateDesignJournal(djPageIndex)
+    }
+}
+function paginateDesignJournal(num) {
+
+    $(djPages).hide()
+    $(djPages[num]).show()
+}
+
+function show(elem) {
+    let element = document.getElementById(elem)
+    element.style.display = "Block"
+}
 
 function addComment(menu) {
     let divShow = document.getElementById(menu)

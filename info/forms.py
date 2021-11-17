@@ -1,6 +1,26 @@
 from django import forms
 from django.forms import modelformset_factory, BaseModelFormSet, ModelForm
-from .models import DiscussionBoard, DiscussionTopic, FakeLO, QuestionStub, CommentContainer
+from .models import DiscussionBoard, DiscussionTopic, FakeLO, QuestionStub, CommentContainer, DesignJournal, DjPage, \
+    DjPrompt, DjResponse
+
+
+class AddDjResponseForm(forms.ModelForm):
+    class Meta:
+        model = DjResponse
+        fields = ['designJournal', 'content', 'index', 'creator', 'prompt']
+
+
+class AddDjPageForm(forms.ModelForm):
+    class Meta:
+        model = DjPage
+        fields = ['designJournal', 'content', 'index', 'creator']
+        widgets = {'designJournal': forms.HiddenInput(), 'index': forms.HiddenInput(), 'creator': forms.HiddenInput()}
+
+
+class AddDjPromptForm(forms.ModelForm):
+    class Meta:
+        Model = DjPrompt
+        fields = ['prompt', 'creator']
 
 
 class AddTopicForm(forms.ModelForm):

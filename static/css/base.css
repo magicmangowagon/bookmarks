@@ -10,6 +10,11 @@
     font-display: swap;
 }
 
+#djPageEditor {
+    display: none;
+    width: 100%;
+}
+
 #designJournalContainer {
     width: 100%;
     display: flex;
@@ -154,6 +159,23 @@
     width: 15%;
     display: flex;
     flex-direction: column;
+}
+
+.navBtns {
+    display: flex;
+    flex-direction: row;
+    width: 95%;
+}
+
+.navBtnsLeft {
+    width: 50%;
+}
+
+.navBtnsRight {
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
 }
 
 .submitBtn {
