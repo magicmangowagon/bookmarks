@@ -18,6 +18,9 @@
             <button onclick="show('djPageEditor')" class="submitBtn">Add Page</button>
         </div>
     </div>
+    <div class="djPrompts">
+        <h4>{{ prompts.prompt }}</h4>
+    </div>
     <div id="djPageEditor">
     <form method="POST" enctype="multipart/form-data" id="stubForm" >{{ addDjPage.media }}
         {{ addDjPage.content }}

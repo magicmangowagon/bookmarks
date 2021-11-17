@@ -127,7 +127,7 @@ class DesignJournalView(DetailView):
         djPages = DjPage.objects.filter(designJournal=self.kwargs['pk']).order_by('-date')
         djPageForm = AddDjPageForm(initial={'designJournal': self.kwargs['pk'], 'creator': self.request.user})
         # djResponseForm = AddDjResponseForm(initial={'designJournal': self.kwargs['pk'], 'creator': self.request.user})
-        djPrompts = DjPrompt.objects.all()
+        djPrompts = DjPrompt.objects.last()
         context['prompts'] = djPrompts
         context['addDjPage'] = djPageForm
         context['designJournal'] = designJournal
