@@ -147,6 +147,7 @@ class CommentContainer(models.Model):
     comment = models.ForeignKey(QuestionStub, blank=True, default='', on_delete=models.CASCADE)
     baseInfo = models.ForeignKey(BaseInfo, blank=True, default='', on_delete=models.CASCADE)
     coordinates = models.IntegerField(blank=True, default=0)
+    highlight = models.CharField(default='', max_length=2000, blank=True)
 
 
 class FakeCompetency(models.Model):

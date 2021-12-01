@@ -19,7 +19,7 @@ class PromptsAdmin(admin.ModelAdmin):
 
 @admin.register(CommentContainer)
 class CommentContainerAdmin(admin.ModelAdmin):
-    list_display = ['comment', 'baseInfo', 'coordinates']
+    list_display = ['comment', 'baseInfo', 'coordinates', 'highlight']
 
 
 @admin.register(BaseInfo)

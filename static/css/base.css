@@ -178,6 +178,10 @@
     align-items: flex-end;
 }
 
+.highlight {
+    background-color: #12c064;
+}
+
 .submitBtn {
     background-color: #003469;
     color: white;

@@ -13,14 +13,15 @@
     <div id="postedComments">
         <h2>Conversations</h2>
         {% for comment in existingComments %}
-            <div class="existingComment" id="comment{{ comment.id }}" onclick="loadConversation('{{ comment.comment }}')">{{ comment.comment }}</div>
+            <div id="comment{{ comment.id }}" class="hiddenText" data-key="{{ comment.comment.questionCategory }}">{{ comment.highlight }}</div>
+            <div class="existingComment" id="comment{{ comment.id }}" onclick="loadConversation('{{ comment.comment }}')">{{ comment.comment|truncatewords:10 }}</div>
             {% endfor %}
     </div>
          <div id="djContent">
          <div id="addFeedback"><button onclick="showCommentContainer('flex')">Add Feedback</button><button onclick="hideThis('addFeedback')">Cancel</button></div>
          <form  method="POST" enctype="multipart/form-data" id="containerForm">
              <p id="label">{{ containerForm.comment.value }}</p>
-             <div id="containerHide">{{ containerForm.comment }}{{ containerForm.baseInfo }} {{ containerForm.coordinates }}</div>
+             <div id="containerHide">{{ containerForm.comment }}{{ containerForm.baseInfo }} {{ containerForm.highlight }}{{ containerForm.coordinates }}</div>
 
             <div id="containerFormButtons">
                 <input type="submit" value="Submit" name="container">
@@ -32,7 +33,7 @@
                  <h3>{{ prompt.question }}</h3>
                  <p>{{ prompt.response | safe }}</p>
              {% endfor %}</div>
-            <div class="djLong"><p>{{ info.mainText | safe }}</p></div>
+            <div class="djLong" id="djLong"><p>{{ info.mainText | safe }}</p></div>
          </div>
 
 
@@ -103,11 +104,14 @@
         element.style.display = "flex"
     }
     document.onLoad = hide()
+    document.onLoad = addHighlights()
     let content = document.getElementById("djContent")
     //content.onclick = function () {
     //    addComment("commentContainer")
     //}
     document.onLoad = loadList({{ tree|safe }})
     document.onLoad = returnDefault({{ tree | safe }})
+    let questionTextBox = document.getElementsByName("question")
+
 </script>
 {% endblock javascript %}

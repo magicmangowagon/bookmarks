@@ -46,5 +46,5 @@ class CommentContainerForm(forms.ModelForm):
 
     class Meta:
         model = CommentContainer
-        fields = ['comment', 'baseInfo', 'coordinates']
+        fields = ['comment', 'baseInfo', 'highlight', 'coordinates']
         widgets = {'baseInfo': forms.HiddenInput(), 'coordinates': forms.HiddenInput(), }

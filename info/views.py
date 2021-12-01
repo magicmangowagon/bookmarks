@@ -24,7 +24,7 @@ class BaseInfoDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super(BaseInfoDetail, self).get_context_data(**kwargs)
         info = BaseInfo.objects.get(id=self.kwargs['pk'])
-        comps = Competency.objects.all()
+        comps = Competency.objects.all().filter(archive=False)
         category = []
         tree = []
         existingComments = CommentContainer.objects.filter(baseInfo=self.kwargs['pk'])
@@ -63,6 +63,7 @@ class BaseInfoDetail(DetailView):
         return context
 
     def post(self, request, *args, **kwargs):
+        baseInfo = BaseInfo.objects.get(pk=self.kwargs['pk'])
         if request.POST:
             if request.POST.get("qStub"):
                 newQStub = AddComment(request.POST)

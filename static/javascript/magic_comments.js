@@ -23,6 +23,7 @@ function paginateDesignJournal(num) {
 function show(elem) {
     let element = document.getElementById(elem)
     element.style.display = "Block"
+    saveText()
 }
 
 function addComment(menu) {
@@ -48,7 +49,7 @@ document.getElementById("djContent").addEventListener("mouseup", showAddButton)
 function showAddButton () {
     let x = event.clientX
     let y = event.clientY
-    console.log(x, y)
+    //console.log(x, y)
     let addFeedback = document.getElementById("addFeedback")
     let djContent = document.getElementById("djContent")
     let topMath = djContent.clientHeight - y
@@ -72,16 +73,31 @@ let yClick = 0
 
 function getCoordinates() {
     //let yClick = event.clientY
-    console.log(yClick)
+    //console.log(yClick)
     yClick = event.clientY
     //return yClick
 }
 let spanId = 0
 
+let highlightColor = {
+    'A': '#ffec65',
+    'B': 'pink',
+    'C': '#63cde8',
+    'D': '#12c064'
+}
+
+function returnHighlightColor(string) {
+    return highlightColor[string]
+}
+
+let selectedText = ""
+
 function highlightText() {
     let selection = window.getSelection();
     let range = selection.getRangeAt(0);
-    console.log(range, selection)
+    console.log(selection.toString())
+    selectedText = selection.toString()
+    saveText()
     let newNode = document.createElement("span");
     newNode.setAttribute("style", "background-color: pink;");
     newNode.id = "highlight" + spanId.toString()
@@ -165,8 +181,30 @@ function loadStubs (stubs) {
             createFeedback(v["questionText"])
             setContainerValues(v['id'])
             console.log(v['id'])
+            saveText()
         }
+
         $(divMenu.append(newBtn))
+    }
+}
+
+
+
+function addHighlights() {
+    console.log("add highlights")
+    let oldComments = document.getElementsByClassName("hiddenText")
+    let djContent = document.getElementById("djLong")
+    for (let i = 0; i < oldComments.length; i++) {
+        let regex = new RegExp($(oldComments[i]).text())
+        //console.log(regex)
+        console.log($(djContent).text().replace().match(regex), regex)
+        let category = oldComments[i].getAttribute("data-key").toString()
+        let color = returnHighlightColor(category)
+        //console.log(djContent.innerText.replace(regex,'<span class="highlight">regex</span>'))
+        //$(djContent).text().replace($(djContent).text().match($(oldComments[i]).text()), '<span class="highlight">$(oldComments[i]).text</span>')
+        //$(djContent).text().replace(regex, '<span class="highlight">regex</span>')
+        //$(djContent).text().replace($(djContent).text().match($(regex), '<span class="highlight">$(regex)</span>'))
+        djContent.innerHTML = djContent.innerHTML.replace(regex, '<span style="background-color: ' + color + '">' +  regex + '</span>')
     }
 }
 
@@ -334,4 +372,11 @@ function setContainerValues(id) {
     form.value = id
     let displayPar = document.getElementById("label")
     displayPar.innerText = form.options[form.selectedIndex].text
+}
+
+function saveText() {
+    let form = document.getElementById("id_highlight")
+    form.value = selectedText
+    //let displayPar = document.getElementById("label")
+    //displayPar.innerText = form.options[form.selectedIndex].text
 }
