@@ -8,7 +8,9 @@
 
 {% block content %}
 <h1>{{ info.title }}</h1>
+    <div id="addFeedback"><button onclick="showCommentContainer('flex')">Add Feedback</button><button onclick="hideThis('addFeedback')">Cancel</button></div>
 <h3>{{ info.category.first.infoClass }} - {{ info.occurrenceDate.date }}</h3>
+
     <div id="designJournalContainer">
     <div id="postedComments">
         <h2>Conversations</h2>
@@ -18,7 +20,7 @@
             {% endfor %}
     </div>
          <div id="djContent">
-         <div id="addFeedback"><button onclick="showCommentContainer('flex')">Add Feedback</button><button onclick="hideThis('addFeedback')">Cancel</button></div>
+
          <form  method="POST" enctype="multipart/form-data" id="containerForm">
              <p id="label">{{ containerForm.comment.value }}</p>
              <div id="containerHide">{{ containerForm.comment }}{{ containerForm.baseInfo }} {{ containerForm.highlight }}{{ containerForm.coordinates }}</div>
