@@ -10,7 +10,7 @@ django-tinymce==2.8.0
 gunicorn==19.9.0
 Markdown==3.0.1
 Pillow==5.4.1
-pipenv==2018.11.26
+pipenv==2022.1.8
 psycopg2==2.7.7
 pytz==2018.9
 virtualenv==16.4.3
