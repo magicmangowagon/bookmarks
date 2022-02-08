@@ -35,10 +35,11 @@ class ChallengeStatusForm(forms.ModelForm):
         fields = ['challengeAccepted', 'user', 'challenge']
 
 
-class SolutionStatusForm(forms.ModelForm):
+class SolutionStatusForm(BaseModelFormSet):
     class Meta:
         model = SolutionStatus
         fields = ['solutionRejected', 'returnTo', 'solutionCompleted']
+        widgets = {'solutionRejected': forms.HiddenInput, 'solutionCompleted': forms.HiddenInput}
 
 
 class UserWorkToView(forms.Form):
@@ -68,6 +69,7 @@ class StudioExpoChoiceForm(forms.ModelForm):
 
 ChallengeStatusFormset = modelformset_factory(ChallengeStatus, extra=0, fields=('user', 'challenge', 'challengeAccepted'))
 
+solutionStatusFormset = modelformset_factory(SolutionStatus, extra=0, formset=SolutionStatusForm, fields=('returnTo',))
 
 SolutionRouterFormset = modelformset_factory(SolutionRouter, extra=0, formset=SolutionRouterForm,
                                              fields=('coach', 'challenge', 'solutionInstance', 'automate', 'routerChoices'),

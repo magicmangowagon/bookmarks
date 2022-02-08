@@ -8,11 +8,11 @@ from .models import SolutionRouter, AssignmentKeeper, ChallengeStatus, SolutionS
 from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.edit import FormMixin, UpdateView
 from .forms import SolutionRouterForm, AssignmentKeeperForm, SolutionRouterFormset, SolutionRouterFormB, \
-    NewSolutionFormset, UserWorkToView, AllUsersForm
+    NewSolutionFormset, UserWorkToView, AllUsersForm, solutionStatusFormset, SolutionStatusForm
 from django.forms import BaseModelFormSet, modelformset_factory
 from django import forms
 from django.http import HttpResponseRedirect
-from .functions import submissionAlert, evaluatorAssigned, processCompetency, processCompetencyD3
+from .functions import submissionAlert, evaluatorAssigned, processCompetency, processCompetencyD3, htmlMessage
 from django_tables2 import SingleTableView, LazyPaginator, SingleTableMixin
 from .tables import SolutionTable, ChallengeTable
 from django_filters.views import FilterView
@@ -72,6 +72,11 @@ class NewSolutionDispatch(FormView):
 
         newSubmissions = UserSolution.objects.filter(evaluated__isnull=True).filter(assignmentkeeper__coach__isnull=True).filter(
             coachReview__isnull=True).filter(userOwner__is_active=True).distinct()
+        revisedSolutions = UserSolution.objects.filter(solutionstatus__solutionRejected=True).filter(
+            solutionstatus__solutionCompleted=False)#.filter(solutionstatus__returnTo__isnull=True)
+        print(revisedSolutions)
+        RevisedSubmissionFormset = modelformset_factory(SolutionStatus, extra=0, formset=SolutionStatusForm, fields=('returnTo', ))
+        revisedSubmissionFormset = RevisedSubmissionFormset(prefix='revisedSolutions', queryset=SolutionStatus.objects.filter(userSolution__in=revisedSolutions))
         solutionInstances = SolutionInstance.objects.filter(usersolution__in=newSubmissions).order_by('usersolution__challengeName__challengeGroupChoices')
         NewSubmissionFormset = modelformset_factory(AssignmentKeeper, extra=0,
                                                     formset=AssignmentKeeperForm,
@@ -81,6 +86,7 @@ class NewSolutionDispatch(FormView):
                                                         userSolution__in=newSubmissions).order_by('userSolution__solutionInstance'))
 
         context['newSubmissionsFormset'] = newSubmissionFormset
+        context['revisedSolutions'] = revisedSubmissionFormset
         context['solutionInstances'] = solutionInstances
         return context
 
@@ -89,10 +95,18 @@ class NewSolutionDispatch(FormView):
         newSubmissions = UserSolution.objects.filter(evaluated__isnull=True).filter(
             assignmentkeeper__coach__isnull=True).filter(
             coachReview__isnull=True).filter(userOwner__is_active=True).distinct()
+        revisedSolutionFormset = solutionStatusFormset(request.POST, prefix='revisedSolutions')
         # solutionInstances = SolutionRouter.objects.filter(usersolution__in=newSubmissions).order_by('usersolution__challengeName__challengeGroupChoices')
         asd = AssignmentKeeper.objects.filter(userSolution__in=newSubmissions).exclude(evaluator__isnull=True)
-        if newSolutionFormset.is_valid():
+        if newSolutionFormset.is_valid() and revisedSolutionFormset.is_valid():
             newSolutionFormset.save()
+            revisedSolutionFormset.save()
+            for form in revisedSolutionFormset:
+                f = form.instance
+                if f.returnTo:
+                    userSolution = UserSolution.objects.get(pk=f.userSolution.pk)
+                    print(userSolution)
+                    htmlMessage(userSolution, 'revisionRequested')
             for form in newSolutionFormset:
                 f = form.instance
                 if f.evaluator:
@@ -102,7 +116,7 @@ class NewSolutionDispatch(FormView):
             return self.form_valid(newSolutionFormset)
         else:
             print(newSolutionFormset.errors)
-            return render(request, 'centralDispatch/newSolutionDispatch.html', {"newSubmissionFormset": newSolutionFormset})
+            return render(request, 'centralDispatch/newSolutionDispatch.html', {"newSubmissionFormset": newSolutionFormset, "revisedSolutionFormset": revisedSolutionFormset})
 
 
 class AssignedSolutions(ListView):

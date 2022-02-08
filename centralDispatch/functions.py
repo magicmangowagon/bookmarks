@@ -139,6 +139,11 @@ def process_rubricLine(rubricLines):
         solutionStatus.solutionCompleted = True
         solutionStatus.save()
         print('returning rubricLines')
+    else:
+        solutionStatus = SolutionStatus.objects.get(userSolution=rubricLines[0].student)
+        solutionStatus.solutionRejected = True
+        solutionStatus.save()
+        print('rejecting solution')
     # return rubricLines
 
 

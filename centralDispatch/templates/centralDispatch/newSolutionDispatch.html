@@ -8,10 +8,23 @@
 
         <div class="centralDispatch">
         <form action=""  method="post" enctype="multipart/form-data">
-            {{ newSubmissionsFormset.management_form }}
+
+            {{ revisedSolutions.management_form }}
             <input type="submit">
             <div class="flexList">
+            <h2>Revisions</h2>
+                {% for revisionForm in revisedSolutions %}
+                {% ifchanged revisionForm.instance.userSolution.solutionInstance%}<h3>{{ revisionForm.instance.userSolution.solutionInstance.name }}</h3>{% endifchanged %}
 
+                   <div class="flexListMember">
+                            <div class="flexListSubMember"><label class="flexListSubMember">{{ revisionForm.instance.userSolution.userOwner }}</label> </div>
+                            <div class="flexListSubMember"><label class="flexListSubMember">{{ revisionForm.returnTo.label }}</label>: {{ revisionForm.returnTo }}</div>
+
+                        </div>
+                    {{ revisionForm.id }}
+                {% endfor %}
+            <h2>New Submissions</h2>
+            {{ newSubmissionsFormset.management_form }}
                 {% for newSubmissionForm in newSubmissionsFormset %}
                     {% ifchanged newSubmissionForm.instance.userSolution.solutionInstance%}<h3>{{ newSubmissionForm.instance.userSolution.solutionInstance.name }}</h3>{% endifchanged %}
                     <div class="flexListMember">

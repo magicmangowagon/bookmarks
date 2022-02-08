@@ -206,12 +206,8 @@ if DEBUG is True:
     SITE_ID = 2
     HIJACK_ALLOW_GET_REQUESTS = True
 
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = 'smtp.gmail.com'
-    EMAIL_USE_TLS = True
-    EMAIL_PORT = 587
-    EMAIL_HOST_USER = 'noreply@wwgradschool.org'
-    EMAIL_HOST_PASSWORD = os.environ.get('GSUITE')
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 else:
     STATIC_URL = 'https://' + AWS_S3_CUSTOM_DOMAIN + AWS_LOCATION + '/'

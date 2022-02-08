@@ -49,6 +49,7 @@
     display: none;
     background-color: #f5f6f6;
     padding: 10pt;
+    border: solid 2pt #2f3a42;
 }
 
 #responseForm {
