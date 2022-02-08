@@ -73,7 +73,7 @@ class NewSolutionDispatch(FormView):
         newSubmissions = UserSolution.objects.filter(evaluated__isnull=True).filter(assignmentkeeper__coach__isnull=True).filter(
             coachReview__isnull=True).filter(userOwner__is_active=True).distinct()
         revisedSolutions = UserSolution.objects.filter(solutionstatus__solutionRejected=True).filter(
-            solutionstatus__solutionCompleted=False)#.filter(solutionstatus__returnTo__isnull=True)
+            solutionstatus__solutionCompleted=False).filter(solutionstatus__returnTo__isnull=True)
         print(revisedSolutions)
         RevisedSubmissionFormset = modelformset_factory(SolutionStatus, extra=0, formset=SolutionStatusForm, fields=('returnTo', ))
         revisedSubmissionFormset = RevisedSubmissionFormset(prefix='revisedSolutions', queryset=SolutionStatus.objects.filter(userSolution__in=revisedSolutions))
