@@ -24,7 +24,7 @@ def submissionAlert(challenge, tc):
 
 
 def htmlMessage(userSolution, htmlName):
-    print(userSolution)
+    # print(userSolution)
     if EmailMessage.objects.filter(name=htmlName).exists():
         users = User.objects.all().filter(profile__role=4)
         email_recipients = []
@@ -37,14 +37,15 @@ def htmlMessage(userSolution, htmlName):
         msg_html = render_to_string('centralDispatch/mail_template.html', {'content': msg.body,
                                                                            'creator': userSolution.userOwner.first_name,
                                                                            'challenge': userSolution.solutionInstance.name,
-                                                                           'event': htmlName,
+                                                                           'event': msg.event,
                                                                            'link': str(current_site.domain) + '/' +
                                                                                    msg.event.urlPath + '/'
                                                                                    + str(userSolution.id)})
         send_mail('The Orchard: ' + htmlName, userSolution.userOwner.first_name
                   + userSolution.solutionInstance.name,
                   'noreply@wwgradschool.org', email_recipients, html_message=msg_html, fail_silently=False)
-        print('htmlMessage')
+        # print('htmlMessage')
+        print(htmlName + ' testing')
     else:
         submissionAlert(userSolution.challengeName, userSolution.userOwner)
 
