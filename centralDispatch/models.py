@@ -83,7 +83,7 @@ class SolutionStatus(models.Model):
     solutionCompleted = models.BooleanField(default=False, verbose_name='Completed')
     userSolution = models.ForeignKey(UserSolution, null=True, default='', on_delete=models.CASCADE)
     solutionInstance = models.ForeignKey(SolutionInstance, default='', on_delete=models.PROTECT, null=True)
-    returnTo = models.ForeignKey(User, null=True, default='', on_delete=models.CASCADE, limit_choices_to=models.Q(profile__role__gte=2))
+    returnTo = models.ForeignKey(User, null=True, default='', blank=True, on_delete=models.CASCADE, limit_choices_to=models.Q(profile__role__gte=2))
 
     def __str__(self):
         if self.solutionInstance:

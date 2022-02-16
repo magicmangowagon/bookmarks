@@ -11,6 +11,11 @@ from django.db.models.signals import post_save
 from django.core.serializers import json, serialize
 
 
+class BaseModel(models.Model):
+    creator = models.ForeignKey(User, default='', null=False, on_delete=models.CASCADE)
+    dateCreated = models.DateTimeField(auto_now=True)
+
+
 # Categories for posts
 class InfoCategory(models.Model):
     infoClass = models.CharField(max_length=600)
@@ -192,3 +197,37 @@ class DjPrompt(DesignJournalContent):
 
 class DjResponse(DjPage):
     prompt = models.ForeignKey(DjPrompt, default='', blank=False, on_delete=models.CASCADE)
+
+
+class LearningModulePrompt(BaseModel):
+    promptText = models.TextField(default='', blank=False)
+
+    def __str__(self):
+        return self.promptText
+
+
+class LearningModuleResponse(BaseModel):
+    question = models.ForeignKey(LearningModulePrompt, default='', null=False, on_delete=models.CASCADE)
+    response = RichTextUploadingField(default='')
+
+
+class LearningModulePage(BaseModel):
+    content = RichTextUploadingField(default='')
+    pageNumber = models.IntegerField(default=0)
+    prompt = models.ManyToManyField(LearningModulePrompt, blank=True)
+
+    def get_absolute_url(self):
+        return reverse('learning-module', args=str[self.id])
+
+
+class LearningModule(BaseModel):
+    name = models.CharField(default='', blank=False, max_length=1000)
+    pages = models.ManyToManyField(LearningModulePage, blank=True)
+
+
+class Message(BaseModel):
+    pageLocation = models.ForeignKey(LearningModulePage, null=True, default='', on_delete=models.CASCADE)
+    messageText = models.TextField(default='', blank=True)
+    recipient = models.ForeignKey(User, default='', blank=True, on_delete=models.CASCADE)
+
+

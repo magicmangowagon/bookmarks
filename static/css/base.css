@@ -10,6 +10,52 @@
     font-display: swap;
 }
 
+.pageSidebar {
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+}
+
+.learningModulePromptsContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.learningModuleContentContainer {
+    display: block;
+    width: 75%;
+}
+
+.singlePrompt {
+    display: block;
+}
+
+.lmSidebar {
+    overflow: visible;
+    display: block;
+}
+
+.LMcomment {
+    border: solid 1pt gray;
+    border-radius: 12pt;
+    margin: 1pt 0;
+    padding: 2pt;
+}
+
+.singlePrompt label {
+    float: none;
+}
+
+.djPage {
+    width: 83%;
+}
+
+#learningModuleContainer {
+    width: 100%;
+    margin: auto;
+    padding: 0;
+}
+
 #djPageEditor {
     display: none;
     width: 100%;

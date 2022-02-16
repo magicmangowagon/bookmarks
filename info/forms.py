@@ -1,7 +1,24 @@
 from django import forms
 from django.forms import modelformset_factory, BaseModelFormSet, ModelForm
 from .models import DiscussionBoard, DiscussionTopic, FakeLO, QuestionStub, CommentContainer, DesignJournal, DjPage, \
-    DjPrompt, DjResponse
+    DjPrompt, DjResponse, LearningModulePrompt, LearningModuleResponse, Message
+
+
+class LearningModuleResponseForm(BaseModelFormSet):
+    class Meta:
+        model = LearningModuleResponse
+        fields = ['creator', 'question', 'response', ]
+
+
+LMResponseFormset = modelformset_factory(LearningModuleResponse, extra=0, formset=LearningModuleResponseForm, fields=[
+    'creator', 'question', 'response'
+])
+
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ['messageText', 'pageLocation', 'recipient', 'creator']
 
 
 class AddDjResponseForm(forms.ModelForm):

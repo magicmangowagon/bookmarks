@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import BaseInfo, InfoCategory, DiscussionBoard, DiscussionTopic, QuestionStub, FakeLO, FakeCompetency, \
-    Prompts, CommentContainer, DesignJournal, DjPage, DjResponse, DjPrompt
+    Prompts, CommentContainer, DesignJournal, DjPage, DjResponse, DjPrompt, LearningModulePage, LearningModulePrompt, \
+    LearningModule, LearningModuleResponse, Message
 from rubrics.models import LearningExperience
 from adminsortable2.admin import SortableInlineAdminMixin
 # Register your models here.
@@ -68,3 +69,28 @@ class DjPageAdmin(admin.ModelAdmin):
 @admin.register(DjPrompt)
 class DjPromptAdmin(admin.ModelAdmin):
     list_display = ['prompt']
+
+
+@admin.register(LearningModule)
+class LearningModuleAdmin(admin.ModelAdmin):
+    list_display = ['name']
+
+
+@admin.register(LearningModulePage)
+class LearningModulePageAdmin(admin.ModelAdmin):
+    list_display = ['content']
+
+
+@admin.register(LearningModulePrompt)
+class LearningModulePromptAdmin(admin.ModelAdmin):
+    list_display = ['promptText']
+
+
+@admin.register(LearningModuleResponse)
+class LearningModuleResponseAdmin(admin.ModelAdmin):
+    list_display = ['response']
+
+
+@admin.register(Message)
+class MessageAdmin(admin.ModelAdmin):
+    list_display = ['messageText', 'recipient']
