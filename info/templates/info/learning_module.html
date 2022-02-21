@@ -11,8 +11,8 @@
     <div class="learningObjectivesList">
     <ul class="challengeListObj">
         {% for learningObjective in learningObjectives %}
-        <li class="challengeListObj" id="{{ learningObjective.id }}">{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}.
-                                {{ learningObjective.loNumber }}</li>
+        <li class="challengeListObj" id="{{ learningObjective.id }}">{{ learningObjective.name }}-{{ learningObjective.number }}
+                                </li>
         {% endfor %}
     </ul>
     </div>
@@ -35,7 +35,7 @@
 
                 <div class="learningModulePromptsContainer">
                     {% for prompt in section.prompts.all %}
-                        <div class="singlePrompt">{{ prompt.promptText }}</div>
+                        <div class="singlePrompt">{{ prompt.promptText | safe }}</div>
                     {% endfor %}
                  </div>
             <hr>

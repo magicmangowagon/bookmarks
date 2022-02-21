@@ -2,7 +2,7 @@ from django.contrib import admin
 from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 from .models import BaseInfo, InfoCategory, DiscussionBoard, DiscussionTopic, QuestionStub, FakeLO, FakeCompetency, \
     Prompts, CommentContainer, DesignJournal, DjPage, DjResponse, DjPrompt, LearningModulePage, LearningModulePrompt, \
-    LearningModule, LearningModuleResponse, Message, LearningModulePageSection, PageOrderThrough
+    LearningModule, LearningModuleResponse, Message, LearningModulePageSection, PageOrderThrough, NewLearningObjective
 from rubrics.models import LearningExperience
 from adminsortable2.admin import SortableInlineAdminMixin
 # Register your models here.
@@ -12,6 +12,12 @@ class PageSectionInline(SortableInlineAdminMixin, admin.TabularInline):
     model = LearningModulePage.content.through
     exclude = ['learningObjectives', 'content']
     extra = 0
+
+
+@admin.register(NewLearningObjective)
+class NewLearningObjectiveAdmin(admin.ModelAdmin):
+    model = NewLearningObjective
+    filter_horizontal = ['criteria']
 
 
 @admin.register(InfoCategory)
@@ -88,9 +94,6 @@ class LearningModuleAdmin(admin.ModelAdmin):
 class LearningModulePageAdmin(admin.ModelAdmin):
     list_display = ['name', 'pageNumber']
     filter_horizontal = ['content']
-    inlines = [
-        PageSectionInline,
-    ]
 
 
 @admin.register(LearningModulePageSection)

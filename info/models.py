@@ -4,7 +4,7 @@ from djrichtextfield.models import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
 from taggit.managers import TaggableManager
 from datetime import datetime
-from rubrics.models import Challenge, LearningExperience, Evaluated, LearningObjective
+from rubrics.models import Challenge, LearningExperience, Evaluated, LearningObjective, Criterion
 from django.urls import reverse
 from django.dispatch import receiver
 from django.db.models.signals import post_save
@@ -200,7 +200,7 @@ class DjResponse(DjPage):
 
 
 class LearningModulePrompt(BaseModel):
-    promptText = models.TextField(default='', blank=False)
+    promptText = RichTextUploadingField(default='')
 
     def __str__(self):
         return self.promptText
@@ -211,16 +211,41 @@ class LearningModuleResponse(BaseModel):
     response = RichTextUploadingField(default='')
 
 
+class NewLearningObjective(models.Model):
+    name = models.TextField(default='', blank=False)
+    number = models.PositiveIntegerField(default=0)
+    criteria = models.ManyToManyField(Criterion, default='', blank=True)
+
+
 class LearningModulePageSection(models.Model):
     sectionContent = RichTextUploadingField(default='')
     prompts = models.ManyToManyField(LearningModulePrompt, blank=True)
-    learningObjectives = models.ManyToManyField(LearningObjective, blank=True, default='')
+    name = models.TextField(default='', blank=True)
+    learningObjectives = models.ManyToManyField(NewLearningObjective, blank=True, default='')
+    category = models.IntegerField(choices=(
+                                           (1, "Standard"),
+                                           (2, "Attributed"),
+                                           (3, "Student Work")), default=1)
+    attribution = models.TextField(default='', blank=True)
+    order = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        if self.name:
+            return self.name
+        else:
+            return self.sectionContent
+
+    class Meta:
+        ordering = ()
 
 
 class LearningModulePage(BaseModel):
-    content = models.ManyToManyField(LearningModulePageSection, through='PageOrderThrough')
+    content = models.ManyToManyField(LearningModulePageSection)
     pageNumber = models.IntegerField(default=0)
     name = models.TextField(blank=True, default='')
+
+    def __str__(self):
+        return self.name
 
 
 class PageOrderThrough(models.Model):
