@@ -1,10 +1,17 @@
 from django.contrib import admin
+from adminsortable2.admin import SortableAdminMixin, SortableInlineAdminMixin
 from .models import BaseInfo, InfoCategory, DiscussionBoard, DiscussionTopic, QuestionStub, FakeLO, FakeCompetency, \
     Prompts, CommentContainer, DesignJournal, DjPage, DjResponse, DjPrompt, LearningModulePage, LearningModulePrompt, \
-    LearningModule, LearningModuleResponse, Message
+    LearningModule, LearningModuleResponse, Message, LearningModulePageSection, PageOrderThrough
 from rubrics.models import LearningExperience
 from adminsortable2.admin import SortableInlineAdminMixin
 # Register your models here.
+
+
+class PageSectionInline(SortableInlineAdminMixin, admin.TabularInline):
+    model = LearningModulePage.content.through
+    exclude = ['learningObjectives', 'content']
+    extra = 0
 
 
 @admin.register(InfoCategory)
@@ -74,11 +81,22 @@ class DjPromptAdmin(admin.ModelAdmin):
 @admin.register(LearningModule)
 class LearningModuleAdmin(admin.ModelAdmin):
     list_display = ['name']
+    filter_horizontal = ['pages']
 
 
 @admin.register(LearningModulePage)
 class LearningModulePageAdmin(admin.ModelAdmin):
-    list_display = ['content']
+    list_display = ['name', 'pageNumber']
+    filter_horizontal = ['content']
+    inlines = [
+        PageSectionInline,
+    ]
+
+
+@admin.register(LearningModulePageSection)
+class LearningModulePageSectionAdmin(admin.ModelAdmin):
+    list_display = ['sectionContent']
+    filter_horizontal = ['learningObjectives', 'prompts']
 
 
 @admin.register(LearningModulePrompt)

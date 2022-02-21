@@ -211,13 +211,25 @@ class LearningModuleResponse(BaseModel):
     response = RichTextUploadingField(default='')
 
 
-class LearningModulePage(BaseModel):
-    content = RichTextUploadingField(default='')
-    pageNumber = models.IntegerField(default=0)
-    prompt = models.ManyToManyField(LearningModulePrompt, blank=True)
+class LearningModulePageSection(models.Model):
+    sectionContent = RichTextUploadingField(default='')
+    prompts = models.ManyToManyField(LearningModulePrompt, blank=True)
+    learningObjectives = models.ManyToManyField(LearningObjective, blank=True, default='')
 
-    def get_absolute_url(self):
-        return reverse('learning-module', args=str[self.id])
+
+class LearningModulePage(BaseModel):
+    content = models.ManyToManyField(LearningModulePageSection, through='PageOrderThrough')
+    pageNumber = models.IntegerField(default=0)
+    name = models.TextField(blank=True, default='')
+
+
+class PageOrderThrough(models.Model):
+    page = models.ForeignKey(LearningModulePage, null=True, default='', on_delete=models.CASCADE)
+    sections = models.ForeignKey(LearningModulePageSection, null=True, default='', on_delete=models.CASCADE)
+    order = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ('order', )
 
 
 class LearningModule(BaseModel):

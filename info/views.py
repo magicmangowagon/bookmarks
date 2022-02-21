@@ -5,7 +5,7 @@ from django import forms
 from django.core.paginator import Paginator
 from .models import BaseInfo, DiscussionBoard, DiscussionTopic, FakeLO, QuestionStub, FakeCompetency, CommentContainer,\
     DesignJournal, DjPage, DjResponse, DjPrompt, DesignJournalContent, LearningModule, LearningModulePage, \
-    LearningModulePrompt, LearningModuleResponse, Message
+    LearningModulePrompt, LearningModuleResponse, Message, LearningModulePageSection
 from centralDispatch.models import StudioExpoChoice
 from centralDispatch.forms import StudioExpoChoiceForm
 from rubrics.models import Competency, LearningObjective
@@ -34,19 +34,21 @@ class LearningModuleView(DetailView):
         context = super(LearningModuleView, self).get_context_data()
         currentPage = LearningModulePage.objects.get(pk=self.kwargs['pk'])
         learningModule = currentPage.learningmodule_set.first()
-
+        learningObjectives = []
+        for section in currentPage.content.all():
+            for lo in section.learningObjectives.all():
+                learningObjectives.append(lo)
         pages = learningModule.pages.all().order_by('pageNumber')
         conversations = Message.objects.filter(pageLocation__in=pages)
         context['conversations'] = conversations
-        questions = currentPage.prompt.all()
-        LMResponseFormset = modelformset_factory(LearningModuleResponse, extra=len(questions), formset=LearningModuleResponseForm,
-                                                 fields=['creator', 'question', 'response'], widgets={'creator': forms.HiddenInput})
-        responseForm = LMResponseFormset(prefix='responseForm', initial=[{'question': question, 'creator': self.request.user} for question in questions],
-                                         queryset=LearningModuleResponse.objects.none())
-        context['responseForm'] = responseForm
+        # questions = currentPage.content.all().prompts.all()
+        # LMResponseFormset = modelformset_factory(LearningModuleResponse, extra=len(questions), formset=LearningModuleResponseForm, fields=['creator', 'question', 'response'], widgets={'creator': forms.HiddenInput})
+        # responseForm = LMResponseFormset(prefix='responseForm', initial=[{'question': question, 'creator': self.request.user} for question in questions], queryset=LearningModuleResponse.objects.none())
+        # context['responseForm'] = responseForm
         messageCoach = MessageForm(initial={'creator': self.request.user, 'recipient': self.request.user})
         context['messageCoach'] = messageCoach
-        context['pages'] = pages
+        context['learningObjectives'] = learningObjectives
+        context['page'] = currentPage
         context['learningModule'] = learningModule
         return context
 

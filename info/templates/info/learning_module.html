@@ -8,63 +8,68 @@
 
 {% block content %}
 <h1>{{ learningModule.name }}</h1>
+    <div class="learningObjectivesList">
+    <ul class="challengeListObj">
+        {% for learningObjective in learningObjectives %}
+        <li class="challengeListObj" id="{{ learningObjective.id }}">{{ learningObjective.compGroup }}-{{ learningObjective.compNumber }}.
+                                {{ learningObjective.loNumber }}</li>
+        {% endfor %}
+    </ul>
+    </div>
+
     <div id="designJournalContainer">
 
 
-    {% for page in pages %}
-        <div class="djPage" id="djPage-{{ page.id }}">
+        <div class="djPage" id="djPage-{{ section.id }}">
+        {% for section in page.content.all %}
 
-            <div>{{ page.content | safe }}</div>
+
+            <div class="pageSection">
+                <div>{{ section.sectionContent | safe }}</div>
+            </div>
+
+
+
+
+
+
+                <div class="learningModulePromptsContainer">
+                    {% for prompt in section.prompts.all %}
+                        <div class="singlePrompt">{{ prompt.promptText }}</div>
+                    {% endfor %}
+                 </div>
             <hr>
 
 
 
-    <form>
-        <div class="learningModulePromptsContainer">
-        {{ responseForm.management_form }}
-
-        {% for form in responseForm %}
-            <div class="singlePrompt">
-            <h4>{{ form.question.initial | safe }}</h4>
-            {{ form.response }}
-            {{ form.id }}
-            </div>
-            {% endfor %}
-
-        {% csrf_token %}
-
-         </div>
-    <input type="submit" value="Submit">
-    </form>
-
-
-
-        <a rel="next" href="{{ pages.get_next_by_pageNumber }}">Next</a>
-        <button onclick="previous()" class="submitBtn">Back</button>
-            <button onclick="{{ pages.next }}" class="submitBtn">Next</button>
-        </div>
-    {% endfor %}
-
-
-
-
-    <div class="pageSidebar">
-        <button onclick="show(lmsidebar)">Message Coach</button>
-        <button>Message Faculty</button>
-        <form method="POST" enctype="multipart/form-data" class="lmSidebar" id="lmSidebar">
-            {{ messageCoach }}
-            <input type="submit" value="Submit" id="msgForm" name="msgForm">
-            {% csrf_token %}
-        </form>
-        <hr>
-        {% for comment in conversations %}
-            <div class="LMcomment">
-            {{ comment.creator }}
-            {{ comment.dateCreated }}
-            <p>{{ comment.messageText }}</p>
-            </div>
         {% endfor %}
-    </div>
+
+            <a rel="next" href="{{ pages.get_next_by_pageNumber }}">Next</a>
+            <button onclick="previous()" class="submitBtn">Back</button>
+                <button onclick="{{ pages.next }}" class="submitBtn">Next</button>
+        </div>
+
+
+
+
+
+        <div class="pageSidebar">
+            <button onclick="show(lmsidebar)">Message Coach</button>
+            <button>Message Faculty</button>
+            <form method="POST" enctype="multipart/form-data" class="lmSidebar" id="lmSidebar">
+                {{ messageCoach }}
+                <input type="submit" value="Submit" id="msgForm" name="msgForm">
+                {% csrf_token %}
+            </form>
+            <hr>
+            {% for comment in conversations %}
+                <div class="LMcomment">
+                {{ comment.creator }}
+                {{ comment.dateCreated }}
+                <p>{{ comment.messageText }}</p>
+                </div>
+            {% endfor %}
+        </div>
 </div>
 
 
@@ -76,7 +81,7 @@
     <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
 <script src="{% static "javascript/magic_comments.js" %}"></script>
 <script type="text/javascript" >
-    document.onLoad = paginateDesignJournal(0)
+
     let index = 0
     let lmsidebar = document.getElementById("lmSidebar")
     function hide() {

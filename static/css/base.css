@@ -21,6 +21,12 @@
     flex-direction: row;
 }
 
+.singlePrompt {
+    margin: 2pt;
+    padding: 2pt;
+    width: 30%;
+}
+
 .learningModuleContentContainer {
     display: block;
     width: 75%;
