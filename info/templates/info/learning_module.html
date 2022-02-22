@@ -23,10 +23,17 @@
         <div class="djPage" id="djPage-{{ section.id }}">
         {% for section in page.content.all %}
 
-
-            <div class="pageSection">
+            {% if section.category is 2 %}
+                <div class="attributedContent">
+                    <div>{{ section.sectionContent | safe }}</div>
+                    <div class="attributedTo">{{ section.attribution }}</div>
+                </div>
+            {% else %}
+                <div class="pageSection">
                 <div>{{ section.sectionContent | safe }}</div>
             </div>
+            {% endif %}
+
 
 
 

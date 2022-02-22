@@ -16,6 +16,31 @@
     width: 15%;
 }
 
+.attributedContent {
+    border: 10pt solid #00a497;
+    padding: 10pt;
+}
+
+.attributedTo {
+    background-color: #00a497;
+    font-size: 125%;
+    color: #FFFFFF;
+}
+
+.attributedContent:before {
+    content: "''";
+    font-size: 36pt;
+    color: #00a497;
+    font-weight: 800;
+}
+
+.attributedContent:after {
+    content: "''";
+    font-size: 36pt;
+    color: #00a497;
+    font-weight: 800;
+}
+
 .learningModulePromptsContainer {
     display: flex;
     flex-direction: row;

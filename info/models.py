@@ -214,7 +214,11 @@ class LearningModuleResponse(BaseModel):
 class NewLearningObjective(models.Model):
     name = models.TextField(default='', blank=False)
     number = models.PositiveIntegerField(default=0)
+    description = models.TextField(default='')
     criteria = models.ManyToManyField(Criterion, default='', blank=True)
+
+    def __str__(self):
+        return self.name + ' ' + str(self.number)
 
 
 class LearningModulePageSection(models.Model):
