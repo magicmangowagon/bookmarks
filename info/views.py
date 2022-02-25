@@ -35,16 +35,29 @@ class LearningModuleView(DetailView):
         currentPage = LearningModulePage.objects.get(pk=self.kwargs['pk'])
         learningModule = currentPage.learningmodule_set.first()
         learningObjectives = []
+        prompts = []
         for section in currentPage.content.all():
             for lo in section.learningObjectives.all():
                 learningObjectives.append(lo)
+            for prompt in section.prompts.all():
+                prompts.append(prompt)
         pages = learningModule.pages.all().order_by('pageNumber')
         conversations = Message.objects.filter(pageLocation__in=pages)
         context['conversations'] = conversations
         # questions = currentPage.content.all().prompts.all()
-        # LMResponseFormset = modelformset_factory(LearningModuleResponse, extra=len(questions), formset=LearningModuleResponseForm, fields=['creator', 'question', 'response'], widgets={'creator': forms.HiddenInput})
-        # responseForm = LMResponseFormset(prefix='responseForm', initial=[{'question': question, 'creator': self.request.user} for question in questions], queryset=LearningModuleResponse.objects.none())
-        # context['responseForm'] = responseForm
+        if LearningModuleResponse.objects.filter(question__learningmodulepagesection__in=currentPage.content.all(), creator=self.request.user):
+            currentResponses = LearningModuleResponse.objects.filter(question__learningmodulepagesection__in=currentPage.content.all(), creator=self.request.user)
+            LMResponseFormset = modelformset_factory(LearningModuleResponse, extra=0, formset=
+                LearningModuleResponseForm, fields=['creator', 'question', 'response'], widgets={'creator': forms.HiddenInput, 'question': forms.HiddenInput})
+            responseForm = LMResponseFormset(prefix='responseForm', queryset=currentResponses)
+        else:
+            LMResponseFormset = modelformset_factory(LearningModuleResponse, extra=len(prompts), formset=
+                        LearningModuleResponseForm, fields=['creator', 'question', 'response'], widgets={'creator': forms.HiddenInput, 'question': forms.HiddenInput})
+            responseForm = LMResponseFormset(prefix='responseForm', initial=
+                        [{'question': prompt, 'creator': self.request.user} for prompt in prompts],
+                                             queryset=LearningModuleResponse.objects.none())
+        context['responseForm'] = responseForm
+        # context['responseForms'] = promptForms
         messageCoach = MessageForm(initial={'creator': self.request.user, 'recipient': self.request.user})
         context['messageCoach'] = messageCoach
         context['learningObjectives'] = learningObjectives
@@ -63,9 +76,10 @@ class LearningModuleView(DetailView):
                     # LearningModule.objects.get(pk=self.kwargs['pk'])
                     return redirect('learning-module', pk=self.kwargs.get('pk'))
             if request.POST.get("promptResponse"):
-                promptResponse = LearningModuleResponseForm(request.POST)
-
+                promptResponse = LMResponseFormset(request.POST, prefix='responseForm')
+                print('trying to save prompt formset')
                 if promptResponse.is_valid():
+                    print('form valid')
                     promptResponse.save()
 
                     return redirect('learning-module', pk=self.kwargs.get('pk'))

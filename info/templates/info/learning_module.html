@@ -21,6 +21,10 @@
 
 
         <div class="djPage" id="djPage-{{ section.id }}">
+            <form id="promptResponse" enctype="multipart/form-data" method="POST">
+                {{ responseForm.management_form }}
+
+
         {% for section in page.content.all %}
 
             {% if section.category is 2 %}
@@ -42,7 +46,17 @@
 
                 <div class="learningModulePromptsContainer">
                     {% for prompt in section.prompts.all %}
-                        <div class="singlePrompt">{{ prompt.promptText | safe }}</div>
+                        <div class="singlePrompt">{{ prompt.promptText | safe }}
+                        {% for form in responseForm %}
+                            {% if form.question.value == prompt.id %}
+                                {{ form.id }}
+                                {{ form.creator }}
+                                {{ form.question }}
+                                {{ form.response }}
+                                <input type="submit" value="OK" name="promptResponse">
+                            {% endif %}
+                        {% endfor %}
+                        </div>
                     {% endfor %}
                  </div>
             <hr>
@@ -50,7 +64,8 @@
 
 
         {% endfor %}
-
+            {% csrf_token %}
+        </form>
             <a rel="next" href="{{ pages.get_next_by_pageNumber }}">Next</a>
             <button onclick="previous()" class="submitBtn">Back</button>
                 <button onclick="{{ pages.next }}" class="submitBtn">Next</button>

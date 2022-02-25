@@ -208,7 +208,7 @@ class LearningModulePrompt(BaseModel):
 
 class LearningModuleResponse(BaseModel):
     question = models.ForeignKey(LearningModulePrompt, default='', null=False, on_delete=models.CASCADE)
-    response = RichTextUploadingField(default='')
+    response = RichTextUploadingField(default='', blank=True)
 
 
 class NewLearningObjective(models.Model):
