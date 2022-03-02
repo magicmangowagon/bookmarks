@@ -221,8 +221,13 @@ class NewLearningObjective(models.Model):
         return self.name + ' ' + str(self.number)
 
 
+class LearningModulePromptInstructions(models.Model):
+    instructions = RichTextUploadingField(default='', blank=True)
+
+
 class LearningModulePageSection(models.Model):
     sectionContent = RichTextUploadingField(default='')
+    promptInstructions = models.ManyToManyField(LearningModulePromptInstructions, blank=True)
     prompts = models.ManyToManyField(LearningModulePrompt, blank=True)
     name = models.TextField(default='', blank=True)
     learningObjectives = models.ManyToManyField(NewLearningObjective, blank=True, default='')

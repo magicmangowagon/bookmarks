@@ -37,7 +37,7 @@ class LearningModuleView(DetailView):
         learningObjectives = []
         prompts = []
         for section in currentPage.content.all():
-            for lo in section.learningObjectives.all():
+            for lo in section.learningObjectives.all().order_by('name', 'number'):
                 learningObjectives.append(lo)
             for prompt in section.prompts.all():
                 prompts.append(prompt)
@@ -45,21 +45,20 @@ class LearningModuleView(DetailView):
         conversations = Message.objects.filter(pageLocation__in=pages)
         context['conversations'] = conversations
         # questions = currentPage.content.all().prompts.all()
-        if LearningModuleResponse.objects.filter(question__learningmodulepagesection__in=currentPage.content.all(), creator=self.request.user):
+        if LearningModuleResponse.objects.filter(question__learningmodulepagesection__in=currentPage.content.all(), creator=self.request.user).exists():
             currentResponses = LearningModuleResponse.objects.filter(question__learningmodulepagesection__in=currentPage.content.all(), creator=self.request.user)
             LMResponseFormset = modelformset_factory(LearningModuleResponse, extra=0, formset=
                 LearningModuleResponseForm, fields=['creator', 'question', 'response'], widgets={'creator': forms.HiddenInput, 'question': forms.HiddenInput})
             responseForm = LMResponseFormset(prefix='responseForm', queryset=currentResponses)
         else:
-            LMResponseFormset = modelformset_factory(LearningModuleResponse, extra=len(prompts), formset=
-                        LearningModuleResponseForm, fields=['creator', 'question', 'response'], widgets={'creator': forms.HiddenInput, 'question': forms.HiddenInput})
-            responseForm = LMResponseFormset(prefix='responseForm', initial=
-                        [{'question': prompt, 'creator': self.request.user} for prompt in prompts],
+            LMResponseFormset = modelformset_factory(LearningModuleResponse, extra=len(prompts), formset=LearningModuleResponseForm, fields=['creator', 'question', 'response', 'basemodel_ptr'], widgets={'creator': forms.HiddenInput, 'question': forms.HiddenInput})
+            responseForm = LMResponseFormset(prefix='responseForm', initial=[{'question': prompt, 'creator': self.request.user} for prompt in prompts],
                                              queryset=LearningModuleResponse.objects.none())
         context['responseForm'] = responseForm
         # context['responseForms'] = promptForms
-        messageCoach = MessageForm(initial={'creator': self.request.user, 'recipient': self.request.user})
+        messageCoach = MessageForm(initial={'creator': self.request.user, 'recipient': self.request.user, 'pageLocation': currentPage}, prefix='msgForm')
         context['messageCoach'] = messageCoach
+        list(learningObjectives)
         context['learningObjectives'] = learningObjectives
         context['page'] = currentPage
         context['learningModule'] = learningModule
@@ -69,11 +68,14 @@ class LearningModuleView(DetailView):
         if request.POST:
             print('inside POST')
             if request.POST.get("msgForm"):
-                newMsg = MessageForm(request.POST)
+                newMsg = MessageForm(request.POST, prefix='msgForm')
                 print('inside msg form')
                 if newMsg.is_valid():
                     newMsg.save()
                     # LearningModule.objects.get(pk=self.kwargs['pk'])
+                    return redirect('learning-module', pk=self.kwargs.get('pk'))
+                else:
+                    print(newMsg.errors)
                     return redirect('learning-module', pk=self.kwargs.get('pk'))
             if request.POST.get("promptResponse"):
                 promptResponse = LMResponseFormset(request.POST, prefix='responseForm')
@@ -82,6 +84,9 @@ class LearningModuleView(DetailView):
                     print('form valid')
                     promptResponse.save()
 
+                    return redirect('learning-module', pk=self.kwargs.get('pk'))
+                else:
+                    print(promptResponse.errors)
                     return redirect('learning-module', pk=self.kwargs.get('pk'))
         else:
             return redirect('learning-module', pk=self.kwargs['pk'])

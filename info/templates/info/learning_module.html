@@ -11,8 +11,10 @@
     <div class="learningObjectivesList">
     <ul class="challengeListObj">
         {% for learningObjective in learningObjectives %}
+            {% ifchanged learningObjective.id%}
         <li class="challengeListObj" id="{{ learningObjective.id }}">{{ learningObjective.name }}-{{ learningObjective.number }}
                                 </li>
+            {% endifchanged %}
         {% endfor %}
     </ul>
     </div>
@@ -20,7 +22,7 @@
     <div id="designJournalContainer">
 
 
-        <div class="djPage" id="djPage-{{ section.id }}">
+        <div class="learningModuleSection" id="djPage-{{ section.id }}">
             <form id="promptResponse" enctype="multipart/form-data" method="POST">
                 {{ responseForm.management_form }}
 
@@ -28,6 +30,20 @@
         {% for section in page.content.all %}
 
             {% if section.category is 2 %}
+                <div class="sectionMenu">
+                    <div class="sectionMenuItem">
+                        <div class="material-icons-outlined">favorite_border</div>
+                    </div>
+                <div class="sectionMenuItem">
+                        <div class="material-icons-outlined">star_outline</div>
+                    </div>
+                <div class="sectionMenuItem">
+                    <div class="material-icons-outlined">add_card</div>
+                    </div>
+                <div class="sectionMenuItem">
+                    <div class="material-icons-outlined">share</div>
+                    </div>
+                </div>
                 <div class="attributedContent">
                     <div>{{ section.sectionContent | safe }}</div>
                     <div class="attributedTo">{{ section.attribution }}</div>
@@ -45,14 +61,21 @@
 
 
                 <div class="learningModulePromptsContainer">
+                {% if section.promptInstructions %}
+                    {% for instructions in section.promptInstructions.all %}
+                        <p>{{ instructions.instructions | safe }}</p>
+                    {% endfor %}
+                {% endif %}
                     {% for prompt in section.prompts.all %}
-                        <div class="singlePrompt">{{ prompt.promptText | safe }}
+                        <div class="singlePrompt">
+                            <p>{{ prompt.promptText | safe }}</p>
                         {% for form in responseForm %}
                             {% if form.question.value == prompt.id %}
                                 {{ form.id }}
                                 {{ form.creator }}
                                 {{ form.question }}
                                 {{ form.response }}
+                                {{ form.basemodel_ptr }}
                                 <input type="submit" value="OK" name="promptResponse">
                             {% endif %}
                         {% endfor %}
@@ -76,21 +99,30 @@
 
 
         <div class="pageSidebar">
-            <button onclick="show(lmsidebar)">Message Coach</button>
-            <button>Message Faculty</button>
-            <form method="POST" enctype="multipart/form-data" class="lmSidebar" id="lmSidebar">
-                {{ messageCoach }}
-                <input type="submit" value="Submit" id="msgForm" name="msgForm">
-                {% csrf_token %}
-            </form>
-            <hr>
-            {% for comment in conversations %}
-                <div class="LMcomment">
-                {{ comment.creator }}
-                {{ comment.dateCreated }}
-                <p>{{ comment.messageText }}</p>
-                </div>
-            {% endfor %}
+            <button onclick="show(lmsidebar)" class="material-icons">email</button>Coach
+            <button onclick="show(lmsidebar)" class="material-icons">email</button>Faculty
+            <div id="lmSidebar">
+
+                <form method="POST" enctype="multipart/form-data" class="lmSidebar" id="msgForm">
+                    {{ messageCoach.id }}
+                    {{ messageCoach.creator }}
+                    {{ messageCoach.messageText }}
+                    {{ messageCoach.pageLocation }}
+                    {{ messageCoach.recipient }}
+                    <input type="submit" value="Submit" name="msgForm">
+                    {% csrf_token %}
+                </form>
+                <hr>
+            <div class="LMcommentContainer">
+                {% for comment in conversations %}
+                    <div class="LMcomment">
+                    {{ comment.creator }}
+                    {{ comment.dateCreated }}
+                    <p>{{ comment.messageText }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            </div>
         </div>
 </div>
 

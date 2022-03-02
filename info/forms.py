@@ -19,6 +19,7 @@ class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
         fields = ['messageText', 'pageLocation', 'recipient', 'creator']
+        widgets = {'pageLocation': forms.HiddenInput, 'recipient': forms.HiddenInput, 'creator': forms.HiddenInput}
 
 
 class AddDjResponseForm(forms.ModelForm):

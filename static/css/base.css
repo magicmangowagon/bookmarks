@@ -13,7 +13,6 @@
 .pageSidebar {
     display: flex;
     flex-direction: column;
-    width: 15%;
 }
 
 .attributedContent {
@@ -41,36 +40,73 @@
     font-weight: 800;
 }
 
-.learningModulePromptsContainer {
+.sectionMenu {
     display: flex;
     flex-direction: row;
+    justify-content: flex-end;
+
+}
+
+.sectionMenuItem {
+    margin: 1pt 2pt;
+    background-color: #00a497
+}
+
+.learningModulePromptsContainer {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
 }
 
 .singlePrompt {
-    margin: 2pt;
-    padding: 2pt;
-    width: 30%;
+    margin: 10pt 2pt;
+    padding: 12pt;
+    display: flex;
+    flex-direction: column;
+    background-color: #cccccc;
+    border-radius: 4pt;
+}
+
+.singlePrompt textarea {
+    width: 96%;
+    padding: 12pt;
+    margin: 0 2pt 24pt;
+    resize: none;
+    border: none;
+    border-radius: 4pt;
+    background-color: #ebebeb;
+}
+
+.singlePrompt input {
+    width: 10%;
 }
 
 .learningModuleContentContainer {
     display: block;
-    width: 75%;
 }
 
-.singlePrompt {
-    display: block;
-}
 
 .lmSidebar {
     overflow: visible;
     display: block;
+    width: 300pt;
+}
+
+.pageSidebar button {
+    background: none;
+    border: none;
+    color: #2f3a42;
 }
 
 .LMcomment {
     border: solid 1pt gray;
-    border-radius: 12pt;
+    border-radius: 2pt;
     margin: 1pt 0;
     padding: 2pt;
+}
+
+.LMcommentContainer {
+    margin: 40pt 10pt;
 }
 
 .singlePrompt label {
