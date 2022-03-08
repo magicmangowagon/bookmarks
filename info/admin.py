@@ -98,7 +98,7 @@ class LearningModulePageAdmin(admin.ModelAdmin):
 
 @admin.register(LearningModulePageSection)
 class LearningModulePageSectionAdmin(admin.ModelAdmin):
-    list_display = ['sectionContent']
+    list_display = ['name']
     filter_horizontal = ['learningObjectives', 'prompts', 'promptInstructions']
 
 
