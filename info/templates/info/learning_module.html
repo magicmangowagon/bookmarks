@@ -7,10 +7,11 @@
 {% block title %}Woodrow Wilson Academy{% endblock %}
 
 {% block content %}
+
 <h1>{{ learningModule.name }}</h1>
     <div class="learningObjectivesList">
     <ul class="challengeListObj">
-        {% for learningObjective in learningObjectives %}
+        {% for learningObjective in page.returnLos %}
             {% ifchanged learningObjective.id%}
         <li class="challengeListObj" id="{{ learningObjective.id }}">{{ learningObjective.name }}-{{ learningObjective.number }}
                                 </li>
@@ -28,9 +29,7 @@
 
 
         {% for section in page.content.all %}
-
-            {% if section.category is 2 %}
-                <div class="sectionMenu">
+                    <div class="sectionMenu">
                     <div class="sectionMenuItem">
                         <div class="material-icons-outlined">favorite_border</div>
                     </div>
@@ -44,12 +43,20 @@
                     <div class="material-icons-outlined">share</div>
                     </div>
                 </div>
+            {% if section.category is 2 %}
+                {% if section.title  %}
+                    <h2>{{ section.title }}</h2>
+                {% endif %}
                 <div class="attributedContent">
+                <div class="attributedTo">Source: {{ section.attribution }}</div>
                     <div>{{ section.sectionContent | safe }}</div>
-                    <div class="attributedTo">{{ section.attribution }}</div>
+
                 </div>
             {% else %}
                 <div class="pageSection">
+                {% if section.title  %}
+                    <h2>{{ section.title }}</h2>
+                {% endif %}
                 <div>{{ section.sectionContent | safe }}</div>
             </div>
             {% endif %}

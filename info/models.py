@@ -230,6 +230,7 @@ class LearningModulePageSection(models.Model):
     promptInstructions = models.ManyToManyField(LearningModulePromptInstructions, blank=True)
     prompts = models.ManyToManyField(LearningModulePrompt, blank=True)
     name = models.TextField(default='', blank=True)
+    title = models.TextField(default='', blank=True)
     learningObjectives = models.ManyToManyField(NewLearningObjective, blank=True, default='')
     category = models.IntegerField(choices=(
                                            (1, "Standard"),
@@ -245,7 +246,7 @@ class LearningModulePageSection(models.Model):
             return self.sectionContent
 
     class Meta:
-        ordering = ()
+        ordering = ['order']
 
 
 class LearningModulePage(BaseModel):
@@ -255,6 +256,10 @@ class LearningModulePage(BaseModel):
 
     def __str__(self):
         return self.name
+
+    def returnLos(self):
+        learningObjectives = NewLearningObjective.objects.filter(id__in=self.content.all()).order_by('name', 'number')
+        return learningObjectives
 
 
 class PageOrderThrough(models.Model):
