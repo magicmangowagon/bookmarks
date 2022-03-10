@@ -4,7 +4,7 @@ from .views import ChallengeDetail, ChallengeListView, SolutionDetailView, Solut
     EvalDetailView, EvalListView, RubricFinalFormView, CompetencyView, RubricAddendum, PreEvaluationUpdate, \
     LearningExperienceCreator, LearningExperienceView, ChallengeCover, CoachingReviewView, SolutionSectionView, \
     MegaSubPage, CoachingReviewSession, searchSubmissions, ChallengeResourcesView, TFJHotFixView, \
-    SolutionEvaluationView, TfJSolutionSubmissionView, TfJEvaluation, CourseCatalog
+    SolutionEvaluationView, TfJSolutionSubmissionView, TfJEvaluation, CourseCatalog, LearningExpoToCSV
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
@@ -36,5 +36,6 @@ urlpatterns = [
     path('tfjsolution/<int:pk>', login_required(TfJSolutionSubmissionView.as_view()), name='tfj-submission'),
     path('tfjeval/<int:pk>', login_required(TfJEvaluation.as_view()), name='tfj-evaluation'),
     path('coursecatalog', login_required(CourseCatalog.as_view()), name='course-catalog'),
+    path('learningExpoCSV', login_required(views.LearningExpoToCSV.as_view()), name='expo-csv')
     # path('edit/', views.edit, name='edit'),
 ]

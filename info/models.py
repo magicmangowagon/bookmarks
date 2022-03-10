@@ -201,6 +201,10 @@ class DjResponse(DjPage):
 
 class LearningModulePrompt(BaseModel):
     promptText = RichTextUploadingField(default='')
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
 
     def __str__(self):
         return self.promptText
@@ -280,5 +284,14 @@ class Message(BaseModel):
     pageLocation = models.ForeignKey(LearningModulePage, null=True, default='', on_delete=models.CASCADE)
     messageText = models.TextField(default='', blank=True)
     recipient = models.ForeignKey(User, default='', blank=True, on_delete=models.CASCADE)
+
+
+class ContentFlag(BaseModel):
+    like = models.BooleanField(default=False)
+    favorite = models.BooleanField(default=False)
+    add = models.BooleanField(default=False)
+    share = models.ManyToManyField(User, blank=True)
+    content = models.ForeignKey(LearningModulePageSection, blank=True, default='', on_delete=models.CASCADE)
+
 
 

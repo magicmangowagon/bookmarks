@@ -9,6 +9,7 @@ from django.template.loader import render_to_string
 from datetime import datetime, timedelta
 from .models import EmailMessage
 from django.contrib.sites.models import Site
+import csv
 
 
 def submissionAlert(challenge, tc):
@@ -464,3 +465,5 @@ def CopyUsersolutionsToGeneralSolution():
     oldSolutions = UserSolution.objects.all()
     for oldS in oldSolutions:
         TempUserSolution.objects.create(creator=oldS.userOwner, solutionInstance=oldS.solutionInstance, )
+
+

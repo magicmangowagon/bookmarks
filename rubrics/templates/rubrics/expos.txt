@@ -1,0 +1,3 @@
+{% for expo in expo_list %}
+{{expo.name}}, {{expo.challenge.name}}
+{% endfor %}

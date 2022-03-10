@@ -1523,3 +1523,11 @@ def searchSubmissions(request):
     solution_filter = EvalFilter(request.GET, queryset=solutions)
     return render(request, 'rubrics/solutions.html', {'filter': solution_filter, 'coachReview': coachReviews})
 
+
+class LearningExpoToCSV(ListView):
+    model = LearningExperience
+    template_name = 'rubrics/expos.txt'
+    content_type = 'text/csv'
+    context_object_name = 'expo_list'
+    queryset = LearningExperience.objects.all().order_by('challenge')
+

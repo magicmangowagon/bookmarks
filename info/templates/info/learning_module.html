@@ -47,8 +47,9 @@
                 {% if section.title  %}
                     <h2>{{ section.title }}</h2>
                 {% endif %}
-                <div class="attributedContent">
                 <div class="attributedTo">Source: {{ section.attribution }}</div>
+                <div class="attributedContent">
+
                     <div>{{ section.sectionContent | safe }}</div>
 
                 </div>
