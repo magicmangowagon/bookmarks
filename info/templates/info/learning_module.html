@@ -97,9 +97,7 @@
         {% endfor %}
             {% csrf_token %}
         </form>
-            <a rel="next" href="{{ pages.get_next_by_pageNumber }}">Next</a>
-            <button onclick="previous()" class="submitBtn">Back</button>
-                <button onclick="{{ pages.next }}" class="submitBtn">Next</button>
+
         </div>
 
 

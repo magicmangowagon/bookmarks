@@ -16,14 +16,10 @@ import json
 
 
 class LearningModuleListView(ListView):
-    context_object_name = 'learningModulePages'
+    context_object_name = 'pages'
     template_name = 'info/learning_module_list.html'
-    model = LearningModule
-    paginate_by = 1
-
-    def get_queryset(self, **kwargs):
-        currentLM = LearningModule.objects.get(pk=self.kwargs['pk'])
-        return currentLM.pages.all().order_by('pageNumber')
+    # model = LearningModulePage
+    queryset = LearningModulePage.objects.all()
 
 
 class LearningModuleView(DetailView):

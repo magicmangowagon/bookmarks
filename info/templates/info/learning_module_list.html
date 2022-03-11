@@ -8,49 +8,17 @@
 
 {% block content %}
 <h1>{{ learningModule.name }}</h1>
-    <div id="designJournalContainer">
 
 
-    {% for page in object_list %}
-        <div class="djPage" id="djPage-{{ page.id }}">
-
-            <div>{{ page.content | safe }}</div>
-            <hr>
-
-
-    <div class="learningModulePromptsContainer">
-    <form>
-
-        {{ responseForm.management_form }}
-        {% for form in responseForm %}
-            <label>{{ form.question.initial | safe }}</label>
-            {{ form.response }}
-            {{ form.id }}
-            {% endfor %}
-
-        {% csrf_token %}
-        <input type="submit" value="Submit">
-    </form>
-
-    </div>
-        <button onclick="previous()" class="submitBtn">Back</button>
-            <button onclick="{{ pages.next }}" class="submitBtn">Next</button>
-        </div>
+    <ul>
+    {% for page in pages %}
+       <h2><a href="learningmodule/{{ page.id }}">{{ page.name }}</a></h2>
     {% endfor %}
 
+    </ul>
 
 
 
-    <div class="pageSidebar">
-        <button>Message Coach</button>
-        <button>Message Faculty</button>
-        <form method="POST" enctype="multipart/form-data">
-            {{ messageCoach }}
-            <input type="submit" value="Submit" id="msgForm" name="msgForm">
-            {% csrf_token %}
-        </form>
-    </div>
-</div>
 {% endblock content %}
 {% block javascript %}
  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" rel="prefetch"></script>
