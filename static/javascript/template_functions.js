@@ -47,7 +47,7 @@ function autoGet() {
 
 }
 
-function autoSave(bannerDisplayOn) {
+function autoSave() {
     $.ajax({
         headers: { "X-CSRFToken": getCookie("csrftoken") },
         data: $("form").serialize(),

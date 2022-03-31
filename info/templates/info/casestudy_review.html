@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load solution_filters %}
+{% load comments %}
+{% load comments_xtd %}
+{% load static %}
+
+{% block title %}Woodrow Wilson Academy{% endblock %}
+
+{% block content %}
+
+<h1>{{ learningModule.name }}</h1>
+
+
+<div id="designJournalContainer">
+        <div class="learningModuleSection" id="djPage-{{ section.id }}">
+        {% for section in page.content.all %}
+
+
+            <h2>Title: {{ section.name }}</h2>
+                <div class="learningObjs">
+                    <ul class="challengeListObj">
+                        {% for learningObjective in section.learningObjectives.all %}
+                            <li class="challengeListObj" id="{{ learningObjective.id }}">{{ learningObjective.name }}-{{ learningObjective.number }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="pageSection">
+                        <div class="hiddenSection">{{ section.sectionContent | safe }}</div>
+                </div>
+
+        {% endfor %}
+            </div>
+
+
+
+        <div class="pageSidebar">
+            <button onclick="show(lmsidebar)" class="material-icons">email</button>Coach
+            <button onclick="show(lmsidebar)" class="material-icons">email</button>Faculty
+            <div id="lmSidebar">
+
+                <form method="POST" enctype="multipart/form-data" class="lmSidebar" id="msgForm">
+                    {{ messageCoach.id }}
+                    {{ messageCoach.creator }}
+                    {{ messageCoach.messageText }}
+                    {{ messageCoach.pageLocation }}
+                    {{ messageCoach.recipient }}
+                    <input type="submit" value="Submit" name="msgForm">
+                    <input type="button" value="Cancel" onclick="hide()">
+                    {% csrf_token %}
+                </form>
+                <hr>
+            <div class="LMcommentContainer">
+                {% for comment in conversations %}
+                    <div class="LMcomment">
+                    {{ comment.creator }}
+                    {{ comment.dateCreated }}
+                    <p>{{ comment.messageText }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            </div>
+        </div>
+</div>
+
+
+{% endblock content %}
+{% block javascript %}
+ <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" rel="prefetch"></script>
+    <script type="text/javascript" src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://d3js.org/d3-array.v2.min.js"></script>
+    <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+<script src="{% static "javascript/magic_comments.js" %}"></script>
+    <script src="{% static "javascript/template_functions.js" %}"></script>
+<script type="text/javascript" >
+
+    let index = 0
+    let lmsidebar = document.getElementById("lmSidebar")
+    function hide() {
+
+        lmsidebar.style.display = "none"
+    }
+    document.onload = hide()
+    function show(element) {
+        element.style.display = "block"
+    }
+</script>
+<script type="text/javascript" >
+
+
+
+</script>
+{% endblock javascript %}

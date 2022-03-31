@@ -12,7 +12,16 @@ from rubrics.models import Competency, LearningObjective
 from .forms import AddTopicForm, AddComment, CommentContainerForm, AddDjPageForm, AddDjPromptForm, AddDjResponseForm, \
     LearningModuleResponseForm, LMResponseFormset, MessageForm
 import json
+from rest_framework import viewsets
+from rest_framework import permissions
+from .serializers import CaseStudyPromptSerializer
 # Create your views here.
+
+
+class PromptResponseViewSet(viewsets.ModelViewSet):
+    queryset = LearningModuleResponse.objects.all()
+    serializer_class = CaseStudyPromptSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class LearningModuleListView(ListView):
@@ -74,6 +83,7 @@ class LearningModuleView(DetailView):
                     print(newMsg.errors)
                     return redirect('learning-module', pk=self.kwargs.get('pk'))
             if request.POST.get("promptResponse"):
+
                 promptResponse = LMResponseFormset(request.POST, prefix='responseForm')
                 print('trying to save prompt formset')
                 if promptResponse.is_valid():
@@ -86,6 +96,17 @@ class LearningModuleView(DetailView):
                     return redirect('learning-module', pk=self.kwargs.get('pk'))
         else:
             return redirect('learning-module', pk=self.kwargs['pk'])
+
+
+class CaseStudyReview(DetailView):
+    model = LearningModulePage
+    template_name = 'info/casestudy_review.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CaseStudyReview, self).get_context_data(**kwargs)
+        currentPage = LearningModulePage.objects.get(pk=self.kwargs['pk'])
+        context['page'] = currentPage
+        return context
 
 
 class BaseInfoList(ListView):

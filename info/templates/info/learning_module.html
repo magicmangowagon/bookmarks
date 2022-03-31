@@ -84,7 +84,7 @@
                                 {{ form.question }}
                                 {{ form.response }}
                                 {{ form.basemodel_ptr }}
-                                <input type="submit" value="OK" name="promptResponse">
+                                <input type="submit" value="OK" name="promptResponse" onclick="autoSave()">
                             {% endif %}
                         {% endfor %}
                         </div>
@@ -116,6 +116,7 @@
                     {{ messageCoach.pageLocation }}
                     {{ messageCoach.recipient }}
                     <input type="submit" value="Submit" name="msgForm">
+                    <input type="button" value="Cancel" onclick="hide()">
                     {% csrf_token %}
                 </form>
                 <hr>
@@ -140,6 +141,7 @@
     <script src="https://d3js.org/d3-array.v2.min.js"></script>
     <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
 <script src="{% static "javascript/magic_comments.js" %}"></script>
+    <script src="{% static "javascript/template_functions.js" %}"></script>
 <script type="text/javascript" >
 
     let index = 0
